@@ -1,0 +1,152 @@
+\documentclass[12pt]{article}
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fancyhdr}
+\usepackage{bm}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{bbold}
+\usepackage{yhmath} % pour pouvoir obtenir le symbole des ouverts avec une parenthèse
+\usepackage{amsmath}    % les symboles les plus fréquents
+\usepackage{amssymb}    % des symboles
+%deux packages qui étaient dans le truc de Nou
+\usepackage{enumitem} % pour les listes
+\usepackage{hyperref} %hyperliens
+
+\usepackage{theorem}
+\newtheorem{theorem}{Teorema}
+\newtheorem{lemma}{Lema}
+\newtheorem{observation}{Observaci\'on}
+\newtheorem{proof}{Demostraci\'on}
+\newtheorem{proposition}{Proposici\'on}
+\newtheorem{definition}{Definici\'on}
+\newtheorem{corollary}{Corolario}
+\DeclareMathOperator\supp{supp } %pour faire des jolis supports
+
+%il suffira de renommer 3 commandes par celles utilisées pour th, lemme, preuve si on veut changer le style des démonstrations notamment. package amsth + \theoremstyle ?
+
+
+%environnement pour les démo sans compteur et en écriture normale :
+\renewenvironment{proof}{%
+
+\vspace{0.5cm}
+
+  \noindent \textbf{Demostraci\'on :}
+}{%
+
+  ~\hfill{$\Box$}
+}
+
+
+
+
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\subg}{\mathrm{SubG}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\pp}{\mathbb{P}}
+
+\begin{document}
+
+\section{TABLAS}
+\subsection{p=2}
+
+\begin{center}
+\begin{tabular} {|c|c|c|c|l|}
+\hline
+$h$ & Error Norma 2 & Error Norma infinito & Tiempo de ejecución(ns)\\
+\hline
+$10$ &   $ 1.2305e-04$ & $5.5000e-05$  & $1150300$ \\
+$20$ &   $1.1180e-05$   &  $4.0000e-06$ & $1979700$   \\
+$40$ &   $2.8284e-06$   &  $1.0000e-06$ & $3639500$   \\
+$80$ &   $1.4142e-06$   &  $1.0000e-06$ & $5977700$   \\
+
+\hline
+\end{tabular}
+\vspace{3cm}
+\end{center}
+
+\subsection{p=3}
+IMPORTANTE: puntos de control no exactos, limitan la convergencia.
+\begin{center}
+\begin{tabular} {|c|c|c|c|l|}
+\hline
+$h$ & Norma 2 & Norma infinito & Tiempo de ejecución(ns)\\
+\hline
+$10$ &   $ 3.4581e-04$ & $1.5000e-04$  & $1162900$ \\
+$20$ &   $4.8552e-04$   &  $1.6100e-04$ & $1996300$   \\
+$40$ &   $6.8807e-04$   &  $1.6100e-04$ & $3986400$   \\
+
+
+\hline
+\end{tabular}
+\vspace{3cm}
+\end{center}
+
+\subsection{p=4}
+\begin{center}
+\begin{tabular} {|c|c|c|c|l|}
+\hline
+$h$ & Norma 2 & Norma infinito & Tiempo de ejecución(ns)\\
+\hline
+$10$ &   $ 1.4142e-06$ & $1.0000e-06$  & $1409000$ \\
+$20$ &   $1.4142e-06$   &  $1.0000e-06$ & $3111600$   \\
+$40$ &   $1.2247e-16$   &  $1.2247e-16$ & $4555700$   \\
+$80$ &   $1.2247e-16$   &  $1.2247e-16$ & $9696100$   \\
+
+\hline
+\end{tabular}
+\vspace{3cm}
+\end{center}
+
+\section{CAMBIO DE VARIABLE 1D}
+\subsection{Formulación clasica}
+
+Espacio parametrico:
+
+\begin{equation*}
+-u''(x) = f(x), \quad x \in \Omega .
+\end{equation*}\\
+
+Espacio fisico:
+
+\begin{equation*}
+-\frac{1}{J(\xi)} \frac{d}{d\xi} \left( \frac{1}{J(\xi)} u(r(\xi)) \right) = f(r(\xi)), \quad \xi \in \Omega^{\xi} .
+\end{equation*}\\
+
+Equivalentemente:
+
+\begin{equation*}
+-\frac{d}{d\xi} \left( \frac{1}{J(\xi)} u'(r(\xi)) \right) = f(r(\xi))J(\xi), \quad \xi \in \Omega^{\xi} .
+\end{equation*}\\
+
+
+\subsection{Formulación variacional}
+suponemos $\Omega$ = (0,L), spg\\
+Espacio parametrico:
+
+\begin{equation*}
+\int_{\Omega} u'(x)v'(x)dx-u'(L)v(L)+u'(0)v(0) = \int_{\Omega} f(x)v(x)dx, \quad x \in \Omega .
+\end{equation*}\\
+
+Espacio fisico:
+
+\begin{align*}
+&\int_{\Omega^{\xi}} \frac{1}{J(\xi)} u'(r(\xi)) \frac{1}{J(\xi)} v'(r(\xi)) J(\xi) d\xi x-\frac{1}{J(L)}u'(r(L))v(r(L))+\frac{1}{J(0)}u'(r(0))v(r(0)) =\\
+&=\int_{\Omega^{\xi}} f(r(\xi))v(r(\xi)) J(\xi) d\xi, \quad \xi \in \Omega^{\xi} .
+\end{align*}\\
+
+Simplificando obtenemos:
+\begin{align*}
+&\int_{\Omega^{\xi}} \frac{1}{J(\xi)} u'(r(\xi))  v'(r(\xi)) d\xi x-\frac{1}{J(L)}u'(r(L))v(r(L))+\frac{1}{J(0)}u'(r(0))v(r(0)) =\\
+&=\int_{\Omega^{\xi}} f(r(\xi))v(r(\xi)) J(\xi) d\xi, \quad \xi \in \Omega^{\xi} .
+\end{align*}\\
+
+Donde $J(\xi)$ = $|r'(\xi)|_{2}$.
+
+\end{document}
+
