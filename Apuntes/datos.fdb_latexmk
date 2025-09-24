@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1755693823.02063 "c:/Users/carlo/OneDrive/Escritorio/Uni/TFG/Apuntes/datos.tex" "datos.pdf" "datos" 1755693824.27387 0
+["pdflatex"] 1755777966.73123 "c:/Users/carlo/OneDrive/Escritorio/Uni/TFG/Apuntes/datos.tex" "datos.pdf" "datos" 1755777967.77743 0
   "C:/Users/carlo/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1752850949 220785 04c254893ae5a617621c9946864b3bae ""
   "C:/Users/carlo/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/ecbx1440.pk" 1754117628 40136 dbc43c86534f9cd29866bb3f655b3e93 ""
   "C:/Users/carlo/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/ecbx1728.pk" 1752847369 49100 76d7d7dcf1112f466834e056de042b84 ""
@@ -114,10 +114,10 @@
   "C:/Users/carlo/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "C:/Users/carlo/AppData/Local/Programs/MiKTeX/tex/latex/yhmath/omxyhex.fd" 1584531306 433 6f009616205848d6bf5a6cf4ba5366c1 ""
   "C:/Users/carlo/AppData/Local/Programs/MiKTeX/tex/latex/yhmath/yhmath.sty" 1584531306 4974 0d87ecb9c52cb398cf8866a2c0fb9d8d ""
-  "c:/Users/carlo/OneDrive/Escritorio/Uni/TFG/Apuntes/datos.tex" 1755693822 4281 1503544ce12cd1f00fd10d7be9361576 ""
-  "datos.aux" 1755693823 1171 67883d966de6635fb2b1c1d425cb5eb6 "pdflatex"
-  "datos.out" 1755693824 782 04a9040a0e89306fb07d56f6c9201b84 "pdflatex"
-  "datos.tex" 1755693822 4281 1503544ce12cd1f00fd10d7be9361576 ""
+  "c:/Users/carlo/OneDrive/Escritorio/Uni/TFG/Apuntes/datos.tex" 1755777966 3955 a72638144227083270c31a334208ccfb ""
+  "datos.aux" 1755777967 1061 b4bc070617b0a93793a282741930c337 "pdflatex"
+  "datos.out" 1755777967 710 db0e0113198dc2138499d82b3e36e527 "pdflatex"
+  "datos.tex" 1755777966 3955 a72638144227083270c31a334208ccfb ""
   (generated)
   "datos.aux"
   "datos.log"

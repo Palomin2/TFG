@@ -56,47 +56,31 @@
 \subsection{p=2}
 
 \begin{center}
-\begin{tabular} {|c|c|c|c|l|}
+\begin{tabular} {|c|c|c|c|c|}
 \hline
-$h$ & Error Norma 2 & Error Norma infinito & Tiempo de ejecución(ns)\\
+$h$ & Error Norma L2 & Error Norma infinito & Error Norma H1 & Tiempo de ejecución(ns)\\
 \hline
-$10$ &   $ 1.2305e-04$ & $5.5000e-05$  & $1150300$ \\
-$20$ &   $1.1180e-05$   &  $4.0000e-06$ & $1979700$   \\
-$40$ &   $2.8284e-06$   &  $1.0000e-06$ & $3639500$   \\
-$80$ &   $1.4142e-06$   &  $1.0000e-06$ & $5977700$   \\
+$10$ &   $1.0984e-04$ & $1.9700e-04$ & $7.7051e-03$  & $1150300$ \\
+$20$ &   $1.5722e-05$ &  $3.1000e-05$ & $1.6852e-03$ & $1979700$   \\
+$40$ &   $1.9573e-06$ &  $4.0000e-06$ & $4.1137e-04$ & $3639500$   \\
+$80$ &   $4.5354e-07$ &  $1.0000e-06$ & $1.4515e-04$ & $5977700$   \\
 
 \hline
 \end{tabular}
 \vspace{3cm}
 \end{center}
 
-\subsection{p=3}
-IMPORTANTE: puntos de control no exactos, limitan la convergencia.
-\begin{center}
-\begin{tabular} {|c|c|c|c|l|}
-\hline
-$h$ & Norma 2 & Norma infinito & Tiempo de ejecución(ns)\\
-\hline
-$10$ &   $ 3.4581e-04$ & $1.5000e-04$  & $1162900$ \\
-$20$ &   $4.8552e-04$   &  $1.6100e-04$ & $1996300$   \\
-$40$ &   $6.8807e-04$   &  $1.6100e-04$ & $3986400$   \\
-
-
-\hline
-\end{tabular}
-\vspace{3cm}
-\end{center}
 
 \subsection{p=4}
 \begin{center}
-\begin{tabular} {|c|c|c|c|l|}
+\begin{tabular} {|c|c|c|c|c|}
 \hline
-$h$ & Norma 2 & Norma infinito & Tiempo de ejecución(ns)\\
+$h$ & Error Norma L2 & Error Norma infinito & Error Norma H1 & Tiempo de ejecución(ns)\\
 \hline
-$10$ &   $ 1.4142e-06$ & $1.0000e-06$  & $1409000$ \\
-$20$ &   $1.4142e-06$   &  $1.0000e-06$ & $3111600$   \\
-$40$ &   $1.2247e-16$   &  $1.2247e-16$ & $4555700$   \\
-$80$ &   $1.2247e-16$   &  $1.2247e-16$ & $9696100$   \\
+$10$ &   $5.9898e-07$ & $1.0000e-06$  & $2.0412e-05$ & $1409000$ \\
+$20$ &   $0$   &  $0$ & $5.1158e-06$ & $3111600$   \\
+$40$ &   $0$   &  $0$ & $2.7355e-07$ & $4555700$   \\
+$80$ &   $0$   &  $0$ & $3.8227e-15 $ & $9696100$   \\
 
 \hline
 \end{tabular}
@@ -115,7 +99,7 @@ Espacio parametrico:
 Espacio fisico:
 
 \begin{equation*}
--\frac{1}{J(\xi)} \frac{d}{d\xi} \left( \frac{1}{J(\xi)} u(r(\xi)) \right) = f(r(\xi)), \quad \xi \in \Omega^{\xi} .
+-\frac{1}{J(\xi)} \frac{d}{d\xi} \left( \frac{1}{J(\xi)} u'(r(\xi)) \right) = f(r(\xi)), \quad \xi \in \Omega^{\xi} .
 \end{equation*}\\
 
 Equivalentemente:
@@ -146,7 +130,7 @@ Simplificando obtenemos:
 &=\int_{\Omega^{\xi}} f(r(\xi))v(r(\xi)) J(\xi) d\xi, \quad \xi \in \Omega^{\xi} .
 \end{align*}\\
 
-Donde $J(\xi)$ = $|r'(\xi)|_{2}$.
+Donde $J(\xi)$ = $\|r'(\xi)\|_{2}$.
 
 \end{document}
 

@@ -1,0 +1,335 @@
+\documentclass[12pt]{article}
+\usepackage{graphicx}
+\usepackage{svg}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fancyhdr}
+\usepackage{bm}
+\usepackage{mathtools}
+\usepackage{bbold}
+\usepackage{yhmath} % pour pouvoir obtenir le symbole des ouverts avec une parenthèse
+\usepackage{amsmath}    % les symboles les plus fréquents
+\usepackage{amssymb}    % des symboles
+%deux packages qui étaient dans le truc de Nou
+\usepackage{enumitem} % pour les listes
+\usepackage{hyperref} %hyperliens
+
+\usepackage{theorem}
+\newtheorem{theorem}{Teorema}
+\newtheorem{lemma}{Lema}
+\newtheorem{observation}{Observaci\'on}
+\newtheorem{proof}{Demostraci\'on}
+\newtheorem{proposition}{Proposici\'on}
+\newtheorem{definition}{Definici\'on}
+\newtheorem{corollary}{Corolario}
+\DeclareMathOperator\supp{supp } %pour faire des jolis supports
+
+%il suffira de renommer 3 commandes par celles utilisées pour th, lemme, preuve si on veut changer le style des démonstrations notamment. package amsth + \theoremstyle ?
+
+
+%environnement pour les démo sans compteur et en écriture normale :
+\renewenvironment{proof}{%
+
+\vspace{0.5cm}
+
+  \noindent \textbf{Demostraci\'on :}
+}{%
+
+  ~\hfill{$\Box$}
+}
+
+
+
+
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\subg}{\mathrm{SubG}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\pp}{\mathbb{P}}
+
+\begin{document}
+
+
+
+\section{CAMBIO DE VARIABLE 1D}
+\subsection{Formulación clasica}
+
+Espacio parametrico:
+
+\begin{equation*}
+-u''(x) = f(x), \quad x \in \Omega .
+\end{equation*}\\
+
+Espacio fisico:
+
+\begin{equation*}
+-\frac{1}{J(\xi)} \frac{d}{d\xi} \left( \frac{1}{J(\xi)} u'(r(\xi)) \right) = f(r(\xi)), \quad \xi \in \Omega^{\xi} .
+\end{equation*}\\
+
+Equivalentemente:
+
+\begin{equation}
+-\frac{d}{d\xi} \left( \frac{1}{J(\xi)} u'(r(\xi)) \right) = f(r(\xi))J(\xi), \quad \xi \in \Omega^{\xi} .
+\end{equation}\\
+
+
+\subsection{Formulación variacional}
+suponemos $\Omega$ = (0,L), spg\\
+Espacio parametrico:
+
+\begin{equation*}
+\int_{\Omega} u'(x)v'(x)dx-u'(L)v(L)+u'(0)v(0) = \int_{\Omega} f(x)v(x)dx, \quad x \in \Omega .
+\end{equation*}\\
+
+Espacio fisico:
+
+\begin{align*}
+&\int_{\Omega^{\xi}} \frac{1}{J(\xi)} u'(r(\xi)) \frac{1}{J(\xi)} v'(r(\xi)) J(\xi) d\xi x-\frac{1}{J(L)}u'(r(L))v(r(L))+\frac{1}{J(0)}u'(r(0))v(r(0)) =\\
+&=\int_{\Omega^{\xi}} f(r(\xi))v(r(\xi)) J(\xi) d\xi, \quad \xi \in \Omega^{\xi} .
+\end{align*}\\
+
+Simplificando obtenemos:
+\begin{align*}
+&\int_{\Omega^{\xi}} \frac{1}{J(\xi)} u'(r(\xi))  v'(r(\xi)) d\xi x-\frac{1}{J(L)}u'(r(L))v(r(L))+\frac{1}{J(0)}u'(r(0))v(r(0)) =\\
+&=\int_{\Omega^{\xi}} f(r(\xi))v(r(\xi)) J(\xi) d\xi, \quad \xi \in \Omega^{\xi} .
+\end{align*}\\
+
+Donde $J(\xi)$ = $\|r'(\xi)\|_{2}$.
+
+\section{Evaluaciones y resultados de convergencia}
+
+Tomaremos $f(x)=k m^2\pi^2sin(m \pi x), \quad x \in [0,1].$\\
+Donde $k=100, m=10$.\\
+
+\subsection{Grado polinomial p=2:}
+Tomaremos los puntos de control: ${(0, 0.75, 1)}$\\
+Y su respectivo vector de pesos: $ (1,1,1)$\\
+Con vector de nodos: ${(0,0,0,1,1,1)}$\\
+\subsubsection{Numero de elementos h=10.}
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.32\textwidth}
+        \includesvg[width=\linewidth]{ej1_p2_h10_sol.svg}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.32\textwidth}
+        \includesvg[width=\linewidth]{ej1_p2_h10_ders.svg}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.32\textwidth}
+        \includesvg[width=\linewidth]{ej1_p2_h10_curve.svg}
+    \end{subfigure}
+    \caption{Comparación de resultados.}
+    \label{fig:tresgraficas}
+\end{figure}
+Resultados numéricos concretos:\\
+Tiempo de ejecución: 780800 nanosegundos\\
+Error Norma L2 = 32.250\\
+Error Norma H1 = 1249.3\\
+Error Norma Infinito = 140.30\\
+\subsubsection{Numero de elementos h=20.}
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.32\textwidth}
+        \includesvg[width=\linewidth]{ej1_p2_h20_sol.svg}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.32\textwidth}
+        \includesvg[width=\linewidth]{ej1_p2_h20_ders.svg}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.32\textwidth}
+        \includesvg[width=\linewidth]{ej1_p2_h20_curve.svg}
+    \end{subfigure}
+    \caption{Comparación de resultados.}
+    \label{fig:tresgraficas}
+\end{figure}
+Resultados numéricos concretos:\\
+Tiempo de ejecución: 2267400 nanosegundos\\
+Error Norma L2 = 4.3739\\
+Error Norma H1 = 344.65\\
+Error Norma Infinito = 22.692\\
+\subsubsection{Numero de elementos h=40.}
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.32\textwidth}
+        \includesvg[width=\linewidth]{ej1_p2_h40_sol.svg}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.32\textwidth}
+        \includesvg[width=\linewidth]{ej1_p2_h40_ders.svg}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.32\textwidth}
+        \includesvg[width=\linewidth]{ej1_p2_h40_curve.svg}
+    \end{subfigure}
+    \caption{Comparación de resultados.}
+    \label{fig:tresgraficas}
+\end{figure}
+Resultados numéricos concretos:\\
+Tiempo de ejecución: 3882400 nanosegundos\\
+Error Norma L2 = 0.2922\\
+Error Norma H1 = 63.083\\
+Error Norma Infinito = 1.4318\\
+\subsubsection{Numero de elementos h=80.}
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.32\textwidth}
+        \includesvg[width=\linewidth]{ej1_p2_h80_sol.svg}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.32\textwidth}
+        \includesvg[width=\linewidth]{ej1_p2_h80_ders.svg}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.32\textwidth}
+        \includesvg[width=\linewidth]{ej1_p2_h80_curve.svg}
+    \end{subfigure}
+    \caption{Comparación de resultados.}
+    \label{fig:tresgraficas}
+\end{figure}
+Resultados numéricos concretos:\\
+Tiempo de ejecución: 4768000 nanosegundos\\
+Error Norma L2 = 0.031083\\
+Error Norma H1 = 13.567\\
+Error Norma Infinito = 0.1659\\
+\subsection{Grado polinomial p=4:}
+Tomaremos los puntos de control: ${(0, 0.05, 0.10, 0.95, 1)}$\\
+Y su respectivo vector de pesos: $ (1,1,1,1,1 )$\\
+Con vector de nodos: ${(0,0,0,0,0,1,1,1,1,1)}$\\
+\subsubsection{Numero de elementos h=10.}
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.32\textwidth}
+        \includesvg[width=\linewidth]{ej2_p4_h10_sol.svg}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.32\textwidth}
+        \includesvg[width=\linewidth]{ej2_p4_h10_ders.svg}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.32\textwidth}
+        \includesvg[width=\linewidth]{ej2_p4_h10_curve.svg}
+    \end{subfigure}
+    \caption{Comparación de resultados.}
+    \label{fig:tresgraficas}
+\end{figure}
+Resultados numéricos concretos:\\
+Tiempo de ejecución: 1370100 nanosegundos\\
+Error Norma L2 = 35.806\\
+Error Norma H1 = 1599.8\\
+Error Norma Infinito = 124.20\\
+\subsubsection{Numero de elementos h=20.}
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.32\textwidth}
+        \includesvg[width=\linewidth]{ej2_p4_h20_sol.svg}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.32\textwidth}
+        \includesvg[width=\linewidth]{ej2_p4_h20_ders.svg}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.32\textwidth}
+        \includesvg[width=\linewidth]{ej2_p4_h20_curve.svg}
+    \end{subfigure}
+    \caption{Comparación de resultados.}
+    \label{fig:tresgraficas}
+\end{figure}
+Resultados numéricos concretos:\\
+Tiempo de ejecución: 4262500 nanosegundos\\
+Error Norma L2 = 4.2303\\
+Error Norma H1 = 293.33\\
+Error Norma Infinito = 19.396\\
+\subsubsection{Numero de elementos h=40.}
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.32\textwidth}
+        \includesvg[width=\linewidth]{ej2_p4_h40_sol.svg}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.32\textwidth}
+        \includesvg[width=\linewidth]{ej2_p4_h40_ders.svg}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.32\textwidth}
+        \includesvg[width=\linewidth]{ej2_p4_h40_curve.svg}
+    \end{subfigure}
+    \caption{Comparación de resultados.}
+    \label{fig:tresgraficas}
+\end{figure}
+Resultados numéricos concretos:\\
+Tiempo de ejecución: 6218200 nanosegundos\\
+Error Norma L2 = 0.028325\\
+Error Norma H1 = 5.6622\\
+Error Norma Infinito = 0.1146\\
+\subsubsection{Numero de elementos h=80.}
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.32\textwidth}
+        \includesvg[width=\linewidth]{ej2_p4_h80_sol.svg}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.32\textwidth}
+        \includesvg[width=\linewidth]{ej2_p4_h80_ders.svg}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.32\textwidth}
+        \includesvg[width=\linewidth]{ej2_p4_h80_curve.svg}
+    \end{subfigure}
+    \caption{Comparación de resultados.}
+    \label{fig:tresgraficas}
+\end{figure}
+Resultados numéricos concretos:\\
+Tiempo de ejecución: 11270600 nanosegundos\\
+Error Norma L2 = 5.6460e-04\\
+Error Norma H1 = 0.2017\\
+Error Norma Infinito = 2.6000e-03\\
+
+\subsubsection{Información importante sobre convergencias}
+Todos los datos referentes a la integración de normas han sido realizados usando una cuadratura de Gauss-Lengendre de 200 elementos,
+los elementos de las submatrices del metodo de IGA han sido calculados mediante el método de cuadratura de Gauss-Legendre con p+2 elementos.
+\section{Curva Genérica en R3 y solución analitica}
+\subsection{Planteamiento y busqueda de solución analitica}
+De la sección anterior podemos observar como al definir f sobre el espacio paramétrico esta se "deforma", al igual que hace la recta,
+es decir, sufre una reparametrización equivalente a la que sufre el sgmento de recta parametrizado sobre el arco en $[0,1]$, adicionalmente,
+es importante notar que si tomamos el segmento de recta entre $[0,b]$ en el espacio fisico como un reescalado de la recta fisica que teniamos previamente
+definida en $[0,1]$ bajo las mismas condiciones y sobre el mismo espacio parametrico, notamos que para cualquier punto de $\xi$ que parametriza nuestro segmento de recta,
+el jacobiano en este punto es reescalado por b, luego nuestra solución analítica será, en este caso, teniendo en cuenta la ecuación (1) e integrando a cada lado y equiparando
+el jacobiano original multiplicado por b con nuestro jacobiano reescalado, implica que nuestra solución es la misma para cada valor del parametro fisico multiplicada por $b^2$ y la de
+la derivada por b (añadire ecuaciones sobre esto para aclararlo)\\ 
+luego nos da pie a definir sobre el mismo problema en el espacio parametrico pero con un espacio fisico dado por una recta en el espacio de longitud L la cual reparametrizaremos por el arco,
+teniendo así que en nuestra reparametrización obtenemos que la solución analítica en cada valor de esta reparametrización es el de nuestra solución sobre la recta de R1 multiplicada por $L^2$.
+\subsection{Evaluación del correcto funcionamiento en una curva genérica}
+Antes de iniciar aclarar que debido a no tener el resultado analítico exacto de la longitud de la curva no podemos calcular aquí resultados de convergencia en función de h o p, debido a que 
+la solución analítica obtenida acarreará estos errores.
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.32\textwidth}
+        \includesvg[width=\linewidth]{ej3_p4_h80_sol.svg}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.32\textwidth}
+        \includesvg[width=\linewidth]{ej3_p4_h80_ders.svg}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.32\textwidth}
+        \includesvg[width=\linewidth]{ej3_p4_h80_curve.svg}
+    \end{subfigure}
+    \caption{Comparación de resultados.}
+    \label{fig:tresgraficas}
+\end{figure}
+Resultados numéricos concretos:\\
+Error Norma L2 = 0.1386\\
+Error Norma H1 = 161.68\\
+Error Norma Infinito = 2.0702\\
+Estos resultados poseen errores heredados del calculo de la longitud y de la reparametrización.
+
+\end{document}
+

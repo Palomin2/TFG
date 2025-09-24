@@ -127,7 +127,7 @@ std::vector<double> BernsteinPolinomial(double t, int n){
 /******************************************************************************* */
 
 /******************************************************************************* */
-std::vector<double> BezierCurve_Point_t(iMatrix<double> &PtosControl, double t){
+std::vector<double> BezierCurve_Point_t(const iMatrix<double> &PtosControl, double t){
     int dim = PtosControl.GetNumRows();
     std::vector<double> Curve(dim);        
     int n=PtosControl.GetNumCols();
@@ -143,7 +143,7 @@ std::vector<double> BezierCurve_Point_t(iMatrix<double> &PtosControl, double t){
 /******************************************************************************* */
 
 /******************************************************************************* */
-iMatrix<double> BezierCurve(iMatrix<double> &PtosControl, double N_Steps){
+iMatrix<double> BezierCurve(const iMatrix<double> &PtosControl, double N_Steps){
     
     iMatrix<double> Curve(PtosControl.GetNumRows(),N_Steps+1);
     double Step=1/(N_Steps);
@@ -156,7 +156,7 @@ iMatrix<double> BezierCurve(iMatrix<double> &PtosControl, double N_Steps){
 /******************************************************************************* */
 
 /******************************************************************************* */
-std::vector<double> BezierSurface_Point_t1_t2(std::vector<iMatrix<double>> &PtosControl, double t1, double t2){
+std::vector<double> BezierSurface_Point_t1_t2(const std::vector<iMatrix<double>> &PtosControl, double t1, double t2){
     int dim = 3;
     std::vector<double> Curve(dim);
 
@@ -179,7 +179,7 @@ std::vector<double> BezierSurface_Point_t1_t2(std::vector<iMatrix<double>> &Ptos
 /******************************************************************************* */
 
 /******************************************************************************* */
-std::vector<iMatrix<double>> BezierSurface(std::vector<iMatrix<double>> &PtosControl, double N_Steps){
+std::vector<iMatrix<double>> BezierSurface(const std::vector<iMatrix<double>> &PtosControl, double N_Steps){
     std::vector<iMatrix<double>> Surface(N_Steps+1);
     double Step=1/(N_Steps);
 
@@ -196,7 +196,7 @@ std::vector<iMatrix<double>> BezierSurface(std::vector<iMatrix<double>> &PtosCon
 /******************************************************************************* */
 
 /******************************************************************************* */
-void Write_BezierSurface(std::vector<iMatrix<double>> &Tensor, std::string name){
+void Write_BezierSurface(const std::vector<iMatrix<double>> &Tensor, std::string name){
     std::ofstream fichero;
     char coord[3]={'X','Y','Z'};
     int iterj = Tensor[0].GetNumCols();
@@ -218,7 +218,7 @@ void Write_BezierSurface(std::vector<iMatrix<double>> &Tensor, std::string name)
 /******************************************************************************* */
 
 /******************************************************************************* */
-void Write_CtrlPts(std::vector<iMatrix<double>> &CtrlPts, std::string name){
+void Write_CtrlPts(const std::vector<iMatrix<double>> &CtrlPts, std::string name){
     std::ofstream fichero;
     char coord[3]={'X','Y','Z'};
     int iterj = CtrlPts[0].GetNumCols();
@@ -246,7 +246,7 @@ void Write_CtrlPts(std::vector<iMatrix<double>> &CtrlPts, std::string name){
 *
 ************************************************************************************/
 
-int FindSpan(std::vector<double> &KnotVector, double t, int p, int n){
+int FindSpan(const std::vector<double> &KnotVector, double t, int p, int n){
 
     if(KnotVector[n+1]==t){
         return n;
@@ -274,7 +274,7 @@ int FindSpan(std::vector<double> &KnotVector, double t, int p, int n){
 /******************************************************************************* */
 
 /******************************************************************************* */
-std::vector<double> BasisFuns(int i, double t, int p, std::vector<double> &KnotVector){
+std::vector<double> BasisFuns(int i, double t, int p,const std::vector<double> &KnotVector){
     std::vector<double> sol(p+1);
     std::vector<double> left(p+1);
     std::vector<double> right(p+1);
@@ -304,7 +304,7 @@ std::vector<double> BasisFuns(int i, double t, int p, std::vector<double> &KnotV
 
 
 
-iMatrix<double> AllBasisFuns(int i, double t, int p, std::vector<double> &KnotVector){
+iMatrix<double> AllBasisFuns(int i, double t, int p,const std::vector<double> &KnotVector){
 
 
     iMatrix<double> sol(p+1,p+1);
@@ -334,15 +334,13 @@ iMatrix<double> AllBasisFuns(int i, double t, int p, std::vector<double> &KnotVe
 /******************************************************************************* */
 
 /******************************************************************************* */
-iMatrix<double> DerBasisFuns(int span, double t, int p, int k,std::vector<double> &KnotVector){
+iMatrix<double> DerBasisFuns(int span, double t, int p, int k,const std::vector<double> &KnotVector){
     iMatrix<double> ders(p+1,p+1);
     iMatrix<double> ndu(p+1,p+1);
     double temp,saved;
     ndu(0,0)=1.0f;
-    // Almacenamiento para diferencias izquierda y derecha
     std::vector<double> left(p + 1), right(p + 1);
 
-    // Llenar la tabla de funciones base (algoritmo recursivo)
     for (int j = 1; j <= p; ++j) {
         left[j] = t - KnotVector[span + 1 - j];
         right[j] = KnotVector[span + j] - t;
@@ -357,14 +355,13 @@ iMatrix<double> DerBasisFuns(int span, double t, int p, int k,std::vector<double
         ndu(j,j)=saved;
     }
 
-    // Inicializar derivadas (0-ésima derivada = función base)
     for (int j = 0; j <= p; ++j) {
         ders(0,j)=ndu(j,p);
     }
 
-    // Calcular derivadas de orden superior
+
     for (int r = 0; r <= p; ++r) {
-        int s1 = 0, s2 = 1; // Alternar filas en a
+        int s1 = 0, s2 = 1; 
         iMatrix<double> a(2,p+1);
         a(0,0)=1.0f;
 
@@ -387,7 +384,7 @@ iMatrix<double> DerBasisFuns(int span, double t, int p, int k,std::vector<double
                 d += a(s2,i)*ndu(r,pk);
             }
             ders(i,r)=d;
-            std::swap(s1, s2); // Alternar filas
+            std::swap(s1, s2);
         }
         
     }
@@ -407,7 +404,7 @@ iMatrix<double> DerBasisFuns(int span, double t, int p, int k,std::vector<double
 /******************************************************************************* */
 
 /******************************************************************************* */
-void Write_BasisFunctions(iMatrix<double> &BasisFunctions, std::string name){
+void Write_BasisFunctions(const iMatrix<double> &BasisFunctions, std::string name){
     std::ofstream fichero;
     fichero.open(name+".txt");
     for(unsigned int j=0; j<BasisFunctions.GetNumRows();j++){
@@ -425,7 +422,7 @@ void Write_BasisFunctions(iMatrix<double> &BasisFunctions, std::string name){
 *
 ************************************************************************************/
 
-std::vector<double> CurvePoint(int n, int p, std::vector<double> &KnotVector, iMatrix<double> &CtrlPts, double t){
+std::vector<double> CurvePoint(int n, int p,const std::vector<double> &KnotVector,const iMatrix<double> &CtrlPts, double t){
     int span =FindSpan(KnotVector, t, p, n);
     std::vector<double> Funs = BasisFuns(span,t,p,KnotVector);
     
@@ -448,12 +445,12 @@ std::vector<double> CurvePoint(int n, int p, std::vector<double> &KnotVector, iM
 /******************************************************************************* */
 
 /******************************************************************************* */
-iMatrix<double> CurveDerivsAlg1(int n, int p,std::vector<double> &KnotVector, iMatrix<double> &CtrlPts, double t, int d){
+iMatrix<double> CurveDerivsAlg1(int n, int p,const std::vector<double> &KnotVector,const iMatrix<double> &CtrlPts, double t, int d){
     int du= std::min(d,p);
     int span =FindSpan(KnotVector, t, p, n);
     int itermax=CtrlPts.GetNumRows();
     //std::cout << "du " << du<< std::endl;
-    iMatrix<double> CK(du, itermax); //inicializa a 0 no hace falta dar valores
+    iMatrix<double> CK(du+1, itermax); //inicializa a 0 no hace falta dar valores
     iMatrix<double> nders= DerBasisFuns(span, t, p, du,KnotVector);
     for(unsigned int k=0; k<=du;k++){
         for(unsigned int i=0; i<=p;i++){
@@ -462,7 +459,7 @@ iMatrix<double> CurveDerivsAlg1(int n, int p,std::vector<double> &KnotVector, iM
             //CK[k] = CK[k] + nders[k] [j]*P[span-p+j]
             for(unsigned int j=0;j<itermax;j++){
             
-                CK(k,j)=CK(k,j)+aux*(CtrlPts(j,span-p+i)) ;      
+                CK(k,j)+=aux*(CtrlPts(j,span-p+i));      
                 
             } 
         }
@@ -474,7 +471,7 @@ iMatrix<double> CurveDerivsAlg1(int n, int p,std::vector<double> &KnotVector, iM
 /******************************************************************************* */
 
 /******************************************************************************* */
-iMatrix<std::vector<double>> CurveDerivsCpts(int n, int p,std::vector<double> &KnotVector, iMatrix<double> &CtrlPts,  int d, int r1, int r2){
+iMatrix<std::vector<double>> CurveDerivsCpts(int n, int p,const std::vector<double> &KnotVector,const iMatrix<double> &CtrlPts,  int d, int r1, int r2){
     int r= r2-r1;
     iMatrix<std::vector<double>> sol(d+1,r+1);
     for(unsigned int i=0;i<=r;i++){
@@ -502,7 +499,7 @@ iMatrix<std::vector<double>> CurveDerivsCpts(int n, int p,std::vector<double> &K
 /******************************************************************************* */
 
 /******************************************************************************* */
-iMatrix<double> CurveDerivsAlg2(int n, int p,std::vector<double> &KnotVector, iMatrix<double> &CtrlPts, double t, int d){ //not working atm
+iMatrix<double> CurveDerivsAlg2(int n, int p,const std::vector<double> &KnotVector,const iMatrix<double> &CtrlPts, double t, int d){ //not working atm
     int du= std::min(d,p);
     int span =FindSpan(KnotVector, t, p, n);
     int itermax=CtrlPts.GetNumRows(); //dimension del espacio
@@ -526,7 +523,7 @@ iMatrix<double> CurveDerivsAlg2(int n, int p,std::vector<double> &KnotVector, iM
 /******************************************************************************* */
 
 /******************************************************************************* */
-void Write_Curve(iMatrix<double> &Curve, std::string filename){
+void Write_Curve(const iMatrix<double> &Curve, std::string filename){
     std::ofstream fichero;
     int iterMaxi=Curve.GetNumCols();
     int iterMaxj=Curve.GetNumRows();
@@ -543,7 +540,7 @@ void Write_Curve(iMatrix<double> &Curve, std::string filename){
 /******************************************************************************* */
 
 /******************************************************************************* */
-std::vector<double> SurfacePoint(int n1, int p1, std::vector<double> &KnotVector1, int n2, int p2,  std::vector<double> &KnotVector2, std::vector<iMatrix<double>> &CtrlPts, double t1, double t2){
+std::vector<double> SurfacePoint(int n1, int p1,const std::vector<double> &KnotVector1, int n2, int p2,const std::vector<double> &KnotVector2,const std::vector<iMatrix<double>> &CtrlPts, double t1, double t2){
     int span1=FindSpan(KnotVector1,t1,p1,n1);
     int span2=FindSpan(KnotVector2,t2,p2,n2);
     std::vector<double> Basis1=BasisFuns(span1,t1,p1,KnotVector1);
@@ -575,7 +572,7 @@ std::vector<double> SurfacePoint(int n1, int p1, std::vector<double> &KnotVector
 /******************************************************************************* */
 
 /******************************************************************************* */
-iMatrix<std::vector<double>> SurfaceDerivsAlg1(int n1, int p1, std::vector<double> &KnotVector1, int n2, int p2,  std::vector<double> &KnotVector2, std::vector<iMatrix<double>> &CtrlPts, double t1, double t2, int d){
+iMatrix<std::vector<double>> SurfaceDerivsAlg1(int n1, int p1,const std::vector<double> &KnotVector1, int n2, int p2,const std::vector<double> &KnotVector2,const std::vector<iMatrix<double>> &CtrlPts, double t1, double t2, int d){
     unsigned int du=std::min(d,p1);
     unsigned int dv=std::min(d,p2);
 
@@ -659,7 +656,7 @@ iMatrix<double> WeightCtrlPts(const iMatrix<double> &CtrlPts,const std::vector<d
 
 /******************************************************************************* */
 
-iMatrix<double> UnWeightCtrlPts(iMatrix<double> &CtrlPtsW){
+iMatrix<double> UnWeightCtrlPts(const iMatrix<double> &CtrlPtsW){
     int NumPts = CtrlPtsW.GetNumCols();
     int dim = CtrlPtsW.GetNumRows()-1;
     iMatrix<double> CtrlPts(dim,NumPts);
@@ -691,7 +688,7 @@ std::vector<iMatrix<double>> WeightCtrlPtsSurf(const std::vector<iMatrix<double>
 /******************************************************************************* */
 
 /******************************************************************************* */
-std::vector<iMatrix<double>> UnWeightCtrlPtsSurf(std::vector<iMatrix<double>> &CtrlPtsW){
+std::vector<iMatrix<double>> UnWeightCtrlPtsSurf(const std::vector<iMatrix<double>> &CtrlPtsW){
     int NumPts2= CtrlPtsW.size();
     int NumPts1 = CtrlPtsW[0].GetNumCols();
     int dim = CtrlPtsW[0].GetNumRows()-1;
@@ -727,7 +724,7 @@ std::vector<iMatrix<double>> UnWeightCtrlPtsSurf(std::vector<iMatrix<double>> &C
 /******************************************************************************* */
 
 /******************************************************************************* */
-std::vector<double> CurvePointRational(int n, int p, std::vector<double> &KnotVector, iMatrix<double> &CtrlPtsWeighted, double t){
+std::vector<double> CurvePointRational(int n, int p,const std::vector<double> &KnotVector,const iMatrix<double> &CtrlPtsWeighted, double t){
     int span =FindSpan(KnotVector, t, p, n);
     std::vector<double> Funs = BasisFuns(span,t,p,KnotVector);
     int dim= CtrlPtsWeighted.GetNumRows();
@@ -751,31 +748,33 @@ std::vector<double> CurvePointRational(int n, int p, std::vector<double> &KnotVe
 
 /******************************************************************************* */
 int Binomial(int k, int i){
-    if (i > k - i) i = k - i;  // C(k, i) = C(k, k-i)
+    if (i < 0 || i > k) return 0;
+    if (i == 0 || i == k) return 1;
+    if (i > k - i) i = k - i;  // simetría
+
     long long res = 1;
-    for (int j = 1; j <= k; j++) {
+    for (int j = 1; j <= i; j++) {
         res *= k - (i - j);
         res /= j;
     }
-    return res;
+    return (int)res;
 }
 
 /******************************************************************************* */
 
 /******************************************************************************* */
-std::vector<double> RationalBasisFuns(int i, double t, int p, std::vector<double> &KnotVector, std::vector<double> &WeightVector){
+std::vector<double> RationalBasisFuns(int i, double t, int p,const std::vector<double> &KnotVector,const std::vector<double> &WeightVector){
     std::vector<double> Funs = BasisFuns(i, t, p, KnotVector);
     int itermax=Funs.size();
     double coef=0.0f;
-    int span = FindSpan(KnotVector, t, p, KnotVector.size()-2-p);
             //std::cout<<itermax<<std::endl;
     for(int j=0; j<itermax;j++){
         //std::cout<<"a"<<std::endl;
-        coef=coef+Funs[j]*WeightVector[span+j-p];
+        coef=coef+Funs[j]*WeightVector[i-p+j];
     }
     for(int j=0; j<itermax;j++){
         //std::cout<<"b"<<std::endl;
-        Funs[j]=Funs[j]*WeightVector[span+j-p]/coef;
+        Funs[j]=Funs[j]*WeightVector[i-p+j]/coef;
     }
 
     return Funs;
@@ -784,26 +783,26 @@ std::vector<double> RationalBasisFuns(int i, double t, int p, std::vector<double
 /******************************************************************************* */
 
 /******************************************************************************* */
-iMatrix<double> RatDersBasisFuns(int i, double t, int p, int k,std::vector<double> &KnotVector, std::vector<double> &WeightVector){
+iMatrix<double> RatDersBasisFuns(int i, double t, int p, int k,  const std::vector<double> &KnotVector,const std::vector<double> &WeightVector){
     iMatrix<double> R_ders(k+1, p+1);
     iMatrix<double> ders = DerBasisFuns(i, t, p, k ,KnotVector);
-
+    
     std::vector<double> Wk(k+1, 0.0);
     for (int j = 0; j <= k; ++j){
-        for (int i = 0; i < p+1; ++i){
-            Wk[j] += WeightVector[i] * ders(j,i);
+        for (int iter = 0; iter <= p; iter++){
+            Wk[j] += WeightVector[i-p+iter] * ders(j,iter);
         }   
     }
 
     for (int a = 0; a < p+1; ++a) {
-    R_ders(0, a)= ders(0,a)*WeightVector[a]/Wk[0]; // (D(0, a) * weights[a]) / Wk[0];
+    R_ders(0, a)= ders(0,a)*WeightVector[i-p+a]/Wk[0]; // (D(0, a) * weights[a]) / Wk[0];
     for (int j = 1; j <= k; ++j) {
             double sum = 0.0;
             for (int m = 1; m <= j; ++m){
                 sum += Binomial(j, m) * Wk[m] * R_ders(j - m, a);
-                double num = ders(j, a) * WeightVector[a] - sum;
-                R_ders(j, a)= num / Wk[0];
             }
+            double num = ders(j, a) * WeightVector[i-p+a] - sum;
+            R_ders(j, a)= num / Wk[0];
                 
         }
     }
@@ -815,28 +814,31 @@ iMatrix<double> RatDersBasisFuns(int i, double t, int p, int k,std::vector<doubl
 /******************************************************************************* */
 
 /******************************************************************************* */
-iMatrix<double> RatCurveDerivs(iMatrix<double> &Aders, iMatrix<double> &wders, int d){
+iMatrix<double> RatCurveDerivs(const iMatrix<double> &Aders,const iMatrix<double> &wders, int d){
     int NumCols=Aders.GetNumCols();
-    iMatrix<double> CK(d,NumCols);
+    iMatrix<double> CK(d+1,NumCols);
     //CK[0]=Aders[0]/wders[0]
-    std::vector<double> init(NumCols);
+    //std::vector<double> init(NumCols);
     for(unsigned int k=0; k<NumCols; k++){
-        init[k]=Aders(0,k)/wders(0,0);
+        CK(0,k)=Aders(0,k)/wders(0,0);
     }   
-    CK.SetRow(0, init);
-    for(unsigned int k =0; k<=d; k++){
+
+
+    for(unsigned int k =1; k<=d; k++){
         std::vector<double> v = Aders.GetRow(k);
-        for(unsigned int i=1;i<=k;i++){
+        for(int i=1;i<=k;i++){
             int Bin=Binomial(k,i);
+            //std::cout << "k: " << k <<std::endl;
+            //std::cout << "i: " << i <<std::endl;
+            //std::cout << "binomial: " << Bin <<std::endl;
             //v = v - Binomial(k, i) * wders[i] * CK[k - i];
             for(unsigned int j=0; j<NumCols; j++){
-                v[j]=v[j]-Bin*wders(i,0)*CK(k-i,j);
+                v[j]-=Bin*wders(i,0)*CK(k-i,j);
             }
         }
         //CK[k] = v / wders[0];
-        std::vector<double> aux=v;
         for(unsigned int j=0; j<NumCols; j++){
-            aux[j]=v[j]/wders(0,0);
+            v[j] /= wders(0,0);
         }
         CK.SetRow(k,v);
     }
@@ -848,7 +850,7 @@ iMatrix<double> RatCurveDerivs(iMatrix<double> &Aders, iMatrix<double> &wders, i
 /******************************************************************************* */
 
 /******************************************************************************* */
-std::vector<double> SurfacePointRational(int n1, int p1, std::vector<double> &KnotVector1, int n2, int p2,  std::vector<double> &KnotVector2, std::vector<iMatrix<double>> &CtrlPtsWeighted, double t1, double t2){
+std::vector<double> SurfacePointRational(int n1, int p1,const std::vector<double> &KnotVector1, int n2, int p2,const std::vector<double> &KnotVector2,const std::vector<iMatrix<double>> &CtrlPtsWeighted, double t1, double t2){
     int span1=FindSpan(KnotVector1,t1,p1,n1);
     int span2=FindSpan(KnotVector2,t2,p2,n2);
     std::vector<double> Basis1=BasisFuns(span1,t1,p1,KnotVector1);
@@ -894,7 +896,7 @@ std::vector<double> SurfacePointRational(int n1, int p1, std::vector<double> &Kn
 /******************************************************************************* */
 
 /******************************************************************************* */
-iMatrix<std::vector<double>> RatSurfaceDerivs(iMatrix<std::vector<double>> &Aders,iMatrix<double> &wders,int d){
+iMatrix<std::vector<double>> RatSurfaceDerivs(const iMatrix<std::vector<double>> &Aders,const iMatrix<double> &wders,int d){
 
     int dim=Aders(0,0).size();
     iMatrix<std::vector<double>> SKL(d+1,d+1);
@@ -1009,7 +1011,7 @@ int countOccurrences(const std::vector<double>& v, double e) {
 /******************************************************************************* */
 
 /******************************************************************************* */
-void FindSpanMult(std::vector<double> &KnotVector, double t, int p, int n,int &k, int &s){
+void FindSpanMult(const std::vector<double> &KnotVector, double t, int p, int n,int &k, int &s){
     double eps = 1e-6f;
     k=FindSpan(KnotVector,t,p,n);
     s=0;
@@ -1020,7 +1022,7 @@ void FindSpanMult(std::vector<double> &KnotVector, double t, int p, int n,int &k
 /******************************************************************************* */
 
 /******************************************************************************* */
-iMatrix<double> CurveKnotsIns(int np, int p, std::vector<double> &KnotVector,iMatrix<double> &CtrlPtsW, double u, int index, int s, int r){
+iMatrix<double> CurveKnotsIns(int np, int p, std::vector<double> &KnotVector,const iMatrix<double> &CtrlPtsW, double u, int index, int s, int r){
     //int mp = np+p+1;
     int dim=CtrlPtsW.GetNumRows();
     int L;
@@ -1129,7 +1131,7 @@ std::vector<double> CurvePntByCornerCut(int n, int p, std::vector<double> &KnotV
 /******************************************************************************* */
 
 /******************************************************************************* */
-std::vector<iMatrix<double>> SurfaceKnotIns(int np1, int p1, std::vector<double> &KnotVector1, int np2, int p2, std::vector<double> &KnotVector2,std::vector<iMatrix<double>> &CtrlPtsW, bool dir,
+std::vector<iMatrix<double>> SurfaceKnotIns(int np1, int p1, std::vector<double> &KnotVector1, int np2, int p2, std::vector<double> &KnotVector2,const std::vector<iMatrix<double>> &CtrlPtsW, bool dir,
                                             double uv, int index, int r, int s){
     if(dir==true){//KnotVector1 will be updated
         int dim=CtrlPtsW[0].GetNumRows();
@@ -1243,7 +1245,7 @@ std::vector<iMatrix<double>> SurfaceKnotIns(int np1, int p1, std::vector<double>
 /******************************************************************************* */
 
 /******************************************************************************* */
-iMatrix<double> RefineKnotVectCurve(int n, int p, std::vector<double> &KnotVector, iMatrix<double> &CtrlPtsW, std::vector<double> &Insertions, int r){
+iMatrix<double> RefineKnotVectCurve(int n, int p, std::vector<double> &KnotVector,const iMatrix<double> &CtrlPtsW,const std::vector<double> &Insertions, int r){
     int m=n+p+1;
     int dim=CtrlPtsW.GetNumRows();
     std::vector<double> NewKnotVector(m+r+2);
@@ -1302,8 +1304,8 @@ iMatrix<double> RefineKnotVectCurve(int n, int p, std::vector<double> &KnotVecto
 /******************************************************************************* */
 
 /******************************************************************************* */
-std::vector<iMatrix<double>> RefineKnotVectSurface(int np1, int p1, std::vector<double> &KnotVector1, int np2, int p2, std::vector<double> &KnotVector2,std::vector<iMatrix<double>> &CtrlPtsW, bool dir,
-std::vector<double> Insertions, int r){
+std::vector<iMatrix<double>> RefineKnotVectSurface(int np1, int p1, std::vector<double> &KnotVector1, int np2, int p2, std::vector<double> &KnotVector2,const std::vector<iMatrix<double>> &CtrlPtsW, bool dir,
+const std::vector<double> Insertions, int r){
     int dim=CtrlPtsW[0].GetNumRows();
     if(dir==true){
         //int L;
@@ -1505,11 +1507,12 @@ std::vector<double> removeDuplicates(const std::vector<double>& input) {
 /******************************************************************************* */
 
 /******************************************************************************* */
-std::vector<double> createSubIntervals(const double nElements){
+std::vector<double> createSubIntervals(const double nElements, const double lower_limit, const double upper_limit){
     std::vector<double> sol(nElements+1);
-    double Step=1/nElements;
+    double Lenght = upper_limit -lower_limit;
+    double Step=Lenght/nElements;
     for(unsigned int i=0; i<=nElements; i++){
-        sol[i]=i*Step;
+        sol[i]=lower_limit + i*Step;
     }
     return sol;
 }
@@ -1553,9 +1556,9 @@ std::vector<double> removeMatches(const std::vector<double>& v1,  const std::vec
 /******************************************************************************* */
 
 /******************************************************************************* */
-void D1_element_eval(int n, int i, int p, int nEvals, double lower_limit, double upper_limit, std::vector<double> &KnotVector, std::vector<double> &Weights,
-                    Eigen::VectorXd &nodes, iMatrix<double> &CtrlPtsW, std::function<double(double)> f,
-                    iMatrix<double> &BasisFunsEvals, iMatrix<double> &DerBasisFunsEvals,std::vector<double>& JacobianEvals, std::vector<double>& InverseJacobianEvals, std::vector<double>& funcEvals){
+void D1_element_eval(int n, int i, int p, int nEvals, double lower_limit, double upper_limit,const std::vector<double> &KnotVector,const std::vector<double> &Weights,
+                    const Eigen::VectorXd &nodes,const iMatrix<double> &CtrlPtsW, std::function<double(double)> f,
+                    iMatrix<double> &BasisFunsEvals, iMatrix<double> &DerBasisFunsEvals,std::vector<double>& JacobianEvals, std::vector<double>& InverseJacobianEvals, std::vector<double>& funcEvals, double Lenght){
     BasisFunsEvals.Resize(p+1,nEvals);                        
     DerBasisFunsEvals.Resize(p+1,nEvals);
     JacobianEvals.resize(nEvals);
@@ -1573,24 +1576,26 @@ void D1_element_eval(int n, int i, int p, int nEvals, double lower_limit, double
         DerBasisFunsEvals.SetCol(k, AuxMat1.GetRow(1));
         //std::cout << "i1" << std::endl;
         iMatrix<double> Aders, wders;
-        iMatrix<double> Allders = CurveDerivsAlg1(n, p, KnotVector, CtrlPtsW, EvalPoint, 2);
+        iMatrix<double> Allders = CurveDerivsAlg1(n, p, KnotVector, CtrlPtsW, EvalPoint, 1);
         //std::cout << "i2" << std::endl;
         int auxInt=Allders.GetNumCols()-1;
         Aders = Allders.GetSubMat(0,1,0, auxInt-1);
         wders = Allders.GetSubMat(0,1,auxInt, auxInt);
-        iMatrix<double> AuxMat2 = RatCurveDerivs(Aders, wders, 2);
+        iMatrix<double> AuxMat2 = RatCurveDerivs(Aders, wders, 1);
         //std::cout << "i3" << std::endl;
 
         std::vector<double> AuxVec= AuxMat2.GetRow(1);
         double AuxVal=0;
-        for(unsigned int i=0; i< AuxVec.size(); i++){
-            AuxVal+= AuxVec[i]*AuxVec[i];
+        for(unsigned int iter=0; iter< AuxVec.size(); iter++){
+            AuxVal+= AuxVec[iter]*AuxVec[iter];
         }
         AuxVal=sqrt(AuxVal);
         //std::cout << "i4" << std::endl;
         JacobianEvals[k]=AuxVal;
         InverseJacobianEvals[k]=1/AuxVal;
-        funcEvals[k]=f(EvalPoint);
+        //funcEvals[k]=f(EvalPoint); //Case Jacobian is constant at 1
+        funcEvals[k] = f(CurvePointRational(n, p, KnotVector, CtrlPtsW, EvalPoint)[0]); //Case unidimensional curve
+        //funcEvals[k]= f(Fisical_to_Parametric(EvalPoint, 0, Lenght, 50, CtrlPtsW, KnotVector, n, p)); //Generic case (optimization needed)
     }
 
 }
@@ -1598,7 +1603,7 @@ void D1_element_eval(int n, int i, int p, int nEvals, double lower_limit, double
 /******************************************************************************* */
 
 /******************************************************************************* */
-iMatrix<double> gauss_legendre_cuadrature_integral_bilinealForm(int p, double lower_limit, double upper_limit, int nEvals, iMatrix<double> &DerBasisFunsEvals, std::vector<double>& InverseJacobianEvals, Eigen::VectorXd &weights){
+iMatrix<double> gauss_legendre_cuadrature_integral_bilinealForm(int p, double lower_limit, double upper_limit, int nEvals,const iMatrix<double> &DerBasisFunsEvals,const std::vector<double>& InverseJacobianEvals,const Eigen::VectorXd &weights){
     iMatrix<double> sol(p+1,p+1);
     double AuxConstant = (upper_limit-lower_limit)/2;
 
@@ -1620,7 +1625,7 @@ iMatrix<double> gauss_legendre_cuadrature_integral_bilinealForm(int p, double lo
 /******************************************************************************* */
 
 /******************************************************************************* */
-std::vector<double> gauss_legendre_cuadrature_integral_linealForm(int p, double lower_limit, double upper_limit, int nEvals, iMatrix<double> &BasisFunsEvals, std::vector<double>& JacobianEvals, std::vector<double>& funcEvals, Eigen::VectorXd &weights){
+std::vector<double> gauss_legendre_cuadrature_integral_linealForm(int p, double lower_limit, double upper_limit, int nEvals,const iMatrix<double> &BasisFunsEvals,const std::vector<double>& JacobianEvals,const std::vector<double>& funcEvals,const Eigen::VectorXd &weights){
     std::vector<double> sol(p+1);
     double AuxConstant = (upper_limit-lower_limit)/2;
 
@@ -1654,7 +1659,7 @@ void impose_Dirichlet_Condition(int p, int size, Eigen::SparseMatrix<double> &gl
 
         global.coeffRef(size, size) = 1.0;
         LinearForm(size)=ValueAt1;
-        for(unsigned int i=size-1; i>=size-p; i--){
+        for(int i=size-1; i>=size-p; i--){
             global.coeffRef(size, i) = 0.0;
             LinearForm(i)-=ValueAt1*global.coeffRef(i, size);
             global.coeffRef(i, size) = 0.0;
@@ -1698,39 +1703,191 @@ void impose_Robin_Condition(int p, int size, Eigen::SparseMatrix<double> &global
 /******************************************************************************* */
 
 /******************************************************************************* */
-void writeFunction(Eigen::VectorXd funEvals, std::vector<double> KnotVector, std::vector<double> WeightVector, int n, int p, double lowerLimit, double upperLimit,  std::string name){
+void writeNumericFunction(Eigen::VectorXd funEvals,const std::vector<double> &KnotVector,const std::vector<double> &WeightVector, int n, int p, int nEvals, double lowerLimit, double upperLimit,  std::string name,
+                            Eigen::VectorXd nodes, Eigen::VectorXd weights, std::vector<double> time, int nElements){
+    std::ofstream fichero1, fichero2;
+    fichero1.open(name+"_h=" + std::to_string(static_cast<int>(nElements)) +"_p="+ std::to_string(p)+"_test1.txt");
+    fichero2.open(name+ "Ders_h=" + std::to_string(static_cast<int>(nElements)) +"_p="+ std::to_string(p)+"_test1.txt");
+    for(unsigned int i=0; i<nEvals; i++){
+        int span= FindSpan(KnotVector, time[i], p, n);
+        //std::cout << "span: " << span << std::endl;
+        double AuxVal1=0;
+        double AuxVal2=0;
+        //std::vector<double> eval= RatDersBasisFuns(span, t, p, 0, KnotVector, WeightVector).GetRow(0);
+        iMatrix<double> evalMat= RatDersBasisFuns(span, time[i] , p, 1, KnotVector, WeightVector);
+        std::vector<double> eval1=evalMat.GetRow(0);
+        std::vector<double> eval2=evalMat.GetRow(1);
+        //std::cout << "t= " << t << std::endl;
+        for(int j=0; j<=p; j++){
+            //std::cout << "funEvals[" << span-p+j<< "]= " << funEvals[span-p+j]<< std::endl;
+            //std::cout << "eval[" << j << "]= " << eval[j]<< std::endl;
+            AuxVal1+=funEvals[span-p+j]*eval1[j];
+            AuxVal2+=funEvals[span-p+j]*eval2[j];
+        }
+        fichero1 << AuxVal1 << " ";
+        fichero2 << AuxVal2 << " ";
+    }
+    fichero1.close();
+    fichero2.close();
+}
+
+
+
+/******************************************************************************* */
+
+/******************************************************************************* */
+void writeAnalyticFunction(std::function<double(double)> f,std::function<double(double)> f_Ders, double lowerLimit, double upperLimit, double nEvals,const iMatrix<double> &CtrlPtsW,const std::vector<double> &KnotVector,
+                    int n, int p, std::string name,Eigen::VectorXd nodes, Eigen::VectorXd weights, std::vector<double> time, double Lenght){
+    std::ofstream fichero1, fichero2;
+    fichero1.open(name + "_Analytic_test1.txt");
+    fichero2.open(name+"Ders_Analytic_test1.txt");
+    //Eigen::VectorXd nodes, weights;
+    //legendre_pol(nEvals, nodes, weights);
+    for(unsigned int i=0; i< nEvals; i++){
+        iMatrix<double> Aders, wders;
+        iMatrix<double> Allders = CurveDerivsAlg1(n, p, KnotVector, CtrlPtsW, time[i], 1);
+        //std::cout << "i2" << std::endl;
+        int auxInt=Allders.GetNumCols()-1;
+        Aders = Allders.GetSubMat(0,1,0, auxInt-1);
+        wders = Allders.GetSubMat(0,1,auxInt, auxInt);
+        iMatrix<double> AuxMat2 = RatCurveDerivs(Aders, wders, 1);
+        //std::cout << "i3" << std::endl;
+
+        std::vector<double> AuxVec= AuxMat2.GetRow(1);
+        double Jacobian=0;
+        for(unsigned int i=0; i< AuxVec.size(); i++){
+            Jacobian+= AuxVec[i]*AuxVec[i];
+        }
+        Jacobian=sqrt(Jacobian);
+        //std::cout << "tanalytic = " << Fisical_to_Parametric(auxeval1*nodes(i)+auxeval2, 0, Lenght, 20, CtrlPtsW, KnotVector, n, p) << std::endl;
+        //double auxval = CurvePointRational(n, p, KnotVector, CtrlPtsW, lowerLimit + i*Step)[0];
+        //std::cout << "point is: "<< lowerLimit + (auxeval1*nodes(i)+auxeval2) << std::endl;
+        //fichero << f(auxeval1*nodes(i)+auxeval2) << " "; //case Jacobian is constant at value 1
+        //fichero << f(CurvePointRational(n, p, KnotVector, CtrlPtsW, auxeval1*nodes(i)+auxeval2)[0]) << " "; //case jacobian is not constant but f only takes 1 dimensional parameters
+        //fichero1 << f(Fisical_to_Parametric(time[i], 0, Lenght, p+2, CtrlPtsW, KnotVector, n, p))<< " "; //optimization needed, not neccesary to commpute the lagranje pol pts in each interation
+        //fichero2 << f_Ders(Fisical_to_Parametric(time[i], 0, Lenght, p+2, CtrlPtsW, KnotVector, n, p))*Jacobian<< " ";
+        //std::cout << CurvePointRational(n, p, KnotVector, CtrlPtsW, time[i])[0] << std::endl;
+        fichero1 << f(CurvePointRational(n, p, KnotVector, CtrlPtsW, time[i])[0]) << " ";
+        fichero2 << f_Ders(CurvePointRational(n, p, KnotVector, CtrlPtsW, time[i])[0])*Jacobian << " ";
+    }
+
+    fichero1.close();
+    fichero2.close();
+}
+
+/******************************************************************************* */
+
+/******************************************************************************* */
+/*
+void writeFunctionDers(Eigen::VectorXd funEvals,const std::vector<double> &KnotVector,const iMatrix<double> &CtrlPtsW ,const std::vector<double> &WeightVector, int n, int p, int nEvals, double lowerLimit, double upperLimit,  std::string name){
     std::ofstream fichero;
     fichero.open(name);
-    double Step=(upperLimit-lowerLimit)/(funEvals.size()-p);
-    for(unsigned int i=0; i<=funEvals.size()-p; i++){
-        double t=lowerLimit + i*Step;
+    Eigen::VectorXd nodes, weights;
+    legendre_pol(nEvals, nodes, weights);
+    double auxeval1= (upperLimit - lowerLimit)/2;
+    double auxeval2= (upperLimit + lowerLimit)/2;
+
+    
+    //double Step=(upperLimit-lowerLimit)/(funEvals.size()-p);
+    for(unsigned int i=0; i<nEvals; i++){
+        double t=auxeval1*nodes(i)+auxeval2;
+        //std::cout << "i4" << std::endl;
+        
         int span= FindSpan(KnotVector, t, p, n);
         double AuxVal=0;
-        std::vector<double> eval= RationalBasisFuns(span, t , p, KnotVector, WeightVector);
+        std::vector<double> eval= RatDersBasisFuns(span, t , p, 1, KnotVector, WeightVector).GetRow(1);
         for(int j=0; j<=p; j++){
             AuxVal+=funEvals[span-p+j]*eval[j];
         }
+
         fichero << AuxVal << " ";
     }
     fichero.close();
 }
-
-
-
+*/
 /******************************************************************************* */
 
 /******************************************************************************* */
-void writeFunction(std::function<double(double)> f, double lowerLimit, double upperLimit, double nSteps, iMatrix<double> CtrlPtsW, std::vector<double> KnotVector,
-                    int n, int p, std::string name){
+/*
+void writeFunctionDers(std::function<double(double)> f, double lowerLimit, double upperLimit, double nEvals,const iMatrix<double> &CtrlPtsW,const std::vector<double> &KnotVector,
+                    int n, int p, std::string name, double Lenght){
     std::ofstream fichero;
     fichero.open(name);
-    double Step=(upperLimit-lowerLimit)/nSteps;
-    
-    for(unsigned int i=0; i<= nSteps; i++){
+    Eigen::VectorXd nodes, weights;
+    legendre_pol(nEvals, nodes, weights);
+    double auxeval1= (upperLimit - lowerLimit)/2;
+    double auxeval2= (upperLimit + lowerLimit)/2;
+    for(unsigned int i=0; i< nEvals; i++){
+        double t= auxeval1*nodes(i)+auxeval2;
+        iMatrix<double> Aders, wders;
+        iMatrix<double> Allders = CurveDerivsAlg1(n, p, KnotVector, CtrlPtsW, t, 1);
+        //std::cout << "i2" << std::endl;
+        int auxInt=Allders.GetNumCols()-1;
+        Aders = Allders.GetSubMat(0,1,0, auxInt-1);
+        wders = Allders.GetSubMat(0,1,auxInt, auxInt);
+        iMatrix<double> AuxMat2 = RatCurveDerivs(Aders, wders, 1);
+        //std::cout << "i3" << std::endl;
+
+        std::vector<double> AuxVec= AuxMat2.GetRow(1);
+        double Jacobian=0;
+        for(unsigned int i=0; i< AuxVec.size(); i++){
+            Jacobian+= AuxVec[i]*AuxVec[i];
+        }
+        Jacobian=sqrt(Jacobian);
+        //double auxVal = f(CurvePointRational(n, p, KnotVector, CtrlPtsW, t)[0])*Jacobian; //Case curve is 1 dimensional
+        //std::cout << "tders = " << Fisical_to_Parametric(t, 0, Lenght, p+2, CtrlPtsW, KnotVector, n, p) << std::endl;
+        double auxVal = f(Fisical_to_Parametric(t, 0, Lenght, 20, CtrlPtsW, KnotVector, n, p))*Jacobian; //Generic case
+
         //double auxval = CurvePointRational(n, p, KnotVector, CtrlPtsW, lowerLimit + i*Step)[0];
-        //std::cout << "point is: "<< auxval << std::endl;
-        fichero << f(lowerLimit + i*Step) << " ";
+        //std::cout << "point is: "<< lowerLimit + (auxeval1*nodes(i)+auxeval2) << std::endl;
+
+        //fichero << f(auxeval1*nodes(i)+auxeval2) << " "; //case Jacobian is constant at value 1
+        fichero << auxVal << " "; //case jacobian is not constant but f only takes 1 dimensional parameters
     }
 
     fichero.close();
 }
+*/
+/******************************************************************************* */
+
+/******************************************************************************* */
+double IntegrateNormDer(double lowerLimit, double upperLimit, int nEvals,const iMatrix<double> &CtrlPtsW,const std::vector<double> &KnotVector, int n, int p){
+    Eigen::VectorXd nodes, weights;
+    legendre_pol(nEvals, nodes, weights);
+    double auxeval1= (upperLimit - lowerLimit)/2;
+    double auxeval2= (upperLimit + lowerLimit)/2;
+    double sol=0;
+
+    for(unsigned int i=0; i< nEvals; i++){
+        
+        double t= auxeval1*nodes(i)+auxeval2;
+        //std::cout << "t= " << t << std::endl; 
+        iMatrix<double> Aders, wders;
+        //std::cout << "i0" << std::endl;
+        iMatrix<double> Allders = CurveDerivsAlg1(n, p, KnotVector, CtrlPtsW, t, 1);
+        //std::cout << "i1" << std::endl;
+        //Allders.PrintMatrix();
+        //std::cout << "i2" << std::endl;
+        int auxInt=Allders.GetNumCols()-1;
+        Aders = Allders.GetSubMat(0,1,0, auxInt-1);
+        wders = Allders.GetSubMat(0,1,auxInt, auxInt);
+        iMatrix<double> AuxMat2 = RatCurveDerivs(Aders, wders, 1);
+        //std::cout << "i3" << std::endl;
+
+        std::vector<double> AuxVec= AuxMat2.GetRow(1);
+        double Jacobian=0;
+        for(unsigned int iter=0; iter< AuxVec.size(); iter++){
+            Jacobian+= AuxVec[iter]*AuxVec[iter];
+        }
+        Jacobian=sqrt(Jacobian);
+        sol+=Jacobian*weights[i];
+        
+        //double auxval = CurvePointRational(n, p, KnotVector, CtrlPtsW, lowerLimit + i*Step)[0];
+        //std::cout << "point is: "<< lowerLimit + (auxeval1*nodes(i)+auxeval2) << std::endl;
+        //fichero << f(auxeval1*nodes(i)+auxeval2) << " "; //case Jacobian is constant at value 1
+        
+    }
+
+    return sol*auxeval1;
+}
+

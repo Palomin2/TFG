@@ -43,12 +43,12 @@ elseif p == 7
     knotVec    = [0 0 0 0 0 0 0 0 2 2 2 2 2 2 2 2];
     controlPts = [0 0;2/7 0;4/7 0;6/7 0;8/7 0;10/7 0;12/7 0;2 0];
     noGPs = 8;
-% Octavo orden    
+% Octavo orden
 elseif p == 8
     knotVec    = [0 0 0 0 0 0 0 0 0 2 2 2 2 2 2 2 2 2];
     %controlPts = [0 0;2/8 0;4/8 0;6/8 0;1 0;10/8 0;12/8 0;14/8 0;2 0];
     controlPts = [0 0;2/8 0;4/8 0;6/8 0;1 0;10/8 0;12/8 0;14/8 0;2 0];
-    noGPs = 9;    
+    noGPs = 9;
 end
 %Noveno orden
 % knotVec    = [0 0 0 0 0 0 0 0 0 0 2 2 2 2 2 2 2 2 2 2];
@@ -70,10 +70,10 @@ noCtrPts = size(controlPts,1); % no of control points
 noElems  = size(elConn,1);    % no of elements
 
 % initialization
-K = sparse(noCtrPts,noCtrPts); % global stiffness matrix 
+K = sparse(noCtrPts,noCtrPts); % global stiffness matrix
 M = sparse(noCtrPts,noCtrPts); % matriz de masa
 u = zeros(noCtrPts,1);        % displacement vector
-f = zeros(noCtrPts,1);        % external force vector    
+f = zeros(noCtrPts,1);        % external force vector
 % pause
 % Gauss quadrature rule
 [W,Q]=quadrature(  noGPs, 'GAUSS', 1 ); %  quadrature
@@ -84,14 +84,14 @@ for e=1:noElems
    xiE   = elRange(e,:); % [xi_i,xi_i+1]
    conn  = elConn(e,:);
    noFns = length(conn);
- 
-   % loop over Gauss points 
-    for gp=1:size(W,1)                        
-      pt      = Q(gp,:);                          
-      wt      = W(gp);                            
-      Xi      = 0.5 * ( ( xiE(2) - xiE(1) ) * pt + xiE(2) + xiE(1)); % coord in parameter space  
-      J2      = 0.5 * ( xiE(2) - xiE(1) ); 
-      
+
+   % loop over Gauss points
+    for gp=1:size(W,1)
+      pt      = Q(gp,:);
+      wt      = W(gp);
+      Xi      = 0.5 * ( ( xiE(2) - xiE(1) ) * pt + xiE(2) + xiE(1)); % coord in parameter space
+      J2      = 0.5 * ( xiE(2) - xiE(1) );
+
       i = findspan(noCtrPts-1,p,Xi,knotVec);
       %N = BasisFuns(i+1,Xi,p,knotVec);
       w=0;
@@ -109,15 +109,15 @@ for e=1:noElems
       jacob1 = dNdxi*controlPts(conn,1:2);
       J1     = norm (jacob1);
       dNdx   = (1/J1)*dNdxi;
-     
-      
+
+
       % compute elementary stiffness matrix and
       % assemble it to the global matrix
       M(conn,conn) = M(conn,conn) + dMdx' * dMdx * J2 * wt;% MATRIZ DE MASA
       K(conn,conn) = K(conn,conn) + dNdx' * dNdx * J1 * J2 * wt;
-      
+
       % compute the external force, kind of body force
-           
+
       X       = N * controlPts(conn,1:2);
       % u(x) correspondiente al ejemplo de Hughes
 %       bx      = X(1);
@@ -146,6 +146,7 @@ f(udofs)=bcwt*uFixed;
 
 % SOLVE SYSTEM
 
+
 U=K\f;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -157,7 +158,7 @@ for j=1:501
     C=NURBSCurvepoint(length(U),p,knotVec,[controlPts(:,1),U,controlPts(:,3)],2*(j-1)/500);
     aux(j,:)=C;
     xx(j)=C(1);
-    yy(j)=C(2); 
+    yy(j)=C(2);
 end
 
 plot(xx,yy);
@@ -170,7 +171,7 @@ plot(controlPts(:,1),U,'black',xx,ordenadas,'red',xx,yy,'blue')
 
 max(abs(yy-ordenadas))
 norm(yy-ordenadas,2)
-% % % 
+% % %
 % % % pause
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

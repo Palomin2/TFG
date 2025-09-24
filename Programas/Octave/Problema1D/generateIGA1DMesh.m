@@ -1,5 +1,5 @@
 
-controlPts  = [controlPts weights']; % Los puntos de control añadiendo columna con su peso
+controlPts  = [controlPts weights']; % Los puntos de control aÃ±adiendo columna con su peso
 
 % -------------------------------------
 % ------------ h-refinement -----------
@@ -7,7 +7,6 @@ controlPts  = [controlPts weights']; % Los puntos de control añadiendo columna c
 
 % the idea here is to take the original knot vector and add knots at point
 % in between existing points
-
 if refinement > 0
 for c=1:refinement
     n           = length(knotVec)-1-p; % n = numero de funciones base
@@ -16,10 +15,10 @@ for c=1:refinement
     nonewkX     = size(newKnotsX,2); % nuevo numero de nodos
     weightedPts = [controlPts(:,1).*controlPts(:,3) ...
                    controlPts(:,2).*controlPts(:,3) controlPts(:,3)]; % puntos de control por su peso
-    
+
     [newKnots,newControlPts] = ...
         RefineKnotVectCurve(n-1,p,knotVec,weightedPts,newKnotsX,nonewkX-1); % Hacemos con n-1!!!!!!!!
-    
+
     knotVec       = newKnots;
     controlPts  = [newControlPts(:,1)./newControlPts(:,3) ...
                    newControlPts(:,2)./newControlPts(:,3) newControlPts(:,3)]; % antes hemos multiplicado por los pesos
@@ -34,21 +33,21 @@ uniqueKnots=unique(knotVec);
 % if refinement>1
 %     oldKnotVec = knotVec;
 %     newKnots   = zeros((length(uniqueKnots)-1),refinement-1);
-%     
+%
 %     for i=1:size(newKnots,1)
 %         distributed   = linspace(uniqueKnots(i),uniqueKnots(i+1),refinement+1);
 %         newKnots(i,:) = distributed(2:end-1);
 %     end
-%     
+%
 %     [m n]    = size(newKnots);
 %     newKnots = sort(reshape(newKnots,1,m*n));
-% 
+%
 %     % and now redefine the control points
 %     for knot=1:length(newKnots)                       % loop over all the new knots
 %         newControlPts = zeros(length(weightedPts)+1,3); % increase the array of control points
 %         knot_bar      = newKnots(knot);
 %         kval          = find(knotVec>knot_bar, 1 )-1;
-%         
+%
 %         for i=1:length(newControlPts)
 %             if     i<= (kval - p)
 %                 alpha=1;
@@ -57,25 +56,25 @@ uniqueKnots=unique(knotVec);
 %                        ( oldKnotVec(i+p) - oldKnotVec(i) );
 %             else
 %                 alpha=0;
-%             end 
-%             
+%             end
+%
 %             newPoints=zeros(1,3);
-%             
+%
 %             if i~=1
 %                 newPoints=(1-alpha).*weightedPts(i-1,:);
 %             end
-%             
+%
 %             if i~= length(newControlPts)
 %                newPoints=newPoints + alpha * weightedPts(i,:);
 %             end
-%             
+%
 %             newControlPts(i,:)=newPoints;
 %         end
 %         weightedPts = newControlPts;
 %         knotVec     = sort([knotVec knot_bar]);
 %         oldKnotVec  = knotVec;
 %     end
-% 
+%
 % controlPts=[weightedPts(:,1)./weightedPts(:,3) weightedPts(:,2)./weightedPts(:,3) weightedPts(:,3)];
 % uniqueKnots=unique(knotVec);
 % end
@@ -88,14 +87,14 @@ uniqueKnots=unique(knotVec);
 
 ne            = length(uniqueKnots)-1;   % number of elements
 elRange       = zeros(ne,2);        % la fila i guarda el intervalo que ocupa el elemento i
-elConn        = zeros(ne,p+1);   % matriz de conectividad? ¿fila i = los p+1 nudos implicados en el elemento i?
+elConn        = zeros(ne,p+1);   % matriz de conectividad? Â¿fila i = los p+1 nudos implicados en el elemento i?
 elKnotIndices = zeros(ne,2); % la fila i guarda los indices de los nudos extremos que forman el elemento i
 
 % determine our element ranges and the corresponding knot indices
 element=1;
 previousKnotVal=0;
-% Construyo los elementos y guardo los indices de los nudos distintos 
-for i=1:length(knotVec) 
+% Construyo los elementos y guardo los indices de los nudos distintos
+for i=1:length(knotVec)
     currentKnotVal=knotVec(i);
     if knotVec(i)~=previousKnotVal  % ~= es desigualdad
         elRange(element,:)=[previousKnotVal currentKnotVal]; % intervalo que ocupa el elemento en el espacio parametrico
@@ -117,8 +116,3 @@ for e=1:ne
     end
     elConn(e,:)=(elKnotIndices(e,1)-p):elKnotIndices(e,1);
 end
-
-
-
-
-

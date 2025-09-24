@@ -1,6 +1,7 @@
 function OctaveReader(it)
 #it=2
-figure
+%figure
+%h=figure('Position',[100 100 600 400]);  % tamaño de ventana: ancho x alto en pixeles
 if(it==1)
   dataX =  dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\BezierSurf\TestFicheroDatosBezierSurfaceX.txt', ' ');
   dataY =  dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\BezierSurf\TestFicheroDatosBezierSurfaceY.txt', ' ');
@@ -272,9 +273,10 @@ elseif(it==6)
     plot3(dataCtrlX(:,j),dataCtrlY(:,j),dataCtrlZ(:,j), color='r');
   endfor
   elseif(it==16)
-  data1=dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\SolEvals\EjSin_h=80_p=4.txt');
+  data1=dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\SolEvals\EjSin_h=80_p=2.txt');
   data2=dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\SolEvals\EjSin_Analytic_h=80.txt');
-
+  data3=dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\SolEvals\EjSinDers_h=80_p=2.txt');
+  data4=dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\SolEvals\EjSinDers_Analytic_h=80.txt');
   [n1 n2] = size(data1);
   hold on
   for i=1:n1
@@ -285,9 +287,144 @@ elseif(it==6)
     plot(data2(i,:), color='b');
     #pause(0.5)
   endfor
+  hold off               % número de puntos de Gauss
+  [a,b] = deal(0,1);   % intervalo
+  [xq, wq] = gauss_legendre(n2, a, b);
+  wq=wq/2;
+  L2sq = sum( wq .* (data1 - data2).^2 );
+  L2norm= sqrt(L2sq)
+  H1sqs = sum( wq .* (data3 - data4).^2 );
+  H1norm = sqrt(L2sq + H1sqs)
+  normInf = norm(data1 - data2, Inf)
+  elseif(it==17)
+  data1=dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\SolEvals\EjSinNonConst_h=40_p=4.txt');
+  data2=dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\SolEvals\EjSinNonConst_Analytic_h=40.txt');
+  data3=dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\SolEvals\EjSinNonConstDers_h=40_p=4.txt');
+  data4=dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\SolEvals\EjSinNonConstDers_Analytic_h=40.txt');
+  [n1 n2] = size(data1);
+  hold on
+  for i=1:n1
+    plot(data1(i,:), color='r');
+    #pause(0.5)
+  endfor
+  for i=1:n1
+    plot(data2(i,:), color='b');
+    #pause(0.5)
+  endfor
+  figure
+  hold on
+    for i=1:n1
+    plot(data3(i,:), color='g');
+    #pause(0.5)
+  endfor
+  for i=1:n1
+    plot(data4(i,:), color='y');
+    #pause(0.5)
+  endfor
+  hold off               % número de puntos de Gauss
+  [a,b] = deal(0,1);   % intervalo
+  [xq, wq] = gauss_legendre(n2, a, b);
+  xq = (xq + 1) / 2
+  wq=wq/2;
+  L2sq = sum( wq .* (data1 - data2).^2 );
+  L2norm= sqrt(L2sq)
+  H1sqs = sum( wq .* (data3 - data4).^2 );
+  H1norm = sqrt(L2sq + H1sqs)
+  normInf = norm(data1 - data2, Inf)
+  elseif(it==18)
+  %% --- Cargar y preparar datos ---
+  data1 = dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\SolEvals\EjSinNonConst_h=32_p=4_test1.txt');
+  data2 = dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\SolEvals\EjSinNonConst_Analytic_test1.txt');
+  data3 = dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\SolEvals\EjSinNonConstDers_h=32_p=4_test1.txt');
+  data4 = dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\SolEvals\EjSinNonConstDers_Analytic_test1.txt');
+
+  Length = 1;
+  data1 = data1 / (Length*Length);
+  data3 = data3 / Length;
+
+  [n1, n2] = size(data1);
+
+  [a,b] = deal(0,1);  % intervalo
+  [xq, wq] = gauss_legendre(n2, a, b);
+  wq = wq / 2;
+
+  %% --- Figura 1: Solución ---
+  h1 = figure('Position',[100 100 800 600]);
+  hold on
+  for i=1:n1
+      plot(xq, data1(i,:), 'r');
+  endfor
+  for i=1:n1
+      plot(xq, data2(i,:), 'b');
+  endfor
+  legend({'$u_{\text{num}}$','$u_{\text{ana}}$'}, 'Interpreter','latex','FontSize',30);
+  title('Solución', 'FontSize', 30, 'Interpreter', 'tex');
+  xlabel('x', 'FontSize', 30, 'Interpreter', 'latex');
+  ylabel('u(x)', 'FontSize', 30, 'Interpreter', 'latex');
+
+  % --- Ajustar márgenes tight para SVG ---
+  set(gca,'LooseInset',get(gca,'TightInset'));
+  % Exportar en SVG
+  print(h1,'ej1_p4_h32_sol.svg','-dsvg');
+
   hold off
-  diff = data1 - data2;       % diferencia elemento a elemento
-  normL2 = norm(diff, 2)
-  normInf = norm(diff, Inf)
+
+  %% --- Figura 2: Derivada ---
+  h2 = figure('Position',[100 100 800 600]);
+  hold on
+  for i=1:n1
+      plot(xq, data3(i,:), 'g');
+  endfor
+  for i=1:n1
+      plot(xq, data4(i,:), 'y');
+  endfor
+  legend({'$u^{\prime}_{\text{num}}$','$u^{\prime}_{\text{ana}}$'}, 'Interpreter','latex','FontSize',30);
+  title('Derivada', 'FontSize', 30, 'Interpreter', 'tex');
+  xlabel('x', 'FontSize', 30, 'Interpreter', 'latex');
+  ylabel('$u^{\prime}(x)$', 'FontSize', 30, 'Interpreter', 'latex');
+
+  set(gca,'LooseInset',get(gca,'TightInset'));
+  print(h2,'ej1_p4_h32_ders.svg','-dsvg');
+  hold off
+
+  %% --- Figura 3: Curva coloreada ---
+  %curva   = load('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\Curvas\CurvaEjPruebaFEM2.txt');
+  %valores = data1;
+
+  %x = curva(1,:);
+  %y = curva(2,:);
+  %z = curva(3,:);
+  %h3 = figure('Position',[100 100 800 600]);
+  %scatter3(x, y,z, 60, valores, 'filled');
+  %colormap(jet);
+  %colorbar;
+  %axis equal;
+  %grid on;
+
+  %xlabel('x', 'FontSize',14);
+  %ylabel('y', 'FontSize',14);
+  %zlabel('z', 'FontSize',14);
+
+ % Ajuste del título para que no se corte (Octave)
+  %t = title('Curva en $R^3$', 'Interpreter','latex','FontSize',30);
+  %set(gca,'LooseInset',[0.1 0.1 0.1 0.25]);  % margen superior más grande
+
+  %pos = get(t, 'position');   % vector [x y z]
+  %pos(2) = pos(2) - 0.05;     % subir el título ligeramente
+  %set(t, 'position', pos);
+
+
+  % Exportar a SVG
+  %print(h3,'ej1_p4_h8_curve.svg','-dsvg');
+  data1
+  [a,b] = deal(0,2);   % intervalo
+  [xq, wq] = gauss_legendre(n2, a, b);
+  xq = (xq + 1);
+  wq=wq;
+  L2sq = sum( wq .* (data1 - data2).^2 );
+  L2norm= sqrt(L2sq)
+  H1sqs = sum( wq .* (data3 - data4).^2 );
+  H1norm = sqrt(L2sq + H1sqs)
+  normInf = norm(data1 - data2, Inf)
 endif
 hold off

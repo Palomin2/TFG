@@ -278,7 +278,7 @@ int main(int argc, char *argv[]) {
         double Step=1/(N_Steps);
         auto start = std::chrono::high_resolution_clock::now();
         for(unsigned int i = 0; i<N_Steps+1; i++){
-            eval=CurveDerivsAlg1(Nurbs.size()-2-p,p,Nurbs,matrix, i*Step,dim);
+            eval=CurveDerivsAlg1(Nurbs.size()-2-p,p,Nurbs,matrix, i*Step,dim-1);
             //eval=CurveDerivsAlg1(Nurbs.size()-2-p,p,Nurbs,matrix,i*Step);
             sol[i]=eval;
             //sol[i].PrintMatrix();
@@ -310,7 +310,7 @@ int main(int argc, char *argv[]) {
         double Step=1/(N_Steps);
         auto start = std::chrono::high_resolution_clock::now();
         for(unsigned int i = 0; i<N_Steps+1; i++){
-            eval=CurveDerivsAlg2(Nurbs.size()-2-p,p,Nurbs,matrix, i*Step,dim);
+            eval=CurveDerivsAlg2(Nurbs.size()-2-p,p,Nurbs,matrix, i*Step,dim-1);
             //eval=CurveDerivsAlg1(Nurbs.size()-2-p,p,Nurbs,matrix,i*Step);
             sol[i]=eval;
             //sol[i].PrintMatrix();
@@ -391,10 +391,10 @@ int main(int argc, char *argv[]) {
     }
     else if(stoi(argv[1])==11){ //test RationalBasisFuns
 
-        int p=2;
-        double N_Steps = 100;
-        std::vector<double> KnotVector={0,0,0,0.2,0.4,0.6,0.8,1,1,1};
-        std::vector<double> WeightVector={1,1,0.5,1,1,1,1};
+        int p=4;
+        double N_Steps = 1000;
+        std::vector<double> KnotVector={0.000, 0.000, 0.000, 0.000, 0.000, 0.050, 0.100, 0.150, 0.200, 0.250, 0.300, 0.350, 0.400, 0.450, 0.500, 0.550, 0.600, 0.650, 0.700, 0.750, 0.800, 0.850, 0.900, 0.950, 1.000, 1.000, 1.000, 1.000, 1.000};
+        std::vector<double> WeightVector={1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000,1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000};
         iMatrix<double> sol(KnotVector.size()-p-1,N_Steps+1);
         //std::vector<double> Nurb(NurbsVector.size());
         double Step=1/(N_Steps);
@@ -405,7 +405,8 @@ int main(int argc, char *argv[]) {
             std::vector<double> eval= RationalBasisFuns(span, t , p, KnotVector, WeightVector);
             for(int j = span-p; j<=span;j++){
                 if(j>=0) {
-                    sol(j,i)=eval[j-span+p];                }
+                    sol(j,i)=eval[j-span+p];                
+                }
                 else{
                     std::cout<<"Función base con indices " << j<<" "<< p << " no ha sido dibujada en el punto t="<< t << std::endl;
                     std::cout<<"Valor de la función previa: "<< eval[j-span+p]<< std::endl;
@@ -503,10 +504,10 @@ int main(int argc, char *argv[]) {
             WeightedCtrlPts.SetRow(i,NewCtrlPts.GetRow(i));
         }
         WeightedCtrlPts.PrintMatrix();
-        iMatrix<double> Allders= CurveDerivsAlg1(KnotVector.size()-p-2, p, KnotVector, NewCtrlPts, t, 2);
-        iMatrix<double> Aders = CurveDerivsAlg1(KnotVector.size()-p-2, p, KnotVector, WeightedCtrlPts, t, 2);
+        iMatrix<double> Allders= CurveDerivsAlg1(KnotVector.size()-p-2, p, KnotVector, NewCtrlPts, t, 1);
+        iMatrix<double> Aders = CurveDerivsAlg1(KnotVector.size()-p-2, p, KnotVector, WeightedCtrlPts, t, 1);
         //std::cout << "p " << p<< " d " << 2 << std::endl;
-        iMatrix<double> wders = CurveDerivsAlg1(KnotVector.size()-p-2, p, KnotVector, WeightsMat, t, 2);
+        iMatrix<double> wders = CurveDerivsAlg1(KnotVector.size()-p-2, p, KnotVector, WeightsMat, t, 1);
         //std::cout << "p " << p<< " d " << 2 << std::endl;
         std::cout<<"----------Allders----------"<<std::endl;
         Allders.PrintMatrix();
@@ -517,7 +518,7 @@ int main(int argc, char *argv[]) {
         std::cout<<"-----------CW---------------"<<std::endl;
 
 
-        iMatrix<double> CW= RatCurveDerivs(Aders, wders, 2);
+        iMatrix<double> CW= RatCurveDerivs(Aders, wders, 1);
         CW.PrintMatrix();
 
 
@@ -1140,18 +1141,21 @@ int main(int argc, char *argv[]) {
         std::cout<<"fin 24"<<endl;
     }
 
-    if(stoi(argv[1])==25){//test subMatrix1D
-
+    if(stoi(argv[1])==25){//test 1D problems (Unoptimized legacy functions)
+        /*
         bool PrintMatixes=false;
         bool PrintIntermediateValues=false;
+
         
         int p=4;
-        double nElements = 80;
+        double nElements = 40;
         //variables que no cambian en cada ejecución del bucle o que se declaran fuera para ir actualizandolas
         std::cout<< "----------------CtrlPts--------------" << std::endl;
         iMatrix<double> CtrlPts = ReadDataFile_Matrix("C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/CtrlPts/EjPruebaFEM.txt");        
         CtrlPts.PrintMatrix();
         std::vector<double> KnotVector={0,0,0,0,0,1,1,1,1,1};
+        double lower_limit=KnotVector[0];
+        double upper_limit=KnotVector[KnotVector.size()-1];
         std::vector<double> Weights={1,1,1,1,1};
         std::cout<< "----------WeightedCtrlPts--------------" << std::endl;
         iMatrix WeightedCtrlPts=WeightCtrlPts(CtrlPts,Weights);
@@ -1181,6 +1185,11 @@ int main(int argc, char *argv[]) {
             return sin(pi*x);
         };
 
+        auto analyticSolDers = [](double x){
+            double pi=3.141592653589793;
+            return pi*cos(pi*x);
+        };
+
         n = KnotVector.size()-p-2;
 
         std::cout<< "---------------KnotVectorNew-----------------" << std::endl;
@@ -1189,6 +1198,12 @@ int main(int argc, char *argv[]) {
         }
         std::cout << std::endl;
         std::cout << "n value:" << n << std::endl;
+
+        Weights=NewCtrlPts.GetRow(NewCtrlPts.GetNumRows()-1);
+        std::cout<< "---------------Weights-----------------" << std::endl;
+        for(unsigned int i=0; i<Weights.size(); i++){
+            std::cout << Weights[i] << ", ";
+        }
         
         int dim=NewCtrlPts.GetNumRows()-1;
         int numElements= NewCtrlPts.GetNumCols();
@@ -1210,8 +1225,8 @@ int main(int argc, char *argv[]) {
         Eigen::VectorXd nodes, weights;
         legendre_pol(nEvals, nodes, weights);
             
-            std::cout << "Nodos (raices):\n" << nodes.transpose() << "\n";
-            std::cout << "Pesos:\n" << weights.transpose() << "\n"; 
+        std::cout << "Nodos (raices):\n" << nodes.transpose() << "\n";
+        std::cout << "Pesos:\n" << weights.transpose() << "\n"; 
         typedef Eigen::Triplet<double> T;
         std::vector<Eigen::Triplet<double>> tripletList;
 
@@ -1315,24 +1330,26 @@ int main(int argc, char *argv[]) {
        
         //Compute of the Inverse jacobians for boundary conditions on dirhclet/Robin conditions
         iMatrix<double> Aders, wders;
-        iMatrix<double> Allders0 = CurveDerivsAlg1(n, p, KnotVector, NewCtrlPts, 0, 2);
+        iMatrix<double> Allders0 = CurveDerivsAlg1(n, p, KnotVector, NewCtrlPts, 0, 1);
         int auxInt=Allders0.GetNumCols()-1;
         Aders = Allders0.GetSubMat(0,1,0, auxInt-1);
         wders = Allders0.GetSubMat(0,1,auxInt, auxInt);
-        iMatrix<double> AuxMat2 = RatCurveDerivs(Aders, wders, 2);
+        iMatrix<double> AuxMat2 = RatCurveDerivs(Aders, wders, 1);
         std::vector<double> AuxVec= AuxMat2.GetRow(1);
         double JacobianEvals0=0;
         for(unsigned int i=0; i< AuxVec.size(); i++){
             JacobianEvals0+= AuxVec[i]*AuxVec[i];
         }
+
+        
         double InverseJacobianEvals0=1/JacobianEvals0;
 
 
-        iMatrix<double> Allders1 = CurveDerivsAlg1(n, p, KnotVector, NewCtrlPts, 1, 2);
+        iMatrix<double> Allders1 = CurveDerivsAlg1(n, p, KnotVector, NewCtrlPts, 1, 1);
         Aders = Allders1.GetSubMat(0,1,0, auxInt-1);
         wders = Allders1.GetSubMat(0,1,auxInt, auxInt);
-        iMatrix<double> AuxMat2 = RatCurveDerivs(Aders, wders, 2);
-        std::vector<double> AuxVec= AuxMat2.GetRow(1);
+        AuxMat2 = RatCurveDerivs(Aders, wders, 1);
+        AuxVec= AuxMat2.GetRow(1);
         double JacobianEvals1=0;
         for(unsigned int i=0; i< AuxVec.size(); i++){
             JacobianEvals1+= AuxVec[i]*AuxVec[i];
@@ -1389,11 +1406,15 @@ int main(int argc, char *argv[]) {
         std::cout << std::endl;
 
 
-        std::string Text= "C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/SolEvals/EjSin_h=" + to_string(static_cast<int>(nElements)) +"_p="+ to_string(p)+".txt";
-        writeFunction(u, KnotVector, NewCtrlPts.GetRow(2), n, p, 0, 1, Text);
-        Text= "C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/SolEvals/EjSin_Analytic_h=" + to_string(static_cast<int>(nElements)) +".txt";
-        writeFunction(analyticSol, 0, 1, nElements, NewCtrlPts, KnotVector, n, p, Text);
-
+        std::string Text= "C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/SolEvals/EjSinNonConst_h=" + to_string(static_cast<int>(nElements)) +"_p="+ to_string(p)+".txt";
+        writeFunction(u, KnotVector, NewCtrlPts.GetRow(2), n, p, lower_limit, upper_limit, Text);
+        Text= "C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/SolEvals/EjSinNonConstDers_h=" + to_string(static_cast<int>(nElements)) +"_p="+ to_string(p)+".txt";
+        writeFunctionDers(u, KnotVector,NewCtrlPts, NewCtrlPts.GetRow(2), n, p, lower_limit, upper_limit, Text);
+        Text= "C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/SolEvals/EjSinNonConst_Analytic_h=" + to_string(static_cast<int>(nElements)) +".txt";
+        writeFunction(analyticSol, lower_limit, upper_limit, nElements, NewCtrlPts, KnotVector, n, p, Text);
+        Text= "C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/SolEvals/EjSinNonConstDers_Analytic_h=" + to_string(static_cast<int>(nElements)) +".txt";
+        writeFunctionDers(analyticSolDers, lower_limit, upper_limit, nElements, NewCtrlPts, KnotVector, n, p, Text);
+        */
         std::cout<<"fin 25"<<std::endl;
     }
 
@@ -1406,13 +1427,432 @@ int main(int argc, char *argv[]) {
         
         double nElements = 100;
 
-        std::vector<double> vec = createSubIntervals(nElements);
+        std::vector<double> vec = createSubIntervals(nElements, 0,1);
 
         for(unsigned int i=0; i<=nElements; i++){
             std::cout << vec[i] << ", ";
         }
         std::cout<< std::endl;
         std::cout<<"fin 26"<<std::endl;
+    }
+
+    if(stoi(argv[1])==27){//test jacobian/ inverse jacobian
+
+        int p=4;
+        std::cout<< "----------------CtrlPts--------------" << std::endl;
+        iMatrix<double> CtrlPts = ReadDataFile_Matrix("C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/CtrlPts/EjPruebaFEM.txt");        
+        CtrlPts.PrintMatrix();
+        std::vector<double> KnotVector={0,0,0,0,0,1,1,1,1,1};
+        double lower_limit=KnotVector[0];
+        double upper_limit=KnotVector[KnotVector.size()-1];
+        std::vector<double> Weights={1,1,1,1,1};
+        std::cout<< "----------WeightedCtrlPts--------------" << std::endl;
+        iMatrix WeightedCtrlPts=WeightCtrlPts(CtrlPts,Weights);
+        WeightedCtrlPts.PrintMatrix();
+        
+        int n= KnotVector.size()-p-2;
+        std::cout<< "------------------------------" << std::endl;
+        double EvalPoint = 0.4;
+        std::cout << "EvalPoint = " << EvalPoint << std::endl;
+
+        iMatrix<double> Aders, wders;
+        iMatrix<double> Allders = CurveDerivsAlg1(n, p, KnotVector, WeightedCtrlPts, EvalPoint, 2);
+        std::cout<< "----------Allders--------------" << std::endl;
+        Allders.PrintMatrix();
+        //std::cout << "i2" << std::endl;
+        int auxInt=Allders.GetNumCols()-1;
+        std::cout<< "----------Aders--------------" << std::endl;
+        Aders = Allders.GetSubMat(0,1,0, auxInt-1);
+        Aders.PrintMatrix();
+        std::cout<< "----------wders--------------" << std::endl;
+        wders = Allders.GetSubMat(0,1,auxInt, auxInt);
+        wders.PrintMatrix();
+        iMatrix<double> AuxMat2 = RatCurveDerivs(Aders, wders, 1);
+        std::cout<< "----------RatCurveDerivs--------------" << std::endl;
+        AuxMat2.PrintMatrix();
+        std::vector<double> AuxVec= AuxMat2.GetRow(1);
+        double AuxVal=0;
+        for(unsigned int i=0; i< AuxVec.size(); i++){
+            AuxVal+= AuxVec[i]*AuxVec[i];
+        }
+        AuxVal=sqrt(AuxVal);
+        //std::cout << "i4" << std::endl;
+        double JacobianEvals=AuxVal;
+        double InverseJacobianEvals=1/AuxVal;
+
+        std::cout<< "----------CurvePoint--------------" << std::endl;
+        std::vector<double> CurvePoint=CurvePointRational(n,p,KnotVector, WeightedCtrlPts, EvalPoint);
+        for(unsigned int i=0; i<CurvePoint.size(); i++){
+            std::cout << CurvePoint[i] << ", ";
+        }
+        std::cout << std::endl;
+
+        std::cout << "JacobianEval = " <<  std::setprecision(7) << JacobianEvals << std::endl;
+        std::cout << "InverseJacobianEval = " << InverseJacobianEvals << std::endl;
+        std::cout<<"fin 27"<<std::endl;
+    }
+
+    if(stoi(argv[1])==28){//test 1D problems in space
+
+        bool PrintMatixes=true;
+        bool PrintIntermediateValues=true;
+
+        
+        int p=4;
+        double nElements = 32;
+        //variables que no cambian en cada ejecución del bucle o que se declaran fuera para ir actualizandolas
+        std::cout<< "----------------CtrlPts--------------" << std::endl;
+        iMatrix<double> CtrlPts = ReadDataFile_Matrix("C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/CtrlPts/EjPruebaFEM.txt");        
+        CtrlPts.PrintMatrix();
+        std::vector<double> KnotVector={0,0,0,0,0,2,2,2,2,2};
+        double lower_limit=KnotVector[0];
+        double upper_limit=KnotVector[KnotVector.size()-1];
+        std::vector<double> Weights={1,1,1,1,1};
+        std::cout<< "----------WeightedCtrlPts--------------" << std::endl;
+        iMatrix WeightedCtrlPts=WeightCtrlPts(CtrlPts,Weights);
+        WeightedCtrlPts.PrintMatrix();
+        
+        int n= KnotVector.size()-p-2;
+        std::cout<< "---------------KnotVectorOld-----------------" << std::endl;
+        for(unsigned int i=0; i<KnotVector.size(); i++){
+            std::cout << KnotVector[i] << ", ";
+        }
+        std::cout << std::endl;
+        std::cout << "n value:" << n << std::endl;
+        
+        std::vector<double> Insertions=createSubIntervals(nElements, lower_limit, upper_limit);
+        Insertions=removeMatches(Insertions, KnotVector);
+        iMatrix<double> NewCtrlPts=RefineKnotVectCurve(n,p,KnotVector, WeightedCtrlPts, Insertions, Insertions.size()-1);
+        std::cout<< "----------------NewCtrlPtsW--------------" << std::endl;   
+        NewCtrlPts.PrintMatrix();
+        int size = KnotVector.size()-p-1;
+        auto f = [](double x) { 
+            double pi=3.141592653589793;
+            return 10*10*pi*pi*sin(10*pi*x); 
+        };
+
+        auto analyticSol = [](double x){
+            double pi=3.141592653589793;
+            return sin(10*pi*x);
+        };
+
+        auto analyticSolDers = [](double x){
+            double pi=3.141592653589793;
+            return 10*pi*cos(10*pi*x);
+        };
+
+        n = KnotVector.size()-p-2;
+
+
+
+        std::cout<< "---------------KnotVectorNew-----------------" << std::endl;
+        for(unsigned int i=0; i<KnotVector.size(); i++){
+            std::cout << KnotVector[i] << ", ";
+        }
+        double Lenght=IntegrateNormDer(lower_limit,upper_limit, 20, NewCtrlPts, KnotVector, n, p);
+
+        std::cout << std::endl;
+        std::cout << "n value:" << n << std::endl;
+        
+        Weights=NewCtrlPts.GetRow(NewCtrlPts.GetNumRows()-1);
+        std::cout<< "---------------Weights-----------------" << std::endl;
+        for(unsigned int i=0; i<Weights.size(); i++){
+            std::cout << Weights[i] << ", ";
+        }
+        std::cout << std::endl;
+        int dim=NewCtrlPts.GetNumRows()-1;
+        int numElements= NewCtrlPts.GetNumCols();
+        
+        int nEvals=p+1;
+        
+        
+        Eigen::SparseMatrix<double> global(size, size);
+        Eigen::VectorXd LinearForm(size);
+        LinearForm.setZero(); // Inicializa en cero
+        
+        
+        std::cout<< "---------------Intervals-----------------" << std::endl;
+        std::vector<double> Intervals=removeDuplicates(KnotVector);
+        for(unsigned int i=0; i<Intervals.size(); i++){
+            std::cout << Intervals[i] << ", ";
+        }
+        std::cout << std::endl;
+        Eigen::VectorXd nodes, weights;
+        legendre_pol(nEvals, nodes, weights);
+            
+        std::cout << "Nodos (raices):\n" << nodes.transpose() << "\n";
+        std::cout << "Pesos:\n" << weights.transpose() << "\n"; 
+        typedef Eigen::Triplet<double> T;
+        std::vector<Eigen::Triplet<double>> tripletList;
+
+        //iteraciones 
+        auto start = std::chrono::high_resolution_clock::now();
+        for(unsigned int index=0; index<Intervals.size()-1; index++){
+            double lowerLimit=Intervals[index], upperLimit=Intervals[index+1];
+            int span = FindSpan(KnotVector, lowerLimit,p,n);
+            std::vector<int> global_indices(p+1);
+            for(unsigned int w=0; w<=p; w++){
+                global_indices[w]=span-p+w;
+            }
+            if(PrintIntermediateValues){
+
+                std::cout << "global_indices: (";
+                for(unsigned int w=0; w<p; w++){
+                    std::cout <<global_indices[w] << ", ";
+                }
+                std::cout << global_indices[p] << ")" <<std::endl;
+                std::cout << "Evaluation Interval: (" << Intervals[index] << ", " << Intervals[index+1]<< ")" <<std::endl;
+                std::cout<< "--------------------------------------------" << std::endl;
+            }
+            
+            iMatrix<double> BasisFunsEvals;
+            iMatrix<double> DerBasisFunsEvals;
+            std::vector<double> JacobianEvals;
+            std::vector<double> InverseJacobianEvals;
+            std::vector<double> funcEvals;
+            
+            D1_element_eval(n, span,p,nEvals, lowerLimit, upperLimit, KnotVector, Weights, nodes, NewCtrlPts, 
+                            f, BasisFunsEvals, DerBasisFunsEvals, JacobianEvals, InverseJacobianEvals, funcEvals, Lenght);
+            if(PrintIntermediateValues){
+                std::cout<< "-------------BasisFunsEvals----------------" << std::endl;
+                BasisFunsEvals.PrintMatrix();
+                std::cout<< "-------------DerBasisFunsEvals----------------" << std::endl;
+                DerBasisFunsEvals.PrintMatrix();
+                std::cout<< "--------------JacobianEvals----------------" << std::endl;
+                for(unsigned int i=0; i<JacobianEvals.size(); i++){
+                    std::cout << JacobianEvals[i] << ", ";
+                }
+                std::cout << std::endl;
+                std::cout<< "--------------InverseJacobianEvals----------------" << std::endl;
+                for(unsigned int i=0; i<InverseJacobianEvals.size(); i++){
+                    std::cout << InverseJacobianEvals[i] << ", ";
+                }
+                std::cout << std::endl;
+                std::cout<< "--------------funcEvals----------------" << std::endl;
+                for(unsigned int i=0; i<funcEvals.size(); i++){
+                    std::cout << funcEvals[i] << ", ";
+                }
+                std::cout << std::endl;
+                std::cout<< "--------------Element----------------" << std::endl;
+            }
+
+            iMatrix<double> Element=gauss_legendre_cuadrature_integral_bilinealForm(p,lowerLimit,upperLimit,nEvals, DerBasisFunsEvals, InverseJacobianEvals, weights);
+            
+            if(PrintIntermediateValues){
+                Element.PrintMatrix();
+                std::cout<< "-------------------------------------" << std::endl;
+            }
+
+
+            for (int i = 0; i <= p; ++i){
+                for (int j = 0; j <= p; ++j){
+                    tripletList.push_back(T(global_indices[i], global_indices[j], Element(i, j)));
+                } 
+            }
+            
+
+            std::vector<double> LinearElement=gauss_legendre_cuadrature_integral_linealForm(p,lowerLimit, upperLimit, nEvals, BasisFunsEvals, JacobianEvals, funcEvals, weights);
+            
+            if(PrintIntermediateValues){
+                std::cout<< "--------------LinearElement----------------" << std::endl;
+                for(unsigned int i=0; i<LinearElement.size(); i++){
+                    std::cout << LinearElement[i] << ", ";
+                }
+                std::cout << std::endl;
+            }
+            for(unsigned int i=0; i<=p; i++){
+                LinearForm(global_indices[i])+=LinearElement[i];
+            }
+            
+        }
+        
+        global.setFromTriplets(tripletList.begin(), tripletList.end());
+
+        if(PrintMatixes){
+             std::cout<< "--------------GlobalMat----------------" << std::endl;
+            for (int k = 0; k < global.outerSize(); ++k){
+                for (Eigen::SparseMatrix<double>::InnerIterator it(global, k); it; ++it){
+                    std::cout << "(" << it.row() << "," << it.col() << "): " << it.value() << "\n";
+                }
+            }
+            std::cout<<Eigen::MatrixXd(global) <<std::endl;
+            std::cout<< "--------------GlobalLinearForm----------------" << std::endl;
+            for (int k = 0; k < LinearForm.size(); ++k){
+                std::cout << LinearForm[k] << ", ";
+            }
+            std::cout << std::endl;
+        }
+       
+        //Compute of the Inverse jacobians for boundary conditions on dirhclet/Robin conditions
+        iMatrix<double> Aders, wders;
+        iMatrix<double> Allders0 = CurveDerivsAlg1(n, p, KnotVector, NewCtrlPts, 0, 1);
+        int auxInt=Allders0.GetNumCols()-1;
+        Aders = Allders0.GetSubMat(0,1,0, auxInt-1);
+        wders = Allders0.GetSubMat(0,1,auxInt, auxInt);
+        iMatrix<double> AuxMat2 = RatCurveDerivs(Aders, wders, 1);
+        std::vector<double> AuxVec= AuxMat2.GetRow(1);
+        double JacobianEvals0=0;
+        for(unsigned int i=0; i< AuxVec.size(); i++){
+            JacobianEvals0+= AuxVec[i]*AuxVec[i];
+        }
+
+        
+        double InverseJacobianEvals0=1/JacobianEvals0;
+
+
+        iMatrix<double> Allders1 = CurveDerivsAlg1(n, p, KnotVector, NewCtrlPts, 1, 1);
+        Aders = Allders1.GetSubMat(0,1,0, auxInt-1);
+        wders = Allders1.GetSubMat(0,1,auxInt, auxInt);
+        AuxMat2 = RatCurveDerivs(Aders, wders, 1);
+        AuxVec= AuxMat2.GetRow(1);
+        double JacobianEvals1=0;
+        for(unsigned int i=0; i< AuxVec.size(); i++){
+            JacobianEvals1+= AuxVec[i]*AuxVec[i];
+        }
+        double InverseJacobianEvals1=1/JacobianEvals1;
+
+
+
+
+        //apply boundary conditions
+        impose_Dirichlet_Condition(p, size-1, global, LinearForm, true, true);
+        //impose_Newmann_Condition(size-1, LinearForm, true, true);
+        double alpha = 3;
+        double beta= 5;
+        //impose_Robin_Condition(p, size-1, global, LinearForm, alpha, beta, true, false);
+
+        if(PrintMatixes){
+            std::cout<< "--------------GlobalMatPostCond----------------" << std::endl;
+            for (int k = 0; k < global.outerSize(); ++k){
+                for (Eigen::SparseMatrix<double>::InnerIterator it(global, k); it; ++it){
+                    std::cout << setprecision(std::numeric_limits<double>::max_digits10) << "(" << it.row() << "," << it.col() << "): " << it.value() << "\n";
+                }
+            }
+            std::cout<<Eigen::MatrixXd(global) <<std::endl;
+        }
+        
+        if(PrintMatixes){
+            std::cout<< "--------------GlobalLinearFormPostCond----------------" << std::endl;
+            for (int k = 0; k < LinearForm.size(); ++k){
+                std::cout  << setprecision(std::numeric_limits<double>::max_digits10) << LinearForm[k] << ", ";
+            }
+            std::cout << std::endl;
+        }
+        
+
+        Eigen::SparseLU<Eigen::SparseMatrix<double>> solver;
+        solver.compute(global);
+        if(solver.info() != Eigen::Success) {
+            std::cout << "Error 1" << std::endl;
+        }
+
+        Eigen::VectorXd u = solver.solve(LinearForm);
+        if(solver.info() != Eigen::Success) {
+            std::cout << "Error 2" << std::endl;
+        }
+        auto end = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+        std::cout << "Tiempo tomado: " << duration.count() << " nanosegundos\n";
+
+        std::cout<< "--------------Solution----------------" << std::endl;
+        for (int k = 0; k < u.size(); ++k){
+            std::cout << setprecision(std::numeric_limits<double>::max_digits10)<< u[k] << ", ";
+        }
+        std::cout << std::endl;
+
+        //Pre-computations of necessary variables in order to write the functions
+        nEvals=nElements;
+        //nEvals =200;
+        double auxeval1= (upper_limit - lower_limit)/2;
+        double auxeval2= (upper_limit + lower_limit)/2;
+        Eigen::VectorXd NewNodes, NewWeights;
+        legendre_pol(nEvals, NewNodes, NewWeights);
+        std::vector<double> time(nEvals);
+        for(unsigned int i=0; i<nEvals; i++){
+            time[i]=auxeval1*NewNodes(i)+auxeval2;
+        }
+        //std::cout<<"Longitud de la curva= "<< setprecision(std::numeric_limits<double>::max_digits10) <<  Lenght <<std::endl;
+        std::string Text= "C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/SolEvals/EjSinNonConst"; //_h=" + to_string(static_cast<int>(nElements)) +"_p="+ to_string(p)+"_test2.txt"
+        
+        writeNumericFunction(u, KnotVector, Weights, n, p, nEvals, lower_limit, upper_limit, Text, NewNodes, NewWeights, time, nElements);
+        //std::cout<<"Longitud de la curva= "<< setprecision(std::numeric_limits<double>::max_digits10) <<  Lenght <<std::endl;
+        writeAnalyticFunction(analyticSol, analyticSolDers, lower_limit, upper_limit, nEvals, NewCtrlPts, KnotVector, n, p, Text, NewNodes, NewWeights, time, Lenght);
+       
+        /*
+        writeFunction(analyticSol, lower_limit, upper_limit, 50, NewCtrlPts, KnotVector, n, p, Text, Lenght);
+        Text= "C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/SolEvals/EjSinNonConstDers_Analytic_test2.txt";
+        writeFunctionDers(analyticSolDers, lower_limit, upper_limit, 50, NewCtrlPts, KnotVector, n, p, Text, Lenght);
+        */
+        std::cout<<"Longitud de la curva= "<< setprecision(std::numeric_limits<double>::max_digits10) <<  Lenght <<std::endl;
+
+
+        iMatrix<double> sol(dim,nEvals);
+        std::vector<double> eval(dim);
+        //std::cout<< "--------------------------------------------" << std::endl;
+        //iMatrix WeightedCtrlPts=WeightCtrlPts(CtrlPts,Weights);
+        //WeightedCtrlPts.PrintMatrix();
+        for(unsigned int i = 0; i<nEvals; i++){
+            //std::cout << i << std::endl;
+            eval=CurvePointRational(KnotVector.size()-2-p,p,KnotVector,NewCtrlPts,time[i]);
+            //std::cout << eval[0] << "|" << eval[1] << std::endl;
+            sol.SetCol(i,eval);
+        }
+        Write_Curve(sol,"C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/Curvas/CurvaEjPruebaFEM.txt");
+
+        std::cout<<"fin 28"<<std::endl;
+    }
+
+    if(stoi(argv[1])==29){//Fisical to parametric test
+        int p=4;
+        double nElements = 40;
+        //variables que no cambian en cada ejecución del bucle o que se declaran fuera para ir actualizandolas
+        std::cout<< "----------------CtrlPts--------------" << std::endl;
+        iMatrix<double> CtrlPts = ReadDataFile_Matrix("C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/CtrlPts/EjPruebaFEM2.txt");        
+        CtrlPts.PrintMatrix();
+        std::vector<double> KnotVector={0,0,0,0,0,1,1,1,1,1};
+        double lower_limit=KnotVector[0];
+        double upper_limit=KnotVector[KnotVector.size()-1];
+        std::vector<double> Weights={1,1,1,1,1};
+        std::cout<< "----------WeightedCtrlPts--------------" << std::endl;
+        iMatrix WeightedCtrlPts=WeightCtrlPts(CtrlPts,Weights);
+        WeightedCtrlPts.PrintMatrix();
+        
+        int n= KnotVector.size()-p-2;
+        std::cout<< "---------------KnotVectorOld-----------------" << std::endl;
+        for(unsigned int i=0; i<KnotVector.size(); i++){
+            std::cout << KnotVector[i] << ", ";
+        }
+        std::cout << std::endl;
+        std::cout << "n value:" << n << std::endl;
+        
+        std::vector<double> Insertions=createSubIntervals(nElements,0,1);
+        Insertions=removeMatches(Insertions, KnotVector);
+        iMatrix<double> NewCtrlPts=RefineKnotVectCurve(n,p,KnotVector, WeightedCtrlPts, Insertions, Insertions.size()-1);
+        std::cout<< "----------------NewCtrlPtsW--------------" << std::endl;   
+        NewCtrlPts.PrintMatrix();
+        int size = KnotVector.size()-p-1;
+        n= KnotVector.size()-p-2;
+        double evalPoint = 0.1;
+        std::cout << "evalPoint= " << evalPoint << std::endl;
+        double sol = Fisical_to_Parametric(evalPoint, lower_limit, upper_limit, 20, NewCtrlPts, KnotVector, n, p);
+        std::cout << "sol= " << sol <<std::endl;
+        std::vector<double> CurvePoint= CurvePointRational(n,p, KnotVector, NewCtrlPts, evalPoint);
+        std::cout << "CurvePoint= ";
+        for(unsigned int i=0; i<CurvePoint.size(); i++){
+            std::cout << CurvePoint[i] << ", ";
+        }
+        std::cout <<std::endl;
+    }
+    if(stoi(argv[1])==30){//D2 test
+        
+        //Initial definitions of variables
+        int p1= 2;
+        int p2= 2;
+        int h1= 20;
+        int h2= 20;
+        std::vector<double> KnotVector1 = {0,0,0,1,1,1};
+        std::vector<double> KnotVector2 = {0,0,0,1,1,1};
+        iMatrix<double> Weights;
     }
     return 0;
 }
