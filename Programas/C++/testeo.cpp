@@ -1843,16 +1843,596 @@ int main(int argc, char *argv[]) {
         }
         std::cout <<std::endl;
     }
-    if(stoi(argv[1])==30){//D2 test
+    if(stoi(argv[1])==30){//pre-D2 test
         
         //Initial definitions of variables
-        int p1= 2;
-        int p2= 2;
-        int h1= 20;
-        int h2= 20;
-        std::vector<double> KnotVector1 = {0,0,0,1,1,1};
-        std::vector<double> KnotVector2 = {0,0,0,1,1,1};
-        iMatrix<double> Weights;
+        int pY= 4;
+        int pX= 4;
+        int hY= 5;
+        int hX= 7;
+        std::vector<double> KnotVectorY = {0,0,0,0,0,1,1,1,1,1};
+        std::vector<double> KnotVectorX = {0,0,0,0,0,1,1,1,1,1};
+
+        auto analyticSol = [](double x, double y){
+            double pi=3.141592653589793;
+            return sin(pi*x)*sin(pi*y);
+        };
+
+        auto f = [](double x, double y){
+            double pi=3.141592653589793;
+            return 2*pi*pi*sin(pi*x)*sin(pi*y);
+        };
+
+        std::cout<< "---------------KnotVectorY-----------------" << std::endl;
+        for(unsigned int i=0; i<KnotVectorY.size(); i++){
+            std::cout << KnotVectorY[i] << ", ";
+        }
+        std::cout << std::endl;
+
+        std::cout<< "---------------KnotVectorX-----------------" << std::endl;
+        for(unsigned int i=0; i<KnotVectorX.size(); i++){
+            std::cout << KnotVectorX[i] << ", ";
+        }
+        std::cout << std::endl;
+
+        double lower_limitY=KnotVectorY[0];
+        std::cout << "lower_limitY= " << lower_limitY << std::endl;
+        double upper_limitY=KnotVectorY[KnotVectorY.size()-1];
+        std::cout << "upper_limitY= " << upper_limitY << std::endl;
+        double lower_limitX=KnotVectorX[0];
+        std::cout << "lower_limit2= " << lower_limitX << std::endl;
+        double upper_limitX=KnotVectorX[KnotVectorX.size()-1];
+        std::cout << "upper_limit2= " << upper_limitX << std::endl;
+
+        std::vector<double> data={1,2,3,4,5,
+                                  2,3,4,5,6,
+                                  3,4,5,6,7,
+                                  4,5,6,7,8,
+                                  5,6,7,8,9};
+
+        iMatrix<double> Weights(5,5, data.data());
+        std::vector<iMatrix<double>> CtrlPts = ReadDataFile_CtrlPts("C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/CtrlPts/EjSuperficieTriv.txt");
+        
+        std::cout<<"----CtrlPts----" << std::endl;
+        for(unsigned int i=0; i<CtrlPts.size();i++){
+            CtrlPts[i].PrintMatrix();
+            std::cout<<"-------------------" << std::endl;
+        }
+        std::cout<<"---Matriz_Pesos---" << std::endl;
+        Weights.PrintMatrix();
+        std::cout<<"-----CtrlPtsW-----" << std::endl;
+        std::vector<iMatrix<double>> CtrlPtsW=WeightCtrlPtsSurf(CtrlPts,Weights);
+        for(unsigned int i=0; i<CtrlPtsW.size();i++){
+            CtrlPtsW[i].PrintMatrix();
+            std::cout<<"-------------------" << std::endl;
+        }
+
+        double N_Steps_Y = 100;
+        double N_Steps_X = 100;
+
+        double Step_Y=1/N_Steps_Y;
+        double Step_X=1/N_Steps_X;
+
+        std::vector<iMatrix<double>> eval(N_Steps_Y+1);
+        for(unsigned int i=0; i<N_Steps_Y+1;i++){
+            
+            iMatrix<double> auxMatrix(3,N_Steps_X+1);
+            for(unsigned int j=0; j< N_Steps_X+1;j++){
+                
+                std::vector<double> aux = SurfacePointRational(KnotVectorY.size()-2-pY,pY,KnotVectorY,KnotVectorX.size()-2-pX,pX,KnotVectorX,CtrlPtsW,i*Step_Y,j*Step_X);
+                for(unsigned int k=0; k<3;k++){
+                    auxMatrix(k,j)=aux[k];
+            }
+            }
+            eval[i]=auxMatrix;
+        }
+
+        Write_BezierSurface(eval,"C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/Superficies/SuperficieRationalEjSuperficieTriv" );
+        Write_CtrlPts(CtrlPts,"C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/CtrlPts/EjSuperficieTriv");
+
+
+        std::vector<double> InsertionsY=createSubIntervals(hY, lower_limitY, upper_limitY);
+        InsertionsY=removeMatches(InsertionsY, KnotVectorY);
+        std::cout<< "---------------InsertionsY-----------------" << std::endl;
+        for(unsigned int i=0; i<InsertionsY.size(); i++){
+            std::cout << InsertionsY[i] << ", ";
+        }
+        std::cout << std::endl;
+
+        std::vector<double> InsertionsX=createSubIntervals(hX, lower_limitX, upper_limitX);
+        InsertionsX=removeMatches(InsertionsX, KnotVectorX);
+        std::cout<< "---------------InsertionsX-----------------" << std::endl;
+        for(unsigned int i=0; i<InsertionsX.size(); i++){
+            std::cout << InsertionsX[i] << ", ";
+        }
+        std::cout << std::endl;
+
+
+        std::vector<iMatrix<double>> NewCtrlPtsWintermedieate= RefineKnotVectSurface(KnotVectorY.size()-2-pY,pY,KnotVectorY,KnotVectorX.size()-2-pX,pX,KnotVectorX, CtrlPtsW, true, InsertionsY, InsertionsY.size()-1);
+        std::vector<iMatrix<double>> NewCtrlPtsW= RefineKnotVectSurface(KnotVectorY.size()-2-pY,pY,KnotVectorY,KnotVectorX.size()-2-pX,pX,KnotVectorX, NewCtrlPtsWintermedieate, false, InsertionsX, InsertionsX.size()-1);
+        std::cout<<"------NewCtrlPtsW-----" << std::endl;
+        for(unsigned int i=0; i<NewCtrlPtsW.size();i++){
+            NewCtrlPtsW[i].PrintMatrix();
+            std::cout<<"-------------------" << std::endl;
+        }
+
+        NewCtrlPtsWintermedieate.clear();
+        std::cout<<"------NewWeights-----" << std::endl;
+        iMatrix<double> NewWeights(NewCtrlPtsW.size(),NewCtrlPtsW[0].GetNumCols());
+        for(unsigned int i=0; i<NewWeights.GetNumRows(); i++){
+            for(unsigned int j=0; j<NewWeights.GetNumCols(); j++){
+                NewWeights(i,j)=NewCtrlPtsW[i](3,j);
+            }
+        }
+        NewWeights.PrintMatrix();
+
+        std::cout<< "---------------NewKnotVectorY-----------------" << std::endl;
+        for(unsigned int i=0; i<KnotVectorY.size(); i++){
+            std::cout << KnotVectorY[i] << ", ";
+        }
+        std::cout << std::endl;
+
+        std::cout<< "---------------NewKnotVectorX-----------------" << std::endl;
+        for(unsigned int i=0; i<KnotVectorX.size(); i++){
+            std::cout << KnotVectorX[i] << ", ";
+        }
+        std::cout << std::endl;
+
+
+        std::cout<< "---------------Intervals1-----------------" << std::endl;
+        std::vector<double> Intervals1=removeDuplicates(KnotVectorY);
+        for(unsigned int i=0; i<Intervals1.size(); i++){
+            std::cout << Intervals1[i] << ", ";
+        }
+        std::cout << std::endl;
+        std::cout<< "---------------Intervals2-----------------" << std::endl;
+        std::vector<double> Intervals2=removeDuplicates(KnotVectorX);
+        for(unsigned int i=0; i<Intervals2.size(); i++){
+            std::cout << Intervals2[i] << ", ";
+        }
+        std::cout << std::endl;
+
+        std::vector<iMatrix<double>> evalRefinement(N_Steps_Y+1);
+        for(unsigned int i=0; i<N_Steps_Y+1;i++){
+            
+            iMatrix<double> auxMatrix(3,N_Steps_X+1);
+            for(unsigned int j=0; j< N_Steps_X+1;j++){
+                
+                std::vector<double> aux = SurfacePointRational(KnotVectorY.size()-2-pY,pY,KnotVectorY, KnotVectorX.size()-2-pX,pX,KnotVectorX,NewCtrlPtsW,i*Step_Y,j*Step_X);
+                for(unsigned int k=0; k<3;k++){
+                    auxMatrix(k,j)=aux[k];
+            }
+            }
+            evalRefinement[i]=auxMatrix;
+        }
+
+        Write_BezierSurface(evalRefinement,"C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/Superficies/SuperficieRationalEjSuperficieTrivRefinement" );
+        Write_CtrlPts(NewCtrlPtsW,"C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/CtrlPts/EjSuperficieTrivRefinement");
+
+
+        double tY= 0.25;
+        double tX= 0.75;
+        int MaxD=2;
+        iMatrix<std::vector<double>> Allders = SurfaceDerivsAlg1(KnotVectorY.size()-2-pY,pY,KnotVectorY,KnotVectorX.size()-2-pX,pX,KnotVectorX,NewCtrlPtsW, tY, tX, MaxD);
+        std::cout<<"--------Allders------" << std::endl;
+        for(unsigned int i=0; i<=MaxD; i++){
+            for(unsigned int j=0; j<=MaxD; j++){
+                for(unsigned int k=0; k<Allders(0,0).size();k++){
+                    std::cout << Allders(i,j)[k]<< " ";
+                }
+                std::cout<<"|";
+            }
+            std::cout << std::endl;
+        }
+        std::cout<<"--------Aders------" << std::endl;
+        iMatrix<std::vector<double>> Aders(MaxD+1, MaxD+1);
+        iMatrix<double> Wders(MaxD+1, MaxD+1);
+        for(unsigned int i=0; i<=MaxD; i++){
+            for(unsigned int j=0; j<=MaxD; j++){
+                Aders(i,j)= std::vector<double>(Allders(i,j).begin(), Allders(i,j).begin()+3);
+                Wders(i,j)=Allders(i,j)[3];
+                for(unsigned int k=0; k<Aders(0,0).size();k++){
+                    
+                    std::cout << Aders(i,j)[k]<< " ";
+                }
+                std::cout<<"|";
+            }
+            std::cout << std::endl;
+        }
+
+        std::cout<<"--------Wders------" << std::endl;
+        for(unsigned int i=0; i<=MaxD; i++){
+            for(unsigned int j=0; j<=MaxD; j++){ 
+                std::cout << Wders(i,j)<< " ";
+                std::cout<<"|";
+            }
+            std::cout << std::endl;
+        }
+
+
+        /*
+        std::cout<<"------Weights2-----" << std::endl;
+        
+        std::vector<iMatrix<double>> Weights2(Weights.GetNumRows());
+        int dim=1;
+        for(unsigned int i=0; i<CtrlPtsW.size();i++){
+            iMatrix<double> aux(1, CtrlPtsW[0].GetNumCols());
+
+                aux.SetRow(0,CtrlPtsW[i].GetRow(CtrlPtsW[0].GetNumRows()-1));
+                
+            Weights2[i]=aux;
+            Weights2[i].PrintMatrix();
+                    std::cout<<"-----------" << std::endl;
+        }
+        std::cout<<"------Wders-----" << std::endl;
+        iMatrix<std::vector<double>> Wders = SurfaceDerivsAlg1(V1.size()-2-p1,p1,V1,V2.size()-2-p2,p2,V2,Weights2, t1, t2, MaxD);
+        iMatrix<double> WdersAux(MaxD+1,MaxD+1);
+        for(unsigned int i=0; i<=MaxD; i++){
+            for(unsigned int j=0; j<=MaxD; j++){
+                //for(unsigned int k=0; k<Wders(0,0).size();k++){
+                    std::cout << Wders(i,j)[0]<< " ";
+                    WdersAux(i,j)=Wders(i,j)[0];
+               //}
+                std::cout<<"|";
+            }
+            std::cout << std::endl;
+        }
+        WdersAux.PrintMatrix();
+        */
+        std::cout<< "---------------SurfRatDers-----------------" << std::endl;
+
+        iMatrix<std::vector<double>> SurfRatDers= RatSurfaceDerivs(Aders, Wders, MaxD);
+        std::cout<< "numRows: " <<SurfRatDers.GetNumRows()<< ", numCols: "<<SurfRatDers.GetNumCols()<< std::endl;
+        for(unsigned int i=0; i<= MaxD; i++){
+            for(unsigned int j=0; j<= MaxD; j++){
+                for(unsigned int k=0; k<SurfRatDers(0,0).size();k++){
+                    if(i+j<=2){
+                         std::cout<<SurfRatDers(i,j)[k]<<" ";
+                    }
+                    else{
+                        std::cout<<"0 ";
+                    }
+                   
+                }
+                std::cout<<"|";
+            }
+            std::cout<< std::endl;
+        }
+        
+        int spanY=FindSpan(KnotVectorY, tY, pY, KnotVectorY.size()-pY-2);
+        int spanX=FindSpan(KnotVectorX, tX, pX, KnotVectorX.size()-pX-2);
+        std::cout << "spanY= " << spanY << std::endl;
+        std::cout << "spanX= " << spanX << std::endl;
+        
+
+        std::vector<double> WeightsY=NewWeights.GetSubMat(0,NewWeights.GetNumRows()-1, spanY-pY, spanY-pY).GetCol(0);
+        std::vector<double> WeightsX=NewWeights.GetSubMat(spanX-pX, spanX-pX,0,NewWeights.GetNumCols()-1).GetRow(0);
+
+        std::cout<< "---------------WeightsY-----------------" << std::endl;
+        for(unsigned int i=0; i<WeightsY.size(); i++){
+            std::cout << WeightsY[i] << ", ";
+        }
+        std::cout << std::endl;
+
+        std::cout<< "---------------WeightsX-----------------" << std::endl;
+        for(unsigned int i=0; i<WeightsX.size(); i++){
+            std::cout << WeightsX[i] << ", ";
+        }
+        std::cout << std::endl;
+
+        std::vector<double> RatBasisY= RationalBasisFuns(spanY, tY, pY, KnotVectorY, WeightsY);
+        std::vector<double> RatBasisX= RationalBasisFuns(spanX, tX, pX, KnotVectorX, WeightsX);
+
+        std::cout<< "---------------RatBasisY-----------------" << std::endl;
+        for(unsigned int i=0; i<RatBasisY.size(); i++){
+            std::cout << RatBasisY[i] << ", ";
+        }
+        std::cout << std::endl;
+
+        std::cout<< "---------------RatBasisX-----------------" << std::endl;
+        for(unsigned int i=0; i<RatBasisX.size(); i++){
+            std::cout << RatBasisX[i] << ", ";
+        }
+        std::cout << std::endl;
+
+        iMatrix<double> DersBasisY = DerBasisFuns(spanY, tY, pY, 1, KnotVectorY);
+        iMatrix<double> DersBasisX = DerBasisFuns(spanX, tX, pX, 1, KnotVectorX);
+
+        std::cout<< "---------------DersBasisY-----------------" << std::endl;
+        DersBasisY.PrintMatrix();
+        std::cout<< "---------------DersBasisX-----------------" << std::endl;
+        DersBasisX.PrintMatrix();
+
+        iMatrix<double> RationalizedDersBasisY=RationalizeDersBasisFuns(spanY, tY, pY, 1, KnotVectorY, DersBasisY, WeightsY);
+        iMatrix<double> RationalizedDersBasisX=RationalizeDersBasisFuns(spanX, tX, pX, 1, KnotVectorX, DersBasisX, WeightsX);
+
+        std::cout<< "---------------RationalizedDersBasisY-----------------" << std::endl;
+        RationalizedDersBasisY.PrintMatrix();
+        std::cout<< "---------------RationalizedDersBasisX-----------------" << std::endl;
+        RationalizedDersBasisX.PrintMatrix();
+        
+        iMatrix<double> RatDersBasisY = RatDersBasisFuns(spanY, tY, pY, 1, KnotVectorY, WeightsY);
+        iMatrix<double> RatDersBasisX = RatDersBasisFuns(spanX, tX, pX, 1, KnotVectorX, WeightsX);
+        std::cout<< "---------------RatDersBasisY-----------------" << std::endl;
+        RatDersBasisY.PrintMatrix();
+        std::cout<< "---------------RatDersBasisX-----------------" << std::endl;
+        RatDersBasisX.PrintMatrix();
+        
+        std::cout << "fin 30" << std::endl;
+    }
+
+    if(stoi(argv[1])==31){//D2 test
+        
+        bool PrintMatrixes=true;
+        bool ShowValues=false;
+        bool ShowIterations=true;
+
+        //Initial definitions of variables
+        int pY= 4;
+        int pX= 4;
+        int hY= 3;
+        int hX= 4;
+        int nEvalsY=pY+1;
+        int nEvalsX=pX+1;
+        int nElementsY=hY+pY;
+        int nElementsX=hX+pX;
+        int size = nElementsY*nElementsX;
+        Eigen::SparseMatrix<double> global(size, size);
+        Eigen::VectorXd LinearForm(size);
+        std::vector<double> KnotVectorY = {0,0,0,0,0,1,1,1,1,1};
+        std::vector<double> KnotVectorX = {0,0,0,0,0,1,1,1,1,1};
+                
+        double lower_limitY=KnotVectorY[0];
+        double upper_limitY=KnotVectorY[KnotVectorY.size()-1];
+        double lower_limitX=KnotVectorX[0];
+        double upper_limitX=KnotVectorX[KnotVectorX.size()-1];
+
+
+
+        auto analyticSol = [](double x, double y){
+            double pi=3.141592653589793;
+            return sin(pi*x)*sin(pi*y);
+        };
+
+        auto f = [](double x, double y){
+            double pi=3.141592653589793;
+            return 2*pi*pi*sin(pi*x)*sin(pi*y);
+        };
+
+        std::vector<double> data={1,1,1,1,1,
+                                  1,1,1,1,1,
+                                  1,1,1,1,1,
+                                  1,1,1,1,1,
+                                  1,1,1,1,1};
+
+        iMatrix<double> Weights(5,5, data.data());
+        std::vector<iMatrix<double>> CtrlPts = ReadDataFile_CtrlPts("C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/CtrlPts/EjSuperficieTriv.txt");
+        std::vector<iMatrix<double>> CtrlPtsW=WeightCtrlPtsSurf(CtrlPts,Weights);
+        Eigen::VectorXd nodesY, nodesX, weightsY, weightsX;
+        legendre_pol(nEvalsY, nodesY, weightsY);
+        legendre_pol(nEvalsX, nodesX, weightsX);
+        
+
+        if(ShowValues){
+            std::cout<< "---------------KnotVectorY-----------------" << std::endl;
+        for(unsigned int i=0; i<KnotVectorY.size(); i++){
+            std::cout << KnotVectorY[i] << ", ";
+        }
+        std::cout << std::endl;
+
+        std::cout<< "---------------KnotVectorX-----------------" << std::endl;
+        for(unsigned int i=0; i<KnotVectorX.size(); i++){
+            std::cout << KnotVectorX[i] << ", ";
+        }
+        std::cout << std::endl;
+
+        
+        std::cout << "lower_limitY= " << lower_limitY << std::endl;
+        std::cout << "upper_limitY= " << upper_limitY << std::endl;
+        std::cout << "lower_limit2= " << lower_limitX << std::endl;
+        std::cout << "upper_limit2= " << upper_limitX << std::endl;
+
+        std::cout<<"----CtrlPts----" << std::endl;
+        for(unsigned int i=0; i<CtrlPts.size();i++){
+            CtrlPts[i].PrintMatrix();
+            std::cout<<"-------------------" << std::endl;
+        }
+        std::cout<<"---Matriz_Pesos---" << std::endl;
+        Weights.PrintMatrix();
+        std::cout<<"-----CtrlPtsW-----" << std::endl;
+        
+        for(unsigned int i=0; i<CtrlPtsW.size();i++){
+            CtrlPtsW[i].PrintMatrix();
+            std::cout<<"-------------------" << std::endl;
+        }
+        }
+
+        std::vector<double> InsertionsY=createSubIntervals(hY, lower_limitY, upper_limitY);
+        InsertionsY=removeMatches(InsertionsY, KnotVectorY);
+        
+
+        std::vector<double> InsertionsX=createSubIntervals(hX, lower_limitX, upper_limitX);
+        InsertionsX=removeMatches(InsertionsX, KnotVectorX);
+        
+
+
+        std::vector<iMatrix<double>> NewCtrlPtsWintermedieate= RefineKnotVectSurface(KnotVectorY.size()-2-pY,pY,KnotVectorY,KnotVectorX.size()-2-pX,pX,KnotVectorX, CtrlPtsW, true, InsertionsY, InsertionsY.size()-1);
+        std::vector<iMatrix<double>> NewCtrlPtsW= RefineKnotVectSurface(KnotVectorY.size()-2-pY,pY,KnotVectorY,KnotVectorX.size()-2-pX,pX,KnotVectorX, NewCtrlPtsWintermedieate, false, InsertionsX, InsertionsX.size()-1);
+        
+
+        NewCtrlPtsWintermedieate.clear();
+        
+        iMatrix<double> NewWeights(NewCtrlPtsW.size(),NewCtrlPtsW[0].GetNumCols());
+        for(unsigned int i=0; i<NewWeights.GetNumRows(); i++){
+            for(unsigned int j=0; j<NewWeights.GetNumCols(); j++){
+                NewWeights(i,j)=NewCtrlPtsW[i](3,j);
+            }
+        }
+        std::vector<double> IntervalsY=removeDuplicates(KnotVectorY);
+        std::vector<double> IntervalsX=removeDuplicates(KnotVectorX);
+        
+
+
+        
+        
+
+        if(ShowValues){
+
+            std::cout<< "---------------InsertionsY-----------------" << std::endl;
+            for(unsigned int i=0; i<InsertionsY.size(); i++){
+                std::cout << InsertionsY[i] << ", ";
+            }
+            std::cout << std::endl;
+
+            std::cout<< "---------------InsertionsX-----------------" << std::endl;
+            for(unsigned int i=0; i<InsertionsX.size(); i++){
+                std::cout << InsertionsX[i] << ", ";
+            }
+            std::cout << std::endl;
+
+
+            std::cout<<"------NewCtrlPtsW-----" << std::endl;
+            for(unsigned int i=0; i<NewCtrlPtsW.size();i++){
+                NewCtrlPtsW[i].PrintMatrix();
+                std::cout<<"-------------------" << std::endl;
+            }
+
+            std::cout<<"------NewWeights-----" << std::endl;
+            NewWeights.PrintMatrix();
+
+            std::cout<< "---------------NewKnotVectorY-----------------" << std::endl;
+            for(unsigned int i=0; i<KnotVectorY.size(); i++){
+                std::cout << KnotVectorY[i] << ", ";
+            }
+            std::cout << std::endl;
+
+            std::cout<< "---------------NewKnotVectorX-----------------" << std::endl;
+            for(unsigned int i=0; i<KnotVectorX.size(); i++){
+                std::cout << KnotVectorX[i] << ", ";
+            }
+            std::cout << std::endl;
+
+            std::cout<< "---------------IntervalsY-----------------" << std::endl;
+            
+            for(unsigned int i=0; i<IntervalsY.size(); i++){
+                std::cout << IntervalsY[i] << ", ";
+            }
+            std::cout << std::endl;
+
+            std::cout<< "---------------IntervalsX-----------------" << std::endl;
+            
+            for(unsigned int i=0; i<IntervalsX.size(); i++){
+                std::cout << IntervalsX[i] << ", ";
+            }
+            std::cout << std::endl;
+        }
+
+
+        //int nBasisX=NewCtrlPtsW.size();
+        //int nBasisY=NewCtrlPtsW[0].GetNumCols();
+        int nLoc=(pX+1)*(pY+1);
+        std::vector<Eigen::Triplet<double>> tripletList;
+        tripletList.reserve(hX * hY * nLoc * nLoc);
+
+        //Precomputation of BasisFuns and its derivates.
+        std::vector<int> SpanIndexY(IntervalsY.size()-1);
+        std::vector<int> SpanIndexX(IntervalsX.size()-1);
+        
+        std::vector<std::vector<iMatrix<double>>> Basis_and_DersY=PreBasis_and_Ders(pY, 1, KnotVectorY, IntervalsY, nodesY,SpanIndexY);
+        std::vector<std::vector<iMatrix<double>>> Basis_and_DersX=PreBasis_and_Ders(pX, 1, KnotVectorX, IntervalsX, nodesX,SpanIndexX);
+
+        if(ShowValues){
+            std::cout<< "---------------Basis_and_DersY-----------------" << std::endl;
+            for(unsigned int i=0; i< Basis_and_DersY.size(); i++){
+                std::cout<< "-  -  -  -  -  -  -  -  -  -  -  -" << std::endl;
+                for(unsigned int j=0; j< nEvalsY; j++){
+                    Basis_and_DersY[i][j].PrintMatrix();
+                    std::cout<< "-  -  -  -  -  -  -  -  -  -  -  -" << std::endl;
+                }
+                std::cout<< "-+--+--+--+--+--+--+--+--+--+--+-" << std::endl;
+            }
+            std::cout<< "---------------Basis_and_DersX-----------------" << std::endl;
+            for(unsigned int i=0; i< Basis_and_DersX.size(); i++){
+                std::cout<< "-  -  -  -  -  -  -  -  -  -  -  -" << std::endl;
+                for(unsigned int j=0; j< nEvalsX; j++){
+                    Basis_and_DersX[i][j].PrintMatrix();
+                    std::cout<< "-  -  -  -  -  -  -  -  -  -  -  -" << std::endl;
+                }
+                std::cout<< "-+--+--+--+--+--+--+--+--+--+--+-" << std::endl;
+            }
+
+        }
+        //std::unordered_map<int, std::vector<std::pair<double,double>>> spanMapY=BuildSpanMap(IntervalsY, SpanIndexY);
+        //std::unordered_map<int, std::vector<std::pair<double,double>>> spanMapX=BuildSpanMap(IntervalsX, SpanIndexX);
+
+        // Double index matrix for easier and faster assembly
+        std::map<std::pair<int,int>, std::map<std::pair<int,int>, double>> K_e;
+
+        // Assembly of the matrix
+        for (unsigned int i = 0; i < hX; i++) {
+            for (unsigned int j = 0; j < hY; j++) {
+                if (ShowIterations) {
+                    std::cout<<"--------Active Intervals---------"<< std::endl;
+                    std::cout<< "IntervalX: (" << IntervalsX[i] << " " << IntervalsX[i+1]<<")"<< std::endl;
+                    std::cout<< "IntervalY: (" << IntervalsY[j] << " " << IntervalsY[j+1]<<")"<< std::endl;
+                    std::cout<< "SpanIndexX: (" << SpanIndexX[i] <<")"<< std::endl;
+                    std::cout<< "SpanIndexY: (" << SpanIndexY[j] <<")"<< std::endl;
+                }
+
+                int spanU = SpanIndexX[i];
+                int spanV = SpanIndexY[j];
+                //Emulation of computations of the matrix
+                // Inicializamos todos los elementos a 1
+                for(int a = 0; a <= pX; ++a){
+                    for(int b = 0; b <= pY; ++b){
+                        std::pair<int,int> rowIndex(a,b);
+                        for(int c = 0; c <= pX; ++c){
+                            for(int d = 0; d <= pY; ++d){
+                                std::pair<int,int> colIndex(c,d);
+                                K_e[rowIndex][colIndex] = 1.0;
+                            }
+                        }
+                    }
+                }
+
+                // Rellenar triplets en matriz global
+                for(int a = 0; a <= pX; ++a){
+                    for(int b = 0; b <= pY; ++b){
+                        int i_local = a*(pY+1) + b; 
+                        int I_global = (spanU - pX + a) + (spanV - pY + b)*nElementsX;
+                        //std::cout<< "---------------------------"<< std::endl;
+                        //std::cout << "I_global= " << I_global << std::endl;
+
+                        for(int c = 0; c <= pX; ++c){
+                            for(int d = 0; d <= pY; ++d){
+                                
+                                int j_local = c*(pY+1) + d; 
+                                int J_global = (spanU - pX + c) + (spanV - pY + d)*nElementsX;
+                                
+                                //std::cout << "J_global= " << J_global << std::endl;
+                                double val = K_e[{a,b}][{c,d}];
+                                if(val != 0.0){
+                                    tripletList.push_back(Eigen::Triplet<double>(I_global, J_global, val));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        global.setFromTriplets(tripletList.begin(), tripletList.end());
+
+        if(PrintMatrixes){
+            std::cout<< "--------------GlobalMatPostCond----------------" << std::endl;
+            for (int k = 0; k < global.outerSize(); ++k){
+                for (Eigen::SparseMatrix<double>::InnerIterator it(global, k); it; ++it){
+                    //std::cout << "(" << it.row() << "," << it.col() << "): " << it.value() << "\n";
+                }
+            }
+            std::cout<<Eigen::MatrixXd(global) <<std::endl;
+        }
+
+        std::cout << "fin 31" << std::endl;
     }
     return 0;
 }

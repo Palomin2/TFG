@@ -3,6 +3,8 @@
  *DATE: MARCH 2025
  *******************************************************************************/
 #include <iostream>
+#include <unordered_map>
+#include <utility>
 #include <cmath>
 #include <iomanip>
 #include <vector>
@@ -245,6 +247,12 @@ std::vector<double> RationalBasisFuns(int i, double t, int p,const std::vector<d
 iMatrix<double> RatDersBasisFuns(int i, double t, int p, int k, const std::vector<double> &KnotVector,const std::vector<double> &WeightVector);
 
 /*
+*Input: i span index, t eval point, k derivate degree, p polinomial degree and KnotVector, iMatrix of the derivates of the non-rational basis funs and weights vector
+*Output: vector of rational basis funcs
+*/
+iMatrix<double> RationalizeDersBasisFuns(int i, double t, int p, int k,  const std::vector<double> &KnotVector,const iMatrix<double> &ders , const std::vector<double> &WeightVector);
+
+/*
 *Input: Aders: derivates of the CtrlPtsWeighted using CurvDersAlg1 evaluated at some t, wders: same as Aders but with the weighted vector, maximum degree of the derivate
 *              -Aders = CurveDerivsAlgi(n, p,KnotVector, WeightedCtrlPts, t, d);
 *              -wders = CurveDerivsAlgi(n, p,KnotVector, WeightVector, t, d);  
@@ -429,6 +437,7 @@ void writeFunctionDers(Eigen::VectorXd funEvals,const std::vector<double> &KnotV
 void writeFunctionDers(std::function<double(double)> f, double lowerLimit, double upperLimit, double nEvals,const iMatrix<double> &CtrlPtsW,const std::vector<double> &KnotVector,
                     int n, int p, std::string name, double Lenght=1.0);
 */
+
 /*
 *Input: lowerLimit of integration, upperLimit of integration, number of subintervals for the quadrature, CtrlPtsW, Knotvector, n, p
 *Output: numerical value of the integral between lowerLimit and upperLimit of the norm of the derivate of the curve
@@ -443,4 +452,15 @@ inline double Fisical_to_Parametric(double e, double lowerLimit, double Lenght, 
         return IntegrateNormDer(lowerLimit,e,nEvals, CtrlPtsW, KnotVector, n, p)/Lenght;
 }
 
+/*
+*Input: i span index, p polynomial degree, k maximum derivate order, KnotVector, Intervals, nodes and weights of the gauss-legendre cuadrature, vector of storage with spanIndex(memory has to be reserved before execution).
+*Output: vector that each element is a vector that evaluates the basis functions in each of the corresponding gauss-legendre points of each interval, modification of the vector spanIndex.
+*/ 
+std::vector<std::vector<iMatrix<double>>> PreBasis_and_Ders(int p, int k, std::vector<double> KnotVector, std::vector<double> Intervals,Eigen::VectorXd nodes, std::vector<int>& spanIndex);
+
+/*
+*Input: vector of Intervals, and vector of the correlated indexes for each interval
+*Output: unordered map such that given a span index returns its corresponding interval.
+*/ 
+std::unordered_map<int, std::vector<std::pair<double,double>>> BuildSpanMap(const std::vector<double>& Intervals, const std::vector<int>& spanIndices);
 #endif

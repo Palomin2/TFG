@@ -335,7 +335,7 @@ iMatrix<double> AllBasisFuns(int i, double t, int p,const std::vector<double> &K
 
 /******************************************************************************* */
 iMatrix<double> DerBasisFuns(int span, double t, int p, int k,const std::vector<double> &KnotVector){
-    iMatrix<double> ders(p+1,p+1);
+    iMatrix<double> ders(k+1,p+1);
     iMatrix<double> ndu(p+1,p+1);
     double temp,saved;
     ndu(0,0)=1.0f;
@@ -786,6 +786,37 @@ std::vector<double> RationalBasisFuns(int i, double t, int p,const std::vector<d
 iMatrix<double> RatDersBasisFuns(int i, double t, int p, int k,  const std::vector<double> &KnotVector,const std::vector<double> &WeightVector){
     iMatrix<double> R_ders(k+1, p+1);
     iMatrix<double> ders = DerBasisFuns(i, t, p, k ,KnotVector);
+    
+    std::vector<double> Wk(k+1, 0.0);
+    for (int j = 0; j <= k; ++j){
+        for (int iter = 0; iter <= p; iter++){
+            Wk[j] += WeightVector[i-p+iter] * ders(j,iter);
+        }   
+    }
+
+    for (int a = 0; a < p+1; ++a) {
+    R_ders(0, a)= ders(0,a)*WeightVector[i-p+a]/Wk[0]; // (D(0, a) * weights[a]) / Wk[0];
+    for (int j = 1; j <= k; ++j) {
+            double sum = 0.0;
+            for (int m = 1; m <= j; ++m){
+                sum += Binomial(j, m) * Wk[m] * R_ders(j - m, a);
+            }
+            double num = ders(j, a) * WeightVector[i-p+a] - sum;
+            R_ders(j, a)= num / Wk[0];
+                
+        }
+    }
+    
+    return R_ders;
+
+}
+
+/******************************************************************************* */
+
+/******************************************************************************* */
+iMatrix<double> RationalizeDersBasisFuns(int i, double t, int p, int k,  const std::vector<double> &KnotVector,const iMatrix<double> &ders , const std::vector<double> &WeightVector){
+    iMatrix<double> R_ders(k+1, p+1);
+    
     
     std::vector<double> Wk(k+1, 0.0);
     for (int j = 0; j <= k; ++j){
@@ -1848,6 +1879,7 @@ void writeFunctionDers(std::function<double(double)> f, double lowerLimit, doubl
     fichero.close();
 }
 */
+
 /******************************************************************************* */
 
 /******************************************************************************* */
@@ -1890,4 +1922,48 @@ double IntegrateNormDer(double lowerLimit, double upperLimit, int nEvals,const i
 
     return sol*auxeval1;
 }
+
+/******************************************************************************* */
+
+/******************************************************************************* */
+std::vector<std::vector<iMatrix<double>>> PreBasis_and_Ders(int p, int k, std::vector<double> KnotVector, std::vector<double> Intervals,Eigen::VectorXd nodes, std::vector<int>& spanIndex){
+    int nIntervals =Intervals.size()-1;
+    int nEvals=nodes.size(); 
+    int n= KnotVector.size()-p-2;
+    std::vector<std::vector<iMatrix<double>>> sol(nIntervals);
+    for(unsigned int i=0; i< nIntervals; i++){
+        double lower_limit=Intervals[i];
+        double upper_limit=Intervals[i+1];
+        double auxeval1= (upper_limit - lower_limit)/2;
+        double auxeval2= (upper_limit + lower_limit)/2;
+        int span= FindSpan(KnotVector, auxeval2, p, n);
+        spanIndex[i]=span;
+        std::vector<iMatrix<double>> auxVec(nEvals);
+        for(unsigned int j=0; j<nEvals; j++){
+            double EvalPoint = auxeval1*nodes(j)+auxeval2;
+            
+            //std::cout <<"EvalPoint: " << EvalPoint<< std::endl;
+            auxVec[j] = DerBasisFuns(span,EvalPoint, p, k, KnotVector);
+        }
+        sol[i]=auxVec;
+    }
+    return sol;
+}
+
+/******************************************************************************* */
+
+/******************************************************************************* */
+std::unordered_map<int, std::vector<std::pair<double,double>>> BuildSpanMap(const std::vector<double>& Intervals, const std::vector<int>& spanIndices){
+    std::unordered_map<int, std::vector<std::pair<double,double>>> map;
+     size_t nIntervals = spanIndices.size(); // debe ser nodes.size() - 1
+
+    for (size_t i = 0; i < nIntervals; ++i) {
+        int span = spanIndices[i];
+        std::pair<double,double> interval = { Intervals[i], Intervals[i+1] }; // extremos reales
+        map[span].push_back(interval);
+    }
+
+    return map;
+}
+
 
