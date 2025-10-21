@@ -1588,7 +1588,7 @@ std::vector<double> removeMatches(const std::vector<double>& v1,  const std::vec
 
 /******************************************************************************* */
 void D1_element_eval(int n, int i, int p, int nEvals, double lower_limit, double upper_limit,const std::vector<double> &KnotVector,const std::vector<double> &Weights,
-                    const Eigen::VectorXd &nodes,const iMatrix<double> &CtrlPtsW, std::function<double(double)> f,
+                    const Eigen::VectorXd &nodes,const iMatrix<double> &CtrlPtsW, std::function<double(double)> f, double &preEvalPoint, double &cumLenght,
                     iMatrix<double> &BasisFunsEvals, iMatrix<double> &DerBasisFunsEvals,std::vector<double>& JacobianEvals, std::vector<double>& InverseJacobianEvals, std::vector<double>& funcEvals, double Lenght){
     BasisFunsEvals.Resize(p+1,nEvals);                        
     DerBasisFunsEvals.Resize(p+1,nEvals);
@@ -1624,9 +1624,14 @@ void D1_element_eval(int n, int i, int p, int nEvals, double lower_limit, double
         //std::cout << "i4" << std::endl;
         JacobianEvals[k]=AuxVal;
         InverseJacobianEvals[k]=1/AuxVal;
-        //funcEvals[k]=f(EvalPoint); //Case Jacobian is constant at 1
-        funcEvals[k] = f(CurvePointRational(n, p, KnotVector, CtrlPtsW, EvalPoint)[0]); //Case unidimensional curve
-        //funcEvals[k]= f(Fisical_to_Parametric(EvalPoint, 0, Lenght, 50, CtrlPtsW, KnotVector, n, p)); //Generic case (optimization needed)
+        double FisicalP=Fisical_to_Parametric(preEvalPoint, EvalPoint, 0, Lenght, 20, CtrlPtsW, KnotVector, n, p);
+        cumLenght += FisicalP;
+        preEvalPoint=EvalPoint;
+        //std::cout <<std::setprecision(7) << "EvalPoint= " << cumLenght << std::endl; 
+        //funcEvals[k]=f(EvalPoint)/(M_PI *M_PI ); //Case Jacobian is constant at 1
+        //funcEvals[k] = 10*10*M_PI*M_PI*sin(10*M_PI*CurvePointRational(n, p, KnotVector, CtrlPtsW, EvalPoint)[0]);
+        //funcEvals[k] = f(CurvePointRational(n, p, KnotVector, CtrlPtsW, EvalPoint)[0]); //Case unidimensional curve
+        funcEvals[k]= f(cumLenght)/(M_PI*M_PI); //Generic case (optimization needed)
     }
 
 }
@@ -1737,8 +1742,8 @@ void impose_Robin_Condition(int p, int size, Eigen::SparseMatrix<double> &global
 void writeNumericFunction(Eigen::VectorXd funEvals,const std::vector<double> &KnotVector,const std::vector<double> &WeightVector, int n, int p, int nEvals, double lowerLimit, double upperLimit,  std::string name,
                             Eigen::VectorXd nodes, Eigen::VectorXd weights, std::vector<double> time, int nElements){
     std::ofstream fichero1, fichero2;
-    fichero1.open(name+"_h=" + std::to_string(static_cast<int>(nElements)) +"_p="+ std::to_string(p)+"_test1.txt");
-    fichero2.open(name+ "Ders_h=" + std::to_string(static_cast<int>(nElements)) +"_p="+ std::to_string(p)+"_test1.txt");
+    fichero1.open(name+"_h=" + std::to_string(static_cast<int>(nElements)) +"_p="+ std::to_string(p)+"_testCircle.txt");
+    fichero2.open(name+ "Ders_h=" + std::to_string(static_cast<int>(nElements)) +"_p="+ std::to_string(p)+"_testCircle.txt");
     for(unsigned int i=0; i<nEvals; i++){
         int span= FindSpan(KnotVector, time[i], p, n);
         //std::cout << "span: " << span << std::endl;
@@ -1770,8 +1775,12 @@ void writeNumericFunction(Eigen::VectorXd funEvals,const std::vector<double> &Kn
 void writeAnalyticFunction(std::function<double(double)> f,std::function<double(double)> f_Ders, double lowerLimit, double upperLimit, double nEvals,const iMatrix<double> &CtrlPtsW,const std::vector<double> &KnotVector,
                     int n, int p, std::string name,Eigen::VectorXd nodes, Eigen::VectorXd weights, std::vector<double> time, double Lenght){
     std::ofstream fichero1, fichero2;
-    fichero1.open(name + "_Analytic_test1.txt");
-    fichero2.open(name+"Ders_Analytic_test1.txt");
+    fichero1.open(name + "_Analytic_testCircle.txt");
+    fichero2.open(name+"Ders_Analytic_testCircle.txt");
+    double auxeval1= (upperLimit - lowerLimit)/2;
+    double auxeval2= (upperLimit + lowerLimit)/2;
+    double preVal=lowerLimit;
+    double cumLenght=0;
     //Eigen::VectorXd nodes, weights;
     //legendre_pol(nEvals, nodes, weights);
     for(unsigned int i=0; i< nEvals; i++){
@@ -1790,16 +1799,21 @@ void writeAnalyticFunction(std::function<double(double)> f,std::function<double(
             Jacobian+= AuxVec[i]*AuxVec[i];
         }
         Jacobian=sqrt(Jacobian);
-        //std::cout << "tanalytic = " << Fisical_to_Parametric(auxeval1*nodes(i)+auxeval2, 0, Lenght, 20, CtrlPtsW, KnotVector, n, p) << std::endl;
+        double FisicalP=Fisical_to_Parametric(preVal, time[i], 0, Lenght, 20, CtrlPtsW, KnotVector, n, p);
+        cumLenght+=FisicalP;
+        //std::cout << "tanalytic = " << Fisical_to_Parametric(auxeval1*nodes(i)+auxeval2, 0, Lenght, 50, CtrlPtsW, KnotVector, n, p)<< " ,EvalPoint= "<< auxeval1*nodes(i)+auxeval2 << std::endl;
         //double auxval = CurvePointRational(n, p, KnotVector, CtrlPtsW, lowerLimit + i*Step)[0];
         //std::cout << "point is: "<< lowerLimit + (auxeval1*nodes(i)+auxeval2) << std::endl;
         //fichero << f(auxeval1*nodes(i)+auxeval2) << " "; //case Jacobian is constant at value 1
         //fichero << f(CurvePointRational(n, p, KnotVector, CtrlPtsW, auxeval1*nodes(i)+auxeval2)[0]) << " "; //case jacobian is not constant but f only takes 1 dimensional parameters
-        //fichero1 << f(Fisical_to_Parametric(time[i], 0, Lenght, p+2, CtrlPtsW, KnotVector, n, p))<< " "; //optimization needed, not neccesary to commpute the lagranje pol pts in each interation
-        //fichero2 << f_Ders(Fisical_to_Parametric(time[i], 0, Lenght, p+2, CtrlPtsW, KnotVector, n, p))*Jacobian<< " ";
+        fichero1 << f(cumLenght)<< " "; //optimization needed, not neccesary to commpute the lagranje pol pts in each interation
+        fichero2 << f_Ders(cumLenght)*Jacobian<< " ";
+        preVal=time[i];
+        //fichero1 << f(auxeval1*nodes(i)+auxeval2)<< " "; //optimization needed, not neccesary to commpute the lagranje pol pts in each interation
+        //fichero2 << f_Ders(auxeval1*nodes(i)+auxeval2)*Jacobian<< " ";
         //std::cout << CurvePointRational(n, p, KnotVector, CtrlPtsW, time[i])[0] << std::endl;
-        fichero1 << f(CurvePointRational(n, p, KnotVector, CtrlPtsW, time[i])[0]) << " ";
-        fichero2 << f_Ders(CurvePointRational(n, p, KnotVector, CtrlPtsW, time[i])[0])*Jacobian << " ";
+        //fichero1 << f(CurvePointRational(n, p, KnotVector, CtrlPtsW, time[i])[0]) << " ";
+        //fichero2 << f_Ders(CurvePointRational(n, p, KnotVector, CtrlPtsW, time[i])[0])*Jacobian << " ";
     }
 
     fichero1.close();
@@ -1953,6 +1967,20 @@ std::vector<std::vector<iMatrix<double>>> PreBasis_and_Ders(int p, int k, std::v
 /******************************************************************************* */
 
 /******************************************************************************* */
+std::vector<iMatrix<double>> RationalizeDersBasisFunsVec(int span, int nEvals, Eigen::VectorXd nodes, double lower_limit, double upper_limit,int p, int k, int n, std::vector<double> KnotVector,std::vector<iMatrix<double>> Basis_and_DersY,std::vector<double> Weights){
+    std::vector<iMatrix<double>> sol(nEvals);
+    double auxeval1= (upper_limit - lower_limit)/2;
+    double auxeval2= (upper_limit + lower_limit)/2;
+    for(unsigned int iter=0; iter<nEvals; iter++){
+        double EvalPoint = auxeval1*nodes(iter)+auxeval2;
+        sol[iter]=RationalizeDersBasisFuns(span, auxeval1*nodes(iter)+auxeval2, p, k, KnotVector, Basis_and_DersY[iter], Weights);
+    }
+    return sol;
+}
+
+/******************************************************************************* */
+
+/******************************************************************************* */
 std::unordered_map<int, std::vector<std::pair<double,double>>> BuildSpanMap(const std::vector<double>& Intervals, const std::vector<int>& spanIndices){
     std::unordered_map<int, std::vector<std::pair<double,double>>> map;
      size_t nIntervals = spanIndices.size(); // debe ser nodes.size() - 1
@@ -1966,4 +1994,64 @@ std::unordered_map<int, std::vector<std::pair<double,double>>> BuildSpanMap(cons
     return map;
 }
 
+/******************************************************************************* */
+
+/******************************************************************************* */
+iMatrix<iMatrix<double>> RationalizeDersBasisFuns2D(const iMatrix<double> &DersBasisX,const iMatrix<double> &DersBasisY,const iMatrix<double> &activeWeights, unsigned int pX, unsigned int pY) {
+    // Matriz de salida 2x2 de matrices
+    iMatrix<iMatrix<double>> Rationalized(2, 2);
+
+    // Inicializamos las submatrices (pY+1)x(pX+1)
+    for (int i = 0; i < 2; ++i){
+        for (int j = 0; j < 2; ++j){
+            Rationalized(i, j).Resize(pY + 1, pX + 1);
+        }
+    }
+        // Calcular la superficie de pesos y sus derivadas
+    double W = 0.0;
+    double Wx = 0.0;
+    double Wy = 0.0;
+
+    for (unsigned int j = 0; j <= pY; ++j)
+    {
+        for (unsigned int i = 0; i <= pX; ++i)
+        {
+            double w = activeWeights(j, i);
+            double Nx = DersBasisX(0, i);
+            double Ny = DersBasisY(0, j);
+            double Nx_x = DersBasisX(1, i);
+            double Ny_y = DersBasisY(1, j);
+
+            W  += Nx * Ny * w;
+            Wx += Nx_x * Ny * w;
+            Wy += Nx * Ny_y * w;
+        }
+    }
+
+    // Racionalización de funciones base y derivadas
+    for (unsigned int j = 0; j <= pY; ++j)
+    {
+        for (unsigned int i = 0; i <= pX; ++i)
+        {
+            double w = activeWeights(j, i);
+            double Nx = DersBasisX(0, i);
+            double Ny = DersBasisY(0, j);
+            double Nx_x = DersBasisX(1, i);
+            double Ny_y = DersBasisY(1, j);
+
+            double N = Nx * Ny * w;
+
+            // Función base racionalizada
+            Rationalized(0, 0)(j, i) = N / W;
+
+            // Derivada respecto a X
+            Rationalized(1, 0)(j, i) = w * (Nx_x * Ny * W - Nx * Ny * Wx) / (W * W);
+
+            // Derivada respecto a Y
+            Rationalized(0, 1)(j, i) = w * (Nx * Ny_y * W - Nx * Ny * Wy) / (W * W);
+        }
+    }
+
+    return Rationalized;
+}
 

@@ -11,3 +11,14 @@ function [x,w] = gauss_legendre(n, a, b)
   x = 0.5*((b-a)*x + (b+a));
   w = 0.5*(b-a)*w;
 end
+%function [x,w] = gauss_legendre(n,a,b)
+%    beta = 0.5 ./ sqrt(1 - (2*(1:n-1)).^(-2));
+%    T = diag(beta,1) + diag(beta,-1);
+%    [V,D] = eig(T);
+%    x = real(diag(D));           % asegurar que es real
+%    [x,i] = sort(x);             % ordenar
+%    w = 2*(V(1,i)').^2;          % pesos en [-1,1]
+%    % reescalar a [a,b]
+%    x = 0.5*((b-a)*x + (b+a));
+%    w = 0.5*(b-a)*w;
+%end

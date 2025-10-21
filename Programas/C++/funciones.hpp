@@ -2,6 +2,7 @@
  *AUTHOR: Carlos Palomera Oliva
  *DATE: MARCH 2025
  *******************************************************************************/
+#define _USE_MATH_DEFINES
 #include <iostream>
 #include <unordered_map>
 #include <utility>
@@ -365,11 +366,11 @@ std::vector<double> removeMatches(const std::vector<double>& v1,  const std::vec
 
 /*
 *Input: n=the size of the Knot vector-p-2, i span index, t eval point, p polinomial degree, number of points of evaluations in the integral,
-*        KnotVector, upper and lower limits of the integration, weights vector, nodes of the legendre polynomial,  CtrlPtsW the control points weighted, and the function f.
+*        KnotVector, upper and lower limits of the integration, weights vector, nodes of the legendre polynomial,  CtrlPtsW the control points weighted, the function f and the previoues evalPoint.
 *Output: BasisFunsEvals and DerBasisFunsEvals each row will store the evaluation of the value or derivate of the basis fun alongside each evaluation point, same for the JacobianEvals, InverseJacobianEvals and funcEvals.
 */
 void D1_element_eval(int n, int i, int p, int nEvals, double lower_limit, double upper_limit,const std::vector<double> &KnotVector,const std::vector<double> &Weights,
-                     const Eigen::VectorXd &nodes,const iMatrix<double> &CtrlPtsW, std::function<double(double)> f,
+                     const Eigen::VectorXd &nodes,const iMatrix<double> &CtrlPtsW, std::function<double(double)> f, double &preEvalPoint,  double &cumLenght,
                      iMatrix<double> &BasisFunsEvals, iMatrix<double> &DerBasisFunsEvals,std::vector<double>& JacobianEvals, std::vector<double>& InverseJacobianEvals, std::vector<double>& funcEvals, double Lenght=1.0);
 
 /*
@@ -448,8 +449,8 @@ double IntegrateNormDer(double lowerLimit, double upperLimit, int nEvals,const i
 *Input: e fisical parameter, lowerLimit of integration, upperLimit of integration, number of subintervals for the quadrature, CtrlPtsW, Knotvector, n, p
 *Output: numerical value parametric space parameter such that the analytic solution of it its equal to the fisical solution at e
 */ 
-inline double Fisical_to_Parametric(double e, double lowerLimit, double Lenght, int nEvals,const iMatrix<double> &CtrlPtsW,const std::vector<double> &KnotVector, int n, int p){
-        return IntegrateNormDer(lowerLimit,e,nEvals, CtrlPtsW, KnotVector, n, p)/Lenght;
+inline double Fisical_to_Parametric(double t2, double t1, double lowerLimit, double Lenght, int nEvals,const iMatrix<double> &CtrlPtsW,const std::vector<double> &KnotVector, int n, int p){
+        return IntegrateNormDer(t2,t1,nEvals, CtrlPtsW, KnotVector, n, p)/Lenght;
 }
 
 /*
@@ -459,8 +460,22 @@ inline double Fisical_to_Parametric(double e, double lowerLimit, double Lenght, 
 std::vector<std::vector<iMatrix<double>>> PreBasis_and_Ders(int p, int k, std::vector<double> KnotVector, std::vector<double> Intervals,Eigen::VectorXd nodes, std::vector<int>& spanIndex);
 
 /*
+*Input: span index,nEvals number of points of the gauss-legendre cuadrature alongside the corresponding variable, nodes, vector of the Gauss-Legendre cuadrature, lower_limit, upper_limit of the interval, p polynomial degree, k maximum derivate order, KnotVector,
+*       Basis_and_DersY vector of the precomputed Basis and its corresponding derivates, nodes and weights of the gauss-legendre cuadrature and Weights vector of the corresponding weights alongside the corresponding variables.
+*Output: vector that each element is thee evaluations of the basis functions and its derivates up to k-degree in each of the corresponding gauss-legendre points of the interval.
+*/ 
+std::vector<iMatrix<double>> RationalizeDersBasisFunsVec(int span, int nEvals, Eigen::VectorXd nodes, double lower_limit, double upper_limit,int p, int k, int n, std::vector<double> KnotVector,std::vector<iMatrix<double>> Basis_and_DersY,std::vector<double> Weights);
+
+/*
 *Input: vector of Intervals, and vector of the correlated indexes for each interval
 *Output: unordered map such that given a span index returns its corresponding interval.
 */ 
 std::unordered_map<int, std::vector<std::pair<double,double>>> BuildSpanMap(const std::vector<double>& Intervals, const std::vector<int>& spanIndices);
+
+/*
+*Input: vector of Intervals, and vector of the correlated indexes for each interval
+*Output: unordered map such that given a span index returns its corresponding interval.
+*/ 
+iMatrix<iMatrix<double>> RationalizeDersBasisFuns2D(const iMatrix<double> &DersBasisX,const iMatrix<double> &DersBasisY,const iMatrix<double> &activeWeights, unsigned int pX, unsigned int pY);
+
 #endif

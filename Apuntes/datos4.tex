@@ -1,0 +1,164 @@
+\documentclass[12pt]{article}
+\usepackage{graphicx}
+\usepackage{svg}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fancyhdr}
+\usepackage{bm}
+\usepackage{mathtools}
+\usepackage{bbold}
+\usepackage{yhmath} % pour pouvoir obtenir le symbole des ouverts avec une parenthèse
+\usepackage{amsmath}    % les symboles les plus fréquents
+\usepackage{amssymb}    % des symboles
+%deux packages qui étaient dans le truc de Nou
+\usepackage{enumitem} % pour les listes
+\usepackage{hyperref} %hyperliens
+
+\usepackage{theorem}
+\newtheorem{theorem}{Teorema}
+\newtheorem{lemma}{Lema}
+\newtheorem{observation}{Observaci\'on}
+\newtheorem{proof}{Demostraci\'on}
+\newtheorem{proposition}{Proposici\'on}
+\newtheorem{definition}{Definici\'on}
+\newtheorem{corollary}{Corolario}
+\DeclareMathOperator\supp{supp } %pour faire des jolis supports
+
+%il suffira de renommer 3 commandes par celles utilisées pour th, lemme, preuve si on veut changer le style des démonstrations notamment. package amsth + \theoremstyle ?
+
+
+%environnement pour les démo sans compteur et en écriture normale :
+\renewenvironment{proof}{%
+
+\vspace{0.5cm}
+
+  \noindent \textbf{Demostraci\'on :}
+}{%
+
+  ~\hfill{$\Box$}
+}
+
+
+
+
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\subg}{\mathrm{SubG}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\pp}{\mathbb{P}}
+\begin{document}
+\section{Problema en superficie 3D}
+\subsection{Formulación clásica y variacional}
+\subsubsection*{Espacio físico}
+\addcontentsline{toc}{subsubsection}{Espacio físico}
+\medskip
+\textbf{Formulación clásica:\\}
+    Sea $\Omega \subset \mathbb{R}^3$ la superficie definida por NURBS. 
+Buscamos $u : \Omega \to \mathbb{R}$ tal que
+\[
+\begin{cases}
+- \Delta_\Gamma u = f & \text{en } \Omega, \\[6pt]
+u = g & \text{en } \Gamma_D, \quad \text{(condición de Dirichlet)}, \\[6pt]
+\nabla_\Gamma u \cdot n = h & \text{en } \Gamma_N \quad \text{(condición de Neumann)}, \\[6pt]
+\alpha u + \beta \, \nabla_\Gamma u \cdot n = r & \text{en } \Gamma_R 
+\quad \text{(condición de Robin)}.
+\end{cases}
+\]
+
+Aquí $\nabla_\Gamma$ y $\Delta_\Gamma$ denotan respectivamente el gradiente y el laplaciano tangenciales a la superficie.
+
+\medskip
+
+\textbf{Formulación variacional (homogeneizada):}
+
+Definimos los espacios
+\[
+V = \{ v \in H^1(\Omega) \}, 
+\qquad 
+V_0 = \{ v \in H^1(\Omega) : v=0 \ \text{en } \Gamma_D \}.
+\]
+
+Buscamos $u \in V$ con $u=g$ en $\Gamma_D$ tal que
+\[
+a(u,v) = \ell(v) \qquad \forall v \in V_0,
+\]
+donde
+\[
+a(u,v) = \int_\Omega \nabla_\Gamma u \cdot \nabla_\Gamma v \, d\Gamma
+          + \int_{\Gamma_R} \tfrac{\alpha}{\beta}\, u v \, d\Gamma,
+\]
+\[
+\ell(v) = \int_\Omega f \, v \, d\Gamma 
+          + \int_{\Gamma_N} h \, v \, d\Gamma
+          + \int_{\Gamma_R} \tfrac{r}{\beta}\, v \, d\Gamma.
+\]
+
+\subsection{Transformación del espacio físico al paramétrico}
+
+La superficie se describe mediante un mapeo NURBS
+\[
+\mathbf{x}(\xi,\eta) = \sum_{i=1}^{n} R_i(\xi,\eta)\, \mathbf{P}_i,
+\]
+donde $R_i(\xi,\eta)$ son las funciones base NURBS y $\mathbf{P}_i$ los 
+puntos de control.
+
+\medskip
+
+El cambio de variable entre $\Omega$ y $\hat{\Omega}$ se realiza a través del 
+jacobiano superficial
+\[
+d\Gamma = \|\mathbf{x}_\xi \times \mathbf{x}_\eta\| \, d\xi d\eta,
+\]
+donde
+\[
+\mathbf{x}_\xi = \frac{\partial \mathbf{x}}{\partial \xi}, 
+\qquad 
+\mathbf{x}_\eta = \frac{\partial \mathbf{x}}{\partial \eta}.
+\]
+
+\medskip
+
+Así, una integral en el espacio físico se transforma en el espacio paramétrico como
+\[
+\int_{\Omega} f(\mathbf{x}) \, d\Gamma 
+= \int_{\hat{\Omega}} f(\mathbf{x}(\xi,\eta)) \, \|\mathbf{x}_\xi \times \mathbf{x}_\eta\| \, d\xi \, d\eta.
+\]
+
+\medskip
+
+Los gradientes de las funciones base en coordenadas físicas se obtienen mediante
+\[
+\nabla_\Gamma R_i = J (J^T J)^{-1} \, \nabla_{(\xi,\eta)} R_i,
+\]
+donde 
+\[
+J = \begin{bmatrix}
+\mathbf{x}_\xi & \mathbf{x}_\eta
+\end{bmatrix} \in \mathbb{R}^{3\times 2}, 
+\qquad 
+G = J^T J \in \mathbb{R}^{2\times 2}.
+\]
+
+\medskip
+
+En consecuencia, la formulación variacional en el espacio físico queda como
+\[
+a(u,v) = \int_{\hat{\Omega}} (\nabla_{(\xi,\eta)} u)^T \, G^{-1}(\xi,\eta) \, (\nabla_{(\xi,\eta)} v) \; \|\mathbf{x}_\xi \times \mathbf{x}_\eta\| \, d\xi d\eta
+          + \int_{\hat{\Gamma}_R} \frac{\alpha}{\beta}\, u v \; \|J_\Gamma\| \, d\hat s,
+\]
+\[
+\ell(v) = \int_{\hat{\Omega}} f(\mathbf{x}(\xi,\eta))\, v \; \|\mathbf{x}_\xi \times \mathbf{x}_\eta\| \, d\xi d\eta
+          + \int_{\hat{\Gamma}_N} h \, v \; \|J_\Gamma\| \, d\hat s
+          + \int_{\hat{\Gamma}_R} \frac{r}{\beta}\, v \; \|J_\Gamma\| \, d\hat s.
+\]
+
+Aquí \(\hat{\Gamma}_N, \hat{\Gamma}_R\) son las fronteras correspondientes en el espacio paramétrico y
+\(\|J_\Gamma\|\) es el jacobiano tangente que convierte la integral de línea de \(\hat{\Gamma}\) a \(\Gamma\) en el espacio físico.
+
+\end{document}

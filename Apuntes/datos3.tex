@@ -136,13 +136,16 @@ Del mismo modo, los gradientes de las funciones base en coordenadas físicas se 
 \nabla_{\mathbf{x}} R_i = J^{-T} \, \nabla_{(\xi,\eta)} R_i,
 \]
 donde 
-\(
+\[
 \nabla_{(\xi,\eta)} R_i =
 \begin{bmatrix}
 \dfrac{\partial R_i}{\partial \xi} \\[6pt]
 \dfrac{\partial R_i}{\partial \eta}
-\end{bmatrix}.
-\)
+\end{bmatrix},
+\qquad 
+G = J^T J \in \mathbb{R}^{2\times 2}.
+\]
+
 
 \medskip
 
@@ -159,5 +162,107 @@ a(u,v) = \int_{\hat{\Omega}} (\nabla_{(\xi,\eta)} u)^T \, G(\xi,\eta) \, (\nabla
 
 Aquí \(\hat{\Gamma}_N, \hat{\Gamma}_R\) son las fronteras correspondientes en el espacio paramétrico y
 \(\|J_\Gamma\|\) es el jacobiano tangente que convierte la integral de línea de \(\hat{\Gamma}\) a \(\Gamma\) en el espacio físico.
+
+\subsection{Ensamblado de elementos}
+
+Sea el grado polinomial $p$ en la dirección $\xi$ y $q$ en la dirección $\eta$.  
+Si tenemos $n_{\text{el},\xi}$ elementos en la dirección $\xi$ y 
+$n_{\text{el},\eta}$ en la dirección $\eta$, con $n_\xi$ y $n_\eta$ funciones 
+base unidimensionales respectivamente, se cumple:
+
+\[
+n_\xi = n_{\text{el},\xi} + p, 
+\qquad
+n_\eta = n_{\text{el},\eta} + q.
+\]
+
+El número total de funciones base en 2D es
+
+\[
+N = n_\xi \cdot n_\eta,
+\]
+
+por lo que el vector de incógnitas $ \mathbf u_h $ tendrá dimensión $N$.
+
+---
+
+\subsubsection*{Funciones base y gradientes}
+
+Sea el conjunto de funciones base racionales NURBS bi-paramétricas 
+$\{R_A(\xi,\eta)\}_{A=1}^N$.
+
+El gradiente en coordenadas del espacio parametrico se obtiene como
+
+\[
+\nabla_x R_A(\xi,\eta) = J(\xi,\eta)^{-T} \, 
+\nabla R_A(\xi,\eta),
+\]
+
+donde 
+
+\[
+J(\xi,\eta) = \frac{\partial \mathbf F}{\partial(\xi,\eta)}
+\]
+
+es la matriz jacobiana del mapeo geométrico.
+
+---
+
+\subsubsection*{Matriz de rigidez}
+
+Cada entrada de la matriz de rigidez es
+
+\[
+K_{IJ} = \int_\Omega \nabla R_I \cdot \nabla R_J \, d\Omega
+= \int_{\hat\Omega} 
+   \big(\nabla_x R_I(\xi,\eta) \cdot \nabla_x R_J(\xi,\eta)\big) 
+   \, |J(\xi,\eta)| \, d\xi\, d\eta.
+\]
+
+La matriz de rigidez global tiene dimensión
+
+\[
+K \in \mathbb{R}^{N \times N}, 
+\qquad N = n_\xi \cdot n_\eta.
+\]
+
+---
+
+\subsubsection*{Vector de cargas}
+
+El vector de cargas se descompone en parte volumétrica y términos de contorno:
+
+\[
+f_I^\Omega = \int_\Omega f \, R_I \, d\Omega 
+= \int_{\hat\Omega} f(\mathbf F(\xi,\eta)) \, R_I(\xi,\eta) \, 
+  |J(\xi,\eta)| \, d\xi\, d\eta,
+\]
+
+\[
+f_I^{\Gamma_N} = \int_{\Gamma_N} h \, R_I \, d\Gamma
+= \int_{\hat\Gamma_N} h(\mathbf F(\xi,\eta)) \, R_I(\xi,\eta) \, 
+  \|\partial_\tau \mathbf F(\xi,\eta)\| \, d\tau,
+\]
+
+\[
+K_{IJ}^{\Gamma_R} = \int_{\Gamma_R} \tfrac{\alpha}{\beta} R_I R_J \, d\Gamma,
+\qquad
+f_I^{\Gamma_R} = \int_{\Gamma_R} \tfrac{r}{\beta} R_I \, d\Gamma.
+\]
+
+---
+
+\subsubsection*{Sistema lineal final}
+
+\[
+K = K^\Omega + K^{\Gamma_R} \in \mathbb{R}^{N\times N}, 
+\qquad
+f = f^\Omega + f^{\Gamma_N} + f^{\Gamma_R} \in \mathbb{R}^N,
+\]
+
+\[
+K \, \mathbf u = f.
+\]
+
 
 \end{document}

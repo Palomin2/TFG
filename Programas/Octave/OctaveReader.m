@@ -333,9 +333,9 @@ elseif(it==6)
   normInf = norm(data1 - data2, Inf)
   elseif(it==18)
   %% --- Cargar y preparar datos ---
-  data1 = dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\SolEvals\EjSinNonConst_h=32_p=4_test1.txt');
+  data1 = dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\SolEvals\EjSinNonConst_h=16_p=4_test1.txt');
   data2 = dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\SolEvals\EjSinNonConst_Analytic_test1.txt');
-  data3 = dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\SolEvals\EjSinNonConstDers_h=32_p=4_test1.txt');
+  data3 = dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\SolEvals\EjSinNonConstDers_h=16_p=4_test1.txt');
   data4 = dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\SolEvals\EjSinNonConstDers_Analytic_test1.txt');
 
   Length = 1;
@@ -365,7 +365,7 @@ elseif(it==6)
   % --- Ajustar márgenes tight para SVG ---
   set(gca,'LooseInset',get(gca,'TightInset'));
   % Exportar en SVG
-  print(h1,'ej1_p4_h32_sol.svg','-dsvg');
+  print(h1,'ej1_p4_h16_sol.svg','-dsvg');
 
   hold off
 
@@ -384,7 +384,7 @@ elseif(it==6)
   ylabel('$u^{\prime}(x)$', 'FontSize', 30, 'Interpreter', 'latex');
 
   set(gca,'LooseInset',get(gca,'TightInset'));
-  print(h2,'ej1_p4_h32_ders.svg','-dsvg');
+  print(h2,'ej1_p4_h16_ders.svg','-dsvg');
   hold off
 
   %% --- Figura 3: Curva coloreada ---
@@ -426,5 +426,125 @@ elseif(it==6)
   H1sqs = sum( wq .* (data3 - data4).^2 );
   H1norm = sqrt(L2sq + H1sqs)
   normInf = norm(data1 - data2, Inf)
+
+   elseif(it==19)
+   figure
+  dataX =  dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\Superficies\SuperficieRationalEjSuperficieTrivX.txt', ' ');
+  dataY =  dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\Superficies\SuperficieRationalEjSuperficieTrivY.txt', ' ');
+  dataZ =  dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\Superficies\SuperficieRationalEjSuperficieTrivZ.txt', ' ');
+
+  hold on
+  surf(dataX, dataY, dataZ);
+
+  dataCtrlX =  dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\CtrlPts\EjSuperficieTrivX.txt', ' ');
+  dataCtrlY =  dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\CtrlPts\EjSuperficieTrivY.txt', ' ');
+  dataCtrlZ =  dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\CtrlPts\EjSuperficieTrivZ.txt', ' ');
+
+  [n1 n2] = size(dataCtrlX);
+
+  for i=1:n1
+    plot3(dataCtrlX(i,:),dataCtrlY(i,:),dataCtrlZ(i,:), color='r');
+  endfor
+
+  for j=1:n2
+    plot3(dataCtrlX(:,j),dataCtrlY(:,j),dataCtrlZ(:,j), color='r');
+  endfor
+  figure
+  dataX =  dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\Superficies\SuperficieRationalEjSuperficieTrivRefinementX.txt', ' ');
+  dataY =  dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\Superficies\SuperficieRationalEjSuperficieTrivRefinementY.txt', ' ');
+  dataZ =  dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\Superficies\SuperficieRationalEjSuperficieTrivRefinementZ.txt', ' ');
+
+  hold on
+  surf(dataX, dataY, dataZ);
+
+  dataCtrlX =  dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\CtrlPts\EjSuperficieTrivRefinementX.txt', ' ');
+  dataCtrlY =  dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\CtrlPts\EjSuperficieTrivRefinementY.txt', ' ');
+  dataCtrlZ =  dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\CtrlPts\EjSuperficieTrivRefinementZ.txt', ' ');
+
+  [n1 n2] = size(dataCtrlX);
+
+  for i=1:n1
+    plot3(dataCtrlX(i,:),dataCtrlY(i,:),dataCtrlZ(i,:), color='r');
+  endfor
+
+  for j=1:n2
+    plot3(dataCtrlX(:,j),dataCtrlY(:,j),dataCtrlZ(:,j), color='r');
+  endfor
+  elseif (it == 20)
+  %% --- Parámetros configurables ---
+  h_val = 32;    % resolución
+  p_val = 2;       % grado p
+
+  base_path = 'C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\SolEvals\';
+  test_name = 'testCircle';
+
+  %% --- Cargar y preparar datos ---
+  data1 = dlmread([base_path sprintf('EjSinNonConst_h=%d_p=%d_%s.txt', h_val, p_val, test_name)]);
+  data2 = dlmread([base_path sprintf('EjSinNonConst_Analytic_%s.txt', test_name)]);
+  data3 = dlmread([base_path sprintf('EjSinNonConstDers_h=%d_p=%d_%s.txt', h_val, p_val, test_name)]);
+  data4 = dlmread([base_path sprintf('EjSinNonConstDers_Analytic_%s.txt', test_name)]);
+
+  Length = 1;
+  data1 = data1 / (Length * Length);
+  data3 = data3 * pi;
+
+  [n1, n2] = size(data1);
+
+  [a, b] = deal(0, 1);  % intervalo
+  [xq, wq] = gauss_legendre(n2, a, b);
+  %wq = wq / 2;
+
+  %% --- Figura 1: Solución ---
+  h1 = figure('Position', [100 100 800 600]);
+  hold on
+  for i = 1:n1
+      plot(xq, data1(i,:), 'r');
+  endfor
+  for i = 1:n1
+      plot(xq, data2(i,:), 'b');
+  endfor
+  legend({'$u_{\text{num}}$', '$u_{\text{ana}}$'}, 'Interpreter', 'latex', 'FontSize', 30);
+  title('Solución', 'FontSize', 30, 'Interpreter', 'tex');
+  xlabel('x', 'FontSize', 30, 'Interpreter', 'latex');
+  ylabel('u(x)', 'FontSize', 30, 'Interpreter', 'latex');
+
+  set(gca, 'LooseInset', get(gca, 'TightInset'));
+  print(h1, sprintf('ejCircle_p%d_h%d_sol.svg', p_val, h_val), '-dsvg');
+  hold off
+
+  %% --- Figura 2: Derivada ---
+  h2 = figure('Position', [100 100 800 600]);
+  hold on
+  for i = 1:n1
+      plot(xq, data3(i,:), 'g');
+  endfor
+  for i = 1:n1
+      plot(xq, data4(i,:), 'y');
+  endfor
+  legend({'$u^{\prime}_{\text{num}}$', '$u^{\prime}_{\text{ana}}$'}, 'Interpreter', 'latex', 'FontSize', 30);
+  title('Derivada', 'FontSize', 30, 'Interpreter', 'tex');
+  xlabel('x', 'FontSize', 30, 'Interpreter', 'latex');
+  ylabel('$u^{\prime}(x)$', 'FontSize', 30, 'Interpreter', 'latex');
+
+  set(gca, 'LooseInset', get(gca, 'TightInset'));
+  print(h2, sprintf('ejCircle_p%d_h%d_ders.svg', p_val, h_val), '-dsvg');
+  hold off
+
+  %% --- Cálculo de normas ---
+  [a, b] = deal(0, 1);
+  [xq, wq] = gauss_legendre(n2, a, b);
+  %xq = (xq + 1);
+  L2sq = sum(sum((data1 - data2).^2 .* wq));
+  L2norm = sqrt(L2sq)
+  H1sqs = sum(sum((data3 - data4).^2 .* wq));
+  H1norm = sqrt(L2sq + H1sqs)
+  normInf = norm(data1 - data2, Inf)
+  %% --- Test Cuadratura ---
+  %[a,b]=deal(0,2);
+  %[xq,wq]=gauss_legendre(n2,a,b);
+  %I1 = sum(wq);     % debe ser 2
+  %Ix = sum(wq .* xq); % debe ser integral x dx over [0,2] = 2
+  %fprintf('sum(wq)=%.12g (esperado 2), sum(wq.*xq)=%.12g (esperado 2)\n', I1, Ix);
+
 endif
 hold off

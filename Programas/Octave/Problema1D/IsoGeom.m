@@ -96,7 +96,7 @@ for e=1:noElems
       %N = BasisFuns(i+1,Xi,p,knotVec);
       w=0;
       w=sum(BasisFuns(i+1,Xi,p,knotVec).*weights(conn)');
-      N = BasisFuns(i+1,Xi,p,knotVec).*weights(conn)'/(w);
+      N = BasisFuns(i+1,Xi,p,knotVec).*weights(conn)'/(w)
       dNdx = DerBasisFuns(i+1,Xi,p,1,knotVec);
       derw= sum(dNdx(2,:).*weights(conn)');
       dNdxi=((dNdx(2,:).*weights(conn)')*w - derw*(BasisFuns(i+1,Xi,p,knotVec).*weights(conn)'))/w^2;
@@ -121,8 +121,9 @@ for e=1:noElems
       X       = N * controlPts(conn,1:2);
       % u(x) correspondiente al ejemplo de Hughes
 %       bx      = X(1);
-      c=1;
-      bx      = c^2*pi^2*sin(c*pi*X(1));
+      c=10;
+      bx      = c^2*pi^2*sin(c*pi*X(1))
+      bx * N' * J1 * J2 * wt
       f(conn) = f(conn) + bx * N' * J1 * J2 * wt;
     end
 end

@@ -3,8 +3,11 @@
  *DATE: MARCH 2025
  *******************************************************************************/
 #include <iostream>
+#include <stdexcept>
 #include <iomanip>
 #include <vector>
+#include <cmath>
+#include <numeric>
 
 #ifndef IMATRIX_H
 #define IMATRIX_H
@@ -117,7 +120,7 @@ class iMatrix{
             }
         }
 
-        iMatrix<T> inv(n, n, T(0));
+        iMatrix<T> inv(n, n);
         for (int col = 0; col < n; ++col) {
             std::vector<T> b(n, T(0));
             b[piv[col]] = T(1);
@@ -155,85 +158,74 @@ class iMatrix{
     template <class U> friend iMatrix<U> operator* (const U& lhs, const iMatrix<U>& rhs);
     template <class U> friend iMatrix<U> operator* (const iMatrix<U>& lhs, const U& rhs);
 
+	template <class U> friend iMatrix<U> operator* (const std::vector<U>& v1, const std::vector<U>& v2);
+
 	
 
     void PrintMatrix();
     void PrintMatrix(int precision);
+	std::vector<T> Vectorize() const;
 
     bool IsSquare();
+	T Determinant() const;
+
+	// Función estática para calcular el Producto Punto entre dos std::vector<T>.
+	static T dot_product (const std::vector<T>& v1, const std::vector<T>& v2);
+
 	private:
 		int Sub2Ind(int row, int col) const;
     private:
-    T *m_matrixData;
-    int m_nRows, m_nCols, m_nElements;
+    std::vector<T> m_matrixData;
+    int m_nRows, m_nCols;
 };   
 
 
 /* **************************************************************************************************
 CONSTRUCTOR / DESTRUCTOR FUNCTIONS
 /* *************************************************************************************************/
-// The default constructor.
 template <class T>
-iMatrix<T>::iMatrix()
+iMatrix<T>::iMatrix() : m_nRows(1), m_nCols(1)
 {
-  m_nRows = 1;
-  m_nCols = 1;
-  m_nElements = 1;
-  m_matrixData = nullptr;
+  // Inicializamos el vector con 1 elemento (por defecto 0 o T())
+  m_matrixData.resize(1);
 }
 
 // Construct empty matrix (all elements 0)
 template <class T>
-iMatrix<T>::iMatrix(int nRows, int nCols)
+iMatrix<T>::iMatrix(int nRows, int nCols) : m_nRows(nRows), m_nCols(nCols)
 {
-  m_nRows = nRows;
-  m_nCols = nCols;
-  m_nElements = m_nRows * m_nCols;
-  m_matrixData = new T[m_nElements];
-  for (int i = 0; i < m_nElements; i++) {
-	if constexpr (std::is_arithmetic_v<T>) {
-		// Si T es un tipo numérico (int, float, double, etc.)
-		m_matrixData[i] = 0.0f;
+  int nElements = m_nRows * m_nCols;
+  if constexpr (std::is_arithmetic_v<T>) {
+		// Redimensionar e inicializar a 0.0f
+		m_matrixData.resize(nElements, static_cast<T>(0.0f));
 	} else {
-		// Si T es un contenedor (std::vector<float>, etc.)
-		m_matrixData[i] = T(); // Constructor por defecto (vector vacío)
+		// Redimensionar e inicializar con el constructor por defecto T()
+		m_matrixData.resize(nElements); 
 	}
 }
-}
-
 // Construct from const linear array.
 template <class T>
-iMatrix<T>::iMatrix(int nRows, int nCols, const T *inputData)
+iMatrix<T>::iMatrix(int nRows, int nCols, const T *inputData) : m_nRows(nRows), m_nCols(nCols)
 {
-	m_nRows = nRows;
-	m_nCols = nCols;
-	m_nElements = m_nRows * m_nCols;
-	m_matrixData = new T[m_nElements];
-	for (int i=0; i<m_nElements; i++)
-	  m_matrixData[i] = inputData[i];
+	int nElements = m_nRows * m_nCols;
+	// Usamos el constructor de rango de std::vector para la copia eficiente.
+	m_matrixData = std::vector<T>(inputData, inputData + nElements);
 }
 
 // The copy constructor.
 template <class T>
-iMatrix<T>::iMatrix(const iMatrix<T> &inputMatrix)
+iMatrix<T>::iMatrix(const iMatrix<T> &inputMatrix) 
+    : m_nRows(inputMatrix.m_nRows), 
+      m_nCols(inputMatrix.m_nCols), 
+      m_matrixData(inputMatrix.m_matrixData) 
 {
-	m_nRows = inputMatrix.m_nRows;
-	m_nCols = inputMatrix.m_nCols;
-	m_nElements = inputMatrix.m_nElements;
-	
-	m_matrixData = new T[m_nElements];
-	for (int i=0; i<m_nElements; i++)
-		m_matrixData[i] = inputMatrix.m_matrixData[i];
+	// Cuerpo del constructor vacío (RAII).
 }
 
 template <class T>
 iMatrix<T>::~iMatrix()
 {
-	// Destructor.
-	if (m_matrixData)
-		delete[] m_matrixData;
-	
-	m_matrixData = nullptr;
+	// El destructor de std::vector se llama automáticamente (RAII).
 }
 /* **************************************************************************************************
 CONFIGURATION FUNCTIONS
@@ -243,20 +235,16 @@ bool iMatrix<T>::Resize(int numRows, int numCols)
 {
 	m_nRows = numRows;
 	m_nCols = numCols;
-	m_nElements = (m_nRows * m_nCols);
-	delete[] m_matrixData;
-	m_matrixData = new T[m_nElements];
-	if (m_matrixData != nullptr)
-	{
-		for (int i=0; i<m_nElements; i++)
-			m_matrixData[i] = 0.0f;
+	int nElements = (m_nRows * m_nCols);
+	
+	
+	if constexpr (std::is_arithmetic_v<T>) {
+		m_matrixData.resize(nElements, static_cast<T>(0.0f));
+	} else {
+		m_matrixData.resize(nElements); 
+	}
 
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+	return true; 
 }
 template <class T>
 void iMatrix<T>::SetToIdentity()
@@ -335,20 +323,14 @@ bool iMatrix<T>::SetElement(int row, int col, T elementValue)
 
 template <class T>
 bool iMatrix<T>::SetCol(int col, std::vector<T> elements){
-	int linearIndex = Sub2Ind(0, col);
-	int aux =this->GetNumRows();
-	if (linearIndex >= 0){
-		for(unsigned int i=0;i<aux;i++){
-			(*this)(i,col)=elements[i];
-			//this->SetElement(i,col,elements[i]);
-			linearIndex=linearIndex+aux;
-		}
-		return true;
-	}
-	else{
-		return false;
-	}
+    if (col < 0 || col >= m_nCols || static_cast<int>(elements.size()) != m_nRows)
+        return false;
+    for (int i = 0; i < m_nRows; ++i) {
+        m_matrixData[i * m_nCols + col] = elements[i];
+    }
+    return true;
 }
+
 
 template <class T>
 bool iMatrix<T>::SetRow(int row, std::vector<T> elements){
@@ -370,17 +352,12 @@ bool iMatrix<T>::SetRow(int row, std::vector<T> elements){
 
 template <class T>
 std::vector<T> iMatrix<T>::GetCol(int col) const
-{   
-    int linearIndex = Sub2Ind(0, col);
-    std::vector<T> AuxCol;
-    int aux =this->GetNumCols();
-	int maxiter = this->GetNumRows();
-    for(unsigned int i=0; i<maxiter; i++){
-        AuxCol.push_back(m_matrixData[linearIndex]);
-        linearIndex=linearIndex+aux;
+{
+    std::vector<T> result(m_nRows);
+    for (int i = 0; i < m_nRows; ++i) {
+        result[i] = m_matrixData[i * m_nCols + col];
     }
-    return AuxCol;
-
+    return result;
 }
 
 template <class T>
@@ -410,7 +387,7 @@ iMatrix<T> operator+ (const iMatrix<T>& lhs, const iMatrix<T>& rhs)
 {
 	int numRows = lhs.m_nRows;
 	int numCols = lhs.m_nCols;
-	int numElements = numRows * numCols;
+	int numElements = lhs.m_matrixData.size();
 	T *tempResult = new T[numElements];
 	for (int i=0; i<numElements; i++)
 		tempResult[i] = lhs.m_matrixData[i] + rhs.m_matrixData[i];
@@ -426,7 +403,7 @@ iMatrix<T> operator+ (const T& lhs, const iMatrix<T>& rhs)
 {
 	int numRows = rhs.m_nRows;
 	int numCols = rhs.m_nCols;
-	int numElements = numRows * numCols;
+	int numElements = rhs.m_matrixData.size();
 	T *tempResult = new T[numElements];
 	for (int i=0; i<numElements; ++i)
 		tempResult[i] = lhs + rhs.m_matrixData[i];
@@ -442,7 +419,7 @@ iMatrix<T> operator+ (const iMatrix<T>& lhs, const T& rhs)
 {
 	int numRows = lhs.m_nRows;
 	int numCols = lhs.m_nCols;
-	int numElements = numRows * numCols;
+	int numElements = lhs.m_matrixData.size();
 	T *tempResult = new T[numElements];
 	for (int i=0; i<numElements; ++i)
 		tempResult[i] = lhs.m_matrixData[i] + rhs;
@@ -461,7 +438,7 @@ iMatrix<T> operator- (const iMatrix<T>& lhs, const iMatrix<T>& rhs)
 {
 	int numRows = lhs.m_nRows;
 	int numCols = lhs.m_nCols;
-	int numElements = numRows * numCols;
+	int numElements = lhs.m_matrixData.size();
 	T *tempResult = new T[numElements];
 	for (int i=0; i<numElements; i++)
 		tempResult[i] = lhs.m_matrixData[i] - rhs.m_matrixData[i];
@@ -477,7 +454,7 @@ iMatrix<T> operator- (const T& lhs, const iMatrix<T>& rhs)
 {
 	int numRows = rhs.m_nRows;
 	int numCols = rhs.m_nCols;
-	int numElements = numRows * numCols;
+	int numElements = rhs.m_matrixData.size();
 	T *tempResult = new T[numElements];
 	for (int i=0; i<numElements; ++i)
 		tempResult[i] = lhs - rhs.m_matrixData[i];
@@ -493,7 +470,7 @@ iMatrix<T> operator- (const iMatrix<T>& lhs, const T& rhs)
 {
 	int numRows = lhs.m_nRows;
 	int numCols = lhs.m_nCols;
-	int numElements = numRows * numCols;
+	int numElements = lhs.m_matrixData.size();
 	T *tempResult = new T[numElements];
 	for (int i=0; i<numElements; ++i)
 		tempResult[i] = lhs.m_matrixData[i] - rhs;
@@ -509,7 +486,7 @@ iMatrix<T> operator* (const T& lhs, const iMatrix<T>& rhs)
 {
 	int numRows = rhs.m_nRows;
 	int numCols = rhs.m_nCols;
-	int numElements = numRows * numCols;
+	int numElements = rhs.m_matrixData.size();
 	T *tempResult = new T[numElements];
 	for (int i=0; i<numElements; ++i)
 		tempResult[i] = lhs * rhs.m_matrixData[i];
@@ -525,7 +502,7 @@ iMatrix<T> operator* (const iMatrix<T>& lhs, const T& rhs)
 {
 	int numRows = lhs.m_nRows;
 	int numCols = lhs.m_nCols;
-	int numElements = numRows * numCols;
+	int numElements = lhs.m_matrixData.size();
 	T *tempResult = new T[numElements];
 	for (int i=0; i<numElements; ++i)
 		tempResult[i] = lhs.m_matrixData[i] * rhs;
@@ -546,36 +523,34 @@ iMatrix<T> operator* (const iMatrix<T>& lhs, const iMatrix<T>& rhs)
 
 	if (l_numCols == r_numRows)
 	{
-		// This is the standard matrix multiplication condition.
-		// The output will be the same size as the RHS.
+		iMatrix<T> rhs_T(r_numCols, r_numRows);
+		for (int i = 0; i < r_numRows; ++i) {
+			for (int j = 0; j < r_numCols; ++j) {
+				rhs_T(j, i) = rhs(i, j);
+			}
+		}
+
 		T *tempResult = new T[lhs.m_nRows * rhs.m_nCols];
 
-		// Loop through each row of the LHS.
-		for (int lhsRow=0; lhsRow<l_numRows; lhsRow++)
+		for (int lhsRow=0; lhsRow<l_numRows; lhsRow++) 
 		{
-			// Loop through each column on the RHS.
-			for (int rhsCol=0; rhsCol<r_numCols; rhsCol++)
+			for (int rhsCol=0; rhsCol<r_numCols; rhsCol++) 
 			{
 				T elementResult = static_cast<T>(0.0);
-				// Loop through each element of this LHS row.
-				for (int lhsCol=0; lhsCol<l_numCols; lhsCol++)
+				int lhsLinearIndex = (lhsRow * l_numCols); 
+				int rhsTLinearIndex = (rhsCol * r_numRows); 
+				
+				
+				for (int k=0; k<l_numCols; k++) 
 				{
-					// Compute the LHS linear index.
-					int lhsLinearIndex = (lhsRow * l_numCols) + lhsCol;
-
-					// Compute the RHS linear index (based on LHS col).
-					// rhs row number equal to lhs column number.
-					int rhsLinearIndex = (lhsCol * r_numCols) + rhsCol;
-
-					// Perform the calculation on these elements.
-					elementResult += (lhs.m_matrixData[lhsLinearIndex] * rhs.m_matrixData[rhsLinearIndex]);
+					
+					elementResult += (lhs.m_matrixData[lhsLinearIndex + k] * rhs_T.m_matrixData[rhsTLinearIndex + k]);
 				}
-
-				// Store the result.
 				int resultLinearIndex = (lhsRow * r_numCols) + rhsCol;
 				tempResult[resultLinearIndex] = elementResult;
 			}		
 		}
+		
 		iMatrix<T> result(l_numRows, r_numCols, tempResult);
 		delete[] tempResult;
 		return result;
@@ -590,32 +565,37 @@ iMatrix<T> operator* (const iMatrix<T>& lhs, const iMatrix<T>& rhs)
 template <class T>
 iMatrix<T> iMatrix<T>::operator= (const iMatrix<T> &rhs)
 {
-	// Make sure we're not assigning to ourself.
+	
 	if (this != &rhs)
 	{
-		// If the dimensions are the same, we only need to copy the elements,
-		//	there is no need to delete and re-allocate memory.
-		if ((m_nRows == rhs.m_nRows) && (m_nCols == rhs.m_nCols))
-		{
-			for (int i=0; i<m_nElements; ++i)
-				m_matrixData[i] = rhs.m_matrixData[i];
-		}
-		else
-		{
-			m_nRows = rhs.m_nRows;
-			m_nCols = rhs.m_nCols;
-			m_nElements = rhs.m_nElements;
-			
-			if (m_matrixData)
-				delete[] m_matrixData;
-			
-			m_matrixData = new T[m_nElements];
-			for (int i=0; i<m_nElements; i++)
-				m_matrixData[i] = rhs.m_matrixData[i];	
-		}
+		m_nRows = rhs.m_nRows;
+		m_nCols = rhs.m_nCols;
+		m_matrixData = rhs.m_matrixData; 
 	}
 	
 	return *this;
+}
+
+
+template <class T>
+iMatrix<T> operator* (const std::vector<T>& v1, const std::vector<T>& v2)
+{
+    int N = v1.size();
+    int M = v2.size(); 
+    
+    iMatrix<T> result(N, M); 
+    for (int i = 0; i < N; ++i) 
+    {
+        T v1_i = v1[i]; 
+        
+        for (int j = 0; j < M; ++j) 
+        {
+            result(i, j) = v1_i * v2[j]; 
+        }
+    }
+
+    
+    return result;
 }
 
 // A simple function to print a matrix to stdout.
@@ -650,8 +630,96 @@ void iMatrix<T>::PrintMatrix(int precision)
 	}    
 }
 
+// Function to test whether the matrix is square.
+template <class T>
+bool iMatrix<T>::IsSquare()
+{
+	if (m_nCols == m_nRows)
+		return true;
+	else
+		return false;
+}
+
+template <class T>
+T iMatrix<T>::Determinant() const
+{
+    if (!this->IsSquare()){
+        return static_cast<T>(0.0);
+    }
+
+    int N = this->m_nRows;
+    if (N == 1){
+        return (*this)(0, 0); 
+    }
+    iMatrix<T> tempMatrix = *this; 
+
+    T det = static_cast<T>(1.0);
+    int sign = 1;
+
+    for (int k = 0; k < N; ++k){
+        int pivotRow = k;
+        T maxValue = std::abs(tempMatrix(k, k));
+        
+        for (int i = k + 1; i < N; ++i) 
+        {
+            if (std::abs(tempMatrix(i, k)) > maxValue) 
+            {
+                maxValue = std::abs(tempMatrix(i, k));
+                pivotRow = i;
+            }
+        }
+
+        if (pivotRow != k){
+            for (int j = 0; j < N; ++j){
+                std::swap(tempMatrix(k, j), tempMatrix(pivotRow, j)); 
+            }
+
+            sign = -sign; 
+        }
+
+        if (std::abs(tempMatrix(k, k)) < static_cast<T>(1e-9)){
+            return static_cast<T>(0.0); 
+        }
+
+        T pivotValue = tempMatrix(k, k);
+        for (int i = k + 1; i < N; ++i) {
+            T factor = tempMatrix(i, k) / pivotValue;
+            
+            for (int j = k; j < N; ++j){
+                tempMatrix(i, j) -= factor * tempMatrix(k, j);
+            }
+        }
+
+        det *= pivotValue;
+    }
+    return sign * det;
+}
+
+template <class T>
+std::vector<T> iMatrix<T>::Vectorize() const
+{
+    return m_matrixData;
+}
 
 
+template <class T>
+T dot_product (const std::vector<T>& v1, const std::vector<T>& v2)
+{
+    if (v1.size() != v2.size())
+    {
+        throw std::invalid_argument("Error: Los vectores deben tener la misma dimensión para el Producto Punto.");
+    }
+    
+    int N = v1.size();
+    T resultValue = static_cast<T>(0.0);
+    
+    for (int i = 0; i < N; ++i)
+    {
+        resultValue += v1[i] * v2[i];
+    }
+
+    return resultValue;
+}
 /* **************************************************************************************************
 PRIVATE FUNCTIONS
 /* *************************************************************************************************/
@@ -665,14 +733,6 @@ int iMatrix<T>::Sub2Ind(int row, int col) const
 		return -1;
 }
 
-// Function to test whether the matrix is square.
-template <class T>
-bool iMatrix<T>::IsSquare()
-{
-	if (m_nCols == m_nRows)
-		return true;
-	else
-		return false;
-}
+
 
 #endif

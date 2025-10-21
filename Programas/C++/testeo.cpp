@@ -5,21 +5,89 @@
 
 // C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\Programas\C++
 // compilar con avx2 -mavx2
-// g++ testeo.cpp iMatrix.cpp funciones.cpp -o testeo -mavx2
+// g++ testeo.cpp iMatrix.cpp funciones.cpp SparseTensor.cpp -fopenmp -O3 -march=native -o testeo
+#define _USE_MATH_DEFINES
+
 #include"SparseTensor.cpp" 
 #include <iostream>
+#include <omp.h>
 #include <vector>
 #include"iMatrix.cpp"
 #include"funciones.hpp"
 #include <fstream>
 #include <chrono>
 #include <cstdint>
+#include <cmath>
+#include <string>
+#include <sstream>
+#include <iomanip>
+
 using namespace std;
 using std::chrono::high_resolution_clock;
 using std::chrono::duration_cast;
 using std::chrono::duration;
 using std::chrono::milliseconds;
 
+
+// -----------------------------------------------------------------------------
+// Carga un archivo de texto con números separados por espacios en una matriz
+// -----------------------------------------------------------------------------
+std::vector<std::vector<double>> loadMatrix(const std::string &filename) {
+    std::ifstream file(filename);
+    if (!file.is_open()) {
+        std::cerr << "Error al abrir el archivo: " << filename << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
+    std::vector<std::vector<double>> data;
+    std::string line;
+    while (std::getline(file, line)) {
+        std::stringstream ss(line);
+        std::vector<double> row;
+        double value;
+        while (ss >> value) {
+            row.push_back(value);
+        }
+        if (!row.empty()) data.push_back(row);
+    }
+
+    return data;
+}
+
+// -----------------------------------------------------------------------------
+// Genera puntos y pesos de cuadratura de Gauss-Legendre en [a,b]
+// (usamos n = número de columnas del archivo)
+// -----------------------------------------------------------------------------
+void gaussLegendre(int n, double a, double b, std::vector<double> &x, std::vector<double> &w) {
+    x.resize(n);
+    w.resize(n);
+
+    const double EPS = 1e-14;
+    int m = (n + 1) / 2;
+    double xm = 0.5 * (b + a);
+    double xl = 0.5 * (b - a);
+
+    for (int i = 0; i < m; ++i) {
+        double z = std::cos(M_PI * (i + 0.75) / (n + 0.5));
+        double z1, p1, p2, p3, pp;
+        do {
+            p1 = 1.0;
+            p2 = 0.0;
+            for (int j = 0; j < n; ++j) {
+                p3 = p2;
+                p2 = p1;
+                p1 = ((2.0 * j + 1.0) * z * p2 - j * p3) / (j + 1);
+            }
+            pp = n * (z * p1 - p2) / (z * z - 1.0);
+            z1 = z;
+            z = z1 - p1 / pp;
+        } while (std::fabs(z - z1) > EPS);
+        x[i] = xm - xl * z;
+        x[n - 1 - i] = xm + xl * z;
+        w[i] = 2.0 * xl / ((1.0 - z * z) * pp * pp);
+        w[n - 1 - i] = w[i];
+    }
+}
 
 inline uint64_t rdtsc() {
     unsigned int lo, hi;
@@ -1494,22 +1562,22 @@ int main(int argc, char *argv[]) {
 
     if(stoi(argv[1])==28){//test 1D problems in space
 
-        bool PrintMatixes=true;
-        bool PrintIntermediateValues=true;
+        bool PrintMatixes=false;
+        bool PrintIntermediateValues=false;
 
         
-        int p=4;
-        double nElements = 32;
+        int p=2;
+        double nElements = 50000;
         //variables que no cambian en cada ejecución del bucle o que se declaran fuera para ir actualizandolas
         std::cout<< "----------------CtrlPts--------------" << std::endl;
-        iMatrix<double> CtrlPts = ReadDataFile_Matrix("C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/CtrlPts/EjPruebaFEM.txt");        
+        iMatrix<double> CtrlPts = ReadDataFile_Matrix("C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/CtrlPts/EjCirculo.txt");        
         CtrlPts.PrintMatrix();
-        std::vector<double> KnotVector={0,0,0,0,0,2,2,2,2,2};
+        std::vector<double> KnotVector={0,0,0,0.5,0.5,1,1,1};
         double lower_limit=KnotVector[0];
         double upper_limit=KnotVector[KnotVector.size()-1];
-        std::vector<double> Weights={1,1,1,1,1};
+        std::vector<double> Weights={1,sqrt(2)/2,1,sqrt(2)/2,1};
         std::cout<< "----------WeightedCtrlPts--------------" << std::endl;
-        iMatrix WeightedCtrlPts=WeightCtrlPts(CtrlPts,Weights);
+        iMatrix<double> WeightedCtrlPts=WeightCtrlPts(CtrlPts,Weights);
         WeightedCtrlPts.PrintMatrix();
         
         int n= KnotVector.size()-p-2;
@@ -1526,19 +1594,18 @@ int main(int argc, char *argv[]) {
         std::cout<< "----------------NewCtrlPtsW--------------" << std::endl;   
         NewCtrlPts.PrintMatrix();
         int size = KnotVector.size()-p-1;
-        auto f = [](double x) { 
-            double pi=3.141592653589793;
-            return 10*10*pi*pi*sin(10*pi*x); 
+        std::function<double(double)> f = [](double x) { 
+            return  100*M_PI * M_PI * std::sin( 10*M_PI * x);
         };
 
         auto analyticSol = [](double x){
-            double pi=3.141592653589793;
-            return sin(10*pi*x);
+            //double pi= std::numbers::pi;
+            return sin(10*M_PI*x);
         };
 
         auto analyticSolDers = [](double x){
-            double pi=3.141592653589793;
-            return 10*pi*cos(10*pi*x);
+            //double pi= std::numbers::pi;
+            return 10*M_PI*cos(10*M_PI*x);
         };
 
         n = KnotVector.size()-p-2;
@@ -1549,8 +1616,8 @@ int main(int argc, char *argv[]) {
         for(unsigned int i=0; i<KnotVector.size(); i++){
             std::cout << KnotVector[i] << ", ";
         }
-        double Lenght=IntegrateNormDer(lower_limit,upper_limit, 20, NewCtrlPts, KnotVector, n, p);
-
+        //double Lenght=IntegrateNormDer(lower_limit,upper_limit, 5000, NewCtrlPts, KnotVector, n, p);
+        double Lenght = M_PI;
         std::cout << std::endl;
         std::cout << "n value:" << n << std::endl;
         
@@ -1584,6 +1651,8 @@ int main(int argc, char *argv[]) {
         std::cout << "Pesos:\n" << weights.transpose() << "\n"; 
         typedef Eigen::Triplet<double> T;
         std::vector<Eigen::Triplet<double>> tripletList;
+        double preEvalPoint=lower_limit;
+        double cumLenght=0;
 
         //iteraciones 
         auto start = std::chrono::high_resolution_clock::now();
@@ -1612,25 +1681,25 @@ int main(int argc, char *argv[]) {
             std::vector<double> funcEvals;
             
             D1_element_eval(n, span,p,nEvals, lowerLimit, upperLimit, KnotVector, Weights, nodes, NewCtrlPts, 
-                            f, BasisFunsEvals, DerBasisFunsEvals, JacobianEvals, InverseJacobianEvals, funcEvals, Lenght);
+                            f, preEvalPoint, cumLenght, BasisFunsEvals, DerBasisFunsEvals, JacobianEvals, InverseJacobianEvals, funcEvals, Lenght);
             if(PrintIntermediateValues){
                 std::cout<< "-------------BasisFunsEvals----------------" << std::endl;
-                BasisFunsEvals.PrintMatrix();
+                BasisFunsEvals.PrintMatrix(7);
                 std::cout<< "-------------DerBasisFunsEvals----------------" << std::endl;
-                DerBasisFunsEvals.PrintMatrix();
+                DerBasisFunsEvals.PrintMatrix(7);
                 std::cout<< "--------------JacobianEvals----------------" << std::endl;
                 for(unsigned int i=0; i<JacobianEvals.size(); i++){
-                    std::cout << JacobianEvals[i] << ", ";
+                    std::cout<< std::setprecision(7) << JacobianEvals[i] << ", ";
                 }
                 std::cout << std::endl;
                 std::cout<< "--------------InverseJacobianEvals----------------" << std::endl;
                 for(unsigned int i=0; i<InverseJacobianEvals.size(); i++){
-                    std::cout << InverseJacobianEvals[i] << ", ";
+                    std::cout<< std::setprecision(7) << InverseJacobianEvals[i] << ", ";
                 }
                 std::cout << std::endl;
                 std::cout<< "--------------funcEvals----------------" << std::endl;
                 for(unsigned int i=0; i<funcEvals.size(); i++){
-                    std::cout << funcEvals[i] << ", ";
+                    std::cout<< std::setprecision(7) << funcEvals[i] << ", ";
                 }
                 std::cout << std::endl;
                 std::cout<< "--------------Element----------------" << std::endl;
@@ -1639,7 +1708,7 @@ int main(int argc, char *argv[]) {
             iMatrix<double> Element=gauss_legendre_cuadrature_integral_bilinealForm(p,lowerLimit,upperLimit,nEvals, DerBasisFunsEvals, InverseJacobianEvals, weights);
             
             if(PrintIntermediateValues){
-                Element.PrintMatrix();
+                Element.PrintMatrix(7);
                 std::cout<< "-------------------------------------" << std::endl;
             }
 
@@ -1656,7 +1725,7 @@ int main(int argc, char *argv[]) {
             if(PrintIntermediateValues){
                 std::cout<< "--------------LinearElement----------------" << std::endl;
                 for(unsigned int i=0; i<LinearElement.size(); i++){
-                    std::cout << LinearElement[i] << ", ";
+                    std::cout<< std::setprecision(7) << LinearElement[i] << ", ";
                 }
                 std::cout << std::endl;
             }
@@ -1675,7 +1744,7 @@ int main(int argc, char *argv[]) {
                     std::cout << "(" << it.row() << "," << it.col() << "): " << it.value() << "\n";
                 }
             }
-            std::cout<<Eigen::MatrixXd(global) <<std::endl;
+            //std::cout<<Eigen::MatrixXd(global) <<std::endl;
             std::cout<< "--------------GlobalLinearForm----------------" << std::endl;
             for (int k = 0; k < LinearForm.size(); ++k){
                 std::cout << LinearForm[k] << ", ";
@@ -1728,7 +1797,7 @@ int main(int argc, char *argv[]) {
                     std::cout << setprecision(std::numeric_limits<double>::max_digits10) << "(" << it.row() << "," << it.col() << "): " << it.value() << "\n";
                 }
             }
-            std::cout<<Eigen::MatrixXd(global) <<std::endl;
+            //std::cout<<Eigen::MatrixXd(global) <<std::endl;
         }
         
         if(PrintMatixes){
@@ -1783,7 +1852,7 @@ int main(int argc, char *argv[]) {
         Text= "C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/SolEvals/EjSinNonConstDers_Analytic_test2.txt";
         writeFunctionDers(analyticSolDers, lower_limit, upper_limit, 50, NewCtrlPts, KnotVector, n, p, Text, Lenght);
         */
-        std::cout<<"Longitud de la curva= "<< setprecision(std::numeric_limits<double>::max_digits10) <<  Lenght <<std::endl;
+        std::cout<<"Longitud de la curva= "<< setprecision(std::numeric_limits<double>::max_digits10) <<  cumLenght <<std::endl;
 
 
         iMatrix<double> sol(dim,nEvals);
@@ -1800,8 +1869,74 @@ int main(int argc, char *argv[]) {
         Write_Curve(sol,"C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/Curvas/CurvaEjPruebaFEM.txt");
 
         std::cout<<"fin 28"<<std::endl;
+        
+    }
+    if(stoi(argv[1])==29){//Norm calculations
+
+
+    // -----------------------------------------------------------------------------
+    // Calcula las normas L2, H1 e Infinito
+    // -----------------------------------------------------------------------------
+
+    // --- Parámetros configurables ---
+    int h_val = 128;
+    int p_val = 2;
+    std::string testName = "testCircle";
+    std::string basePath = "C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/SolEvals/";
+
+    // --- Rutas de archivo ---
+    std::ostringstream path1, path2, path3, path4;
+    path1 << basePath << "EjSinNonConst_h=" << h_val << "_p=" << p_val << "_" << testName << ".txt";
+    path2 << basePath << "EjSinNonConst_Analytic_" << testName << ".txt";
+    path3 << basePath << "EjSinNonConstDers_h=" << h_val << "_p=" << p_val << "_" << testName << ".txt";
+    path4 << basePath << "EjSinNonConstDers_Analytic_" << testName << ".txt";
+
+    // --- Leer datos ---
+    auto data1 = loadMatrix(path1.str());
+    auto data2 = loadMatrix(path2.str());
+    auto data3 = loadMatrix(path3.str());
+    for (auto &row : data3)
+        for (auto &val : row)
+            val *= M_PI;
+    auto data4 = loadMatrix(path4.str());
+
+    if (data1.empty() || data2.empty()) {
+        std::cerr << "Error: los archivos no contienen datos válidos.\n";
+        return 1;
     }
 
+    int n1 = data1.size();
+    int n2 = data1[0].size();
+
+    // --- Cuadratura de Gauss-Legendre ---
+    std::vector<double> xq, wq;
+    gaussLegendre(n2, 0.0, 2.0, xq, wq);
+    for (auto &xi : xq) xi += 1.0; // como en el script de Octave
+
+    // --- Calcular normas ---
+    double L2sq = 0.0, H1sqs = 0.0, normInf = 0.0;
+
+    for (int i = 0; i < n1; ++i) {
+        for (int j = 0; j < n2; ++j) {
+            double diffU = data1[i][j] - data2[i][j];
+            double diffD = data3[i][j] - data4[i][j];
+            L2sq += wq[j] * diffU * diffU;
+            H1sqs += wq[j] * diffD * diffD;
+            normInf = std::max(normInf, std::fabs(diffU));
+        }
+    }
+
+    double L2norm = std::sqrt(L2sq);
+    double H1norm = std::sqrt(L2sq + H1sqs);
+
+    // --- Mostrar resultados ---
+    std::cout << std::setprecision(10);
+    std::cout << "L2 norm  = " << L2norm << "\n";
+    std::cout << "H1 norm  = " << H1norm << "\n";
+    std::cout << "Inf norm = " << normInf << "\n";
+
+    }
+    /*
     if(stoi(argv[1])==29){//Fisical to parametric test
         int p=4;
         double nElements = 40;
@@ -1843,6 +1978,7 @@ int main(int argc, char *argv[]) {
         }
         std::cout <<std::endl;
     }
+        */
     if(stoi(argv[1])==30){//pre-D2 test
         
         //Initial definitions of variables
@@ -1851,7 +1987,7 @@ int main(int argc, char *argv[]) {
         int hY= 5;
         int hX= 7;
         std::vector<double> KnotVectorY = {0,0,0,0,0,1,1,1,1,1};
-        std::vector<double> KnotVectorX = {0,0,0,0,0,1,1,1,1,1};
+        std::vector<double> KnotVectorX = {0,0,0,0,0,0.5,1,1,1,1,1};
 
         auto analyticSol = [](double x, double y){
             double pi=3.141592653589793;
@@ -1884,13 +2020,13 @@ int main(int argc, char *argv[]) {
         double upper_limitX=KnotVectorX[KnotVectorX.size()-1];
         std::cout << "upper_limit2= " << upper_limitX << std::endl;
 
-        std::vector<double> data={1,2,3,4,5,
-                                  2,3,4,5,6,
-                                  3,4,5,6,7,
-                                  4,5,6,7,8,
-                                  5,6,7,8,9};
+        std::vector<double> data={1,1,1,1,1,1,
+                                  1,1,1,1,1,1,
+                                  1,1,1,1,1,1,
+                                  1,1,1,1,1,1,
+                                  1,1,1,1,1,1};
 
-        iMatrix<double> Weights(5,5, data.data());
+        iMatrix<double> Weights(5,6, data.data());
         std::vector<iMatrix<double>> CtrlPts = ReadDataFile_CtrlPts("C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/CtrlPts/EjSuperficieTriv.txt");
         
         std::cout<<"----CtrlPts----" << std::endl;
@@ -2137,6 +2273,7 @@ int main(int argc, char *argv[]) {
 
         iMatrix<double> DersBasisY = DerBasisFuns(spanY, tY, pY, 1, KnotVectorY);
         iMatrix<double> DersBasisX = DerBasisFuns(spanX, tX, pX, 1, KnotVectorX);
+        iMatrix<double> activeWeights=NewWeights.GetSubMat(spanX-pX, spanX, spanY-pY, spanY);
 
         std::cout<< "---------------DersBasisY-----------------" << std::endl;
         DersBasisY.PrintMatrix();
@@ -2163,20 +2300,23 @@ int main(int argc, char *argv[]) {
 
     if(stoi(argv[1])==31){//D2 test
         
-        bool PrintMatrixes=true;
+        bool PrintMatrixes=false;
         bool ShowValues=false;
-        bool ShowIterations=true;
+        bool ShowIterations=false;
+        bool ShowIterations2=false;
 
         //Initial definitions of variables
         int pY= 4;
         int pX= 4;
-        int hY= 3;
-        int hX= 4;
+        int hY= 256;
+        int hX= 256;
         int nEvalsY=pY+1;
         int nEvalsX=pX+1;
+        int subMatSize=nEvalsX*nEvalsY;
         int nElementsY=hY+pY;
         int nElementsX=hX+pX;
         int size = nElementsY*nElementsX;
+        
         Eigen::SparseMatrix<double> global(size, size);
         Eigen::VectorXd LinearForm(size);
         std::vector<double> KnotVectorY = {0,0,0,0,0,1,1,1,1,1};
@@ -2330,10 +2470,25 @@ int main(int argc, char *argv[]) {
 
         //int nBasisX=NewCtrlPtsW.size();
         //int nBasisY=NewCtrlPtsW[0].GetNumCols();
+        int nX= KnotVectorX.size()-pX-2;
+        int nY= KnotVectorY.size()-pY-2;
         int nLoc=(pX+1)*(pY+1);
         std::vector<Eigen::Triplet<double>> tripletList;
         tripletList.reserve(hX * hY * nLoc * nLoc);
 
+        //for paralelitation
+        int nthreads = omp_get_max_threads();
+        std::vector<std::vector<Eigen::Triplet<double>>> threadTriplets(nthreads);
+        std::vector<std::vector<double>> threadLinearForms(nthreads, std::vector<double>(size, 0.0));
+
+        // Heurística de reserva por hilo para evitar muchas realocaciones.
+        // Ajusta según memoria / experiencia.
+        for (int t = 0; t < nthreads; ++t) {
+            threadTriplets[t].reserve((hX * hY * nLoc * nLoc) / nthreads / 4 + 1000);
+        }
+
+        
+        auto start = std::chrono::high_resolution_clock::now();
         //Precomputation of BasisFuns and its derivates.
         std::vector<int> SpanIndexY(IntervalsY.size()-1);
         std::vector<int> SpanIndexX(IntervalsX.size()-1);
@@ -2366,11 +2521,19 @@ int main(int argc, char *argv[]) {
         //std::unordered_map<int, std::vector<std::pair<double,double>>> spanMapX=BuildSpanMap(IntervalsX, SpanIndexX);
 
         // Double index matrix for easier and faster assembly
-        std::map<std::pair<int,int>, std::map<std::pair<int,int>, double>> K_e;
-
+        
+        #pragma omp parallel for collapse(2) schedule(dynamic)
         // Assembly of the matrix
         for (unsigned int i = 0; i < hX; i++) {
             for (unsigned int j = 0; j < hY; j++) {
+
+                int tid = omp_get_thread_num();
+
+                // Local buffers referidos por tid
+                auto &localTriplets = threadTriplets[tid];
+                auto &localLinear  = threadLinearForms[tid];
+
+                iMatrix<double> K_e(subMatSize, subMatSize);
                 if (ShowIterations) {
                     std::cout<<"--------Active Intervals---------"<< std::endl;
                     std::cout<< "IntervalX: (" << IntervalsX[i] << " " << IntervalsX[i+1]<<")"<< std::endl;
@@ -2378,30 +2541,91 @@ int main(int argc, char *argv[]) {
                     std::cout<< "SpanIndexX: (" << SpanIndexX[i] <<")"<< std::endl;
                     std::cout<< "SpanIndexY: (" << SpanIndexY[j] <<")"<< std::endl;
                 }
+                double auxeval1X= (IntervalsX[i+1] - IntervalsX[i])/2;
+                double auxeval2X= (IntervalsX[i+1] + IntervalsX[i])/2;
+                double auxeval1Y= (IntervalsY[i+1] - IntervalsY[i])/2;
+                double auxeval2Y= (IntervalsY[i+1] + IntervalsY[i])/2;
 
+                
                 int spanU = SpanIndexX[i];
                 int spanV = SpanIndexY[j];
-                //Emulation of computations of the matrix
-                // Inicializamos todos los elementos a 1
-                for(int a = 0; a <= pX; ++a){
-                    for(int b = 0; b <= pY; ++b){
-                        std::pair<int,int> rowIndex(a,b);
-                        for(int c = 0; c <= pX; ++c){
-                            for(int d = 0; d <= pY; ++d){
-                                std::pair<int,int> colIndex(c,d);
-                                K_e[rowIndex][colIndex] = 1.0;
-                            }
-                        }
+                iMatrix<double> activeWeights=NewWeights.GetSubMat(spanU-pX,spanU, spanV-pY, spanV);
+                auto &DersBasisX_vec = Basis_and_DersX[i]; // vector<iMatrix<double>> size nEvalsX
+                auto &DersBasisY_vec = Basis_and_DersY[j]; // vector<iMatrix<double>> size nEvalsY
+                //std::vector<double> WeightsY=NewWeights.GetSubMat(0,NewWeights.GetNumRows()-1, spanV-pY, spanV-pY).GetCol(0);
+                //std::vector<double> WeightsX=NewWeights.GetSubMat(spanU-pX, spanU-pX,0,NewWeights.GetNumCols()-1).GetRow(0);
+                //std::vector<iMatrix<double>> RationalizedDersBasisY=RationalizeDersBasisFunsVec(spanV, nEvalsY, nodesY, IntervalsY[j],IntervalsY[j+1], pY, 1, nY, KnotVectorY, Basis_and_DersY[j], WeightsY);
+                //std::vector<iMatrix<double>> RationalizedDersBasisX=RationalizeDersBasisFunsVec(spanU, nEvalsX,nodesX, IntervalsX[i], IntervalsX[i+1],pX, 1, nX ,KnotVectorX, Basis_and_DersX[i], WeightsX);
+                if (ShowIterations2) {
+                    std::cout<<"--------RationalizedDersBasisY---------"<< std::endl;
+                    for(unsigned int iter=0; iter<nEvalsY; iter++){
+                        //RationalizedDersBasisY[iter].PrintMatrix();
+                        std::cout<<"------------------------------"<< std::endl;
+                    }
+                    std::cout<<"--------RationalizedDersBasisX---------"<< std::endl;
+                    for(unsigned int iter=0; iter<nEvalsX; iter++){
+                        //RationalizedDersBasisX[iter].PrintMatrix();
+                        std::cout<<"------------------------------"<< std::endl;
                     }
                 }
 
+                //Emulation of computations of the matrix
+                //iMatrix<iMatrix<double>> SurfBasisRat, SurfBasisRatX, SurfBasisRatY;
+                for(int a = 0; a < nEvalsX; ++a){
+
+                    double EvalPointX=auxeval1X*nodesX(a)+auxeval2X;
+                    //std::cout << "EvalPointX: " << EvalPointX << ". ";
+                    for(int b = 0; b < nEvalsY; ++b){
+                        double EvalPointY=auxeval1Y*nodesY(b)+auxeval2Y;
+                        //std::cout << "EvalPointY: " << EvalPointY << ". ";
+                        iMatrix<std::vector<double>> Allders = SurfaceDerivsAlg1(KnotVectorY.size()-2-pY,pY,KnotVectorY,KnotVectorX.size()-2-pX,pX,KnotVectorX,NewCtrlPtsW, EvalPointY, EvalPointX, 1);
+                        
+                        
+                        iMatrix<std::vector<double>> Aders(2, 2);
+                        iMatrix<double> Wders(2, 2);
+                        for(unsigned int iteri=0; iteri<=1; iteri++){
+                            for(unsigned int iterj=0; iterj<=1; iterj++){
+                                Aders(iteri,iterj)= std::vector<double>(Allders(iteri,iterj).begin(), Allders(iteri,iterj).begin()+3);
+                                Wders(iteri,iterj)=Allders(iteri,iterj)[3];
+                            }
+                        }
+                        iMatrix<iMatrix<double>> RationalizedBasis2d=RationalizeDersBasisFuns2D(DersBasisX_vec[a], DersBasisY_vec[b],activeWeights,pX,pY);
+                        std::vector<double> SurfBasisRat=(RationalizedBasis2d(0,0)).Vectorize();
+                        std::vector<double> SurfBasisRatX=(RationalizedBasis2d(1,0)).Vectorize();
+                        std::vector<double> SurfBasisRatY=(RationalizedBasis2d(0,1)).Vectorize();
+                        iMatrix<std::vector<double>> SurfDers= RatSurfaceDerivs(Aders, Wders, 1);
+                        
+                        iMatrix<double> PartialXX=SurfBasisRatX*SurfBasisRatX;
+                        iMatrix<double> PartialXY=SurfBasisRatX*SurfBasisRatY;
+                        iMatrix<double> PartialYY=SurfBasisRatY*SurfBasisRatY;
+                        double g11=dot_product(SurfDers(1,0),SurfDers(1,0));
+                        double g12=dot_product(SurfDers(1,0),SurfDers(0,1));
+                        double g22=dot_product(SurfDers(0,1),SurfDers(0,1));
+                        double detg=g11*g22-g12*g12;
+                        double Jinv=1/std::sqrt(detg);
+                        double auxconstant = weightsX[a]*weightsY[b]*Jinv;
+                        double g11c=  g22*auxconstant;
+                        double g12c= -g12*2*auxconstant;
+                        double g22c=  g11*auxconstant;
+                        iMatrix<double> Kq= g11c*PartialXX+g12c*PartialXY+g22c*PartialYY;
+                        K_e = K_e + Kq;
+                        
+                    }
+                }
+
+                // Emulation of local load vector (all ones)
+                std::vector<double> F_e((pX+1)*(pY+1), 1.0);
                 // Rellenar triplets en matriz global
                 for(int a = 0; a <= pX; ++a){
+                    
                     for(int b = 0; b <= pY; ++b){
                         int i_local = a*(pY+1) + b; 
                         int I_global = (spanU - pX + a) + (spanV - pY + b)*nElementsX;
+                        localLinear[I_global] += F_e[i_local];
                         //std::cout<< "---------------------------"<< std::endl;
                         //std::cout << "I_global= " << I_global << std::endl;
+
+                        LinearForm[I_global] += F_e[i_local];
 
                         for(int c = 0; c <= pX; ++c){
                             for(int d = 0; d <= pY; ++d){
@@ -2410,9 +2634,10 @@ int main(int argc, char *argv[]) {
                                 int J_global = (spanU - pX + c) + (spanV - pY + d)*nElementsX;
                                 
                                 //std::cout << "J_global= " << J_global << std::endl;
-                                double val = K_e[{a,b}][{c,d}];
+                                double val = K_e(i_local, j_local);
                                 if(val != 0.0){
-                                    tripletList.push_back(Eigen::Triplet<double>(I_global, J_global, val));
+                                    //localTriplets.emplace_back(I_global, J_global, val);
+                                    localTriplets.emplace_back(I_global, J_global, val);
                                 }
                             }
                         }
@@ -2420,16 +2645,38 @@ int main(int argc, char *argv[]) {
                 }
             }
         }
+
+        for (int t = 0; t < nthreads; ++t) {
+            // mover triplets al tripletList (efficient push_back many)
+            tripletList.insert(tripletList.end(), threadTriplets[t].begin(), threadTriplets[t].end());
+
+            // sumar fuerza local en LinearForm
+            for (int idx = 0; idx < size; ++idx) {
+                LinearForm[idx] += threadLinearForms[t][idx];
+            }
+        }
         global.setFromTriplets(tripletList.begin(), tripletList.end());
 
+        auto end = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+        std::cout << "Tiempo tomado: " << duration.count() << " nanosegundos\n";
+
         if(PrintMatrixes){
-            std::cout<< "--------------GlobalMatPostCond----------------" << std::endl;
+            std::cout<< "--------------GlobalMat----------------" << std::endl;
             for (int k = 0; k < global.outerSize(); ++k){
                 for (Eigen::SparseMatrix<double>::InnerIterator it(global, k); it; ++it){
-                    //std::cout << "(" << it.row() << "," << it.col() << "): " << it.value() << "\n";
+                    std::cout << "(" << it.row() << "," << it.col() << "): " << it.value() << "\n";
                 }
             }
-            std::cout<<Eigen::MatrixXd(global) <<std::endl;
+            //std::cout<<Eigen::MatrixXd(global) <<std::endl;
+        }
+
+        if(PrintMatrixes){
+            std::cout<< "--------------GlobalLinearForm----------------" << std::endl;
+            for (int k = 0; k < LinearForm.size(); ++k){
+                std::cout   << LinearForm[k] << ", ";
+            }
+            std::cout << std::endl;
         }
 
         std::cout << "fin 31" << std::endl;
