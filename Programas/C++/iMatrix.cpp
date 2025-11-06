@@ -4,10 +4,12 @@
  *******************************************************************************/
 #include <iostream>
 #include <stdexcept>
+#include "C:\Librerias\eigen-3.4.0\Eigen\Dense"  
 #include <iomanip>
 #include <vector>
 #include <cmath>
 #include <numeric>
+#include <type_traits>
 
 #ifndef IMATRIX_H
 #define IMATRIX_H
@@ -44,6 +46,7 @@ class iMatrix{
     iMatrix();
     iMatrix(int nRows, int nCols);
     iMatrix(int nRows, int nCols, const T *inputData);
+	iMatrix(int nRows, int nCols, const Eigen::VectorXd &inputData);
     iMatrix(const iMatrix<T> &inputMatrix);
 
     // And the destructor.
@@ -202,6 +205,19 @@ iMatrix<T>::iMatrix(int nRows, int nCols) : m_nRows(nRows), m_nCols(nCols)
 		// Redimensionar e inicializar con el constructor por defecto T()
 		m_matrixData.resize(nElements); 
 	}
+}
+// Construct from Eigen::VectorXd
+template <class T>
+iMatrix<T>::iMatrix(int nRows, int nCols, const Eigen::VectorXd& inputData)
+    : m_nRows(nRows), m_nCols(nCols)
+{
+    int nElements = m_nRows * m_nCols;
+    if (inputData.size() != nElements)
+        throw std::invalid_argument("Eigen::VectorXd no tiene el tamaño correcto para llenar la matriz.");
+
+    m_matrixData.resize(nElements);
+    for (int i = 0; i < nElements; ++i)
+        m_matrixData[i] = static_cast<T>(inputData[i]);
 }
 // Construct from const linear array.
 template <class T>

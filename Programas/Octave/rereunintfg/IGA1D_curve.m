@@ -3,7 +3,7 @@
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 
 p=2;
-refinement=6;
+refinement=12;
 
 controlPts = [  -1,  -1,  0, 1, 1;
                 0,  1,  1,  1,  0]';
@@ -56,18 +56,17 @@ for e=1:noElems
    xiE   = elRange(e,:); % [xi_i,xi_i+1]
    conn  = elConn(e,:);
    noFns = length(conn);
-   aaaaaaaaaaaa=111111
    % loop over Gauss points
     for gp=1:size(W,1)
       pt      = Q(gp,:);
       wt      = W(gp);
-      Xi      = 0.5 * ( ( xiE(2) - xiE(1) ) * pt + xiE(2) + xiE(1)) % coord in parameter space
+      Xi      = 0.5 * ( ( xiE(2) - xiE(1) ) * pt + xiE(2) + xiE(1)); % coord in parameter space
       J2      = 0.5 * ( xiE(2) - xiE(1) );
 
       i = findspan(noCtrPts-1,p,Xi,knotVec);
       wi=weights(conn);
       B=BasisFuns(i+1,Xi,p,knotVec);
-      D = DerBasisFuns(i+1,Xi,p,2,knotVec)
+      D = DerBasisFuns(i+1,Xi,p,2,knotVec);
       B1=D(2,:);
       B2=D(3,:);
 
@@ -78,12 +77,12 @@ for e=1:noElems
       dNdxi=((B1.*wi')*w - W1*B.*wi')/w^2;
 
       dN2    = DerBasisFuns(i+1,Xi,p,2,knotVec); % 2ª derivada B-spline
-      W2 = sum(B2.*wi');                         % W''
+      W2 = sum(B2.*wi');                        % W''
 
       dN2dxi2 = ((B2.*wi')*w^2 - 2*W1*w*(B1.*wi') - W2*w*(B.*wi') + 2*W1^2*(B.*wi')) / w^3;
 
-      jacob1 = dNdxi*controlPts(conn,1:2)
-      J1     = norm(jacob1)
+      jacob1 = dNdxi*controlPts(conn,1:2);
+      J1     = norm(jacob1);
       dNdx   = (1/J1)*dNdxi;
 
       % compute elementary stiffness matrix and
@@ -94,11 +93,8 @@ for e=1:noElems
       s_gp = interp1(xi_samp, s_samp, Xi, 'cubic');
       c=10;
       f_gp = (c*pi)^2 * sin(c*pi * s_gp)/pi^2; % DIVIDO ENTRE PI^2 POR EL REESCALADO DE LA LONGITUD PI DE LA CURVA
-      wt
-      J1
-      J2
-      N'
-      N' * f_gp * J1 * J2 * wt
+
+      N' * f_gp * J1 * J2 * wt;
       f(conn) = f(conn) + N' * f_gp * J1 * J2 * wt;
     end
 end

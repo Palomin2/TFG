@@ -791,8 +791,10 @@ iMatrix<double> RatDersBasisFuns(int i, double t, int p, int k,  const std::vect
     for (int j = 0; j <= k; ++j){
         for (int iter = 0; iter <= p; iter++){
             Wk[j] += WeightVector[i-p+iter] * ders(j,iter);
+            //std::cout << "Weight1: " << WeightVector[i-p+iter] << " ";
         }   
     }
+    //std::cout << std::endl;
 
     for (int a = 0; a < p+1; ++a) {
     R_ders(0, a)= ders(0,a)*WeightVector[i-p+a]/Wk[0]; // (D(0, a) * weights[a]) / Wk[0];
@@ -1740,28 +1742,50 @@ void impose_Robin_Condition(int p, int size, Eigen::SparseMatrix<double> &global
 
 /******************************************************************************* */
 void writeNumericFunction(Eigen::VectorXd funEvals,const std::vector<double> &KnotVector,const std::vector<double> &WeightVector, int n, int p, int nEvals, double lowerLimit, double upperLimit,  std::string name,
-                            Eigen::VectorXd nodes, Eigen::VectorXd weights, std::vector<double> time, int nElements){
+                            std::vector<double> Intervals, int nElements, double Lenght){
     std::ofstream fichero1, fichero2;
     fichero1.open(name+"_h=" + std::to_string(static_cast<int>(nElements)) +"_p="+ std::to_string(p)+"_testCircle.txt");
     fichero2.open(name+ "Ders_h=" + std::to_string(static_cast<int>(nElements)) +"_p="+ std::to_string(p)+"_testCircle.txt");
-    for(unsigned int i=0; i<nEvals; i++){
-        int span= FindSpan(KnotVector, time[i], p, n);
-        //std::cout << "span: " << span << std::endl;
-        double AuxVal1=0;
-        double AuxVal2=0;
-        //std::vector<double> eval= RatDersBasisFuns(span, t, p, 0, KnotVector, WeightVector).GetRow(0);
-        iMatrix<double> evalMat= RatDersBasisFuns(span, time[i] , p, 1, KnotVector, WeightVector);
-        std::vector<double> eval1=evalMat.GetRow(0);
-        std::vector<double> eval2=evalMat.GetRow(1);
-        //std::cout << "t= " << t << std::endl;
-        for(int j=0; j<=p; j++){
-            //std::cout << "funEvals[" << span-p+j<< "]= " << funEvals[span-p+j]<< std::endl;
-            //std::cout << "eval[" << j << "]= " << eval[j]<< std::endl;
-            AuxVal1+=funEvals[span-p+j]*eval1[j];
-            AuxVal2+=funEvals[span-p+j]*eval2[j];
+
+    // Configurar alta precisión
+    fichero1 << std::scientific << std::setprecision(15);
+    fichero2 << std::scientific << std::setprecision(15);
+    Eigen::VectorXd nodes, weights;
+    legendre_pol(nEvals, nodes, weights);
+
+    for(unsigned int iter=0; iter<Intervals.size()-1; iter++){
+
+    
+        double auxeval1= (Intervals[iter+1] - Intervals[iter])/2;
+        double auxeval2= (Intervals[iter+1] + Intervals[iter])/2;
+        //double preVal=Intervals[iter];
+        
+        
+        
+
+
+
+        for(unsigned int i=0; i<nEvals; i++){
+            double t=0.5*(auxeval1)*nodes(i)+auxeval2;
+
+            int span= FindSpan(KnotVector, t, p, n);
+            //std::cout << "span: " << span << std::endl;
+            double AuxVal1=0;
+            double AuxVal2=0;
+            //std::vector<double> eval= RatDersBasisFuns(span, t, p, 0, KnotVector, WeightVector).GetRow(0);
+            iMatrix<double> evalMat= RatDersBasisFuns(span, t , p, 1, KnotVector, WeightVector);
+            std::vector<double> eval1=evalMat.GetRow(0);
+            std::vector<double> eval2=evalMat.GetRow(1);
+            //std::cout << "t= " << t << std::endl;
+            for(int j=0; j<=p; j++){
+                //std::cout << "funEvals[" << span-p+j<< "]= " << funEvals[span-p+j]<< std::endl;
+                //std::cout << "eval[" << j << "]= " << eval[j]<< std::endl;
+                AuxVal1+=funEvals[span-p+j]*eval1[j];
+                AuxVal2+=funEvals[span-p+j]*eval2[j]*Lenght;
+            }
+            fichero1 << AuxVal1 << " ";
+            fichero2 << AuxVal2 << " ";
         }
-        fichero1 << AuxVal1 << " ";
-        fichero2 << AuxVal2 << " ";
     }
     fichero1.close();
     fichero2.close();
@@ -1772,54 +1796,107 @@ void writeNumericFunction(Eigen::VectorXd funEvals,const std::vector<double> &Kn
 /******************************************************************************* */
 
 /******************************************************************************* */
-void writeAnalyticFunction(std::function<double(double)> f,std::function<double(double)> f_Ders, double lowerLimit, double upperLimit, double nEvals,const iMatrix<double> &CtrlPtsW,const std::vector<double> &KnotVector,
-                    int n, int p, std::string name,Eigen::VectorXd nodes, Eigen::VectorXd weights, std::vector<double> time, double Lenght){
+void writeAnalyticFunction(std::function<double(double)> f,std::function<double(double)> f_Ders, std::vector<double> Intervals, double nEvals,const iMatrix<double> &CtrlPtsW,const std::vector<double> &KnotVector,
+                    int n, int p, std::string name, double Lenght, double nElements){
     std::ofstream fichero1, fichero2;
-    fichero1.open(name + "_Analytic_testCircle.txt");
-    fichero2.open(name+"Ders_Analytic_testCircle.txt");
-    double auxeval1= (upperLimit - lowerLimit)/2;
-    double auxeval2= (upperLimit + lowerLimit)/2;
-    double preVal=lowerLimit;
+    fichero1.open(name+ "_h=" + std::to_string(static_cast<int>(nElements)) +"_p="+ std::to_string(p)+ "_Analytic_testCircle.txt");
+    fichero2.open(name+ "_h=" + std::to_string(static_cast<int>(nElements)) +"_p="+ std::to_string(p)+ "Ders_Analytic_testCircle.txt");
+
+    // Configurar alta precisión
+    fichero1 << std::scientific << std::setprecision(15);
+    fichero2 << std::scientific << std::setprecision(15);
+    double preVal=Intervals[0];
     double cumLenght=0;
-    //Eigen::VectorXd nodes, weights;
-    //legendre_pol(nEvals, nodes, weights);
-    for(unsigned int i=0; i< nEvals; i++){
-        iMatrix<double> Aders, wders;
-        iMatrix<double> Allders = CurveDerivsAlg1(n, p, KnotVector, CtrlPtsW, time[i], 1);
-        //std::cout << "i2" << std::endl;
-        int auxInt=Allders.GetNumCols()-1;
-        Aders = Allders.GetSubMat(0,1,0, auxInt-1);
-        wders = Allders.GetSubMat(0,1,auxInt, auxInt);
-        iMatrix<double> AuxMat2 = RatCurveDerivs(Aders, wders, 1);
-        //std::cout << "i3" << std::endl;
+    Eigen::VectorXd nodes, weights;
+    legendre_pol(nEvals, nodes, weights);
 
-        std::vector<double> AuxVec= AuxMat2.GetRow(1);
-        double Jacobian=0;
-        for(unsigned int i=0; i< AuxVec.size(); i++){
-            Jacobian+= AuxVec[i]*AuxVec[i];
+    for(unsigned int iter=0; iter<Intervals.size()-1; iter++){
+
+    
+        double auxeval1= (Intervals[iter+1] - Intervals[iter])/2;
+        double auxeval2= (Intervals[iter+1] + Intervals[iter])/2;
+        //double preVal=Intervals[iter];
+        
+        
+        for(unsigned int i=0; i< nEvals; i++){
+            iMatrix<double> Aders, wders;
+            double t=0.5*(auxeval1)*nodes(i)+auxeval2;
+            iMatrix<double> Allders = CurveDerivsAlg1(n, p, KnotVector, CtrlPtsW, t, 1);
+            //std::cout << "i2" << std::endl;
+            int auxInt=Allders.GetNumCols()-1;
+            Aders = Allders.GetSubMat(0,1,0, auxInt-1);
+            wders = Allders.GetSubMat(0,1,auxInt, auxInt);
+            iMatrix<double> AuxMat2 = RatCurveDerivs(Aders, wders, 1);
+            //std::cout << "i3" << std::endl;
+
+            std::vector<double> AuxVec= AuxMat2.GetRow(1);
+            double Jacobian=0;
+            for(unsigned int i=0; i< AuxVec.size(); i++){
+                Jacobian+= AuxVec[i]*AuxVec[i];
+            }
+            Jacobian=sqrt(Jacobian);
+            double FisicalP=Fisical_to_Parametric(preVal, t, 0, Lenght, 20, CtrlPtsW, KnotVector, n, p);
+            cumLenght+=FisicalP;
+            //std::cout << "tanalytic = " << Fisical_to_Parametric(auxeval1*nodes(i)+auxeval2, 0, Lenght, 50, CtrlPtsW, KnotVector, n, p)<< " ,EvalPoint= "<< auxeval1*nodes(i)+auxeval2 << std::endl;
+            //double auxval = CurvePointRational(n, p, KnotVector, CtrlPtsW, lowerLimit + i*Step)[0];
+            //std::cout << "point is: "<< lowerLimit + (auxeval1*nodes(i)+auxeval2) << std::endl;
+            //fichero << f(auxeval1*nodes(i)+auxeval2) << " "; //case Jacobian is constant at value 1
+            //fichero << f(CurvePointRational(n, p, KnotVector, CtrlPtsW, auxeval1*nodes(i)+auxeval2)[0]) << " "; //case jacobian is not constant but f only takes 1 dimensional parameters
+            fichero1 << f(cumLenght)<< " "; //optimization needed, not neccesary to commpute the lagranje pol pts in each interation
+            fichero2 << f_Ders(cumLenght)*Jacobian<< " ";
+            preVal=t;
+            //fichero1 << f(auxeval1*nodes(i)+auxeval2)<< " "; //optimization needed, not neccesary to commpute the lagranje pol pts in each interation
+            //fichero2 << f_Ders(auxeval1*nodes(i)+auxeval2)*Jacobian<< " ";
+            //std::cout << CurvePointRational(n, p, KnotVector, CtrlPtsW, time[i])[0] << std::endl;
+            //fichero1 << f(CurvePointRational(n, p, KnotVector, CtrlPtsW, time[i])[0]) << " ";
+            //fichero2 << f_Ders(CurvePointRational(n, p, KnotVector, CtrlPtsW, time[i])[0])*Jacobian << " ";
+            
         }
-        Jacobian=sqrt(Jacobian);
-        double FisicalP=Fisical_to_Parametric(preVal, time[i], 0, Lenght, 20, CtrlPtsW, KnotVector, n, p);
-        cumLenght+=FisicalP;
-        //std::cout << "tanalytic = " << Fisical_to_Parametric(auxeval1*nodes(i)+auxeval2, 0, Lenght, 50, CtrlPtsW, KnotVector, n, p)<< " ,EvalPoint= "<< auxeval1*nodes(i)+auxeval2 << std::endl;
-        //double auxval = CurvePointRational(n, p, KnotVector, CtrlPtsW, lowerLimit + i*Step)[0];
-        //std::cout << "point is: "<< lowerLimit + (auxeval1*nodes(i)+auxeval2) << std::endl;
-        //fichero << f(auxeval1*nodes(i)+auxeval2) << " "; //case Jacobian is constant at value 1
-        //fichero << f(CurvePointRational(n, p, KnotVector, CtrlPtsW, auxeval1*nodes(i)+auxeval2)[0]) << " "; //case jacobian is not constant but f only takes 1 dimensional parameters
-        fichero1 << f(cumLenght)<< " "; //optimization needed, not neccesary to commpute the lagranje pol pts in each interation
-        fichero2 << f_Ders(cumLenght)*Jacobian<< " ";
-        preVal=time[i];
-        //fichero1 << f(auxeval1*nodes(i)+auxeval2)<< " "; //optimization needed, not neccesary to commpute the lagranje pol pts in each interation
-        //fichero2 << f_Ders(auxeval1*nodes(i)+auxeval2)*Jacobian<< " ";
-        //std::cout << CurvePointRational(n, p, KnotVector, CtrlPtsW, time[i])[0] << std::endl;
-        //fichero1 << f(CurvePointRational(n, p, KnotVector, CtrlPtsW, time[i])[0]) << " ";
-        //fichero2 << f_Ders(CurvePointRational(n, p, KnotVector, CtrlPtsW, time[i])[0])*Jacobian << " ";
     }
-
     fichero1.close();
     fichero2.close();
+    std::cout << "Longitud total arco recorrida: " << cumLenght << std::endl;
+    
 }
 
+/******************************************************************************* */
+
+/******************************************************************************* */
+std::vector<std::vector<double>> leerArchivo(const std::string& name, int p) {
+    std::vector<std::vector<double>> resultado;
+    std::ifstream archivo(name);
+    
+    if (!archivo.is_open()) {
+        std::cerr << "Error: No se pudo abrir el archivo " << name << std::endl;
+        return resultado;
+    }
+    
+    std::string linea;
+    std::vector<double> filaActual;
+
+    std::stringstream buffer;
+    buffer << archivo.rdbuf();
+    std::string contenido = buffer.str();
+    
+    std::istringstream ss(contenido);
+    double numero;
+    
+    while (ss >> numero) {
+        filaActual.push_back(numero);
+        
+        if (filaActual.size() == p) {
+            resultado.push_back(filaActual);
+            filaActual.clear();
+        }
+    }
+    
+    if (!filaActual.empty()) {
+        resultado.push_back(filaActual);
+    }
+    
+    archivo.close();
+    return resultado;
+}
 /******************************************************************************* */
 
 /******************************************************************************* */

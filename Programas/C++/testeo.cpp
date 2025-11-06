@@ -53,7 +53,7 @@ std::vector<std::vector<double>> loadMatrix(const std::string &filename) {
 
     return data;
 }
-
+/*
 // -----------------------------------------------------------------------------
 // Genera puntos y pesos de cuadratura de Gauss-Legendre en [a,b]
 // (usamos n = número de columnas del archivo)
@@ -88,7 +88,7 @@ void gaussLegendre(int n, double a, double b, std::vector<double> &x, std::vecto
         w[n - 1 - i] = w[i];
     }
 }
-
+*/
 inline uint64_t rdtsc() {
     unsigned int lo, hi;
     asm volatile (
@@ -1564,35 +1564,45 @@ int main(int argc, char *argv[]) {
 
         bool PrintMatixes=false;
         bool PrintIntermediateValues=false;
+        bool PrintPrevalues=false;
 
         
         int p=2;
-        double nElements = 50000;
+        double nElements = 512;
         //variables que no cambian en cada ejecución del bucle o que se declaran fuera para ir actualizandolas
-        std::cout<< "----------------CtrlPts--------------" << std::endl;
-        iMatrix<double> CtrlPts = ReadDataFile_Matrix("C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/CtrlPts/EjCirculo.txt");        
-        CtrlPts.PrintMatrix();
+        iMatrix<double> CtrlPts = ReadDataFile_Matrix("C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/CtrlPts/EjCirculo.txt"); 
+        if(PrintPrevalues){
+            std::cout<< "----------------CtrlPts--------------" << std::endl;
+            CtrlPts.PrintMatrix();
+        }
         std::vector<double> KnotVector={0,0,0,0.5,0.5,1,1,1};
         double lower_limit=KnotVector[0];
         double upper_limit=KnotVector[KnotVector.size()-1];
         std::vector<double> Weights={1,sqrt(2)/2,1,sqrt(2)/2,1};
-        std::cout<< "----------WeightedCtrlPts--------------" << std::endl;
+
+
         iMatrix<double> WeightedCtrlPts=WeightCtrlPts(CtrlPts,Weights);
-        WeightedCtrlPts.PrintMatrix();
-        
-        int n= KnotVector.size()-p-2;
-        std::cout<< "---------------KnotVectorOld-----------------" << std::endl;
-        for(unsigned int i=0; i<KnotVector.size(); i++){
-            std::cout << KnotVector[i] << ", ";
+
+        if(PrintPrevalues){
+            std::cout<< "----------WeightedCtrlPts--------------" << std::endl;
+            WeightedCtrlPts.PrintMatrix();
         }
-        std::cout << std::endl;
-        std::cout << "n value:" << n << std::endl;
-        
+        int n= KnotVector.size()-p-2;
+        if(PrintPrevalues){
+            std::cout<< "---------------KnotVectorOld-----------------" << std::endl;
+            for(unsigned int i=0; i<KnotVector.size(); i++){
+                std::cout << std::setprecision(7) << KnotVector[i] << ", ";
+            }
+            std::cout << std::endl;
+            std::cout << "n value:" << n << std::endl;
+        }
         std::vector<double> Insertions=createSubIntervals(nElements, lower_limit, upper_limit);
         Insertions=removeMatches(Insertions, KnotVector);
         iMatrix<double> NewCtrlPts=RefineKnotVectCurve(n,p,KnotVector, WeightedCtrlPts, Insertions, Insertions.size()-1);
-        std::cout<< "----------------NewCtrlPtsW--------------" << std::endl;   
-        NewCtrlPts.PrintMatrix();
+        if(PrintPrevalues){
+            std::cout<< "----------------NewCtrlPtsW--------------" << std::endl;   
+            NewCtrlPts.PrintMatrix(7);
+        }
         int size = KnotVector.size()-p-1;
         std::function<double(double)> f = [](double x) { 
             return  100*M_PI * M_PI * std::sin( 10*M_PI * x);
@@ -1611,10 +1621,11 @@ int main(int argc, char *argv[]) {
         n = KnotVector.size()-p-2;
 
 
-
-        std::cout<< "---------------KnotVectorNew-----------------" << std::endl;
-        for(unsigned int i=0; i<KnotVector.size(); i++){
-            std::cout << KnotVector[i] << ", ";
+        if(PrintPrevalues){
+            std::cout<< "---------------KnotVectorNew-----------------" << std::endl;
+            for(unsigned int i=0; i<KnotVector.size(); i++){
+                std::cout <<std::setprecision(7) << KnotVector[i] << ", ";
+            }
         }
         //double Lenght=IntegrateNormDer(lower_limit,upper_limit, 5000, NewCtrlPts, KnotVector, n, p);
         double Lenght = M_PI;
@@ -1622,11 +1633,13 @@ int main(int argc, char *argv[]) {
         std::cout << "n value:" << n << std::endl;
         
         Weights=NewCtrlPts.GetRow(NewCtrlPts.GetNumRows()-1);
-        std::cout<< "---------------Weights-----------------" << std::endl;
-        for(unsigned int i=0; i<Weights.size(); i++){
-            std::cout << Weights[i] << ", ";
+        if(PrintPrevalues){
+            std::cout<< "---------------Weights-----------------" << std::endl;
+            for(unsigned int i=0; i<Weights.size(); i++){
+                std::cout <<std::setprecision(7) << Weights[i] << ", ";
+            }
+            std::cout << std::endl;
         }
-        std::cout << std::endl;
         int dim=NewCtrlPts.GetNumRows()-1;
         int numElements= NewCtrlPts.GetNumCols();
         
@@ -1637,18 +1650,22 @@ int main(int argc, char *argv[]) {
         Eigen::VectorXd LinearForm(size);
         LinearForm.setZero(); // Inicializa en cero
         
-        
-        std::cout<< "---------------Intervals-----------------" << std::endl;
         std::vector<double> Intervals=removeDuplicates(KnotVector);
-        for(unsigned int i=0; i<Intervals.size(); i++){
-            std::cout << Intervals[i] << ", ";
+        
+       
+        if(PrintPrevalues){
+            std::cout<< "---------------Intervals-----------------" << std::endl;
+            for(unsigned int i=0; i<Intervals.size(); i++){
+                std::cout << Intervals[i] << ", ";
+            }
+            std::cout << std::endl;
         }
-        std::cout << std::endl;
         Eigen::VectorXd nodes, weights;
         legendre_pol(nEvals, nodes, weights);
-            
-        std::cout << "Nodos (raices):\n" << nodes.transpose() << "\n";
-        std::cout << "Pesos:\n" << weights.transpose() << "\n"; 
+        if(PrintPrevalues){
+            std::cout << "Nodos (raices):\n" << nodes.transpose() << "\n";
+            std::cout << "Pesos:\n" << weights.transpose() << "\n"; 
+        }
         typedef Eigen::Triplet<double> T;
         std::vector<Eigen::Triplet<double>> tripletList;
         double preEvalPoint=lower_limit;
@@ -1823,15 +1840,16 @@ int main(int argc, char *argv[]) {
         auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
         std::cout << "Tiempo tomado: " << duration.count() << " nanosegundos\n";
 
-        std::cout<< "--------------Solution----------------" << std::endl;
-        for (int k = 0; k < u.size(); ++k){
-            std::cout << setprecision(std::numeric_limits<double>::max_digits10)<< u[k] << ", ";
-        }
-        std::cout << std::endl;
+        //std::cout<< "--------------Solution----------------" << std::endl;
+        //for (int k = 0; k < u.size(); ++k){
+        //    std::cout << setprecision(std::numeric_limits<double>::max_digits10)<< u[k] << ", ";
+        //}
+        //std::cout << std::endl;
 
         //Pre-computations of necessary variables in order to write the functions
-        nEvals=nElements;
+        //nEvals=nElements;
         //nEvals =200;
+        /*
         double auxeval1= (upper_limit - lower_limit)/2;
         double auxeval2= (upper_limit + lower_limit)/2;
         Eigen::VectorXd NewNodes, NewWeights;
@@ -1840,13 +1858,15 @@ int main(int argc, char *argv[]) {
         for(unsigned int i=0; i<nEvals; i++){
             time[i]=auxeval1*NewNodes(i)+auxeval2;
         }
+        */
         //std::cout<<"Longitud de la curva= "<< setprecision(std::numeric_limits<double>::max_digits10) <<  Lenght <<std::endl;
         std::string Text= "C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/SolEvals/EjSinNonConst"; //_h=" + to_string(static_cast<int>(nElements)) +"_p="+ to_string(p)+"_test2.txt"
         
-        writeNumericFunction(u, KnotVector, Weights, n, p, nEvals, lower_limit, upper_limit, Text, NewNodes, NewWeights, time, nElements);
+        writeNumericFunction(u, KnotVector, Weights, n, p, nEvals, lower_limit, upper_limit, Text,Intervals, nElements, M_PI);
         //std::cout<<"Longitud de la curva= "<< setprecision(std::numeric_limits<double>::max_digits10) <<  Lenght <<std::endl;
-        writeAnalyticFunction(analyticSol, analyticSolDers, lower_limit, upper_limit, nEvals, NewCtrlPts, KnotVector, n, p, Text, NewNodes, NewWeights, time, Lenght);
+        writeAnalyticFunction(analyticSol, analyticSolDers, Intervals, nEvals, NewCtrlPts, KnotVector, n, p, Text, Lenght, nElements);
        
+
         /*
         writeFunction(analyticSol, lower_limit, upper_limit, 50, NewCtrlPts, KnotVector, n, p, Text, Lenght);
         Text= "C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/SolEvals/EjSinNonConstDers_Analytic_test2.txt";
@@ -1854,86 +1874,80 @@ int main(int argc, char *argv[]) {
         */
         std::cout<<"Longitud de la curva= "<< setprecision(std::numeric_limits<double>::max_digits10) <<  cumLenght <<std::endl;
 
-
-        iMatrix<double> sol(dim,nEvals);
+        
+        iMatrix<double> sol(dim,nEvals*nElements);
         std::vector<double> eval(dim);
         //std::cout<< "--------------------------------------------" << std::endl;
         //iMatrix WeightedCtrlPts=WeightCtrlPts(CtrlPts,Weights);
         //WeightedCtrlPts.PrintMatrix();
-        for(unsigned int i = 0; i<nEvals; i++){
-            //std::cout << i << std::endl;
-            eval=CurvePointRational(KnotVector.size()-2-p,p,KnotVector,NewCtrlPts,time[i]);
-            //std::cout << eval[0] << "|" << eval[1] << std::endl;
-            sol.SetCol(i,eval);
-        }
-        Write_Curve(sol,"C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/Curvas/CurvaEjPruebaFEM.txt");
+        for(unsigned int iter = 0; iter<nElements; iter++){
+            double auxeval1= (Intervals[iter+1] - Intervals[iter])/2;
+            double auxeval2= (Intervals[iter+1] + Intervals[iter])/2;
 
+            for(unsigned int j=0; j<nEvals; j++){
+                double t=0.5*(auxeval1)*nodes(j)+auxeval2;
+                //std::cout << i << std::endl;
+                eval=CurvePointRational(KnotVector.size()-2-p,p,KnotVector,NewCtrlPts,t);
+                //std::cout << eval[0] << "|" << eval[1] << std::endl;
+                sol.SetCol(iter*nEvals + j,eval);
+            }
+            
+        }
+        Write_Curve(sol,"C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/Curvas/CurvaEjCircle_h="+  std::to_string(static_cast<int>(nElements)) + "_p=" + to_string(p) +".txt");
+        
         std::cout<<"fin 28"<<std::endl;
         
     }
     if(stoi(argv[1])==29){//Norm calculations
 
+        int h_val = 32768;
+        int p_val = 2;
+        std::string nameAnalytic="C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/SolEvals/EjSinNonConst_h="+ to_string(h_val) + "_p=" + to_string(p_val) +"_Analytic_testCircle.txt";
+        std::string nameNumeric="C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/SolEvals/EjSinNonConst_h="+ to_string(h_val) + "_p=" + to_string(p_val) +"_testCircle.txt";
+        std::string nameAnalyticDers="C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/SolEvals/EjSinNonConst_h="+ to_string(h_val) + "_p=" + to_string(p_val) +"Ders_Analytic_testCircle.txt";
+        std::string nameNumericDers="C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/SolEvals/EjSinNonConstDers_h="+ to_string(h_val) + "_p=" + to_string(p_val) +"_testCircle.txt";
+        std::vector<std::vector<double>> AnalyticSol = leerArchivo(nameAnalytic, p_val+1);
+        std::vector<std::vector<double>> NumericSol = leerArchivo(nameNumeric, p_val+1);
+        std::vector<std::vector<double>> AnalyticSolDers = leerArchivo(nameAnalyticDers, p_val+1);
+        std::vector<std::vector<double>> NumericSolDers = leerArchivo(nameNumericDers, p_val+1);
 
-    // -----------------------------------------------------------------------------
-    // Calcula las normas L2, H1 e Infinito
-    // -----------------------------------------------------------------------------
+        Eigen::VectorXd nodes, weights;
+        legendre_pol(p_val+1, nodes, weights);
 
-    // --- Parámetros configurables ---
-    int h_val = 128;
-    int p_val = 2;
-    std::string testName = "testCircle";
-    std::string basePath = "C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/SolEvals/";
+        std::vector<double> Intervals = createSubIntervals(h_val, 0, 1);
 
-    // --- Rutas de archivo ---
-    std::ostringstream path1, path2, path3, path4;
-    path1 << basePath << "EjSinNonConst_h=" << h_val << "_p=" << p_val << "_" << testName << ".txt";
-    path2 << basePath << "EjSinNonConst_Analytic_" << testName << ".txt";
-    path3 << basePath << "EjSinNonConstDers_h=" << h_val << "_p=" << p_val << "_" << testName << ".txt";
-    path4 << basePath << "EjSinNonConstDers_Analytic_" << testName << ".txt";
+        double L2sqr=0;
+        double H1sqr=0;
+        double cumSum=0;
+        double cumSumDers=0;
 
-    // --- Leer datos ---
-    auto data1 = loadMatrix(path1.str());
-    auto data2 = loadMatrix(path2.str());
-    auto data3 = loadMatrix(path3.str());
-    for (auto &row : data3)
-        for (auto &val : row)
-            val *= M_PI;
-    auto data4 = loadMatrix(path4.str());
 
-    if (data1.empty() || data2.empty()) {
-        std::cerr << "Error: los archivos no contienen datos válidos.\n";
-        return 1;
-    }
+        for(unsigned int iter=0; iter<h_val; iter++){
+            double a = Intervals[iter];
+            double b = Intervals[iter+1];
+            double h_elemento = (b - a)/2.0;
 
-    int n1 = data1.size();
-    int n2 = data1[0].size();
+            cumSum=0;
+            cumSumDers=0;
 
-    // --- Cuadratura de Gauss-Legendre ---
-    std::vector<double> xq, wq;
-    gaussLegendre(n2, 0.0, 2.0, xq, wq);
-    for (auto &xi : xq) xi += 1.0; // como en el script de Octave
+            for(unsigned int i=0; i<=p_val; i++){
 
-    // --- Calcular normas ---
-    double L2sq = 0.0, H1sqs = 0.0, normInf = 0.0;
+                
+                cumSum+=(AnalyticSol[iter][i]-NumericSol[iter][i])*(AnalyticSol[iter][i]-NumericSol[iter][i])*weights(i)* h_elemento;
+                
+                cumSumDers+=(AnalyticSolDers[iter][i]-NumericSolDers[iter][i])*(AnalyticSolDers[iter][i]-NumericSolDers[iter][i])*weights(i)* h_elemento;
+                
+            }
 
-    for (int i = 0; i < n1; ++i) {
-        for (int j = 0; j < n2; ++j) {
-            double diffU = data1[i][j] - data2[i][j];
-            double diffD = data3[i][j] - data4[i][j];
-            L2sq += wq[j] * diffU * diffU;
-            H1sqs += wq[j] * diffD * diffD;
-            normInf = std::max(normInf, std::fabs(diffU));
+            L2sqr+=cumSum;
+            H1sqr+=cumSumDers;
         }
-    }
 
-    double L2norm = std::sqrt(L2sq);
-    double H1norm = std::sqrt(L2sq + H1sqs);
-
-    // --- Mostrar resultados ---
-    std::cout << std::setprecision(10);
-    std::cout << "L2 norm  = " << L2norm << "\n";
-    std::cout << "H1 norm  = " << H1norm << "\n";
-    std::cout << "Inf norm = " << normInf << "\n";
+        double L2norm=std::sqrt(L2sqr);
+        double H1norm=std::sqrt(L2sqr+H1sqr);
+        std::cout <<"Norma L2=" << L2norm << std::endl;
+        std::cout <<"Norma H1=" << H1norm << std::endl;
+        std::cout<< "fin 29 " << std::endl;
 
     }
     /*
@@ -2304,12 +2318,14 @@ int main(int argc, char *argv[]) {
         bool ShowValues=false;
         bool ShowIterations=false;
         bool ShowIterations2=false;
+        bool ShowConditions=false;
+        bool ShowSolutions=false;
 
         //Initial definitions of variables
         int pY= 4;
         int pX= 4;
-        int hY= 256;
-        int hX= 256;
+        int hY= 10;
+        int hX= 10;
         int nEvalsY=pY+1;
         int nEvalsX=pX+1;
         int subMatSize=nEvalsX*nEvalsY;
@@ -2487,7 +2503,12 @@ int main(int argc, char *argv[]) {
             threadTriplets[t].reserve((hX * hY * nLoc * nLoc) / nthreads / 4 + 1000);
         }
 
-        
+        Eigen::MatrixXd GaussWeights = weightsX * weightsY.transpose();
+        /*
+        cout << "weightsY: " <<weightsY << std::endl;
+        cout << "weightsX: " << weightsX << std::endl;
+        cout << "GaussWeights: " << std::endl << GaussWeights << std::endl;
+        */
         auto start = std::chrono::high_resolution_clock::now();
         //Precomputation of BasisFuns and its derivates.
         std::vector<int> SpanIndexY(IntervalsY.size()-1);
@@ -2534,6 +2555,7 @@ int main(int argc, char *argv[]) {
                 auto &localLinear  = threadLinearForms[tid];
 
                 iMatrix<double> K_e(subMatSize, subMatSize);
+                std::vector<double> F_e((pX+1)*(pY+1));
                 if (ShowIterations) {
                     std::cout<<"--------Active Intervals---------"<< std::endl;
                     std::cout<< "IntervalX: (" << IntervalsX[i] << " " << IntervalsX[i+1]<<")"<< std::endl;
@@ -2543,8 +2565,8 @@ int main(int argc, char *argv[]) {
                 }
                 double auxeval1X= (IntervalsX[i+1] - IntervalsX[i])/2;
                 double auxeval2X= (IntervalsX[i+1] + IntervalsX[i])/2;
-                double auxeval1Y= (IntervalsY[i+1] - IntervalsY[i])/2;
-                double auxeval2Y= (IntervalsY[i+1] + IntervalsY[i])/2;
+                double auxeval1Y= (IntervalsY[j+1] - IntervalsY[j])/2;
+                double auxeval2Y= (IntervalsY[j+1] + IntervalsY[j])/2;
 
                 
                 int spanU = SpanIndexX[i];
@@ -2603,18 +2625,21 @@ int main(int argc, char *argv[]) {
                         double g22=dot_product(SurfDers(0,1),SurfDers(0,1));
                         double detg=g11*g22-g12*g12;
                         double Jinv=1/std::sqrt(detg);
-                        double auxconstant = weightsX[a]*weightsY[b]*Jinv;
+                        double dOmega = auxeval1X * auxeval1Y * GaussWeights(a,b);
+                        double auxconstant = dOmega * Jinv;
                         double g11c=  g22*auxconstant;
                         double g12c= -g12*2*auxconstant;
                         double g22c=  g11*auxconstant;
                         iMatrix<double> Kq= g11c*PartialXX+g12c*PartialXY+g22c*PartialYY;
                         K_e = K_e + Kq;
-                        
+                        for (int A = 0; A < SurfBasisRat.size(); ++A) {
+                            F_e[A] += SurfBasisRat[A] * f(EvalPointX, EvalPointY) * dOmega;
+                        }
                     }
                 }
 
                 // Emulation of local load vector (all ones)
-                std::vector<double> F_e((pX+1)*(pY+1), 1.0);
+                
                 // Rellenar triplets en matriz global
                 for(int a = 0; a <= pX; ++a){
                     
@@ -2678,6 +2703,148 @@ int main(int argc, char *argv[]) {
             }
             std::cout << std::endl;
         }
+
+
+        // -------------------- Imposición de Dirichlet homogéneo (u = 0) --------------------
+        std::vector<char> isDirichlet(size, false);
+        std::vector<int> dirichletNodes;
+        dirichletNodes.reserve(2 * (nElementsX + nElementsY));
+
+        for (int j = 0; j < nElementsY; ++j) {
+            for (int i = 0; i < nElementsX; ++i) {
+                int idx = i + j * nElementsX;
+                if (i == 0 || i == nElementsX - 1 || j == 0 || j == nElementsY - 1) {
+                    isDirichlet[idx] = 1;
+                    dirichletNodes.push_back(idx);
+                }
+            }
+        }
+        if(ShowConditions){
+            std::cout << "Número de nodos Dirichlet detectados: " << dirichletNodes.size() << std::endl;
+        }
+        
+        for (int col = 0; col < global.outerSize(); ++col) {
+            for (Eigen::SparseMatrix<double>::InnerIterator it(global, col); it; ++it) {
+                int row = it.row();
+                int c   = it.col();
+                if (isDirichlet[row] && row != c) {
+                    it.valueRef() = 0.0;
+                }
+            }
+        }
+
+        for (int k = 0; k < (int)dirichletNodes.size(); ++k) {
+            int colIdx = dirichletNodes[k];
+            for (Eigen::SparseMatrix<double>::InnerIterator it(global, colIdx); it; ++it) {
+                int row = it.row();
+                if (row != colIdx) {
+                    it.valueRef() = 0.0;
+                }
+            }
+        }
+
+        for (int k = 0; k < (int)dirichletNodes.size(); ++k) {
+            int idx = dirichletNodes[k];
+            global.coeffRef(idx, idx) = 1.0;
+            LinearForm[idx] = 0.0;
+        }
+
+        global.makeCompressed();
+
+        if(ShowSolutions){
+            std::cout << "Resolviendo sistema (K u = F) con Conjugate Gradient..." << std::endl;
+        }
+
+        int maxIter = std::max(100, std::min(5 * size, 500000));
+        auto tsolve_start = std::chrono::high_resolution_clock::now();
+        Eigen::VectorXd solution;
+        // IncompleteCholesky como precondicionador (SPD)
+        try {
+            using Precond = Eigen::IncompleteCholesky<double>;
+            Eigen::ConjugateGradient<Eigen::SparseMatrix<double>, Eigen::Lower|Eigen::Upper, Precond> solver;
+            solver.compute(global);
+            if (solver.info() != Eigen::Success) {
+                throw std::runtime_error("Precond compute falló (IC).");
+            }
+            solver.setTolerance(1e-8);
+            solver.setMaxIterations(maxIter);
+            solution = solver.solve(LinearForm);
+            auto tsolve_end = std::chrono::high_resolution_clock::now();
+
+            double elapsed_s = std::chrono::duration_cast<std::chrono::duration<double>>(tsolve_end - tsolve_start).count();
+            std::cout << "Tiempo solucion: " << elapsed_s << " s\n";
+            if(ShowSolutions){
+                std::cout << "Solver info (IC precond): " << solver.info() << "\n";
+                std::cout << "Iterations: " << solver.iterations() << ", Estimated error: " << solver.error() << "\n";
+                std::cout << "Solucion: " << solution.transpose() << std::endl;
+            }
+            
+            
+
+        } catch (const std::exception &e) {
+            // Fallback: usar precondicionador diagonal (Jacobi) si IC falla
+            if(ShowSolutions){
+            std::cerr << "Fallo precondicionador IncompleteCholesky o excepción: " << e.what() << "\n";
+            std::cerr << "Usando ConjugateGradient + DiagonalPreconditioner (fallback)." << std::endl;
+            }
+            Eigen::ConjugateGradient<Eigen::SparseMatrix<double>, Eigen::Lower|Eigen::Upper, Eigen::DiagonalPreconditioner<double>> solver2;
+            solver2.compute(global);
+            solver2.setTolerance(1e-8);
+            solver2.setMaxIterations(2*maxIter);
+            solution = solver2.solve(LinearForm);
+
+            auto tsolve_end2 = std::chrono::high_resolution_clock::now();
+            double elapsed_s2 = std::chrono::duration_cast<std::chrono::duration<double>>(tsolve_end2 - tsolve_start).count();
+            std::cout << "Tiempo solucion: " << elapsed_s2 << " s\n";
+            if(ShowSolutions){
+                std::cout << "Solver info (Diag precond): " << solver2.info() << "\n";
+                std::cout << "Iterations: " << solver2.iterations() << ", Estimated error: " << solver2.error() << "\n";
+                std::cout << "Solucion: " << solution.transpose() << std::endl;
+            }
+        }
+
+        // -------------------- Evaluacion en los elementos de la Solucion --------------------
+        iMatrix<double> MatSol(nElementsX, nElementsY, solution);
+        iMatrix<double> SolEvals(nElementsX*hX, nElementsY*hY);
+        iMatrix<std::vector<double>> Surf(nElementsX*hX, nElementsY*hY);
+        for (unsigned int i = 0; i < hX; i++) {
+            for (unsigned int j = 0; j < hY; j++) {
+
+                double auxeval1X= (IntervalsX[i+1] - IntervalsX[i])/2;
+                double auxeval2X= (IntervalsX[i+1] + IntervalsX[i])/2;
+                double auxeval1Y= (IntervalsY[j+1] - IntervalsY[j])/2;
+                double auxeval2Y= (IntervalsY[j+1] + IntervalsY[j])/2;
+
+                
+                int spanU = SpanIndexX[i];
+                int spanV = SpanIndexY[j];
+                iMatrix<double> activeWeights=NewWeights.GetSubMat(spanU-pX,spanU, spanV-pY, spanV);
+                auto &DersBasisX_vec = Basis_and_DersX[i]; // vector<iMatrix<double>> size nEvalsX
+                auto &DersBasisY_vec = Basis_and_DersY[j]; // vector<iMatrix<double>> size nEvalsY
+                for(int a = 0; a < nEvalsX; ++a){
+
+                    double EvalPointX=auxeval1X*nodesX(a)+auxeval2X;
+                    //std::cout << "EvalPointX: " << EvalPointX << ". ";
+                    for(int b = 0; b < nEvalsY; ++b){
+                        double EvalPointY=auxeval1Y*nodesY(b)+auxeval2Y;
+                        iMatrix<iMatrix<double>> RationalizedBasis2d=RationalizeDersBasisFuns2D(DersBasisX_vec[a], DersBasisY_vec[b],activeWeights,pX,pY);
+                        
+                        iMatrix<double> Rbasis = RationalizedBasis2d(0, 0);
+                        iMatrix<double> LocalSol = MatSol.GetSubMat(spanU - pX, spanU, spanV - pY, spanV);
+                        double u_h = 0.0;
+                        for (int ii = 0; ii < Rbasis.GetNumRows(); ++ii) {
+                            for (int jj = 0; jj < Rbasis.GetNumCols(); ++jj) {
+                                u_h += Rbasis(ii, jj) * LocalSol(ii, jj);
+                            }
+                        }
+                        SolEvals(i * nEvalsX + a, j * nEvalsY + b) = u_h;
+                        
+                        Surf(i*nEvalsX + a, j*nEvalsY + b)=SurfacePointRational(nX, pX, KnotVectorX, nY, pY, KnotVectorY, NewCtrlPtsW, EvalPointX, EvalPointY);
+                    }
+                }
+            }
+        }
+        MatSol.PrintMatrix();
 
         std::cout << "fin 31" << std::endl;
     }

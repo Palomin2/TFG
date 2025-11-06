@@ -1,0 +1,9 @@
+h=128    L2=5.43459e-05   H1=0.139094, tiempo tomado: 23630900 nanosegundos
+h=256    L2=6.72829e-06   H1=0.0344979    reduccion de  8.0772 en L2,   4.0320 en H1, tiempo tomado: 45798800 nanosegundos
+h=512    L2=8.39052e-07   H1=0.00860733   reduccion de  8.0189 en L2,   4.0080 en H1, tiempo tomado: 87303400 nanosegundos
+h=1024   L2=1.04842e-07   H1=0.00215076   reduccion de  8.0030 en L2,   4.0020 en H1, tiempo tomado: 189832700 nanosegundos
+h=2048   L2=1.3115e-08    H1=0.000537623  reduccion de  7.9941 en L2,   4.0005 en H1, tiempo tomado: 333601500 nanosegundos
+h=4096   L2=1.6452e-09    H1=0.000134402  reduccion de  7.9717 en L2,   4.0001 en H1, tiempo tomado: 684406800 nanosegundos
+h=8192   L2=2.08526e-10   H1=3.36001e-05  reduccion de  7.8897 en L2,   4.0000 en H1, tiempo tomado: 1340028900 nanosegundos
+h=16384  L2=2.78313e-11   H1=8.40003e-06  reduccion de  7.4925 en L2,   4.0000 en H1, tiempo tomado: 2521072900 nanosegundos
+h=32768  L2=2.01434e-11   H1=2.09994e-06  reduccion de  1.3816 en L2,   4.0000 en H1, tiempo tomado: 5063443900 nanosegundos

@@ -412,15 +412,21 @@ void impose_Robin_Condition(int p, int size, Eigen::SparseMatrix<double> &global
 *Output: writes the evaluation of the function in a txt
 */  
 void writeNumericFunction(Eigen::VectorXd funEvals,const std::vector<double> &KnotVector,const std::vector<double> &WeightVector, int n, int p, int nEvals, double lowerLimit, double upperLimit,  std::string name,
-                            Eigen::VectorXd nodes, Eigen::VectorXd weights, std::vector<double> time, int nElements); 
+                            std::vector<double> Intervals, int nElements, double Lenght); 
 
 /*
 *Input: the function we evaluate, lower and upper limits of evaluation and number of steps of the evaluation, name of hte file where we write the evaluations,
         for the evaluation of the curve point, CtrlPtsW, KnotVector, n = KnotVector.size()-p-2, p polynomial degree.
 *Output: writes the evaluation of the function in a txt
 */  
-void writeAnalyticFunction(std::function<double(double)> f,std::function<double(double)> f_Ders, double lowerLimit, double upperLimit, double nEvals,const iMatrix<double> &CtrlPtsW,const std::vector<double> &KnotVector,
-                        int n, int p, std::string name,Eigen::VectorXd nodes, Eigen::VectorXd weights, std::vector<double> time, double Lenght);
+void writeAnalyticFunction(std::function<double(double)> f,std::function<double(double)> f_Ders,std::vector<double> Intervals, double nEvals,const iMatrix<double> &CtrlPtsW,const std::vector<double> &KnotVector,
+                        int n, int p, std::string name, double Lenght, double nElements);
+
+/*
+*Input: name of the file, p polynomial degree
+*Output: vector of evaluations on each elements loaded
+*/  
+std::vector<std::vector<double>> leerArchivo(const std::string& name, int p);
 
 /*
 *Input: vector of evaluations of the function, name of hte file where we write the evaluations

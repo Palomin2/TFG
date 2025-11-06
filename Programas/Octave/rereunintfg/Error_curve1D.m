@@ -5,15 +5,15 @@ clear exacta
 k=1;
 for e=1:noElems
    xiE   = elRange(e,:); % [xi_i,xi_i+1]
-   conn  = elConn(e,:);  
-   noFns = length(conn); 
-   
-   % loop over Gauss points 
-    for gp=1:size(W,1)                        
-      pt      = Q(gp,:);                          
-      wt      = W(gp);                            
-      Xi      = 0.5 * ( ( xiE(2) - xiE(1) ) * pt + xiE(2) + xiE(1)); % coord in parameter space  
-      J2      = 0.5 * ( xiE(2) - xiE(1) ); 
+   conn  = elConn(e,:);
+   noFns = length(conn);
+
+   % loop over Gauss points
+    for gp=1:size(W,1)
+      pt      = Q(gp,:);
+      wt      = W(gp);
+      Xi      = 0.5 * ( ( xiE(2) - xiE(1) ) * pt + xiE(2) + xiE(1)); % coord in parameter space
+      J2      = 0.5 * ( xiE(2) - xiE(1) );
       clear exacta
       clear aux
       clear xx
@@ -32,7 +32,7 @@ for e=1:noElems
 
       exacta=zeros(1,length(Xi));
       derexacta=zeros(1,length(Xi));
-      
+
       s_gp = interp1(xi_samp, s_samp, Xi, 'cubic');
       % s_gp=Xi;
       for j=1:length(Xi)
@@ -47,8 +47,8 @@ for e=1:noElems
         % dzz(j)=D(2);
 
         % if Xi>=0 & Xi < 1
-        %     D1=NURBSCurvepoint3D(length(U),p,knotVec,[controlPts(:,1),controlPts(:,2),U,controlPts(:,3)],Xi(j)+1e-6); % 
-        %     D2=NURBSCurvepoint3D(length(U),p,knotVec,[controlPts(:,1),controlPts(:,2),U,controlPts(:,3)],Xi(j)); % 
+        %     D1=NURBSCurvepoint3D(length(U),p,knotVec,[controlPts(:,1),controlPts(:,2),U,controlPts(:,3)],Xi(j)+1e-6); %
+        %     D2=NURBSCurvepoint3D(length(U),p,knotVec,[controlPts(:,1),controlPts(:,2),U,controlPts(:,3)],Xi(j)); %
         %     D=(D1-D2)/1e-6;
         % elseif  Xi == 1
         %     D1=NURBSCurvepoint3D(length(U),p,knotVec,[controlPts(:,1),controlPts(:,2),U,controlPts(:,3)],Xi(j)); %
@@ -67,9 +67,9 @@ for e=1:noElems
         Z(k)=dzz(j)-derexacta(j);
         k=k+1;
       end
-      error2=(exacta-zz).^2; 
-      dererror2=(derexacta-dzz).^2; 
-      
+      error2=(exacta-zz).^2;
+      dererror2=(derexacta-dzz).^2;
+
       % compute elementary stiffness matrix and
       % assemble it to the global matrix
       L2_error = L2_error + sum(error2) * J2 * wt;
