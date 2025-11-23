@@ -1,0 +1,9 @@
+hX=hY=8,    L2=1.21941e-05, H1 = 0.000496499,  tiempo ensamblado= 0,0026283,   tiempo resolucion=0.0003326s
+hX=hY=16,   L2=1.417e-06,   H1 = 0.00012125,   tiempo ensamblado= 0,0068425s,  tiempo resolucion=0.0016073s
+hX=hY=32,   L2=1.74087e-07, H1 = 3.01525e-05,  tiempo ensamblado= 0.0083679,   tiempo resolucion=0,0198082s
+hX=hY=64,   L2=2.16703e-08, H1 = 7.52762e-06,  tiempo ensamblado= 0,0662915,   tiempo resolucion=0.0282581s
+hX=hY=128,  L2=2.7077e-09,  H1 = 1.88121e-06,  tiempo ensamblado= 0,2075536s,  tiempo resolucion=0.117913s
+hX=hY=256,  L2=3.41524e-10, H1 = 4.70256e-07,  tiempo ensamblado= 0,6902125s,  tiempo resolucion=0.970488s
+hX=hY=512,  L2=5.14142e-11, H1 = 1.17561e-07,  tiempo ensamblado= 2,7210927s,  tiempo resolucion=8.65366s
+hX=hY=1024, L2=2.19284e-11, H1 = 2.93905e-08,  tiempo ensamblado= 10,5396818s, tiempo resolucion=98.1845s
+hX=hY=2048, L2=1.57599e-11, H1 = 7.3485e-09,  tiempo ensamblado= 91,8635398s, tiempo resolucion= 1467.8s

@@ -2132,3 +2132,31 @@ iMatrix<iMatrix<double>> RationalizeDersBasisFuns2D(const iMatrix<double> &DersB
     return Rationalized;
 }
 
+/******************************************************************************* */
+
+/******************************************************************************* */
+void ExportToTxt(const iMatrix<double>& SolEvals, const iMatrix<std::vector<double>>& Surf, const std::string& filename){
+    std::ofstream file(filename);
+    if (!file.is_open()) {
+        std::cerr << "Error abriendo archivo para escritura: " << filename << std::endl;
+        return;
+    }
+
+    size_t nx = SolEvals.GetNumRows();
+    size_t ny = SolEvals.GetNumCols();
+    //std::cout << "1";
+    for (size_t i = 0; i < nx; ++i) {
+        //std::cout << "2";
+        for (size_t j = 0; j < ny; ++j) {
+            
+            const auto& xyz = Surf(i, j); 
+            //std::cout << xyz.size();
+            double val = SolEvals(i, j);
+            file<< std::setprecision(std::numeric_limits<double>::max_digits10) << xyz[0] << " " << xyz[1] << " " << xyz[2] << " " << val << "\n";
+        }
+    }
+
+    file.close();
+    std::cout << "Datos exportados correctamente a " << filename << std::endl;
+}
+

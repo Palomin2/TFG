@@ -1,0 +1,1231 @@
+%&pdflatex
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+%
+% PLANTILLA PARA UN TRABAJO DE FIN DE GRADO
+% EN EL GRADO DE MATEMÁTICAS DE LA UNIVERSIDAD DE ZARAGOZA
+%
+% Mario Pérez Riera
+% Área de Análisis Matemático, Universidad de Zaragoza
+%
+% Última modificación: 1 de agosto de 2021
+%
+% Escrito para pdfLaTeX
+%
+%
+\documentclass[11pt]{book}
+
+% Paquetes y fuentes
+%---------------------------------------------------------------------------
+\usepackage{geometry}               % define las dimensiones de la página
+\geometry{
+ a4paper, % Tamaño del papel
+ centering, % Zona útil centrada
+ margin = 25mm, % Márgenes en blanco: 25mm
+% includehead, % Incluir la cabecera en el área del texto
+% includefoot, % Incluir el pie en el área del texto
+}
+
+\usepackage[utf8]{inputenc}        % para usar el teclado normalmente
+\usepackage[spanish]{babel}        % selecciona idioma
+\usepackage[T1]{fontenc}           % gestión de fuentes con acentos
+
+% Si alguno de estos paquetes no los vas a usar, mejor los quitas:
+\usepackage{amssymb}               % para cargar las fuentes de la A.M.S.
+\usepackage{amsmath}               % para usar letras griegas en negrita
+\usepackage{amsthm}                % mejora los entornos tipo-teorema y proof
+\usepackage{mathptmx}              % fuente Times
+%\usepackage{lmodern}              % fuente Times
+\usepackage{tikz}                  % para los dibujos
+\usetikzlibrary{babel}              % para evitar conflictos entre TikZ y babel
+
+%\usepackage{longtable}             % permite saltos de páginas en tablas largas
+
+%------ Enlaces en el pdf
+\usepackage{url}
+\usepackage[pdftex, colorlinks=true, citecolor=cyan, linkcolor=black, 
+urlcolor=black]{hyperref}
+
+%------ Cabeceras y pies de página
+\usepackage{titleps}
+
+\newpagestyle{miestilo}{
+%-- Cabecera par y cabecera impar
+\sethead[\thepage][][\textsl{\chaptername\ \thechapter. \chaptertitle}]
+{\textsl{Analísis isogeométrico \ - \ Carlos Palomera Oliva}}{}{\thepage}
+%-- Pie de página par y pie de página impar
+%\setfoot[][\textsl{\thesection. \sectiontitle}][]
+%{}{\textsl{\thesection. \sectiontitle}}{}
+}
+
+\newpagestyle{primeraparte}{
+%-- Cabecera par y cabecera impar
+\sethead[\thepage][][\textsl{\chaptertitle}]
+{\textsl{Una plantilla para el TFG \ - \ Mario Pérez Riera}}{}{\thepage}
+%-- Pie de página par y pie de página impar
+%\setfoot[][\textsl{\thesection. \sectiontitle}][]
+%{}{\textsl{\thesection. \sectiontitle}}{}
+}
+
+%------ \S 4.3, p. 93, de The LaTeX Companion 1a ed. (Figura 4.2) (Juan Luis)
+\newcommand{\clearemptydoublepage}{\newpage{\pagestyle{empty}\cleardoublepage}}
+\newcommand{\sectionmarkwithoutsections}[1]{\markright{#1}}
+
+\makeindex
+
+\theoremstyle{plain} % Entornos tipo teorema
+\newtheorem{teorema}{Teorema}[chapter]
+%\newtheorem{lema}[teorema]{Lema} % La misma numeración que 'teorema'
+
+\theoremstyle{definition} % Entornos tipo definición
+\newtheorem*{defin}{Definición} % El asterisco hace que no se numere
+%\newtheorem{ejemplo}{Ejemplo}
+
+%------ Conjuntos de números
+\newcommand\N{\mathbb{N}}
+\newcommand\Z{\mathbb{Z}}
+\newcommand\R{\mathbb{R}}
+\newcommand\C{\mathbb{C}}
+
+%------ Funciones en español
+\renewcommand{\spanishoperators}{Re}
+%\renewcommand{\spanishoperators}{Re ctg arc\,ctg} % Define \Re, \ctg, \arctg
+
+%-------------
+\begin{document}
+%-------------
+\frontmatter                     % Parte primera del texto
+\pagestyle{primeraparte}    % Estilo de cabeceras para la parte primera del texto
+
+%\pagenumbering{roman} % Incluido en \frontmatter
+
+%--- PORTADA DEL TFG
+\begin{titlepage}
+\begin{center}
+
+\null
+\vfill
+
+\Huge{\bfseries Una plantilla en {\LaTeX}}\\%
+\Huge{\bfseries para el trabajo de fin de grado}
+
+\vfill
+
+\noindent
+\begin{figure}[h]
+\centering
+\includegraphics[width=100mm]{ciencias.png}\\%
+\includegraphics[width=100mm]{logoUZ.png}
+\end{figure}
+
+\vfill
+
+\Huge{\bfseries Miguel Castaño Alcalde}\\%
+\Huge{Trabajo de fin de grado de Matemáticas}\\%
+\Huge{Universidad de Zaragoza}\\%
+
+\vfill
+\huge{Diciembre de 2023}
+\end{center}
+\end{titlepage}
+%--- FIN DE LA PORTADA
+
+\clearemptydoublepage
+
+%\setcounter{page}{7} % Por si queremos imponer un número de página
+
+%--- RESUMEN
+\chapter{Resumen}
+
+Este documento es una plantilla en {\LaTeX} diseñada para cumplir con las 
+\emph{directrices propias} para la elaboración del trabajo de fin de grado de 
+Matemáticas en la Facultad de Ciencias de la Universidad de Zaragoza. Estas 
+directrices, que se pueden ver en~\cite{FC}, indican lo siguiente sobre la 
+memoria (artículo $4$):
+
+\begin{enumerate}
+\item La memoria del TFG podrá ser redactada en español o en inglés. Si la 
+memoria está escrita en español (respectivamente en inglés) deberá acompañarse de 
+un resumen en inglés (respectivamente en español). La extensión de dicho resumen 
+será de dos o tres páginas.
+
+\item La memoria se editará, preferiblemente, utilizando el sistema de 
+composición de documentos {\LaTeX}. A tal efecto, en la página web de la Facultad 
+de Ciencias se dispondrá de una plantilla~{\LaTeX}.
+
+\item Con el fin de facilitar su validación administrativa, todas las memorias de 
+TFG de la Facultad de Ciencias tendrán un tamaño de letra diferenciado mínimo 
+de~$11$ puntos, con un interlineado a espacio $1.15$ y márgenes de al menos 
+$2.5$~cm, en papel tamaño DIN A4. El índice y el resumen deberán ir justo antes 
+del inicio de la memoria y esta, en ningún caso, podrá superar las $25$ páginas, 
+excluidos los anexos.
+
+\item El director de un TFG deberá comprobar que la memoria presentada cumple con 
+las normas de edición establecidas, antes de dar el visto bueno a su depósito.
+\end{enumerate}
+
+Esta plantilla se ofrece por si resulta útil, pero 
+debe quedar claro que no es obligatorio usarla: el trabajo se puede escibir prescindiendo de esta plantilla, siempre que se respeten las directrices anteriores.
+
+La plantilla está diseñada para un trabajo compuesto por uno o más capítulos y una 
+bibliografía única, es decir, no una por cada capítulo. Detallando un poco más, 
+la estructura es la siguiente y por este orden:
+\begin{itemize}
+\item Una portada.
+\item Un resumen.
+\item Después, un índice general en el que figuran el resumen, los capítulos de 
+los que consta el trabajo y la bibliografía. 
+Cada capítulo puede contener secciones, que también aparecen en el índice.
+\item La parte principal, formada por cada uno de los capítulos que componen el 
+trabajo.
+\item Y, por último, la bibliografía.
+\end{itemize}
+
+La plantilla está escrita para componerse en \texttt{pdflatex} y la forman varios 
+archivos que deben estar en la misma carpeta:
+\begin{itemize}
+\item Un documento principal, que contiene las órdenes iniciales y el código \LaTeX del texto.
+\item Los archivos de imágenes que se vayan a incluir en el trabajo.
+\end{itemize}
+
+En el primer capítulo de este modelo se dan más detalles sobre esta plantilla.
+
+Obsérvese que en este ejemplo el resumen no sigue las directrices 
+establecidas para los trabajos de fin de grado, según las cuales debe estar 
+escrito en inglés si el trabajo está en castellano.
+
+El último capítulo de este documento se ha puesto solo como relleno, como ejemplo 
+de texto matemático, y no corresponde a un verdadero trabajo de fin de grado.
+
+%--- FIN DEL RESUMEN
+
+\clearemptydoublepage
+
+\tableofcontents
+
+\clearemptydoublepage
+
+%-------------
+\mainmatter                      % Parte principal del texto
+\pagestyle{miestilo}    % Estilo de cabeceras para la parte principal del texto
+
+%--- CAPÍTULO 1 DEL TFG
+\chapter{Instrucciones}
+
+Esto no es un manual de {\LaTeX}. Uno bastante completo 
+en castellano es~\cite{CLMPS}. Y, desde luego, el que más información proporciona 
+es~\cite{MGBCR}.
+
+Estas instrucciones son más bien unos comentarios sobre la plantilla, con el 
+objeto de facilitar su uso (y su modificación) a los autores de los trabajos de 
+fin de grado. Lo mejor será tener a la vista el código tex al tiempo que se lee 
+el pdf. Algunos de estos comentarios serán demasiado elementales, otros demasiado 
+escuetos y quizá alguno no sea del todo correcto.
+
+Como ya se ha dicho en el resumen, este trabajo está formado por varios 
+elementos: la portada, el 
+resumen, un índice general, 
+los capítulos y la bibliografía. Cada uno de 
+estos elementos empieza en página impar, dejando antes, si hace falta, una página 
+par en blanco.
+
+A diferencia de los capítulos, el resumen no lleva delante el 
+título de \emph{Capítulo} ni numeración; tampoco el índice ni la bibliografía.
+
+La numeración de las páginas es con números 
+romanos para la parte inicial (el resumen y el índice general) y con 
+números arábigos para el núcleo del trabajo (los capítulos y la bibliografía).
+
+\section{El preámbulo del documento principal}
+
+El documento principal es \emph{PlantillaTFG.tex} y en primer lugar contiene las órdenes 
+principales, las llamadas a los paquetes auxiliares y las definiciones. Es lo que podemos llamar el preámbulo del documento. Empieza por las líneas
+\begin{verbatim}
+%&pdflatex
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+\end{verbatim}
+que indican el programa con que se compone el texto (\emph{pdflatex}) y la 
+codificación (aquí hemos usado \emph{utf-8}). No es necesario entrar en detalles ni tocar estas líneas. A 
+continuación vienen algunos comentarios y, por fin, la orden
+\begin{verbatim}
+\documentclass[11pt]{book}
+\end{verbatim}
+que determina el tamaño de la letra y el formato 
+principal. Las líneas
+\begin{verbatim}
+\usepackage{geometry}
+\geometry{
+...
+}
+\end{verbatim}
+establecen las dimensiones de la página y, dentro 
+de ella, el espacio reservado al texto.
+
+Las siguientes líneas incorporan los paquetes de {\LaTeX} que se 
+van a usar. Los primeros son:
+\begin{verbatim}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage[T1]{fontenc}
+\end{verbatim}
+En conjunto, estas órdenes indican que el trabajo está escrito en castellano.
+Permiten usar de manera normal el teclado en español, es 
+decir, no habrá que escribir \verb"\'a" para obtener la letra acentuada, sino que 
+podremos escribir \verb"á" sin más. Lo mismo se aplica a la letra ñ, a los signos 
+de abrir interrogación y exclamación, etcétera. También establece los cortes de 
+palabra en español y muchos otros parámetros. 
+
+A continuación aparecen varias órdenes de la forma
+\begin{verbatim}
+\usepackage{...}
+\end{verbatim}
+cada una de la cuales carga un paquete. Algunas de estas líneas podrían quitarse 
+(o anteponer un \%) si no se van a usar. Un primer bloque,
+\begin{verbatim}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathptmx}
+\end{verbatim}
+incorpora órdenes útiles cuando se escriben enunciados y fórmulas matemáticas 
+(\emph{amssymb}, \emph{amsmath} y \emph{amsthm}) y cambia a la letra Times 
+(\emph{mathptmx}). En lugar de \emph{mathptmx} se puede poner, por ejemplo, 
+\emph{lmodern}.
+
+Las líneas
+\begin{verbatim}
+\usepackage{tikz}
+\usetikzlibrary{babel}
+\end{verbatim}
+incorporan el paquete \emph{tikz}, que permite hacer dibujos, gráficas y 
+esquemas desde {\LaTeX} (la segunda línea evita algunos conflictos entre los paquetes \emph{tikz} y \emph{babel}).
+
+A lo largo del texto, los capítulos, las secciones, algunos enunciados, algunas 
+fórmulas, las referencias bibliográficas{\dots} llevan una numeración a la que en 
+otras partes se puede hacer referencia (<<\dots en la 
+sección~\ref{bibliografia}\dots>>). Las líneas
+\begin{verbatim}
+\usepackage{url}
+\usepackage[pdftex, colorlinks=true, citecolor=cyan, linkcolor=black, 
+urlcolor=black]{hyperref}
+\end{verbatim}
+hacen que estas referencias lleven un enlace al lugar referenciado 
+(es decir, picar en el~\ref{bibliografia} nos llevaría al comienzo de la 
+sección~\ref{bibliografia}). También mejoran el comportamiento de los enlaces 
+externos (a páginas web, por ejemplo). Las opciones \emph{colorlinks}, 
+\emph{citecolor}, \emph{linkcolor}, \emph{urlcolor} determinan el aspecto y el 
+funcionamiento de estos enlaces.
+
+El bloque
+\begin{verbatim}
+\usepackage{titleps}
+
+\newpagestyle{miestilo}{
+\sethead[\thepage][][\textsl{\chaptername\ \thechapter. \chaptertitle}]
+{\textsl{Una plantilla para el TFG \ - \ Mario Pérez Riera}}{}{\thepage}
+%\setfoot[][\textsl{\thesection. \sectiontitle}][]
+%{}{\textsl{\thesection. \sectiontitle}}{}
+}
+\end{verbatim}
+es importante, porque establece el formato de las cabeceras y pies de 
+página. El estilo está definido mediante dos 
+órdenes: \verb"\sethead" y \verb"\setfoot", aunque en este ejemplo solo usamos la 
+primera. Su sintaxis es la misma:
+\begin{verbatim}
+\sethead[A][B][C]{D}{E}{F}
+\end{verbatim}
+(atención a los corchetes y las llaves), donde:
+\begin{itemize}
+\item A es lo que aparece en la esquina izquierda de la cabecera de las páginas 
+pares;
+\item B es la parte central de la cabecera de las páginas pares;
+\item C es la esquina derecha de la cabecera de las páginas pares;
+\item D, E y F son análogas, pero para las páginas impares.
+\end{itemize}
+Cada uno de estos seis elementos puede estar vacío, como en el ejemplo. Con 
+\verb"\setfoot" establecemos los pies de página (en esta plantilla están vacíos). Como en esta plantilla usamos dos estilos de cabecera diferentes, uno para la primera parte (resumen e índice) y otro para la parte principal, a continuación aparece otro bloque similar:
+\begin{verbatim}
+\newpagestyle{primeraparte}{
+\sethead[\thepage][][\textsl{\chaptertitle}]
+{\textsl{Una plantilla para el TFG \ - \ Mario Pérez Riera}}{}{\thepage}
+%\setfoot[][\textsl{\thesection. \sectiontitle}][]
+%{}{\textsl{\thesection. \sectiontitle}}{}
+}
+\end{verbatim}
+
+En seguida explicamos cómo se activa un estilo u otro.
+
+Después de este bloque se definen algunas órdenes más técnicas, así como los 
+entornos del tipo teorema, proposición, 
+definición, ejemplo y otras órdenes para los símbolos y operadores 
+matemáticos de uso frecuente.
+
+Con estas líneas termina la parte preparatoria y comienza el documento en sí.
+Está dividido en tres grandes bloques: el bloque inicial, el bloque principal y 
+el bloque final.
+
+\section{El bloque inicial: la portada, el resumen y el índice.}
+
+El bloque inicial empieza con las órdenes
+\begin{verbatim}
+\frontmatter
+\pagestyle{primeraparte}
+\end{verbatim}
+y termina, después del código de la portada y el resumen, con
+\begin{verbatim}
+\tableofcontents
+\clearemptydoublepage
+\end{verbatim}
+La orden \verb"\frontmatter" indica que estamos en el bloque inicial. La orden que vemos a continuación, \verb"\pagestyle{primeraparte}", activa el estilo de cabecera \emph{primeraparte}, que es uno de los que acabamos de definir nosotros.
+
+A continuación viene el código de la portada del trabajo. A diferencia del resto, aquí empleamos diferentes tamaños de letra y órdenes para forzar un espaciado vertical.
+
+La portada termina con la orden \verb"\clearemptydoublepage", que se repite a lo largo del código siempre al final de una parte o un capítulo. Esta orden añade una página en blanco si hace falta, para que el siguiente elemento del trabajo empiece en página impar. Es decir: si la última página es impar, añade una página par en blanco; si la última página es par, no hace nada.
+
+Después de la portada viene el resumen, que empieza con la orden \verb"\chapter{Resumen}". Técnicamente, el resumen es un capítulo del texto. Acaba también con la orden \verb"\clearemptydoublepage".
+
+Al final, la orden \verb"\tableofcontents" compone el índice general. Este índice sale de manera automática (quizás haya que componer el texto un par de veces) y 
+contiene los títulos de los capítulos, las secciones y las subsecciones, si las 
+hay. Contiene también el resumen y la bibliografía. Cada entrada lleva un enlace al apartado 
+correspondiente. Como se ha dicho antes, los colores se 
+pueden cambiar en la línea
+\begin{verbatim}
+\usepackage[...]{hyperref}
+\end{verbatim}
+del preámbulo.
+
+La orden \verb"\tableofcontents" viene seguida también por \verb"\clearemptydoublepage". Así termina el bloque inicial del trabajo.
+
+\section{El bloque principal: los capítulos.}
+
+Este bloque empieza con la orden \verb"\mainmatter" y sigue el mismo esquema que el bloque inicial. Consta de los capítulos del trabajo.
+
+Cada capítulo del trabajo empieza con la orden \verb"\chapter{...}", donde entre las llaves está el título del capítulo. Y termina con \verb"\clearemptydoublepage".
+
+\section{El bloque final: la bibliografía.}
+\label{bibliografia}
+
+El bloque final, que empieza con la orden 
+\verb"\backmatter", está formado por la bibliografía.
+Su estructura es estándar: comienza con
+\begin{verbatim}
+\begin{thebibliography}{99}
+\end{verbatim}
+y termina con
+\begin{verbatim}
+\end{thebibliography}
+\end{verbatim}
+En el pdf, cada entrada de la bibliografía aparece 
+con un número entre corchetes, tras el cual se indica el autor o autores y el 
+título del libro o artículo. En el caso de los libros, sigue la editorial, lugar 
+de publicación y año; en el caso de los artículos, la revista, volumen, número, 
+año y páginas. Cada parte va con una tipografía determinada: por ejemplo, los 
+autores se escriben en versalitas.
+
+Naturalmente, el estilo de las referencias se puede cambiar, pero una vez elegido 
+el estilo es importante sujetarse a él.
+
+El número $99$ de la orden \verb"\begin{thebibliography}{99}" indica el espacio 
+que se reserva al número entre corchetes. En este caso, se reserva espacio para 
+dos dígitos. Si hay menos de diez entradas, deberá escribirse un número de una 
+cifra (por ejemplo, $9$); si hay entre $100$ y $999$ entradas, pondremos 
+\verb"\begin{thebibliography}{999}", por ejemplo.
+%--- FIN DEL CAPÍTULO 1
+
+\clearemptydoublepage
+
+%--- CAPÍTULO 2 DEL TFG
+\chapter{Comentarios}
+
+Incluimos en este capítulo algunos comentarios generales y consejos de escritura 
+que no se refieren específicamente a esta plantilla.
+
+\section{Figuras}
+
+Como en cualquier documento escrito en {\LaTeX} (en nuestro caso, 
+\emph{pdflatex}) podemos incluir figuras. Estas figuras pueden ser imágenes 
+contenidas en documentos aparte o compuestas dentro de nuestro documento con 
+órdenes de \LaTeX. Se pueden incluir imágenes en diversos formatos 
+gráficos, como pdf, jpeg y png, pero no todos; por 
+ejemplo, no se pueden incluir imágenes tiff o gif.
+
+Es preferible dejar flotar las figuras. Si se usa el entorno \emph{figure}, 
+entonces con
+\begin{verbatim}
+\begin{figure}[ht]
+...
+\end{figure}
+\end{verbatim}
+indicamos que la figura debe insertarse preferiblemente donde se escribe el 
+código (la \texttt{h} de \emph{here}) o en la parte superior de la página (la 
+\texttt{t} de \emph{top}).
+
+%--------------
+\begin{figure}[ht]% h (here) o t (top)
+\centering
+\includegraphics[width=0.45\textwidth]{ciencias.png}
+\qquad
+\includegraphics[width=0.45\textwidth]{logoUZ.png}
+\caption{dos imágenes en archivos externos.}
+\end{figure}
+%--------------
+
+El paquete \emph{tikz} permite hacer gráficas de funciones, 
+figuras geométricas y diagramas sencillos, y no tan sencillos, como los de las 
+figuras~\ref{graf-seno} y~\ref{dosjuntas}.
+
+%--------------
+\begin{figure}[ht]% h (here) o t (top)
+\centering
+% xscale, yscale sirven para escalar en horizontal y vertical
+\begin{tikzpicture}[xscale=0.8, yscale=1.2]
+% La curva
+\draw[very thick, color=blue] plot[domain=-2*pi:3*pi, samples=200] (\x, {sin(2*\x r)});
+% Eje horizontal
+\draw[thin, gray] (-2*pi-0.3,0) -- (3*pi+0.3,0);
+% Eje vertical
+\draw[thin, gray] (0,-1) -- (0,1);
+\end{tikzpicture}
+\caption{gráfica de la función $\sen(2x)$ entre $-2\pi$ y $3\pi$, hecha con \emph{tikz}.}
+\label{graf-seno}
+\end{figure}
+%--------------
+
+%--------------
+\begin{figure}[ht]% h (here) o t (top)
+\centering
+\begin{tikzpicture}[scale=0.8]
+% Ejes de coordenadas
+\draw (-1,0) -- (5,0);
+\draw (0,-1) -- (0,3);
+
+% Puntos en coordenadas polares: (30:4) [observa los dos puntos]
+% 30 es el ángulo en grados
+% 4 es el módulo
+% la orden -latex indica que el segmento termina en una flecha estilo LaTeX
+\draw[very thick, red, -latex] (0,0) -- (30:4);
+
+% (30:4 |- 0,0) indica la intersección de dos rectas:
+% la recta que parte del punto (30:4) [observa que está en polares]
+% en vertical [observa el símbolo |]
+% y la recta que parte en horizontal [observa el símbolo -]
+% del punto (0,0) [observa que está en cartesianas]
+\draw[very thin, gray] (30:4) -- (30:4 |- 0,0);
+\draw[very thin, gray] (30:4) -- (30:4 -| 0,0);
+
+% arco de circunferencia terminado en flecha [-latex]
+% que empieza en el punto (0:2) [observa que está en polares]
+% que tiene ángulo de salida 0,
+% ángulo de llegada 30
+% y radio 2
+\draw[-latex] (0:2) arc (0:30:2);
+
+% Rótulos
+% Primero: (a,b) en el punto (30;4),
+% pero dejando el punto (30:4) al suroeste (abajo a la izquierda)
+\draw (30:4) node[anchor=south west]{$(a,b)$};
+% Segundo:
+\draw (15:2) node[anchor=west]{$\alpha$};
+% Tercero:
+\draw (30:4 |- 0,0) node[below]{$(a,0)$};
+% Cuarto:
+\draw (30:4 -| 0,0) node[left]{$(0,b)$};
+\end{tikzpicture}
+%--------------
+\qquad
+%--------------
+\begin{tikzpicture}[scale=1.2,
+% Estilo de los círculos
+circ/.style={circle, inner sep=0pt, minimum size=35pt, thick, draw=blue, fill=blue!10!white},
+% Estilo de las flechas
+flecha/.style={-latex,shorten >=2pt, shorten <=2pt, color=blue, very thick},
+]
+% Nodos
+\node (4) at (0,0) [circ]{$4$};
+\node (5) at (2,1) [circ]{$5$};
+\node (6) at (2,-1) [circ]{$6$};
+
+% Flechas
+\draw[flecha] (5) to [bend right=15] (6);
+\draw[flecha] (6) to [bend right=15] (5);
+\end{tikzpicture}
+\caption{dos figuras juntas hechas con \emph{tikz}.}
+\label{dosjuntas}
+\end{figure}
+%--------------
+
+\section{Etiquetas}
+\label{etiquetas}
+
+A menudo, los capítulos y secciones, los enunciados (teoremas, proposiciones, 
+corolarios\dots) y las figuras llevan una numeración 
+automática. Las fórmulas centradas pueden llevar 
+también numeración o no llevarla. Es mejor numerar solo las fórmulas a las que se 
+hace referencia en el texto. En cualquier caso, nunca se debe numerar \emph{a 
+mano}, sino usar las órdenes de {\LaTeX} adecuadas; por ejemplo,
+\begin{verbatim}
+\begin{equation}
+...
+\end{equation}
+\end{verbatim}
+Y tampoco se debe hacer referencia a las fórmulas y enunciados escribiendo a mano 
+la numeración, sino etiquetando la fórmula o enunciado con \verb"\label"  y 
+refiriéndonos a ellos con \verb"\eqref" (para fórmulas) y \verb"\ref" (para 
+enunciados).
+
+De la misma manera, para hacer referencia a una entrada de la bibliografía 
+debemos usar la orden \verb"\cite", nunca escribir a mano la clave.
+
+\section{Consejos de estilo}
+
+Al escribir un trabajo hay algunas reglas de estilo a las que conviene atenerse. 
+Es fácil encontrar textos, más o menos exhaustivos, que recogen estas reglas. 
+Aunque en ocasiones no queramos seguirlas hasta el último detalle, es útil 
+releerlas de vez en cuando.
+
+En la bibliografía hemos seleccionado algunas referencias con indicaciones sobre 
+{\LaTeX}, tipografía y lingüística (\cite{ALV,B,RAE}).
+
+Es singularmente interesante la página \emph{texnia}
+(\url{http://www.texnia.com/}) de Javier Bezos, una autoridad en \LaTeX y tipografía. Ahí está 
+disponible~\cite{B}, entre mucha más información.
+
+La guía~\cite{ALV} está escrita para los alumnos de la Universidad de La Rioja que redacten su 
+trabajo de fin de grado en \LaTeX. De ella hemos tomado buena parte de estas notas. Uno de sus 
+autores, Juan Luis Varona, es otro gran experto en {\LaTeX}, edición y tipografía.
+
+%De~\cite{V}, escrita para La Gaceta de la Real Sociedad Matemática Española, 
+%recomendamos también las referencias que contiene. Su autor, Juan Luis Varona, es 
+%otro gran experto en {\TeX}, edición y tipografía.
+
+%En~\cite{M} se puede ver una lista bastante amplia de normas concretas para 
+%trabajos escritos en {\LaTeX}.
+
+Desde luego, para cualquier duda lingüística en castellano es indispensable la 
+página de la Real Academia Española~\cite{RAE}, donde encontraremos su 
+diccionario de la lengua española y su diccionario panhispánico de dudas.
+
+Recogemos aquí algunos primeros consejos:
+\begin{enumerate} 
+\item Redacta correctamente. Aunque se trate de un texto matemático, debe estar 
+bien escrito y sin faltas de ortografía o gramaticales.
+
+\item Escribe un buen código {\LaTeX}. Un código claro, bien estructurado, es más 
+fácil de repasar. Lo que parece sencillo de entender en el momento en que lo 
+escribes, puede resultar oscuro si lo tienes que revisar al cabo de un tiempo. 
+Pon comentarios (líneas que empiezan por~\%) para explicar las partes más 
+complicadas.
+
+\item Corrige todos los errores de {\TeX} que ocurran al componer el texto. No te 
+conformes nunca con pulsar \emph{Enter} hasta que salga el pdf. Intenta obtener 
+al final una composición limpia, sin errores ni 
+advertencias. En particular, sin avisos de \emph{overfull}.
+
+\item No incluyas una inmensa lista de paquetes o definiciones 
+que no vas a usar, a menudo copiados y pegados de otros sitios.
+
+\item Usa los entornos del tipo teorema, definición, observación{\dots} (es 
+decir, con \verb"\begin{teorema}", \dots, \verb"\end{teorema}"), en lugar de 
+formatear a mano los enunciados.
+
+\item No cites nunca a mano las fórmulas y enunciados; no pongas numeración a 
+fórmulas que no cites. Sobre esto hemos comentado algo en la 
+sección~\ref{etiquetas}.
+
+\item Evita, si es posible, las órdenes \verb"\bigskip", \verb"\medskip", 
+\verb"\smallskip", \verb"\hskip", \verb"\vskip" y similares, y no uses \verb"\ ", 
+\verb"\," y análogas sin una buena razón. Es decir, como regla general es mejor 
+dejar que {\LaTeX} establezca el espaciado vertical y horizontal por sí mismo.
+
+\item Haz un uso moderado de \verb"\emph", \verb"\textbf" y similares: una 
+palabra en cursiva o negrita llama la atención, pero 
+una página llena de cursivas, negritas, texto entre comillas, recuadros o incluso 
+distintos colores es simplemente más difícil de leer. Decide con qué criterio vas 
+a usar cada uno de estos recursos tipográficos.
+
+\item Consulta un buen manual, como~\cite{CLMPS} y~\cite{MGBCR}, antes de escribir una expresión matemática nueva. Es probable que allí 
+encuentres una solución más sencilla que la que vayas a desarrollar por tu 
+cuenta. La mayoría de los paquetes tienen también su manual, que tendrás en tu 
+distribución de {\LaTeX}.
+
+\item Hay una gran variedad de órdenes para escribir fórmulas que no caben en una 
+línea. Consulta la guía de 
+usuario del paquete \emph{amsmath}.
+
+\item Establece un estilo para la bibliografía y sujétate a 
+él. Esto también lo hemos comentado antes, en la sección~\ref{bibliografia}. Ten 
+en cuenta, para decidir el estilo, que las entradas de la bilbiografía pueden ser 
+de varios tipos: libros enteros, artículos de revistas, páginas web{\dots} Puedes 
+tomar el estilo de alguna revista, por ejemplo.
+
+\item No abrevies los nombres de las revistas de cualquier manera: hay formas 
+normalizadas de hacerlo. Puedes consultar las abreviaturas de revistas 
+matemáticas en~\cite{A}, de la American 
+Mathematical Society (AMS). También puedes consultar MathSciNet (por 
+ejemplo,~\cite{A2}), así mismo de la AMS y suscrita por la Universidad de 
+Zaragoza. Si no encuentras la revista que quieres, puedes buscar en~\cite{I} las 
+abreviaturas de palabras en títulos de revistas, en diferentes idiomas, según la 
+norma ISO.
+\end{enumerate}
+%--- FIN DEL CAPÍTULO 2
+
+\clearemptydoublepage
+
+%--- CAPÍTULO 3 DEL TFG
+\chapter{La función Gamma de Euler}
+
+El contenido de la sección~\ref{Gamma-producto} está tomado, sin apenas cambios, 
+de~\cite[pág.~518 y sig.]{BC}. Y el de la sección~\ref{Gamma-integral}, 
+de~\cite[pág.~185--187]{C} y~\cite[pág.~206 y sig.]{W}. De las muchas 
+demostraciones de la fórmula de Stirling, la que presentamos en la 
+sección~\ref{fStirling} está tomada esencialmente de~\cite{P}.
+
+Para la primera sección es necesario tener conocimientos de análisis complejo. 
+Damos por conocida la factorización
+\begin{equation}
+\label{factor-seno}
+   \sen \pi z = \pi z \prod_{n=1}^\infty \left(1 - \frac{z^2}{n^2} \right),
+   \qquad z \in \C,
+\end{equation}
+cuya demostración puede verse, por ejemplo, en~\cite[pág.~518]{BC} o 
+en~\cite[pág.~211--212]{W}.
+
+Enunciamos aquí el teorema de factorización que 
+usamos en la sección~\ref{Gamma-producto} (en realidad, el teorema de 
+factorización de Weierstrass es más bien un recíproco de este resultado):
+\begin{defin}
+Escribimos $E_0(w) = 1 - w$ y para cada $p \in \N$,
+\[
+   E_p(w) 
+   = (1-w) \exp\left(w + \frac{w^2}{2} + \frac{w^3}{3} + \dots + \frac{w^p}{p}\right).
+\]
+Estas funciones enteras se llaman \emph{factores elementales} y su único cero 
+es~$1$, simple.
+\end{defin}
+
+\begin{teorema}
+Sea $\{z_n\}_{n=1}^\infty \subseteq \C$ con $z_n \not= 0$ para todo $n$ y $z_n 
+\to \infty$ (pueden estar repetidos). Si $\{p_n\}_{n=1}^\infty \subseteq \N \cup 
+\{0\}$ y para cada $r > 0$ la serie
+\[
+   \sum_{n=1}^\infty \left(\frac{r}{|z_n|}\right)^{1+p_n}
+\]
+converge, entonces:
+\begin{enumerate}
+\item[a)] $f(z) = \prod\limits_{n=1}^\infty E_{p_n}(\frac{z}{z_n})$ define una 
+función holomorfa en $\C$;
+\item[b)] los ceros de $f$ son los $z_n$ y su multiplicidad es el número de veces 
+que aparecen repetidos en la sucesión.
+\end{enumerate}
+\end{teorema}
+
+%------
+\section{Definición de la función Gamma como un producto infinito}
+\label{Gamma-producto}
+
+La función entera más sencilla que se anula, con ceros 
+simples, en los enteros negativos es
+\begin{equation}
+\label{defF}
+   F(z) = \prod_{n=1}^\infty \left(1 + \frac{z}{n}\right) e^{-z/n}.
+\end{equation}
+En efecto, basta aplicar el teorema de 
+factorización con $z_n = -n$ para cada $n \in \N$ 
+y con $p_n = 1$; claramente, para cada $r > 0$ la serie
+\[
+   \sum_{n=1}^\infty \left( \frac{r}{|z_n|} \right)^{1+p_n}
+   = \sum_{n=1}^\infty \frac{r^2}{n^2}
+\]
+converge, y entonces el producto infinito
+\[
+   \prod_{n=1}^\infty E_{p_n}\left(\frac{z}{z_n}\right)
+   = \prod_{n=1}^\infty \left(1 - \frac{z}{z_n}\right) e^{z/z_n}
+   = \prod_{n=1}^\infty \left(1 + \frac{z}{n}\right) e^{-z/n}
+\]
+converge uniformemente sobre 
+compactos de $\C$ y define una 
+función entera cuyos ceros son los enteros negativos, todos ellos simples.
+
+De la factorización~\eqref{factor-seno}
+se deduce que
+\[
+   \sen \pi z = \pi z F(z) F(-z).
+\]
+Las funciones $F(z-1)$ y $z F(z)$ son ambas enteras y con los mismos ceros: $0, 
+-1, -2 \dots$, todos ellos simples. Por lo tanto, su cociente tiene logaritmo 
+holomorfo: es una función entera que no se anula en ningún punto. Es decir:
+\begin{equation}
+\label{Fzz-1}
+   F(z-1) = z F(z) e^{g(z)}
+\end{equation}
+para alguna función entera $g$. Si sustituimos $F$ por su definición, tenemos
+\[
+   \prod_{n=1}^\infty \left(1 + \frac{z-1}{n}\right) e^{-\frac{z-1}{n}}
+   = z e^{g(z)} \prod_{n=1}^\infty \left(1 + \frac{z}{n}\right) e^{-z/n}.
+\]
+En esta expresión tomamos \emph{derivadas logarítmicas}:
+\[
+   \sum_{n=1}^\infty \left( \frac{1/n}{1 + \frac{z-1}{n}} - \frac{1}{n} \right)
+   = \frac{1}{z} + g'(z)
+   + \sum_{n=1}^\infty \left( \frac{1/n}{1 + \frac{z}{n}} - \frac{1}{n} \right).
+\]
+No insistiremos en esto, pero todos los productos infinitos, las series y los 
+límites que hemos manejado y los que vengan a continuación convergen porque 
+converge el producto infinito~\eqref{defF} y porque se puede derivar 
+logarítmicamente.
+
+De la fórmula anterior obtenemos $g'(z)$, pasando a sumas parciales para no 
+manejar series que no converjan:
+\begin{align*}
+   \frac{1}{z} + g'(z)
+   &= \sum_{n=1}^\infty
+   \left( \frac{1/n}{1 + \frac{z-1}{n}} - \frac{1/n}{1 + \frac{z}{n}} \right)
+   = \lim_N \sum_{n=1}^N
+   \left( \frac{1}{n + z-1} - \frac{1}{n + z} \right)
+   \\
+   &= \lim_N \left( \frac{1}{z} - \frac{1}{N + z} \right)
+   = \frac{1}{z}.
+\end{align*}
+Por consiguiente, $g'(z) = 0$ para todo $z \in \C$, es decir, $g$ es una 
+constante. ¿Qué constante? La llamamos~$\gamma$ y para hallarla basta imponer que 
+cumpla la fórmula~\eqref{Fzz-1} sustituyendo, por ejemplo, $z=1$:
+\[
+   1 = F(0) = F(1) e^\gamma 
+   = e^\gamma \prod_{n=1}^\infty \left(1 + \frac{1}{n}\right) e^{-1/n},
+\]
+es decir,
+\[
+   e^{-\gamma} = \prod_{n=1}^\infty \left(1 + \frac{1}{n}\right) e^{-1/n}.
+\]
+Naturalmente, no hay un único valor porque el logaritmo complejo no es único, 
+pero el producto infinito de la derecha es un número real positivo y entonces 
+podemos elegir el único $\gamma \in \R$ que cumple esa relación. Es decir:
+\[
+   \gamma = - \log \prod_{n=1}^\infty \left(1 + \frac{1}{n}\right) e^{-1/n}
+   = - \log \lim_N \prod_{n=1}^N \frac{n+1}{n} e^{-1/n}
+   = - \log \lim_N (N+1) e^{-1 - \frac{1}{2} - \ldots - \frac{1}{N}}.
+\]
+O, equivalentemente:
+\[
+   \gamma = \lim_N \left(
+   1 + \frac{1}{2} + \dots + \frac{1}{N} - \log(N+1)
+   \right).
+\]
+Esta constante se llama \emph{constante de Euler}. 
+Observemos que como $\log (N+1) = \log N + \log (1 + \frac{1}{N})$, también 
+podemos escribir
+\begin{equation}
+\label{gamma}
+   \gamma = \lim_N \left(
+   1 + \frac{1}{2} + \dots + \frac{1}{N} - \log N
+   \right).
+\end{equation}
+Volviendo a la fórmula~\eqref{Fzz-1}, pero ya con $g(z) = \gamma$, tenemos
+\[
+   F(z-1) = z F(z) e^\gamma
+\]
+y por lo tanto
+\[
+   e^{\gamma(z-1)} F(z-1) = z e^{\gamma z} F(z).
+\]
+La función $\Gamma(z) = \frac{1}{z e^{\gamma z} F(z)}$, cuyos polos son $0, -1, 
+-2 \dots$, todos ellos simples, cumple
+\begin{gather*}
+   \Gamma(z+1) = \frac{1}{e^{\gamma z} F(z)} = z \Gamma(z),
+   \\
+   \Gamma(1) = \frac{1}{e^\gamma F(1)} = 1.
+\end{gather*}
+En particular, de aquí se deduce por inducción que $\Gamma(n) = (n-1)!$ para todo 
+$n \in \N$. También se cumple que
+\[
+   \sen \pi z = \pi z F(z) F(-z)
+   = \pi z \frac{1}{z e^{\gamma z} \Gamma(z)} 
+   \cdot \frac{1}{-z e^{-\gamma z} \Gamma(-z)}
+   = \frac{\pi}{\Gamma(z) (-z) \Gamma(-z)}
+   = \frac{\pi}{\Gamma(z) \Gamma(1-z)},
+\]
+es decir,
+\[
+   \Gamma(z) \Gamma(1-z) = \frac{\pi}{\sen \pi z},
+   \quad z \notin \Z.
+\]
+Si hacemos $z = 1/2$, obtenemos $\Gamma(1/2)^2 = \pi$. Como
+\[
+   \Gamma(\tfrac{1}{2}) 
+   = \frac{1}{\frac{1}{2} e^{\frac{1}{2}\gamma} F(\frac{1}{2})}
+   = \frac{1}{\frac{1}{2} e^{\frac{1}{2}\gamma} 
+   \prod_{n=1}^\infty (1 + \frac{1}{2n}) e^{-\frac{1}{2n}}}
+   > 0,
+\]
+se deduce que
+\[
+   \Gamma(\tfrac{1}{2}) = \sqrt{\pi}.
+\]
+Por otra parte, de la definición de $\Gamma(z)$ se sigue que
+\[
+   \Gamma(z) = \frac{e^{-\gamma z}}{z} 
+   \prod_{n=1}^\infty \left(1 + \frac{z}{n}\right)^{-1} e^{z/n},
+   \quad z \not= 0, -1, -2 \dots
+\]
+Por lo tanto,
+\begin{align*}
+   \Gamma(z) &= \frac{e^{-\gamma z}}{z} 
+   \lim_N \prod_{n=1}^N \left(1 + \frac{z}{n}\right)^{-1} e^{z/n}
+   = \lim_N \frac{e^{-\gamma z} N! e^{z(1+\frac{1}{2}+\dots+\frac{1}{N})}}
+   {z (z+1) \dots (z+N)}
+   \\
+   &= \lim_N \frac{e^{z \log N} N!}{z (z+1) \dots (z+N)}
+   e^{z(-\gamma+1+\frac{1}{2}+\dots+\frac{1}{N}-\log N)}.
+\end{align*}
+Teniendo en cuenta~\eqref{gamma}, queda
+\[
+   \Gamma(z) = \lim_N \frac{N^z N!}{z (z+1) \dots (z+N)},
+   \quad z \not= 0, -1, -2 \dots
+\]
+La función $\Gamma$ se llama \emph{función $\Gamma$ de Euler}.
+
+%------
+\section{Definición de la función Gamma como una integral}
+\label{Gamma-integral}
+
+La definición más clásica de la función $\Gamma$ es como una integral:
+\[
+   \Gamma(z) = \int_0^\infty t^{z-1} e^{-t} \, dt,
+   \quad \Re z > 0.
+\]
+Vamos a ver que esta definición coincide con la anterior. De momento, definamos
+\[
+   G(z) = \int_0^\infty t^{z-1} e^{-t} \, dt.
+\]
+Como $|t^{z-1} e^{-t}| = t^{\Re(z)-1} e^{-t}$, se deduce que la función $G$ está 
+bien definida si $\Re z > 0$. En realidad, es fácil comprobar que es una función 
+holomorfa en el abierto $\{z \in \C; \Re z > 0\}$. 
+Algunas propiedades sencillas de esta función son:
+\begin{enumerate}
+\item[a)] $G(z+1) = z G(z)$ (se comprueba integrando por partes).
+\item[b)] $G(1) = 1$ (es una integral inmediata).
+\item[c)] Para cada $n \in \N$, $G(n) = (n-1)!$ (se prueba por inducción, a 
+partir de las dos propiedades anteriores).
+\end{enumerate}
+Sean ahora $x, y > 0$ (números reales positivos), $0 < \lambda < 1$. Entonces,
+\[
+   G(\lambda x + (1-\lambda)y)
+   = \int_0^\infty t^{\lambda x + (1-\lambda)y - 1} e^{-t} \, dt
+   = \int_0^\infty t^{\lambda (x-1)} e^{-\lambda t}
+   t^{(1-\lambda)(y-1)} e^{-(1-\lambda)t} \, dt.
+\]
+Aplicamos ahora la desigualdad de Hölder a las 
+funciones $t^{\lambda (x-1)} e^{-\lambda t}$, $t^{(1-\lambda)(y-1)} e^{-(1-
+\lambda)t}$, con exponentes $p = 1/\lambda$, $q = 1/(1-\lambda)$. Resulta:
+\begin{align*}
+   G(\lambda x + (1-\lambda)y)
+   &\leq \left(\int_0^\infty t^{\lambda p (x-1)} e^{-\lambda p t}
+   \, dt \right)^{1/p}
+   \left(\int_0^\infty t^{(1-\lambda) q (y-1)} e^{-(1-\lambda) qt}
+   \, dt \right)^{1/q}
+   \\
+   &= \left(\int_0^\infty t^{x-1} e^{-t} \, dt \right)^\lambda
+   \left(\int_0^\infty t^{y-1} e^{-t} \, dt \right)^{1-\lambda}.
+\end{align*}
+Es decir:
+\[
+   G(\lambda x + (1-\lambda)y) \leq G(x)^\lambda G(y)^{1-\lambda},
+   \quad x > 0, \ y > 0, \ 0 \leq \lambda \leq 1
+\]
+(los casos $\lambda = 0$, $\lambda = 1$ son triviales). Las funciones que cumplen 
+esta propiedad se llaman 
+\emph{logarítmicamente convexas}.
+
+La demostración que vamos a ver de que $G$ es la función $\Gamma$ se aplica a 
+cualquier función $G : (0,\infty) \to (0,\infty)$ que cumpla las propiedades 
+\emph{a)}, \emph{b)}, \emph{c)} y la convexidad logarítmica; es el teorema de 
+Bohr-Mollerup. En nuestro caso, como $G$ y $
+\Gamma$ son holomorfas, si coinciden en $(0,\infty)$ coinciden en todo el abierto 
+conexo $\{z \in \C; \Re z > 0\}$, por el principio de prolongación 
+analítica.
+
+Comencemos por un $x \in (0,1]$. Sea $n \in \N$. Entonces,
+\[
+   n + 1 + x = (1-x) (n+1) + x (n+2),
+\]
+luego, por la convexidad logarítmica (por 
+eso hace falta $0 < x \leq 1$),
+\begin{align*}
+   G(n+1+x) &\leq G(n+1)^{1-x} G(n+2)^x
+   = G(n+1)^{1-x} \left[ (n+1) G(n+1) \right]^x
+   \\
+   &= (n+1)^x G(n+1)
+   = (n+1)^x n!
+\end{align*}
+De la misma manera,
+\[
+   n + 1 = x (n+x) + (1-x)(n+1+x),
+\]
+luego
+\begin{align*}
+   n! &= G(n+1) \leq G(n+x)^x G(n+1+x)^{1-x}
+   \\
+   &= \left[\frac{G(n+1+x)}{n+x} \right]^x G(n+1+x)^{1-x}
+   = \frac{G(n+1+x)}{(n+x)^x}.
+\end{align*}
+Juntando las dos desigualdades tenemos
+\[
+   (n+x)^x n! \leq G(n+1+x) \leq (n+1)^x n!,
+\]
+es decir:
+\[
+   \left( 1 + \frac{x}{n} \right)^x 
+   \leq \frac{G(n+1+x)}{n! \, n^x}
+   \leq \left( 1 + \frac{1}{n} \right)^x.
+\]
+Si hacemos $n \to \infty$, deducimos que
+\[
+   1 = \lim_n \frac{G(n+1+x)}{n! \, n^x}
+   = \lim_n \frac{x (x+1) (x+2) \dots (x+n) G(x)}{n! \, n^x},
+\]
+donde en el último paso se usa la propiedad \emph{a)}. Por lo tanto,
+\[
+   G(x) = \lim_n \frac{n! \, n^x}{x (x+1) (x+2) \dots (x+n)} = \Gamma(x).
+\]
+Ya tenemos que $G(x) = \Gamma(x)$ si $x \in (0,1]$. Para $x > 1$ tendremos $x \in 
+(m,m+1]$ para algún $m \in \N$ y entonces
+\[
+   G(x) = (x-1) (x-2) \dots (x-m) G(x-m)
+   = (x-1) (x-2) \dots (x-m) \Gamma(x-m)
+   = \Gamma(x).
+\]
+
+%------
+\section{La fórmula de Stirling}
+\label{fStirling}
+
+Partimos de la definición de la función $\Gamma$ como una integral, pero nos 
+limitamos a valores reales:
+\[
+   \Gamma(x) = \int_0^\infty t^{x-1} e^{-t} \, dt,
+   \quad x > 0.
+\]
+Haciendo el cambio de variable $u = \sqrt{t}$, resulta
+\[
+   \Gamma(x) = \int_0^\infty 2 u^{2x-1} e^{-u^2} \, du.
+\]
+Por lo tanto,
+\[
+   \frac{\Gamma(x)}{x^{x-\frac{1}{2}} e^{-x}}
+   = \int_0^\infty 2 \left(\frac{u}{\sqrt{x}}\right)^{2x-1} e^{x-u^2} \, du
+   = \int_{-\sqrt{x}}^\infty 2 \left(1 + \frac{v}{\sqrt{x}}\right)^{2x-1}
+   e^{-2v\sqrt{x}} e^{-v^2} \, dv,
+\]
+donde para llegar a la segunda integral hacemos el cambio $u = \sqrt{x} + v$ (así 
+que $x - u^2 = -2v \sqrt{x} - v^2$). Es decir,
+\begin{equation}
+\label{dominada}
+   \frac{\Gamma(x)}{x^{x-\frac{1}{2}} e^{-x}}
+   = \int_{-\infty}^\infty \chi_{[-\sqrt{x},+\infty)}(x)
+   2 \left(1 + \frac{v}{\sqrt{x}}\right)^{2x-1}
+   e^{-2v\sqrt{x}} e^{-v^2} \, dv.
+\end{equation}
+Queremos hacer $x \to +\infty$ usando el teorema de la convergencia 
+dominada, para lo cual debemos 
+encontrar una acotación y hallar un límite del integrando. En todo lo que sigue 
+podemos suponer que $2x - 1 >0$. Empezamos con la acotación: usando la 
+desigualdad
+\[
+   1 + t \leq e^t, \qquad \forall t \in \R,
+\]
+que se demuestra muy fácilmente, deducimos que
+\[
+   \left(1 + \frac{v}{\sqrt{x}}\right)^{2x-1}
+   \leq e^{2 v \sqrt{x} - \frac{v}{\sqrt{x}}}
+\]
+y, por lo tanto,
+\[
+   0 \leq 2 \left(1 + \frac{v}{\sqrt{x}}\right)^{2x-1} e^{-2v\sqrt{x}}
+   \leq 2 e^{-v/\sqrt{x}}
+   \leq 2 e,
+   \quad \text{si } v \in [-\sqrt{x},+\infty).
+\]
+Así que
+\[
+   0 \leq \chi_{[-\sqrt{x},+\infty)}(x)
+   2 \left(1 + \frac{v}{\sqrt{x}}\right)^{2x-1}
+   e^{-2v\sqrt{x}} e^{-v^2}
+   \leq 2 e e^{-v^2}.
+\]
+Ya tenemos la acotación. Ahora, fijado $v \in [-\sqrt{x},+\infty)$,
+\[
+   2 \left(1 + \frac{v}{\sqrt{x}}\right)^{2x-1}
+   e^{-2v\sqrt{x}}
+   = 2 e^{(2x-1) \log(1+\frac{v}{\sqrt{x}}) - 2 v \sqrt{x}},
+\]
+y
+\begin{align*}
+   \lim_{x \to +\infty} \left( (2x-1) \log(1+\frac{v}{\sqrt{x}}) - 2 v \sqrt{x}
+   \right)
+   &=\lim_{x \to +\infty} \left( 2x \log(1+\frac{v}{\sqrt{x}}) - 2 v \sqrt{x}
+   \right)
+   \\
+   &= \lim_{x \to +\infty} 2v^2 
+   \frac{\log(1+\frac{v}{\sqrt{x}}) - \frac{v}{\sqrt{x}}}{\frac{v^2}{x}}
+   \\
+   &= \lim_{y \to 0^+} 2v^2 \frac{\log(1+y) - y}{y^2} = - v^2
+\end{align*}
+(por el desarrollo de Young de $\log(1+y)$ o por la 
+regla de L'H\^opital). Es decir, para todo $v \in \R
+$,
+\[
+   \lim_{x \to +\infty} \chi_{[-\sqrt{x},+\infty)}(x)
+   2 \left(1 + \frac{v}{\sqrt{x}}\right)^{2x-1}
+   e^{-2v\sqrt{x}} e^{-v^2}
+   = 2 e^{-2 v^2}.
+\]
+Llevando todo a~\eqref{dominada}, obtenemos que
+\[
+   \lim_{x \to +\infty} \frac{\Gamma(x)}{x^{x-\frac{1}{2}} e^{-x}}
+   = \int_{-\infty}^{+\infty} 2 e^{-2v^2} \, dv.
+\]
+Esta integral se calcula de varias maneras. Por ejemplo, usando coordenadas 
+polares,
+\begin{align*}
+   \left( \int_{-\infty}^{+\infty} 2 e^{-2v^2} \, dv \right)^2
+   &= \iint_{\R^2} 4 e^{-2 (u^2+v^2)} \, du\, dv
+   = \int_{(0.+\infty)} \int_{-\pi}^\pi 4 e^{-2 r^2} r \, d\varphi \, dr
+   \\
+   &= \int_{(0.+\infty)} 8 \pi r e^{-2 r^2} \, dr
+   = \left[ - 2\pi e^{-2 r^2} \right]_{r=0}^{r\to+\infty}
+   = 2\pi,
+\end{align*}
+de donde
+\[
+   \int_{-\infty}^{+\infty} 2 e^{-2v^2} \, dv = \sqrt{2\pi}.
+\]
+Así que finalmente obtenemos:
+\[
+   \lim_{x \to +\infty} \frac{\Gamma(x)}{x^{x-\frac{1}{2}} e^{-x}}
+   = \sqrt{2\pi},
+\]
+que es la fórmula de Stirling. Otra manera equivalente de escribirla, más 
+habitual, es esta:
+\[
+   \lim_{x \to +\infty} \frac{\Gamma(x+1)}{x^x e^{-x} \sqrt{2\pi x}}
+   = \lim_{x \to +\infty}
+   \frac{x \Gamma(x)}{x^{x+\frac{1}{2}} e^{-x} \sqrt{2\pi}}
+   = \lim_{x \to +\infty} \frac{\Gamma(x)}{x^{x-\frac{1}{2}} e^{-x} \sqrt{2\pi}}
+   = 1.
+\]
+%--- FIN DEL CAPÍTULO 3
+
+\clearemptydoublepage
+
+%-------------
+\backmatter                      % Parte final del texto
+
+%------ Bibliografía
+% Para meter cosas en el "toc" a mano, ver
+% \S 2.3.1 del LaTeX Companion (ejemplo de la p. 47) (Juan Luis)
+\phantomsection % Si no, el enlace en el índice apunta a la página anterior
+\addcontentsline{toc}{chapter}{\bibname} % Para que salga en el índice general
+% Para ponerlo a mano en la cabecera, pues no es \chapter:
+\chaptermark{\bibname}
+% Cuando no hay secciones para las cabeceras impares, se suele hacer esto:
+\sectionmarkwithoutsections{\bibname}
+
+%--- BIBLIOGRAFÍA DEL TFG
+\begin{thebibliography}{99}
+
+\bibitem{A}
+\textsc{American Mathematical Society},
+\textit{Abbreviations of names of serials},
+\url{http://www.ams.org/msnhtml/serials.pdf}.
+
+\bibitem{A2}
+\textsc{American Mathematical Society},
+\textit{MathSciNet} (servidor de Estrasburgo),
+\url{http://ams.u-strasbg.fr/mathscinet/}.
+
+\bibitem{ALV}
+\textsc{A. Arenas, E. Labarga y J. L. Varona},
+\textit{Una breve guía para redactar un trabajo de fin de grado
+con contenido matemático utilizando LaTeX},
+\url{https://www.unirioja.es/facultades_escuelas/fct/TFG/guia-TFG-matematicas.pdf},
+disponible en
+\url{https://www.unirioja.es/facultades_escuelas/fct/TFG/guias_manuales.shtml}.
+
+\bibitem{B}
+\textsc{J.~Bezos},
+\textit{Ortotipografía y notaciones matemáticas},
+\url{http://www.texnia.com/archive/ortomatem.pdf},
+disponible en
+\url{http://www.texnia.com/}.
+
+\bibitem{BC}
+\textsc{J. Bruna y J. Cufí},
+\textit{An\`alisi complexa},
+Colección Manuals, Universitat Aut\`onoma de Barcelona, Bellaterra, 2008.
+
+\bibitem{CLMPS}
+\textsc{B. Cascales, P. Lucas, J. M. Mira, A. Pallarés y S. Sánchez-Pedreño}, 
+\textit{LaTeX, una imprenta en tus manos}, 
+Aula Documental de Investigaci\'on, Madrid, 2000.
+
+\bibitem{C}
+\textsc{B. Cuartero},
+\textit{Fundamentos de análisis matemático},
+Colección Textos Docentes, Prensas Universitarias de Zaragoza, 2009.
+
+\bibitem{FC}
+\textsc{Facultad de Ciencias de la Universidad de Zaragoza},
+\textit{Directrices propias para la elaboración del trabajo fin de grado en 
+Matemáticas}, 
+disponible en
+\url{https://ciencias.unizar.es/trabajo-fin-de-grado-en-matematicas}.
+
+\bibitem{I}
+\textsc{International Standard Serial Number},
+\textit{International identifier for serials},
+\url{http://www.issn.org/services/online-services/access-to-the-ltwa/}.
+
+%\bibitem{M}
+%\textsc{P. Millien},
+%\textit{Conseils pour bien taper un document avec {\LaTeX}},
+%\url{http://www.math.ens.fr/~millien/tdlatex/conseils_latex.pdf},
+%disponible en
+%\url{http://www.math.ens.fr/~millien/}.
+
+\bibitem{MGBCR}
+\textsc{F. Mittelbach, M. Goossens, J. Braams, D. Carlisle y C. Rowley}, 
+\textit{The \LaTeX\ Companion}, 
+2.\textsuperscript{a} ed., 
+Addison-Wesley, 2004.
+
+\bibitem{P}
+\textsc{J. M. Patin},
+A very short proof of Stirling's formula,
+\textit{Amer. Math. Monthly}
+\textbf{96} (1) (1989), 41--42.
+
+\bibitem{RAE}
+\textsc{Real Academia Española},
+\url{http://www.rae.es/}.
+
+%\bibitem{V}
+%\textsc{J. L. Varona},
+%\textit{Un ejemplo de cómo escribir un artículo que se publicará en La Gaceta de 
+%la RSME},
+%\url{http://gaceta.rsme.es/estiloGaceta/articulo-suelto.zip},
+%disponible en
+%\textit{Información para autores},
+%\url{http://gaceta.rsme.es/informacion.php}.
+
+\bibitem{W}
+\textsc{R. Webster},
+\textit{Convexity},
+Oxford University Press, Oxford, 1994.
+
+\end{thebibliography}
+%--- FIN DE LA BIBLIOGRAFÍA
+
+%\clearemptydoublepage
+
+\end{document}

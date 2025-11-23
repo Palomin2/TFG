@@ -14,8 +14,10 @@
 #include <string>
 #include <limits>
 #include "iMatrix.cpp"
-#include "C:\Librerias\eigen-3.4.0\Eigen\Sparse"
-#include "C:\Librerias\eigen-3.4.0\Eigen\Dense"    
+#include "C:\Librerias\eigen-3.4.0\Eigen\Sparse" //windows version
+#include "C:\Librerias\eigen-3.4.0\Eigen\Dense"  //windows version
+//#include "/home/carlo/Librerias/eigen-3.4.0/Eigen/Dense"
+//#include "/home/carlo/Librerias/eigen-3.4.0/Eigen/Sparse"
 #ifndef FUNCIONES_HPP
 #define FUNCIONES_HPP
 
@@ -484,4 +486,9 @@ std::unordered_map<int, std::vector<std::pair<double,double>>> BuildSpanMap(cons
 */ 
 iMatrix<iMatrix<double>> RationalizeDersBasisFuns2D(const iMatrix<double> &DersBasisX,const iMatrix<double> &DersBasisY,const iMatrix<double> &activeWeights, unsigned int pX, unsigned int pY);
 
+/*
+*Input: SolEvals and Surface evaluations of the same points with the filename and the path
+*Output: writes the corresponding .txt with the Surface and its evaluations.
+*/ 
+void ExportToTxt(const iMatrix<double>& SolEvals, const iMatrix<std::vector<double>>& Surf, const std::string& filename);
 #endif

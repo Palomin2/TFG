@@ -1,5 +1,7 @@
 #include <vector>
-#include "C:\Librerias\eigen-3.4.0\Eigen\Sparse"
+#include "C:\Librerias\eigen-3.4.0\Eigen\Sparse"   //windows version
+//#include "/home/carlo/Librerias/eigen-3.4.0/Eigen/Dense"  //linux version
+//#include "/home/carlo/Librerias/eigen-3.4.0/Eigen/Sparse" //linux version
 #include <unordered_map>
 #include <functional>
 #include <stdexcept>

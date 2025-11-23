@@ -1,0 +1,396 @@
+%&pdflatex
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+%
+% PLANTILLA PARA UN TRABAJO DE FIN DE GRADO
+% EN EL GRADO DE MATEMÁTICAS DE LA UNIVERSIDAD DE ZARAGOZA
+%
+% Mario Pérez Riera
+% Área de Análisis Matemático, Universidad de Zaragoza
+%
+% Última modificación: 1 de agosto de 2021
+%
+% Escrito para pdfLaTeX
+%
+%
+\documentclass[11pt]{book}
+
+% Paquetes y fuentes
+%---------------------------------------------------------------------------
+\usepackage{geometry}               % define las dimensiones de la página
+\geometry{
+ a4paper, % Tamaño del papel
+ centering, % Zona útil centrada
+ margin = 25mm, % Márgenes en blanco: 25mm
+% includehead, % Incluir la cabecera en el área del texto
+% includefoot, % Incluir el pie en el área del texto
+}
+
+\usepackage[utf8]{inputenc}        % para usar el teclado normalmente
+\usepackage[spanish]{babel}        % selecciona idioma
+\usepackage[T1]{fontenc}           % gestión de fuentes con acentos
+
+% Si alguno de estos paquetes no los vas a usar, mejor los quitas:
+\usepackage{amssymb}               % para cargar las fuentes de la A.M.S.
+\usepackage{amsmath}               % para usar letras griegas en negrita
+\usepackage{amsthm}                % mejora los entornos tipo-teorema y proof
+\usepackage{mathptmx}              % fuente Times
+%\usepackage{lmodern}              % fuente Times
+\usepackage{tikz}                  % para los dibujos
+\usetikzlibrary{babel}              % para evitar conflictos entre TikZ y babel
+
+%\usepackage{longtable}             % permite saltos de páginas en tablas largas
+
+%------ Enlaces en el pdf
+\usepackage{url}
+\usepackage[pdftex, colorlinks=true, citecolor=cyan, linkcolor=black, 
+urlcolor=black]{hyperref}
+
+%------ Cabeceras y pies de página
+\usepackage{titleps}
+
+\newpagestyle{miestilo}{
+%-- Cabecera par y cabecera impar
+\sethead[\thepage][][\textsl{\chaptername\ \thechapter. \chaptertitle}]
+{\textsl{Análisis isogeométrico \ - \ Carlos Palomera Oliva}}{}{\thepage}
+%-- Pie de página par y pie de página impar
+%\setfoot[][\textsl{\thesection. \sectiontitle}][]
+%{}{\textsl{\thesection. \sectiontitle}}{}
+}
+
+\newpagestyle{primeraparte}{
+%-- Cabecera par y cabecera impar
+\sethead[\thepage][][\textsl{\chaptertitle}]
+{\textsl{Análisis isogeométrico \ - \ Carlos Palomera Oliva}}{}{\thepage}
+%-- Pie de página par y pie de página impar
+%\setfoot[][\textsl{\thesection. \sectiontitle}][]
+%{}{\textsl{\thesection. \sectiontitle}}{}
+}
+
+%------ \S 4.3, p. 93, de The LaTeX Companion 1a ed. (Figura 4.2) (Juan Luis)
+\newcommand{\clearemptydoublepage}{\newpage{\pagestyle{empty}\cleardoublepage}}
+\newcommand{\sectionmarkwithoutsections}[1]{\markright{#1}}
+
+\makeindex
+
+\theoremstyle{plain} % Entornos tipo teorema
+\newtheorem{teorema}{Teorema}[chapter]
+%\newtheorem{lema}[teorema]{Lema} % La misma numeración que 'teorema'
+
+\theoremstyle{definition} % Entornos tipo definición
+\newtheorem*{defin}{Definición} % El asterisco hace que no se numere
+%\newtheorem{ejemplo}{Ejemplo}
+
+%------ Conjuntos de números
+\newcommand\N{\mathbb{N}}
+\newcommand\Z{\mathbb{Z}}
+\newcommand\R{\mathbb{R}}
+\newcommand\C{\mathbb{C}}
+
+%------ Funciones en español
+\renewcommand{\spanishoperators}{Re}
+%\renewcommand{\spanishoperators}{Re ctg arc\,ctg} % Define \Re, \ctg, \arctg
+
+%-------------
+\begin{document}
+%-------------
+\frontmatter                     % Parte primera del texto
+\pagestyle{primeraparte}    % Estilo de cabeceras para la parte primera del texto
+
+%\pagenumbering{roman} % Incluido en \frontmatter
+
+%--- PORTADA DEL TFG
+\begin{titlepage}
+\begin{center}
+
+\null
+\vfill
+
+\Huge{\bfseries Análisis}\\%
+\Huge{\bfseries isogeométrico}
+
+\vfill
+
+\noindent
+\begin{figure}[h]
+\centering
+\includegraphics[width=100mm]{ciencias.png}\\%
+\includegraphics[width=100mm]{logoUZ.png}
+\end{figure}
+
+\vfill
+
+\Huge{\bfseries Carlos Palomera Oliva}\\%
+\Huge{Trabajo de fin de grado de Matemáticas}\\%
+\Huge{Universidad de Zaragoza}\\%
+
+\vfill
+\huge{Noviembre de 2025}
+\end{center}
+\end{titlepage}
+%--- FIN DE LA PORTADA
+
+\clearemptydoublepage
+
+%\setcounter{page}{7} % Por si queremos imponer un número de página
+
+\tableofcontents
+
+\clearemptydoublepage
+
+%-------------
+\mainmatter                      % Parte principal del texto
+\pagestyle{miestilo}    % Estilo de cabeceras para la parte principal del texto
+
+%--- CAPÍTULO 1 DEL TFG
+\chapter{Introducción}
+
+\section{Contexto y realación con el método de elementos finitos.}
+
+Explicar aquí brevemente en que se basa el análisis isogeométrico y que relación y diferencias tiene con el método de elementos finitos.
+
+\section{Motivación.}
+
+Breve explicación de las diferencias entre las diferencias de suavidad que puede haber en análisis isogeométrico, el coste de la malla después de crear la figura, como se puede respetar la geometria de elementos creados a base de NURBS como es el caso de CAD.
+
+\section{Evolución del análisis isogeométrico.}
+
+Ligera introducción a NURBS y a como se crean figuras con estos sin entrar muy en detalle, citar su inicio en 2005 y citar posteriormente el libro de NURBS 2009.
+
+bibliografia de esta parte Artículo seminal (2005) en Computer Methods in Applied Mechanics and Engineering
+
+\section{Objetivos.}
+
+No se si hablar aqui de las convergencias en norma H1 y L2, falta poner contexto teorico para mi gusto.
+Se hablará aquí de los procesos que se han llevado durante la realización y su fin (Implementaciñon de codigo propio a partir de la bibliografia, validación de los resultados numéricos...)
+
+\section{Estructura del documento.}
+
+resumen rapido de los posteriores capitulos asi como explicación de donde apareceran el codigo o diferentes elementos en el anexo.
+
+%--- FIN DEL CAPÍTULO 1
+
+\clearemptydoublepage
+
+%--- CAPÍTULO 2 DEL TFG
+\chapter{Marco teórico}
+
+\section{Conceptos previos del método de los elementos finitos.}
+
+Se mencionara rapidamente conceptos como el paso de formulación fuerte a formulación débil o variacional, las funciones base polinómicas clásicas con su espacio de funciones y la suavidad que estas aportan, así como su convergencia en L2 y H1.
+
+\section{Construcción de estructuras usando NURBS.}
+
+En este apartado no sé si explicar tambíen las curvas/superficies de Bezier y/o los B-splines como inicio o si quedaría demasiado largo así. 
+
+Se seguira en este apartado el libro de NURBS para explicar como realizar tanto las estructuras simples aportando ejemplos de estas variando su suavidad a lo largo de su parametrizacion, se introducirá también el concepto isoparamétrico y como se refina el mallado mediante inserción de nodos.
+
+\section{Introducción al análisis isogeométrico.}
+
+Mostrar claramente como las funciones NURBS se toman como funciones base para el análisis isogeométrico, relacionarlo con el método de elementos finitos y sus funciones base.
+Ilustrar como pasar mediante transformadores geometricos como el jacobiano de la malla paramétrica a la física y como se usan en la formulación variacinal para integrar sobre el espacio paramétrico.
+
+
+%--- FIN DEL CAPÍTULO 2
+
+\clearemptydoublepage
+
+%--- CAPÍTULO 3 DEL TFG
+\chapter{Análisis isogeométrico.}
+
+No estoy seguro del orden que debería seguir este capítulo, si debería poner antes las velocidades de convergencia o de tiempo de computación o mejor al final.
+
+Resumen de los casos que se van a tratar en este capitulo (1D y 2D), y formulaciones debiles de estos para trabajar posteriormente sobre ellas.
+
+
+\section{Ensamblaje de matrices y vector de carga.}
+
+\subsection{Caso 1D.}
+Aplicar aqui los apuntes que hice para aclararme que os mande sobre el ensamblado en 1D.
+\subsection{Caso 2D.}
+Aplicar aqui los apuntes que hice para aclararme que os mande sobre el ensamblado en 2D.
+
+\section{Imposición de condiciones de contorno.}
+En este capitulo no sé si es necesario que les de una explicación a por qué son necesarias o puedo asumir que partiendo de elementos finitos puedo asumir que el lector esta familirizado.
+\subsection{Tipo Dirichlet.}
+
+\subsection{Tipo Neumann.}
+
+\subsection{Tipo Robin o mixtas.}
+
+\section{Convergencia en L2 y H1 y tiempo de computación teórico.}
+
+%--- FIN DEL CAPÍTULO 3
+
+\clearemptydoublepage
+
+%--- CAPÍTULO 4 DEL TFG
+\chapter{Implementación computacional.}
+
+Resumen breve de la intención del capitulo en ilustrar ejemplos con código funcional que se ha utilizado para obtener resultados numéricos.
+
+Así como el uso de diferentes estructuras como matrices sparse o tensores y su necesidad para el correcto funcionamiento del código.
+
+\section{Lenguaje y librerías utilizadas.}
+
+Se mencionará C++ como lenguaje principal usando la librería Eigen para el uso de matrices sparse, así como clases y funciones que se añadirán en el anexo para tema NURBS. también habrá mención a Octave para visualizar los resultados.
+
+\section{Metodos numéricos empleados.}
+
+Explicación de integración numérica para las integrales que aparecen en las matrices de ensamblado y vector de cargo mediante la cuadratura de Gauss-Legendre, el metodo LU para resolver el sistema 1D y el método del gradiente conjugada con precondicionador de Choleski incompleto para resolver el sistema de 2D.
+
+\section{Estructura del programa.}
+
+Se explicaran con detalle y en orden como es la ejecución del programa y que funciones/operaciones se ejecutan en cada paso.
+
+Creación de la estructura mediante NURBS.
+
+Refinamiento del mallado.
+
+Ensamblado elemento a elemento (dependiendo de cuanto tome este apartado se fragmentará).
+
+Imposición de las condiciones de frontera.
+
+Resolver el sistema final.
+
+Construcción y evaluación de la solución a partir de las soluciones del sistema.
+
+Cálculo de la norma L2 y H1.
+
+Representación Gráfica en Octave.
+
+(Con el fin de no superar el máximo de hojas permitidas, el codigo se mostrará en el anexo y no en este apartado)
+
+
+%--- FIN DEL CAPÍTULO 4
+
+\clearemptydoublepage
+
+%--- CAPÍTULO 5 DEL TFG
+\chapter{Resultados.}
+
+En este capítulo se mostrarán tanto los resultados de convergencia como las gráficas de las soluciones, la frecuencia de estas respecto al refinamiento dependerá de cuantas páginas hayan sido escritas en total.
+En ambas secciones se verificará que el codigo se ha ejecutado correctamente y su validación.
+
+\section{Resultados en 1D}
+
+\section{Resultados en 2D}
+
+%--- FIN DEL CAPÍTULO 5
+
+\clearemptydoublepage
+
+%--- CAPÍTULO 6 DEL TFG
+\chapter{Conclusiones.}
+
+%-------------
+\backmatter                      % Parte final del texto
+
+%------ Bibliografía
+% Para meter cosas en el "toc" a mano, ver
+% \S 2.3.1 del LaTeX Companion (ejemplo de la p. 47) (Juan Luis)
+\phantomsection % Si no, el enlace en el índice apunta a la página anterior
+\addcontentsline{toc}{chapter}{\bibname} % Para que salga en el índice general
+% Para ponerlo a mano en la cabecera, pues no es \chapter:
+\chaptermark{\bibname}
+% Cuando no hay secciones para las cabeceras impares, se suele hacer esto:
+\sectionmarkwithoutsections{\bibname}
+
+%--- BIBLIOGRAFÍA DEL TFG
+\begin{thebibliography}{99}
+
+\bibitem{A}
+\textsc{American Mathematical Society},
+\textit{Abbreviations of names of serials},
+\url{http://www.ams.org/msnhtml/serials.pdf}.
+
+\bibitem{A2}
+\textsc{American Mathematical Society},
+\textit{MathSciNet} (servidor de Estrasburgo),
+\url{http://ams.u-strasbg.fr/mathscinet/}.
+
+\bibitem{ALV}
+\textsc{A. Arenas, E. Labarga y J. L. Varona},
+\textit{Una breve guía para redactar un trabajo de fin de grado
+con contenido matemático utilizando LaTeX},
+\url{https://www.unirioja.es/facultades_escuelas/fct/TFG/guia-TFG-matematicas.pdf},
+disponible en
+\url{https://www.unirioja.es/facultades_escuelas/fct/TFG/guias_manuales.shtml}.
+
+\bibitem{B}
+\textsc{J.~Bezos},
+\textit{Ortotipografía y notaciones matemáticas},
+\url{http://www.texnia.com/archive/ortomatem.pdf},
+disponible en
+\url{http://www.texnia.com/}.
+
+\bibitem{BC}
+\textsc{J. Bruna y J. Cufí},
+\textit{An\`alisi complexa},
+Colección Manuals, Universitat Aut\`onoma de Barcelona, Bellaterra, 2008.
+
+\bibitem{CLMPS}
+\textsc{B. Cascales, P. Lucas, J. M. Mira, A. Pallarés y S. Sánchez-Pedreño}, 
+\textit{LaTeX, una imprenta en tus manos}, 
+Aula Documental de Investigaci\'on, Madrid, 2000.
+
+\bibitem{C}
+\textsc{B. Cuartero},
+\textit{Fundamentos de análisis matemático},
+Colección Textos Docentes, Prensas Universitarias de Zaragoza, 2009.
+
+\bibitem{FC}
+\textsc{Facultad de Ciencias de la Universidad de Zaragoza},
+\textit{Directrices propias para la elaboración del trabajo fin de grado en 
+Matemáticas}, 
+disponible en
+\url{https://ciencias.unizar.es/trabajo-fin-de-grado-en-matematicas}.
+
+\bibitem{I}
+\textsc{International Standard Serial Number},
+\textit{International identifier for serials},
+\url{http://www.issn.org/services/online-services/access-to-the-ltwa/}.
+
+%\bibitem{M}
+%\textsc{P. Millien},
+%\textit{Conseils pour bien taper un document avec {\LaTeX}},
+%\url{http://www.math.ens.fr/~millien/tdlatex/conseils_latex.pdf},
+%disponible en
+%\url{http://www.math.ens.fr/~millien/}.
+
+\bibitem{MGBCR}
+\textsc{F. Mittelbach, M. Goossens, J. Braams, D. Carlisle y C. Rowley}, 
+\textit{The \LaTeX\ Companion}, 
+2.\textsuperscript{a} ed., 
+Addison-Wesley, 2004.
+
+\bibitem{P}
+\textsc{J. M. Patin},
+A very short proof of Stirling's formula,
+\textit{Amer. Math. Monthly}
+\textbf{96} (1) (1989), 41--42.
+
+\bibitem{RAE}
+\textsc{Real Academia Española},
+\url{http://www.rae.es/}.
+
+%\bibitem{V}
+%\textsc{J. L. Varona},
+%\textit{Un ejemplo de cómo escribir un artículo que se publicará en La Gaceta de 
+%la RSME},
+%\url{http://gaceta.rsme.es/estiloGaceta/articulo-suelto.zip},
+%disponible en
+%\textit{Información para autores},
+%\url{http://gaceta.rsme.es/informacion.php}.
+
+\bibitem{W}
+\textsc{R. Webster},
+\textit{Convexity},
+Oxford University Press, Oxford, 1994.
+
+\end{thebibliography}
+%--- FIN DE LA BIBLIOGRAFÍA
+
+%\clearemptydoublepage
+
+\end{document}

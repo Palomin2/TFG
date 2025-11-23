@@ -4,7 +4,9 @@
  *******************************************************************************/
 #include <iostream>
 #include <stdexcept>
-#include "C:\Librerias\eigen-3.4.0\Eigen\Dense"  
+#include "C:\Librerias\eigen-3.4.0\Eigen\Dense"   //windows version
+//#include "/home/carlo/Librerias/eigen-3.4.0/Eigen/Dense"  //linux version
+//#include "/home/carlo/Librerias/eigen-3.4.0/Eigen/Sparse" //linux version
 #include <iomanip>
 #include <vector>
 #include <cmath>
@@ -168,6 +170,8 @@ class iMatrix{
     void PrintMatrix();
     void PrintMatrix(int precision);
 	std::vector<T> Vectorize() const;
+	iMatrix<T> Transpose() const;
+
 
     bool IsSquare();
 	T Determinant() const;
@@ -716,6 +720,25 @@ std::vector<T> iMatrix<T>::Vectorize() const
 {
     return m_matrixData;
 }
+
+template <class T>
+iMatrix<T> iMatrix<T>::Transpose() const
+{
+    iMatrix<T> result(m_nCols, m_nRows);  // ← filas y columnas intercambiadas
+
+    // Recorremos todos los elementos de la matriz original
+    for (int i = 0; i < m_nRows; ++i)
+    {
+        for (int j = 0; j < m_nCols; ++j)
+        {
+            // Elemento (i,j) en la original → posición (j,i) en la transpuesta
+            result(j, i) = (*this)(i, j);
+        }
+    }
+
+    return result;
+}
+
 
 
 template <class T>

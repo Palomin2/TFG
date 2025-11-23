@@ -1,0 +1,7 @@
+Esta carpeta debe contener los siguientes archivos:
+
+Leeme.txt (este archivo)
+ciencias.png
+logoUZ.png
+PlantillaTFG.pdf
+PlantillaTFG.tex

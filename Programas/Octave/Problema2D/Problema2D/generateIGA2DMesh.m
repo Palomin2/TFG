@@ -1,0 +1,82 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%
+%%% MESH GENERATION: connectivity ...
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Vinh Phu Nguyen
+% nvinhphu@gmail.com
+
+uniqueUKnots   = unique(uKnot);
+uniqueVKnots   = unique(vKnot);
+
+noElemsU       = length(uniqueUKnots)-1; % # of elements xi dir.
+noElemsV       = length(uniqueVKnots)-1; % # of elements eta dir.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% chan = 
+%        1 2 3 4
+%        5 6 7 8
+%        9 10 11 12
+% for a 4x3 control points
+
+
+chan           = zeros(noPtsY,noPtsX);
+
+count = 1;
+
+for i=1:noPtsY
+    for j=1:noPtsX
+        chan(i,j) = count;
+        count = count + 1;
+    end
+end
+
+% determine our element ranges and the corresponding 
+% knot indices along each direction
+
+[elRangeU,elConnU] = buildConnectivity(p,uKnot,noElemsU);
+[elRangeV,elConnV] = buildConnectivity(q,vKnot,noElemsV);
+
+% combine info from two directions to build the elements
+% element is numbered as follows
+%  5 | 6 | 7 | 8
+% ---------------
+%  1 | 2 | 3 | 4 
+% for a 4x2 mesh
+
+noElems = noElemsU * noElemsV;
+
+element = zeros(noElems,(p+1)*(q+1));
+%element va a guardar en la fila i los indices de las funciones base no
+%nulas en el elemento i-esimo /ptos de control presentes en el elemento
+e = 1;
+for v=1:noElemsV
+    vConn = elConnV(v,:);
+    for u=1:noElemsU
+        c = 1;
+        uConn = elConnU(u,:);
+        for i=1:length(vConn)
+            for j=1:length(uConn)
+              element(e,c) = chan(vConn(i),uConn(j));
+              c = c + 1;
+            end
+        end
+        e = e + 1;
+    end
+    
+    
+end
+
+index = zeros(noElems,2); % A cada elemento le voy a asociar los indices i,j de sus respectivos 
+                          % uspan y vspan 
+count = 1;
+
+for j=1:size(elRangeV,1) %size(elRangeV,1) es el no de elementos en V
+    for i=1:size(elRangeU,1)%size(elRangeU,1) es el no de elementos en U
+        index(count,1) = i;
+        index(count,2) = j;
+        
+        count = count + 1;
+    end
+end
