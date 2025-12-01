@@ -1,0 +1,32 @@
+\begin{thebibliography}{}
+
+\bibitem[Brezis, 2010]{brezis_functional_2010}
+Brezis, H. (2010).
+\newblock {\em Functional {Analysis}, {Sobolev} {Spaces} and {Partial}
+  {Differential} {Equations}}.
+\newblock Universitext. Springer New York.
+
+\bibitem[Cottrell et~al., 2009]{cottrell_isogeometric_2009}
+Cottrell, J., Hughes, T., and Bazilevs, Y. (2009).
+\newblock {\em Isogeometric {Analysis}: {Toward} {Integration} of {CAD} and
+  {FEA}}.
+\newblock Wiley.
+
+\bibitem[Evans, 1991]{evans_partial_1991}
+Evans, L. (1991).
+\newblock {\em Partial {Differential} {Equations}}.
+\newblock Graduate studies in mathematics. American Mathematical Society.
+
+\bibitem[Larson and Bengzon, 2013]{larson_finite_2013}
+Larson, M. and Bengzon, F. (2013).
+\newblock {\em The {Finite} {Element} {Method}: {Theory}, {Implementation}, and
+  {Applications}}.
+\newblock Texts in {Computational} {Science} and {Engineering}. Springer Berlin
+  Heidelberg.
+
+\bibitem[Piegl and Tiller, 2012]{piegl_nurbs_2012}
+Piegl, L. and Tiller, W. (2012).
+\newblock {\em The {NURBS} {Book}}.
+\newblock Monographs in {Visual} {Communication}. Springer Berlin Heidelberg.
+
+\end{thebibliography}

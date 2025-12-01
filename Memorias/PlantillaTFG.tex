@@ -25,10 +25,24 @@
 % includehead, % Incluir la cabecera en el área del texto
 % includefoot, % Incluir el pie en el área del texto
 }
-
+\usepackage{natbib}
 \usepackage[utf8]{inputenc}        % para usar el teclado normalmente
 \usepackage[spanish]{babel}        % selecciona idioma
 \usepackage[T1]{fontenc}           % gestión de fuentes con acentos
+\usepackage{graphicx}
+\usepackage{svg}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{listings}
+\usepackage{listingsutf8}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+
+\usepackage{minted}
+\usemintedstyle{colorful}
 
 % Si alguno de estos paquetes no los vas a usar, mejor los quitas:
 \usepackage{amssymb}               % para cargar las fuentes de la A.M.S.
@@ -75,11 +89,17 @@ urlcolor=black]{hyperref}
 
 \theoremstyle{plain} % Entornos tipo teorema
 \newtheorem{teorema}{Teorema}[chapter]
+\newtheorem{proposicion}[teorema]{Proposición}
 %\newtheorem{lema}[teorema]{Lema} % La misma numeración que 'teorema'
 
 \theoremstyle{definition} % Entornos tipo definición
 \newtheorem*{defin}{Definición} % El asterisco hace que no se numere
 %\newtheorem{ejemplo}{Ejemplo}
+
+\theoremstyle{definition} % Entornos tipo definición
+\newtheorem{lemma}{Lema}[section] 
+
+
 
 %------ Conjuntos de números
 \newcommand\N{\mathbb{N}}
@@ -132,7 +152,13 @@ urlcolor=black]{hyperref}
 
 \clearemptydoublepage
 
-%\setcounter{page}{7} % Por si queremos imponer un número de página
+%--- RESUMEN
+\chapter{Resumen}
+
+Se creará al finalizar el trabajo.
+%--- FIN DEL RESUMEN
+
+\clearemptydoublepage
 
 \tableofcontents
 
@@ -145,46 +171,414 @@ urlcolor=black]{hyperref}
 %--- CAPÍTULO 1 DEL TFG
 \chapter{Introducción}
 
-\section{Contexto y realación con el método de elementos finitos.}
+\section{Contexto y relación con el método de elementos finitos.}
 
-Explicar aquí brevemente en que se basa el análisis isogeométrico y que relación y diferencias tiene con el método de elementos finitos.
+El análisis isogeométrico (IGA) es un método numérico, cuya finalidad se basa en la resolución de problemas de ecuaciones en derivadas parciales.
+
+Se asemeja al método de elementos finitos (FEM), ambos buscan la solución mediante una combinación lineal de funciones base a partir de la formulación variacional ,su principal diferencia con él radica en la preservación de la geometría original del espacio en el que se trabaja.
 
 \section{Motivación.}
 
-Breve explicación de las diferencias entre las diferencias de suavidad que puede haber en análisis isogeométrico, el coste de la malla después de crear la figura, como se puede respetar la geometria de elementos creados a base de NURBS como es el caso de CAD.
+En una busqueda de unificar el diseño asistido por ordenador (CAD) y el análisis asistido por ordenador (CAE), intentando eliminar el tener que crear una conversión geométrica que afecta a la precisión nace el análisis isogeométrico.
+
+Partiendo de FEM, que usa funciones base polinómicas de suavidad $C^0$, intercambiando esas funciones por otras de tipo NURBS (Non-Uniform Rational B-Splines), las cuales nos permiten, a parte de respetar la geometría y no tener que crear un nuevo mallado, una suavidad de clase $C^p$, mas adelante explicaremos mas detalladamente que valores toma $p$ y como puede variar la suavidad de la solución a lo largo de esta. 
+
 
 \section{Evolución del análisis isogeométrico.}
 
-Ligera introducción a NURBS y a como se crean figuras con estos sin entrar muy en detalle, citar su inicio en 2005 y citar posteriormente el libro de NURBS 2009.
-
-bibliografia de esta parte Artículo seminal (2005) en Computer Methods in Applied Mechanics and Engineering
+En \textbf{2005} Hughes, Cottrell y Bazilevs presentan las bases teóricas del IGA en un artículo seminal. Más adelante, aunque la teoría sobre NURBS ya estaba establecida, en \textbf{2009} con la publicación del libro \textit{The NURBS Book} de Piegl y Tiller se popularizó y formalizó la base matemática necesaria para su aplicación en el análisis.
+%bibliografia de esta parte Artículo seminal (2005) en Computer Methods in Applied Mechanics and Engineering
 
 \section{Objetivos.}
 
-No se si hablar aqui de las convergencias en norma H1 y L2, falta poner contexto teorico para mi gusto.
-Se hablará aquí de los procesos que se han llevado durante la realización y su fin (Implementaciñon de codigo propio a partir de la bibliografia, validación de los resultados numéricos...)
+El objetivo principal del trabajo es entender el marco teórico y las ventajas del IGA frente al FEM, tanto en costo computacional como en orden de convergencia, en problemas de contorno de ecuaciones en derivadas parciales.
+
+Con el fin de cumplir este objetivo, este se segmentará en los siguientes puntos que se seguiran en el orden siguiente:
+
+\begin{enumerate}
+    \item \textbf{Marco teórico:} Establecer el marco teórico del IGA, contrastando la formulación variacional basada en las funciones NURBS con la aproximación polinómica del FEM.
+    \item \textbf{Implementación computacional:} Desarrollo e implementación de código propio que pueda resolver porblemas de contorno de edps usando el IGA.
+    \item \textbf{Validación y comparación:} Validar los resultados numéricos comparandolos con las soluciones analíticas de los problemas y comprobar las diferencias en velocidad de convergencia con el FEM.
+\end{enumerate}
 
 \section{Estructura del documento.}
 
 resumen rapido de los posteriores capitulos asi como explicación de donde apareceran el codigo o diferentes elementos en el anexo.
 
+Se creará al finalizar el trabajo.
 %--- FIN DEL CAPÍTULO 1
 
 \clearemptydoublepage
 
 %--- CAPÍTULO 2 DEL TFG
 \chapter{Marco teórico}
+\section{Formulación del problema}
+\label{sec:formulacion}
+A continuación definiremos los elementos necesarios y el problema de contorno sobre el que trabajaremos:
 
+\begin{defin}\textbf{Formulación fuerte (o clásica):} Sea $\Omega \subset \mathbb{R}^n$ un conjunto abierto y acotado, donde $n \in \mathbb{N}$,
+     con frontera $\partial\Omega = \Gamma = \overline{\Gamma_D \cup \Gamma_R \cup \Gamma_N}$, que sea suficientemente regular, tal que $\Gamma_D \cap \Gamma_R = \emptyset$, $ \Gamma_D \cap \Gamma_N = \emptyset$, $  \Gamma_R \cap \Gamma_N = \emptyset$ .
+
+Buscamos una función solución $u: \Omega \to \mathbb{R}$, que cumpla $u \in C^2(\Omega)$ y tal que: 
+
+\[
+\begin{cases}
+- \Delta u = f & \text{en } \Omega, \\[6pt]
+u = g & \text{en } \Gamma_D, \quad \text{(Condición de Dirichlet)}, \\[6pt]
+\nabla u \cdot \mathbf{n} = h & \text{en } \Gamma_N, \quad \text{(Condición de Neumann)}, \\[6pt]
+\alpha u + \beta \, \nabla u \cdot \mathbf{n} = r & \text{en } \Gamma_R, \quad \text{(Condición de Robin)}.
+\end{cases}
+\]
+
+Donde:
+
+\begin{itemize}
+    \item ${f: \Omega \to \mathbb{R}}$, $f \in L^2(\Omega)$.
+    \item ${g: \Gamma_D \to \mathbb{R}}$, $g \in H^{1/2}(\Gamma_D)$.
+    \item ${h: \Gamma_N \to \mathbb{R}}$, $h \in L^2(\Gamma_N)$.
+    \item ${r: \Gamma_R \to \mathbb{R}}$, $r \in L^2(\Gamma_R)$.
+    \item ${n: \Gamma \to \mathbb{R}^n}$, vector normal exterior unitario a la frontera $\Gamma$.
+    \item ${\alpha, \beta \in \mathbb{R}}$, tal que $\frac{\alpha}{\beta} \geq 0$.
+\end{itemize}
+\end{defin}
+\begin{proposicion}\textbf{Formulación débil (o variacional):} Definimos los espacios $V(\Omega)=\{v \in H^1(\Omega) \mid v=g \text{ en } \Gamma_D\}$ y 
+$V_0(\Omega)=\{v \in H^1(\Omega) \mid v=0 \text{ en } \Gamma_D\}$. 
+
+Recurriremos ahora al \textbf{Principio de Galerkin}, el cual nos garantiza que:
+\begin{equation*}
+    \int_{\Omega} (-\Delta u - f) v \, d\Omega = 0 \quad \text{para todo } v \in V_0(\Omega).
+\end{equation*}
+
+Reordenando y utilizando la identidad $\Delta u \cdot v = \nabla \cdot (\nabla u \cdot v) - \nabla u \cdot \nabla v$:
+
+\begin{equation}
+\int_{\Omega} (-\Delta u) v \, d\Omega = \int_{\Omega} -[\nabla \cdot (\nabla u \cdot v) - \nabla u \cdot \nabla v] \, d\Omega =  \int_{\Omega} \nabla u \cdot \nabla v \, d\Omega - \int_{\Omega} \nabla \cdot (\nabla u \cdot v) \, d\Omega.
+\label{eq:2.1}
+\end{equation}
+
+
+Al aplicar el \textbf{Teorema de Gauss-Ostrogradsky} al último término:
+\begin{equation*}
+    \int_{\Omega} \nabla \cdot (\nabla u \cdot v) \, d\Omega = \int_{\Gamma} (\nabla u \cdot \mathbf{n}) v \, d\Gamma.
+\end{equation*}
+Sustituyendo esta conversión en la ecuación $\eqref{eq:2.1}$ obtenemos la \textbf{Formulación variacional preliminar}:
+\begin{equation*}
+\int_{\Omega} \nabla u \cdot \nabla v \, d\Omega - \int_{\Gamma} (\nabla u \cdot \mathbf{n}) v \, d\Gamma = \int_{\Omega} f v \, d\Omega.
+%\label{eq:2.2}
+\end{equation*}
+
+Separando ahora $\Gamma$ en sus componentes disjuntas:
+
+\begin{equation*}
+\int_{\Gamma} (\nabla u \cdot \mathbf{n}) v \, d\Gamma = \int_{\Gamma_D} (\nabla u \cdot \mathbf{n}) v \, d\Gamma + \int_{\Gamma_N} (\nabla u \cdot \mathbf{n}) v \, d\Gamma + \int_{\Gamma_R} (\nabla u \cdot \mathbf{n}) v \, d\Gamma.
+\end{equation*}
+
+Utilizamos ahora $v \in V_0(\Omega)$ y las condiciones de contorno:
+
+\begin{equation*}
+\int_{\Gamma} (\nabla u \cdot \mathbf{n}) v \, d\Gamma = 0 + \int_{\Gamma_N} h v \, d\Gamma + \int_{\Gamma_R} (\frac{r-\alpha u}{\beta}) v \, d\Gamma.
+\end{equation*}
+
+Por último sustituimos y reordenamos en forma bilineal $a(u,v)$ igualada a la forma lineal $L(v)$, donde:
+
+\begin{itemize}
+    \item ${a(u,v)}=\int_{\Omega}\nabla u \cdot \nabla v\, d\Omega + \int_{\Gamma_R}\frac{\alpha}{\beta}uv\, d\Gamma$.
+    \item ${L(v)}=\int_{\Omega}fv \, d\Omega+\int_{\Gamma_N}hv\, d\Gamma+\int_{\Gamma_R}\frac{r}{\beta}v\, d\Gamma$.
+\end{itemize}
+\end{proposicion}
+\begin{teorema}
+La existencia y unicidad de la solución al problema variacional $u \in V(\Omega)$ está garantizada gracias al \textbf{Teorema de Lax-Milgram}, pues se cumplen las tres siguientes condiciones de este:
+
+\begin{itemize}
+    \item \textbf{Continuidad de la Forma Bilineal: }$ | a(u,v) | \leq (1+C^2_{Tr}\left|\frac{\alpha}{\beta}\right|) \|u \|_{H^1(\Omega)}\|  v \|_{H^1(\Omega)}.$
+    \item \textbf{Coercividad de la Forma Bilineal: }$ a(v,v) \geq  \| \nabla v \|^2_{L^2(\Omega)} \geq \frac{1}{C_P+1}\|v\|^2_{H^1(\Omega)}. $
+    \item \textbf{Continuidad de la Forma Lineal: } $ |L(v) | \leq C\|v\|_{H^1(\Omega)}, \quad C\in \R^+. $
+    
+\end{itemize}
+\begin{proof}[Demostraciones omitidas]
+    Las demostraciones pueden consultarse en el Anexo \ref{sec:Lax}.
+    \renewcommand{\qedsymbol}{}
+\end{proof}
+El cumplimiento de estas condiciones para el operador Laplaciano asegura que el problema variacional está \textbf{bien planteado}.
+
+\end{teorema}
+Con esta solución $u \in V(\Omega) \subset H^1(\Omega)$ y asumiendo $\Gamma \in C^2$, si se cumplen las condiciones de suavidad de la regularidad elíptica,
+ $f \in L^2(\Omega)$,  $g \in H^{3/2}(\Gamma_D)$, $h \in H^{1/2}(\Gamma_N)$, $r \in H^{1/2}(\Gamma_R)$, podemos asegurar que $u\in H^2(\Omega)$,utilizando el \textbf{teorema de regularidad global de Sobolev}, entonces, podemos aplicar el \textbf{teorema fundamental del cálculo de variaciones}, el cual garantiza que $u$ es también solución de la formulación fuerte o clásica\footnote{La demostración de la equivalencia de las soluciones bajo estas condiciones puede encontrarse en el anexo \ref{sec:equivform}}.
+%Se mencionara rapidamente conceptos como el paso de formulación fuerte a formulación débil o variacional, las funciones base polinómicas clásicas con su espacio de funciones y la suavidad que estas aportan, así como su convergencia en L2 y H1.
 \section{Conceptos previos del método de los elementos finitos.}
 
-Se mencionara rapidamente conceptos como el paso de formulación fuerte a formulación débil o variacional, las funciones base polinómicas clásicas con su espacio de funciones y la suavidad que estas aportan, así como su convergencia en L2 y H1.
+Partiendo ahora de la formulación variacional, con la garantía de la existencia y unicidad de la solución $u\in V(\Omega) \subset H^1(\Omega)$, en el FEM buscamos una solución aproximada $u^h$ de esta en un espacio de dimensión finita.
 
+Para ello se realizan dos pasos previos:
+
+\begin{itemize}
+    \item \textbf{Discretización del dominio ($\Omega$):} este se divide en una colección de subdominios principales denominados \textbf{elementos}, estos elementos son politopos cerrados y simples (en 2D normalmente son triángulos, pero pueden ser también otro tipo de poligonos). Los denotaremos como $K_j$, de manera que se cumple que $\Omega \cup \Gamma = \overline{\Omega} = \bigcup_{j=1}^{M} K_j $. Esta subdivisión se conoce como malla ($T_h=\{K_1, K_2,\dots,K_M\})$.
+    \item \textbf{Discretización del espacio ($V(\Omega$)):} el subespacio de dimensión finita construido a base de funciones polinómicas $V^h = \{ v \in H^1(\Omega) \mid v = g \text{ en } \Gamma_D \text{ y } v|_{K_j} \in P_p(K_j), \forall K_j \in T_h \}$, donde $p\in \mathbb{N}$ es el grado polinomial elegido y $h = \max_{K_j \in \mathcal{T}_h} h_j, \, h_j = \text{diam}(K_j) = \sup_{x, y \in K_j} \|x - y\|$, de manera que podemos definir una base de este de la forma $\{\phi_1, \phi_2, \dots, \phi_N\}$.
+    
+        Definimos adicionalmente los nodos $x_i \in \overline{\Omega}$ y el conjunto nodal $\mathcal{N} = \{ x_1, x_2, \dots, x_N \} \subset \overline{\Omega}$, donde N es la dimensión de $V^h$. El lugar que ocupa cada $x_i$ depende tanto del tipo de elementos utilizados para crear la malla como del grado polinomial $p$ elegido, además, cada uno de estos está asociado a una única función base, de manera que se cumplen las siguientes propiedades:
+        \begin{itemize}
+            \item $\phi_i(x_j) = \delta_{ij} = \begin{cases} 1 & \text{si } i = j \\ 0 & \text{si } i \neq j \end{cases}$
+            \item $\text{supp}(\phi_i) = \overline{\bigcup \{K_j \in T_h \mid x_i \in K_j\}}$
+        \end{itemize}
+\end{itemize}
+
+Tras esto definimos la solución aproximada y su gradiente como como:
+
+\begin{equation*}
+    u^h(x) = \sum_{i=1}^{N} U_i \phi_i(x), \quad U_i \in \mathbb{R}, \quad  \forall i=1,2, \dots , N.
+\end{equation*}
+\begin{equation*}
+    \mathbf{\nabla u^h(x) = \nabla \left( \sum_{i=1}^{N} U_i \phi_i(x) \right) = \sum_{i=1}^{N} U_i \nabla \phi_i(x)}.
+\end{equation*}
+
+Luego el problema se resume en encontrar $u\in v^h$ tal que $a(u^h, v^h)-L(v^h)=0,\, \forall v^h\in V^h$. sustituyendo y aplicando la 
+\textbf{linealidad de la forma bilineal\footnote{$a(\sum_{j=1}^{N} U_j \phi_j,\sum_{i=1}^{N} U_i \phi_i)=\sum_{i=1}^{N}V_i\sum_{j=1}^{N}U_i a(\phi_j,\phi_i).$}
+ y de la forma lineal\footnote{$L(\sum_{i=1}^{N}V_i \phi_i)=\sum_{i=1}^{N}V_i L(\phi_i)$.}}
+ nos queda:
+
+\begin{equation*}
+    \sum_{i=1}^{N} V_i \left[ \sum_{j=1}^{N} a(\phi_j, \phi_i) U_j - L(\phi_i) \right] = 0, \quad \forall V_i \in \mathbb{R}, \quad \forall i=1,2,\dots , N.
+\end{equation*}
+
+Finalizando por tanto con el sistema dado por $\sum_{j=1}^{N} a(\phi_j, \phi_i) U_j = L(\phi_i),\quad \forall i=1,2,\dots , N.$
+
+\begin{defin} Los principales elementos del sistema que se resolverá para obtener la solución son:
+\begin{itemize}
+    \item \textbf{La matriz de rigidez A: } $A_{ij}=a(\phi_j,\phi_i)=\int_{\Omega}\nabla \phi_j \cdot \nabla \phi_i \, d\Omega + \int_{\Gamma_R}\frac{\alpha}{\beta}\phi_j \phi_i \, d\Gamma.$
+    \item \textbf{El vector de carga F: } $F_i=L(\phi_i)=\int_{\Omega}f \phi_i \, d\Omega +\int_{\Gamma_N}h\phi_i \, d\Gamma+\int_{\Gamma_R}\frac{r}{\beta}\phi_i \,d\Gamma.$
+\end{itemize}
+\end{defin}\footnote{Si se desea conocer más sobre algoritmos de ensamblado de $\mathbf{A}$ y $\mathbf{F}$, consúltese \cite{larson_finite_2013}, especialmente los capítulos 4 y 5.}
+Finalizando con el sistema $AU=F$, donde $U=( U_1, U_2, \dots , U_N )^T$, adicionalmente $u^h(x_i)=U_i$.
+
+\begin{defin}
+Definimos ahora la norma inducida por la forma bilineal $a( \cdot , \cdot)$, que denotaremos por $\| \cdot \|_V$:
+\begin{equation*}
+    \|v\|_V^2=a(v,v)=\int_{\Omega} \nabla u \cdot \nabla v \, d\Omega + \int_{\Gamma_R} \frac{\alpha}{\beta} u v \, d\Gamma.
+\end{equation*}
+\end{defin}
+
+\begin{lemma}
+    Las normas $\|\cdot\|_V$ y $\|\cdot\|_{H^1(\Omega)}$ son equivalentes, es decir, existen $C_1, \, C_2 \in \mathbb{R}$ tal que:
+
+\begin{equation*}
+    C_1 \|v\|_{H^1(\Omega)}^2 \leq \|v\|_{V}^2 \leq C_2 \|v\|_{H^1(\Omega)}^2.
+\end{equation*}
+
+\begin{proof}[Demostración omitida]
+    La demostración puede consultarse en el Anexo \ref{sec:normas}.
+    \renewcommand{\qedsymbol}{}
+\end{proof}
+\end{lemma}
+
+
+
+    
+\begin{teorema} El error $e=u-u^h$ del FEM converge en las normas $\|\cdot\|_{L^2(\Omega)}$ y $\|\cdot\|_{H^1(\Omega)}$, tal que:
+    \begin{itemize}
+        \item $\|e\|_{H^1(\Omega)}$, se reduce con orden  $\mathcal{O}(h^{p})$.
+        \item $\|e\|_{L^2(\Omega)}$, se reduce con orden  $\mathcal{O}(h^{p+1})$.
+    \end{itemize}
+    Siempre que $u\in H^{p+1}(\Omega)$.
+
+\begin{proof}
+    Separaremos la demostración en cada una de las normas:
+\begin{itemize}
+    \item \textbf{Convergencia en } $\|\cdot\|_{H^1(\Omega)}$:
+
+    Asumiendo la coercividad y continuidad de la forma bilineal en $V(\Omega)$\footnote{La demostración de estas puede ser encontrada en el anexo \ref{sec:Cea}}, nos encontramos en las condiciones del \textbf{Lema de Céa} por tanto se cumple:
+    \begin{equation*}
+        \|u - u_h\|_V \leq \frac{C_{cont}}{C_{coer}} \inf_{v_h \in V_h} \|u - v_h\|_V, 
+    \end{equation*}
+    donde $C_{cont}$ es la constante de continuidad y $C_{coer}$ es la constante de coercividad.
+
+    Aplicando ahora la equivalencia entre normas $\| \cdot \|_V$ y $\| \cdot \|_{H^1(\Omega)}$ obtenemos que $\exists \, C_{\text{Céa}} \in \R^+$ tal que:
+    \begin{equation}
+        \|u - u_h\|_{H^1(\Omega)} \leq C_{\text{Céa}} \inf_{v_h \in V_h} \|u - v_h\|_{H^1(\Omega)}.
+    \label{eq:cea}
+    \end{equation}
+
+    Por último usaremos la \textbf{propiedad de aproximación del espacio de Sobolev}, la cual nos garantiza que $\exists \, C_{\text{Sob}} \in \R^+$ tal que:
+    \begin{equation}
+        \inf_{v_h \in V_h} \|u - v_h\|_{H^1(\Omega)} \leq C_{\text{Sob}} h^{p} \|u\|_{H^{p+1}(\Omega)}.
+    \label{eq:sob}
+    \end{equation}
+    Finalmente uniendo todo y definiendo $C_{\text{Cota}}=C_{\text{Céa}}C_{\text{Sob}}\|u\|_{H^{p+1}(\Omega)}$ tenemos:
+    \begin{equation*}
+        \|u - u_h\|_{H^1(\Omega)} \leq C_{\text{Cota}} h^{p},
+    \end{equation*} 
+    obteniendo así un error en $H^1(\Omega)$ que converge con orden $\mathcal{O}(h^{p})$, siempre que $u\in H^{p+1}(\Omega)$.
+
+    \item \textbf{Convergencia en } $\|\cdot\|_{L^2(\Omega)}$:
+    
+    Para la cota del error $e=u-u_h$ en $L^2(\Omega)$ consideramos el problema dual asociado:
+
+    Encontrar $w\in V(\Omega)$ tal que:
+    \begin{equation*}
+        a(v,w) = (e,v)_{L^2(\Omega)}=\int_\Omega ev \, d\Omega, \quad \forall v \in V(\Omega).
+    \end{equation*}
+
+    Debido a la coercividad y continuidad de la forma bilineal y la continuidad de la forma lineal\footnote{La demostración de la continuidad de la forma lineal se encuentra en el anexo \ref{sec:cont}}, debido al \textbf{Lema de Lax-Millgram}, la solución w existe y es única, su regularidad viene dada por las condiciones de regularidad elípticas asumidas en la sección \ref{sec:formulacion}, luego $\exists \, C_{\text{Reg}}\in \R^+$ tal que:
+    \begin{equation*}
+        \|w\|_{H^2(\Omega)} \leq C_{\text{reg}} \|e\|_{L^2(\Omega)}
+    \end{equation*}
+
+    Tomamos ahora $v=e$, obteniendo así la identidad
+    \begin{equation*}
+        a(e,w) = (e,e)_{L^2(\Omega)}=\|e\|^2_{L^2(\Omega)}.
+    \end{equation*}
+
+    Como la solución discreta $u_h$ satisface la \textbf{propiedad de ortogonalidad de Galerkin}:
+    \begin{equation*}
+        a(u-u_h, v_h) = a(e, v_h) = 0, \quad \forall v_h \in V_h.
+    \end{equation*} 
+
+    Nos permite introducir cualquier función interpolante $w_h \in V_h$ tal que se cumple la siguiente igualdad:
+    \begin{equation*}
+        \|e\|_{L^2(\Omega)}^2 = a(e, w) - a(e, w_h) = a(e, w - w_h).
+    \end{equation*}
+
+    Aplicando ahora la \textbf{continuidad de la forma bilineal},
+    \begin{equation*}
+        \|e\|_{L^2(\Omega)}^2 \leq C_{\text{cont}} \|e\|_{H^1(\Omega)} \|w - w_h\|_{H^1(\Omega)}.
+    \end{equation*}
+
+    Usamos ahora el resultado de convergencia para $\|e\|_{H^1(\Omega)}$ dadas por \ref{eq:cea} y \ref{eq:sob}
+    \begin{equation*}
+        \|e\|_{L^2(\Omega)}^2 \leq C_{\text{cont}}C_{\text{Céa}}C_{Sob}h^p\|u\|_{H^{p+1}(\Omega)}\|w - w_h\|_{H^1(\Omega)}.
+    \end{equation*}
+    
+    Terminamos utilizando la \textbf{propiedad de aproximación de los espacios de Sobolev}, y tomando que $w\in H^2(\Omega)$ debido a la regularidad elíptica tenemos:
+    \begin{equation*}
+        \|w - w_h\|_{H^1(\Omega)} \leq C_{2} h^{2-1} \|w\|_{H^{2}(\Omega)} = C_{2} h^{1} \|w\|_{H^{2}(\Omega)}.
+    \end{equation*}
+
+    Culminando en la desigualdad:
+    \begin{equation*}
+        \|e\|_{L^2(\Omega)}^2 \leq \left( C_{\text{cont}}C_{\text{Céa}}C_{Sob}C_{2} \|u\|_{H^{p+1}(\Omega)} \|w\|_{H^{2}(\Omega)} \right)h^{p+1}.
+    \end{equation*}
+    obteniendo así un error en $L^2(\Omega)$ que converge con orden $\mathcal{O}(h^{p+1})$, siempre que $u\in H^{p+1}(\Omega)$.
+\end{itemize}
+\end{proof}
+\end{teorema}
 \section{Construcción de estructuras usando NURBS.}
 
-En este apartado no sé si explicar tambíen las curvas/superficies de Bezier y/o los B-splines como inicio o si quedaría demasiado largo así. 
+%En este apartado no sé si explicar tambíen las curvas/superficies de Bezier y/o los B-splines como inicio o si quedaría demasiado largo así. 
+%Se seguira en este apartado el libro de NURBS para explicar como realizar tanto las estructuras simples aportando ejemplos de estas variando su suavidad a lo largo de su parametrizacion, se introducirá también el concepto isoparamétrico y como se refina el mallado mediante inserción de nodos.
 
-Se seguira en este apartado el libro de NURBS para explicar como realizar tanto las estructuras simples aportando ejemplos de estas variando su suavidad a lo largo de su parametrizacion, se introducirá también el concepto isoparamétrico y como se refina el mallado mediante inserción de nodos.
+Las curvas y superficies creadas mediante \textbf{NURBS} son la base y el estándar del diseño CAD, durante esta sección introduciremos los conceptos necesarios para entender su funcionamiento e implementación siguiendo la progresión natural de las siguientes curvas: 
+\begin{equation*}
+    \text{Bézier} \quad \longrightarrow \quad \text{B-Splines} \quad \longrightarrow \quad \text{NURBS}.
+\end{equation*}
+\subsection{Bézier}
+\begin{defin}
+    Las curvas de Bézier de grado $p$ son curvas parametrizadas en el espacio $\R^n$ con $n,p \in \N$, de la forma:
+    \begin{equation*}
+        \mathbf{C}(u) = \sum_{i=0}^{p} B_{i,p}(u) \mathbf{P}_i, \quad u \in [0, 1].
+    \end{equation*}
+    Donde:
+    \begin{itemize}
+        \item $\{\mathbf{P}_0, \mathbf{P}_1, \dots , \mathbf{P}_p\} \footnote{El conjunto de puntos de control puede contener repeticiones, es decir, \textbf{NO} satisfacen necesariamente $\mathbf{P}_i \neq \mathbf{P}_j, \quad \text{si } i \neq j$.}\subset \R^n$, es el conjunto formado por los \textbf{puntos de control}.
+        \item $B_{i,p}(u) = \binom{p}{i} u^{i} (1-u)^{p-i}$, son las \textbf{funciones base de Bernstein}, definidas en su dominio paramétrico $u\in [0,1]$.
+    \end{itemize}
+\end{defin}
 
+Uno de los principales inconvenientes de las curvas de Bézier es su incapacida de representar cónicas de forma exacta, para ello se introduce el concepto de racionalizarlas.
+
+\begin{proposicion} Racionalización de las curvas de Bézier.
+
+    Se le asigna un peso $w_i\in \R^+$ a cada punto de control $P_i$, de manera que elevamos cada uno a coordenadas homogéneas en el \textbf{espacio proyectivo $\mathbb{P}^n$
+    \footnote{Sea $\sim$ una relación de equivalencia, donde $\mathbf{X} \sim \mathbf{Y}$ si $\mathbf{Y} = \lambda \mathbf{X}$, con $\lambda \in \mathbb{R} \setminus \{0\}$. El \textbf{espacio proyectivo} se define como $\mathbb{P}^n = \left( \mathbb{R}^{n+1} \setminus \{\mathbf{0}\} \right) / \sim$.}} y proyectando de vuelta al espacio euclídeo $\R^n$.
+    \pagebreak
+    
+    \begin{equation*}
+        \mathbf{C}^R(u) = \frac{\sum_{i=0}^{p} B_{i,p}(u) w_i \mathbf{P}_i}{\sum_{i=0}^{p} B_{i,p}(u) w_i}
+    \end{equation*}
+\end{proposicion}
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.32\textwidth}
+        \includesvg[width=\linewidth]{curva_bezier.svg}
+        \caption{Curva Bézier no racional.}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.33\textwidth}
+        \includesvg[width=\linewidth]{curva_bezier_racional.svg}
+        \caption{Curva racional, $W=(1,10,7,1)^T$.}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.32\textwidth}
+        \includesvg[width=\linewidth]{bernstein_bases_p3.svg}
+        \caption{Funciones base de Bernstein.}
+    \end{subfigure}
+    %\caption{Código para las figuras en el anexo}
+    % --- NOTA DEL CÓDIGO FUENTE ---
+    \vspace{0.5em} % Pequeño espacio vertical para separar de las subfiguras
+    \begin{flushleft}
+        \footnotesize{\textit{Nota}: El código fuente para la generación de estas figuras se encuentra disponible en el anexo \ref{sec:codigo_bezier}.}
+    \end{flushleft}
+    % -------------------------------
+\end{figure}
+
+\subsection{B-Splines}
+Debido a las limitaciones que tienen las curvas de Bézier, como pueden ser el requirimiento de un orden polinomial $n-1$ para $n$ puntos de control, aperece en este contexto los \textbf{B-Splines}.
+\begin{defin}
+    Para proceder con los B-Splines definiremos y actualizaremos los siguientes conceptos:
+
+    \begin{itemize}
+        \item \textbf{Puntos de control, }$\{\mathbf{P}_0, \mathbf{P}_1, \ldots, \mathbf{P}_n\}$: dejan de estar forzados a ser $p+1$ puntos.
+        \item \textbf{Vector de nudos, }$U = \{u_0, u_1, \ldots, u_m\}$: cumplen $u_i \le u_{i+1}, \quad i = 0, \ldots, m-1$, el número de nudos $m+1$ está relacionado con $p$ y $n$ tal que cumple: $m=n+p+1$.
+                
+            Durante el trabajo nos centraremos en vectores de nudos abiertos, es decir, serán de la forma $U = \{\underbrace{u_0, \ldots, u_0}_{p+1}, u_{p+1}, \ldots, u_n, \underbrace{u_{n+1}, \ldots, u_{n+1}}_{p+1}\}$.
+        \item \textbf{Funciones base B-Spline, $N_{i,p}(u)$}: se definen recursivamente mediante el \textbf{algoritmo de Cox-de Boor}:
+                \begin{itemize}
+                    \item Caso base ($p=0$): 
+                    \begin{equation*}
+                        N_{i,0}(u) = \begin{cases} 1 & \text{si } u_i \le u < u_{i+1}, \\ 0 & \text{en caso contrario.} \end{cases}
+                    \end{equation*} 
+                    \item Caso genérico ($p\geq 1$):
+                    \begin{equation*}
+                        N_{i,p}(u) = \frac{u - u_i}{u_{i+p} - u_i} N_{i,p-1}(u) + \frac{u_{i+p+1} - u}{u_{i+p+1} - u_{i+1}} N_{i+1,p-1}(u) \footnote{Para el caso en el que los coeficientes toman valor $\frac{0}{0}$ se les asignará como valor 1.}.
+                    \end{equation*}
+                \end{itemize} 
+    \end{itemize}
+\end{defin}
+
+\begin{defin}
+    Con estas definiciones podemos ahora definir la curva generada por los B-Splines:
+    \begin{equation*}
+        C(u) = \sum_{i=0}^{n} N_{i,p}(u) \cdot \mathbf{P}_i.
+    \end{equation*}
+\end{defin}
+
+\begin{proposicion}
+    \label{prop:bspline_fundamentales}
+    Algunas de las propiedades importantes de los B-Splines que se extienden directamente a las NURBS son:
+    \begin{enumerate}
+        \item \textbf{Soporte Local}: Cada función base $N_{i,p}(u)$ es no nula solo en un número limitado de intervalos de nudo, concretamente en $[u_i, u_{i+p+1})$. En consecuencia la curva adquiere la propiedad de \textbf{control local}: mover un punto de control $\mathbf{P}_i$ solo altera la forma de la curva en una región limitada.
+        
+        \item \textbf{No Negatividad}: El valor de las funciones base B-Spline es siempre no negativo en todo el dominio paramétrico, es decir, $\forall u \in [u_0, u_m]$, $N_{i,p}(u) \geq 0$.
+
+
+        \item \textbf{Número de Bases Activas}:  Para cualquier intervalo de nudos $[u_i, u_{i+1})$, las únicas funciones base $N_{j,p}(u)$ cuyo soporte contiene dicho intervalo son aquellas con el índice:
+        \begin{equation*}
+            j \in \{i-p, i-p+1, \ldots, i\}
+        \end{equation*}
+        
+        Por tanto el número de funciones base no nulas en el intervalo es a lo sumo $p+1$.
+
+        El número exacto de funciones base no nulas decrece con la multiplicidad $k$ de $u_i$, reduciendose a $\mathbf{p+1-k}$.
+
+        \item \textbf{Partición de la Unidad}: $\forall u\in [u_0, u_m]$, se cumple,
+        $\sum_{i=0}^{n} N_{i,p}(u) = 1$.
+        
+        \item \textbf{Invarianza bajo Transformaciones Afines}: La aplicación de una transformación afín al polígono de control resulta en la misma transformación aplicada directamente a la curva generada.
+        
+        \item \textbf{Continuidad Controlable}: La continuidad de la curva en cualquier unión (nudo) se controla localmente mediante la multiplicidad $k$\footnote{La multiplicidad $k$ de un nudo $u_i$ es el número de veces que el valor $u_i$ aparece en el vector de nudos $U$, debe cumplirse que $k\leq p$ en los nudos interiores.} del nudo, sin depender de la manipulación compleja de los puntos de control. La continuidad es $C^r$, donde $r = p - k$.
+    \end{enumerate}
+    \begin{proof}
+        La demostración puede encontrarse en el anexo \ref{sec:B-Splines_proof}.
+    \end{proof}
+\end{proposicion}
 \section{Introducción al análisis isogeométrico.}
 
 Mostrar claramente como las funciones NURBS se toman como funciones base para el análisis isogeométrico, relacionarlo con el método de elementos finitos y sus funciones base.
@@ -287,110 +681,344 @@ En ambas secciones se verificará que el codigo se ha ejecutado correctamente y 
 \backmatter                      % Parte final del texto
 
 %------ Bibliografía
-% Para meter cosas en el "toc" a mano, ver
-% \S 2.3.1 del LaTeX Companion (ejemplo de la p. 47) (Juan Luis)
-\phantomsection % Si no, el enlace en el índice apunta a la página anterior
-\addcontentsline{toc}{chapter}{\bibname} % Para que salga en el índice general
-% Para ponerlo a mano en la cabecera, pues no es \chapter:
+% 1. Configuración para el Título en el Índice (TOC)
+\phantomsection
+%\chapter*{\bibname} 
+\addcontentsline{toc}{chapter}{\bibname}
 \chaptermark{\bibname}
-% Cuando no hay secciones para las cabeceras impares, se suele hacer esto:
 \sectionmarkwithoutsections{\bibname}
 
-%--- BIBLIOGRAFÍA DEL TFG
-\begin{thebibliography}{99}
-
-\bibitem{A}
-\textsc{American Mathematical Society},
-\textit{Abbreviations of names of serials},
-\url{http://www.ams.org/msnhtml/serials.pdf}.
-
-\bibitem{A2}
-\textsc{American Mathematical Society},
-\textit{MathSciNet} (servidor de Estrasburgo),
-\url{http://ams.u-strasbg.fr/mathscinet/}.
-
-\bibitem{ALV}
-\textsc{A. Arenas, E. Labarga y J. L. Varona},
-\textit{Una breve guía para redactar un trabajo de fin de grado
-con contenido matemático utilizando LaTeX},
-\url{https://www.unirioja.es/facultades_escuelas/fct/TFG/guia-TFG-matematicas.pdf},
-disponible en
-\url{https://www.unirioja.es/facultades_escuelas/fct/TFG/guias_manuales.shtml}.
-
-\bibitem{B}
-\textsc{J.~Bezos},
-\textit{Ortotipografía y notaciones matemáticas},
-\url{http://www.texnia.com/archive/ortomatem.pdf},
-disponible en
-\url{http://www.texnia.com/}.
-
-\bibitem{BC}
-\textsc{J. Bruna y J. Cufí},
-\textit{An\`alisi complexa},
-Colección Manuals, Universitat Aut\`onoma de Barcelona, Bellaterra, 2008.
-
-\bibitem{CLMPS}
-\textsc{B. Cascales, P. Lucas, J. M. Mira, A. Pallarés y S. Sánchez-Pedreño}, 
-\textit{LaTeX, una imprenta en tus manos}, 
-Aula Documental de Investigaci\'on, Madrid, 2000.
-
-\bibitem{C}
-\textsc{B. Cuartero},
-\textit{Fundamentos de análisis matemático},
-Colección Textos Docentes, Prensas Universitarias de Zaragoza, 2009.
-
-\bibitem{FC}
-\textsc{Facultad de Ciencias de la Universidad de Zaragoza},
-\textit{Directrices propias para la elaboración del trabajo fin de grado en 
-Matemáticas}, 
-disponible en
-\url{https://ciencias.unizar.es/trabajo-fin-de-grado-en-matematicas}.
-
-\bibitem{I}
-\textsc{International Standard Serial Number},
-\textit{International identifier for serials},
-\url{http://www.issn.org/services/online-services/access-to-the-ltwa/}.
-
-%\bibitem{M}
-%\textsc{P. Millien},
-%\textit{Conseils pour bien taper un document avec {\LaTeX}},
-%\url{http://www.math.ens.fr/~millien/tdlatex/conseils_latex.pdf},
-%disponible en
-%\url{http://www.math.ens.fr/~millien/}.
-
-\bibitem{MGBCR}
-\textsc{F. Mittelbach, M. Goossens, J. Braams, D. Carlisle y C. Rowley}, 
-\textit{The \LaTeX\ Companion}, 
-2.\textsuperscript{a} ed., 
-Addison-Wesley, 2004.
-
-\bibitem{P}
-\textsc{J. M. Patin},
-A very short proof of Stirling's formula,
-\textit{Amer. Math. Monthly}
-\textbf{96} (1) (1989), 41--42.
-
-\bibitem{RAE}
-\textsc{Real Academia Española},
-\url{http://www.rae.es/}.
-
-%\bibitem{V}
-%\textsc{J. L. Varona},
-%\textit{Un ejemplo de cómo escribir un artículo que se publicará en La Gaceta de 
-%la RSME},
-%\url{http://gaceta.rsme.es/estiloGaceta/articulo-suelto.zip},
-%disponible en
-%\textit{Información para autores},
-%\url{http://gaceta.rsme.es/informacion.php}.
-
-\bibitem{W}
-\textsc{R. Webster},
-\textit{Convexity},
-Oxford University Press, Oxford, 1994.
-
-\end{thebibliography}
+% 2. Proceso de BibTeX
+\bibliographystyle{apalike} % Define el estilo (APA-like)
+\nocite{*}
+\bibliography{Biblio}
 %--- FIN DE LA BIBLIOGRAFÍA
 
+\chapter*{Anexos}
+\addcontentsline{toc}{chapter}{Anexos}
+\section{Demmostraciones omitidas}
+\subsection{Condiciones del Lema de Lax-Millgram}
+\label{sec:Lax}
+\begin{itemize}
+    \item \textbf{Continuidad de la Forma Bilineal:}\begin{proof} aplicaremos la \textbf{desigualdad triangular},
+    \[ | a(u,v) | = \left| \int_{\Omega}\nabla u \cdot \nabla v\, d\Omega + \int_{\Gamma_R}\frac{\alpha}{\beta}uv\, d\Gamma \right| \leq \left| \int_{\Omega}\nabla u \cdot \nabla v\, d\Omega \right| + \left| \int_{\Gamma_R}\frac{\alpha}{\beta}uv\, d\Gamma \right|. \]
+    Continuaremos con la \textbf{desigualdad de Cauchy-Schwartz} para el primer término,
+    \[ \left| \int_{\Omega}\nabla u \cdot \nabla v\, d\Omega \right| \leq  \int_{\Omega} \left|\nabla u \right| \left|\nabla v \right|\, d\Omega \leq \| \nabla u \|_{L^2(\Omega)}\| \nabla v \|_{L^2(\Omega)} \leq \|  u \|_{H^1(\Omega)}\|  v \|_{H^1(\Omega)} .\]
+    Buscamos ahora acotar el segundo término utilizando primero la \textbf{desigualdad de Cauchy-Schwartz}:
+    \[ \left| \int_{\Gamma_R}\frac{\alpha}{\beta}uv\, d\Gamma \right| \leq  \left|\frac{\alpha}{\beta}\right|\int_{\Gamma_R}|u||v|\, d\Gamma \leq \left|\frac{\alpha}{\beta}\right| \|  u \|_{L^2(\Gamma_R)}\|  v \|_{L^2(\Gamma_R)} .\]
+    Usamos ahora el \textbf{teorema de la traza} que nos garantiza la existencia de una constante $C_{Tr}$ tal que,
+    \[ \left|\frac{\alpha}{\beta}\right| \|  u \|_{L^2(\Gamma_R)}\|  v \|_{L^2(\Gamma_R)} \leq C^2_{Tr} \left|\frac{\alpha}{\beta}\right| \|  u \|_{H^1(\Omega)}\|  v \|_{H^1(\Omega)}.\]
+    Por lo que obtenemos:
+    \[ | a(u,v) | \leq (1+C^2_{Tr}\left|\frac{\alpha}{\beta}\right|) \|u \|_{H^1(\Omega)}\|  v \|_{H^1(\Omega)}.\]
+    \end{proof}
+    \item \textbf{Coercividad de la Forma Bilineal:}\begin{proof} partimos de la condición impuesta $\frac{\alpha}{\beta} \geq 0$:
+    \[ a(v,v) = \int_\Omega \nabla v \cdot \nabla v \, d\Omega + \int_{\Gamma_R} \frac{\alpha}{\beta}v^2 \, d\Gamma = \int_\Omega |\nabla v|^2 \, d\Omega + \int_{\Gamma_R} \frac{\alpha}{\beta} v^2 \, d\Gamma \geq \int_\Omega |\nabla v|^2 \, d\Omega = \| \nabla v \|^2_{L^2(\Omega)}. \]
+    Partiendo de que $\Omega$ es acotado y $v \in V_0(\Omega)$ aplicamos la \textbf{desigualdad de Poincaré} la cual nos dice:
+    \[\text{Existe $C_P > 0$ tal que: } \|v\|^2_{L^2(\Omega)} \leq C_P\|\nabla v\|^2_{L^2(\Omega)}. \]
+    Recordamos ahora la definición de la norma H1 y aplicamos la \textbf{desigualdad de Poincaré}:
+    \[ \|v\|^2_{H^1(\Omega)}=  \|v\|^2_{L^2(\Omega)} +  \|\nabla v\|^2_{L^2(\Omega)} \leq (C_P+1)\|\nabla v\|^2_{L^2(\Omega)} .\]
+    Dividiendo ambos lados por $(C_P+1)$  y sustituyendo en la desigualdad de la forma bilinear anterior obtenemos:
+    \[ a(v,v) \geq  \| \nabla v \|^2_{L^2(\Omega)} \geq \frac{1}{C_P+1}\|v\|^2_{H^1(\Omega)}. \]
+    \end{proof}
+    \item \textbf{Continuidad de la Forma Lineal:}\begin{proof} partimos de definición de $L(v)$ y aplicamos la \textbf{desigualdad triangular},
+    \[ |L(v) | \leq \left| \int_\Omega fv \,d\Omega \right| +  \left| \int_{\Gamma_N}hv \, d\Gamma \right| + \left| \int_{\Gamma_R}\frac{r}{\beta}v \, d\Gamma \right|.\] 
+    Acotaremos ahora término a término,
+    \[ \left| \int_\Omega fv \,d\Omega \right| \leq \|f\|_{L^2(\Omega)}\|v\|_{L^2(\Omega)}\leq \|f\|_{L^2(\Omega)}\|v\|_{H^1(\Omega)} .\]
+    \[ \left| \int_{\Gamma_N} hv \,d\Gamma \right| \leq \|h\|_{L^2(\Gamma_N)}\|v\|_{L^2(\Gamma_N)} \leq \|h\|_{L^2(\Gamma_N)}C_{Tr}\|v\|_{H^1(\Omega)}, \textbf{(Teorema de la traza)}.\]
+    \[ \left| \int_{\Gamma_R}\frac{r}{\beta}v \, d\Gamma \right| \leq \left|\frac{1}{\beta} \right| \|r\|_{L^2(\Gamma_R)}\|v\|_{L^2(\Gamma_R)} \leq  \left|\frac{1}{\beta} \right| \|r\|_{L^2(\Gamma_R)}C_{Tr}\|v\|_{H^1(\Omega)}, \textbf{(Teorema de la traza)} .\]
+    Finalmente, la continuidad se demuestra al acotar:
+    \[ |L(v) | \leq \left(  \|f\|_{L^2(\Omega)}\| +  \|h\|_{L^2(\Gamma_N)}C_{Tr} + \left|\frac{1}{\beta} \right|\|r\|_{L^2(\Gamma_R)}C_{Tr}   \right)\|v\|_{H^1(\Omega)}. \]
+    \end{proof}
+\end{itemize}
+\subsection{Equivalencia de la solución de la formulación variacional y fuerte}
+\label{sec:equivform}
+\begin{proof}
+Asumimos $\Gamma \in C^2$, $f \in L^2(\Omega)$,  $g \in H^{3/2}(\Gamma_D)$, $h \in H^{1/2}(\Gamma_N)$, $r \in H^{1/2}(\Gamma_R)$ y $u\in H^2(\Omega)$, recordamos ahora la formulación variacional:
+
+\begin{equation}
+    \int_{\Omega}\nabla u \cdot \nabla v\, d\Omega + \int_{\Gamma_R}\frac{\alpha}{\beta}uv\, d\Gamma ={a(u,v)}={L(v)}=\int_{\Omega}fv \, d\Omega+\int_{\Gamma_N}hv\, d\Gamma+\int_{\Gamma_R}\frac{r}{\beta}v\, d\Gamma.
+\label{eq:6.1}
+\end{equation}
+
+Como $u\in H^2(\Omega)$ podemos aplicar el teorema de divergencia inverso al primer término de la forma bilineal:
+\begin{equation*}
+     \int_{\Omega}\nabla u \cdot \nabla v\, d\Omega = -\int_\Omega (\Delta u)v \, d\Omega + \int_{\Gamma} (\nabla u \cdot n)v \, d\Gamma.
+\end{equation*}
 %\clearemptydoublepage
+Sustituyendo ahora en $\eqref{eq:6.1}$ y agrupando todo en un lado de la igualdad obtenemos:
+
+\begin{equation*}
+    -\int_\Omega (\Delta u)v \, d\Omega + \int_{\Gamma} (\nabla u \cdot n)v \, d\Gamma + \int_{\Gamma_R}\frac{\alpha}{\beta}uv\, d\Gamma -\int_{\Omega}fv \, d\Omega-\int_{\Gamma_N}hv\, d\Gamma-\int_{\Gamma_R}\frac{r}{\beta}v\, d\Gamma = 0.
+\end{equation*}
+
+Separamos $\Gamma$ en sus componentes disjuntas $\Gamma_N$, $\Gamma_D$, $\Gamma_R$ y como $v\in V_0(\Omega)$, $v=0$ en $\Gamma_D$ luego:
+
+\begin{equation*}
+    \int_{\Gamma} (\nabla u \cdot \mathbf{n})v \, d\Gamma = \int_{\Gamma_N}  (\nabla u \cdot \mathbf{n})v \, d\Gamma + \int_{\Gamma_R}  (\nabla u \cdot \mathbf{n})v \, d\Gamma.
+\end{equation*}
+
+Reagrupamos ahora los términos que se integran en las mismas regiones:
+
+\begin{equation*}
+    \int_\Omega(-\Delta u- f)v \, d\Omega + \int_{\Gamma_N}(\nabla u \cdot \mathbf{n} -h)v \, d\Gamma +\int_{\Gamma_R} (\nabla u \cdot \mathbf{n} + \frac{\alpha}{\beta}u -\frac{r}{\beta})v \, d\Gamma = 0.
+\end{equation*}
+
+Aplicando ahora el \textbf{teorema fundamental del cálculo de variaciones} tenemos que todos los elementos entre paréntesis equivalen a 0 luego:
+
+\begin{equation*}
+\begin{cases}
+- \Delta u = f & \text{en } \Omega, \\[6pt]
+u = g & \text{en } \Gamma_D \quad (u\in V(\Omega)), \\[6pt]
+\nabla u \cdot \mathbf{n} = h & \text{en } \Gamma_N, \\[6pt]
+\alpha u + \beta \, \nabla u \cdot \mathbf{n} = r & \text{en } \Gamma_R.
+\end{cases}
+\end{equation*}
+\end{proof}
+\subsection{Equivalencia de normas}
+\label{sec:normas}
+
+\begin{proof}Demostraremos ambas cotas por separado:
+
+    \begin{itemize}
+        \item \textbf{Acotación superior} ($\|v\|_{V}^2 \leq C_2 \|v\|_{H^1(\Omega)}^2$), iniciamos recordando la definición de cada norma:
+        
+        \begin{itemize} 
+            \item $\|v\|_{V}^2 = \int_{\Omega} |\nabla v|^2 \, d\Omega + \int_{\Gamma_R} \frac{\alpha}{\beta} |v|^2 \, d\Gamma$
+            \item $\|v\|_{H^1(\Omega)}^2 = \int_{\Omega} |\nabla v|^2 \, d\Omega + \int_{\Omega} |v|^2 \, d\Omega$
+        \end{itemize}
+
+        Aplicaremos ahora la \textbf{desigualdad de la traza} obteniendo:
+        \begin{equation*}
+            \int_{\Gamma_R} |v|^2 \, d\Gamma \leq C_{Tr} \|v\|_{H^1(\Omega)}^2.
+        \end{equation*}
+        Usaremos también la desigualdad trivial:
+        \begin{equation*}
+            \int_{\Omega} |\nabla v|^2 \, d\Omega \leq \|v\|_{H^1(\Omega)}^2.
+        \end{equation*}
+        Obteniendo finalmente:
+        \begin{equation*}
+            \|v\|_{V}^2 \leq \|v\|_{H^1(\Omega)}^2+C_{Tr} \|v\|_{H^1(\Omega)}^2=(1+C_{Tr}) \|v\|_{H^1(\Omega)}^2.
+        \end{equation*}
+        Luego tomaremos $C_2$=$1+C_{Tr}$.
+        \item \textbf{Acotación inferior} ($C_1 \|v\|_{H^1(\Omega)}^2 \leq \|v\|_{V}^2$), partimos de la \textbf{desigualdad de Poincaré generalizado}, el cual nos dice que existe $C_{P}\in \R^+$ tal que:
+        \begin{equation*}
+            \int_{\Omega} |v|^2 \, d\Omega \leq C_P \left( \int_{\Omega} |\nabla v|^2 \, d\Omega + \int_{\Gamma_R} |v|^2 \, d\Gamma \right)
+        \end{equation*}
+        Sustituyendo ahora en $\|v\|_{H^1(\Omega)}$:
+        \begin{equation*}
+            \|v\|_{H^1(\Omega)}^2 \leq \int_{\Omega} |\nabla v|^2 \, d\Omega + C_{P} \left( \int_{\Omega} |\nabla v|^2 \, d\Omega + \int_{\Gamma_R} |v|^2 \, d\Gamma \right) = (1 + C_P) \int_{\Omega} |\nabla v|^2 \, d\Omega + C_P \int_{\Gamma_R} |v|^2 \, d\Gamma.
+        \end{equation*} 
+        Buscamos ahora una constante $C_R$ tal que $C_R \cdot \|v\|^2_V\geq \|v\|^2_{H^1(\Omega)}$ y cumpla las siguientes propiedades:
+        \begin{itemize}
+            \item $C_{R} \geq (1 + C_P) \implies C_R \geq 1 + C_P.$
+            \item $C_R\cdot \frac{\alpha}{\beta} \geq C_P \implies C_R \geq C_P \cdot \frac{\beta}{\alpha}$
+        \end{itemize}
+        Luego tomamos:
+        \begin{equation*}
+           C_R = max\left(1+C_P, \frac{\beta C_P}{\alpha}   \right).
+        \end{equation*} 
+        Obteniendo así la siguiente desigualdad:
+        \begin{equation*}
+           C_R \|v\|_{V}^2 = C_R \int_{\Omega} |\nabla v|^2 \, d\Omega + C_R \frac{\alpha}{\beta} \int_{\Gamma_R} |v|^2 \, d\Gamma \geq (1 + C_P) \int_{\Omega} |\nabla v|^2 \, d\Omega + C_P \int_{\Gamma_R} |v|^2 \, d\Gamma.
+        \end{equation*}
+        Tomando finalmente $C_1=\frac{1}{C_R}$:
+        \begin{equation*}
+           \|v\|_{V}^2\geq C_1\|v\|^2_{H^1(\Omega)}.
+        \end{equation*}
+    \end{itemize}
+    
+
+\end{proof}
+\subsection{Condiciones del Lema de Céa}
+\label{sec:Cea}
+\begin{proof} Probaremos la coercividad y la continuidad en $\|\cdot\|_V$:
+\begin{itemize}
+    \item \textbf{Coercividad: } $\exists \, C_1\in \R^+ \text{ tal que }\, C_1 \|v\|_{H^1(\Omega)}^2 \leq \|v\|_{V}^2,$, Probado en la equivalencia de normas.
+    \item \textbf{Continuidad: } $\exists \, C_2\in \R^+ \text{ tal que }\, |a(u, v)| \leq C_2 \|u\|_{H^1(\Omega)} \|v\|_{H^1(\Omega)}$:
+     Iniciamos aplicando la \textbf{desigualdad triangular} a la definición de  $|a(u, v)|$:
+     \begin{equation*}
+        |a(u, v)| \leq \left| \int_{\Omega} \nabla u \cdot \nabla v \, d\Omega \right| + \left| \int_{\Gamma_R} \frac{\alpha}{\beta} u v \, d\Gamma \right|.
+     \end{equation*}
+     Aplicamos ahora la \textbf{desigualdad de Cauchy-Schwartz} en $L^2(\Omega)$ al primer término:
+     \begin{equation*}
+        \left| \int_{\Omega} \nabla u \cdot \nabla v \, d\Omega \right| \leq \int_{\Omega} |\nabla u| |\nabla v| \, d\Omega\leq \| \nabla u \|_{L^2(\Omega)} \| \nabla v \|_{L^2(\Omega)}.
+     \end{equation*}
+     Usamos ahora la propiedad trivial $\|v\|_H^1(\Omega) \geq \|\nabla v\|_L^2(\Omega), \forall v \in H^1(\Omega)$,
+     \begin{equation*}
+        |a(u, v)| \leq \| \nabla u \|_{L^2(\Omega)} \| \nabla v \|_{L^2(\Omega)} \leq \| u \|_{H^1(\Omega)} \| v \|_{H^1(\Omega)} .
+     \end{equation*}
+     Pasamos ahora al segundo término e empezamos aplicando la \textbf{desigualdad de Cauchy-Schwartz}:
+     \begin{equation*}
+        \left| \int_{\Gamma_R} \frac{\alpha}{\beta} u v \, d\Gamma \right| \leq \frac{\alpha}{\beta} \int_{\Gamma_R} |u| |v| \, d\Gamma \leq \frac{\alpha}{\beta} \|u\|_{L^2(\Gamma_R)} \|v\|_{L^2(\Gamma_R)}.
+     \end{equation*}
+     Seguiremos aplicando ahora la \textbf{desigualdad de la traza}:
+     \begin{equation*}
+        \|  u \|_{L^2(\Gamma_R)} \| v \|_{L^2(\Gamma_R)} \leq C_{Tr}^2 \|u\|_{H^1(\Omega)} \|v\|_{H^1(\Omega)}.
+     \end{equation*}
+     Luego uniendo ambas cotas de los términos individuales obtenemos:
+     \begin{equation*}
+        |a(u, v)| \leq \| u \|_{H^1(\Omega)} \| v \|_{H^1(\Omega)}  + \frac{\alpha}{\beta} C_{Tr}^2 \|u\|_{H^1(\Omega)} \|v\|_{H^1(\Omega)} = (1+\frac{\alpha}{\beta}C_{Tr}^2)\| u \|_{H^1(\Omega)} \| v \|_{H^1(\Omega)}.
+     \end{equation*}
+     Por último tomamos $C_2=1+\frac{\alpha}{\beta}C_{Tr}^2$.
+\end{itemize}
+\end{proof}
+
+\subsection{Continuidad de la forma lineal dual}
+\label{sec:cont}
+\begin{proof}
+    Recordamos que la forma lineal del problema dual es $L_\text{dual}(v)=(e,v)_{L^2(\Omega)}$.
+
+    Iniciamos usando la \textbf{desigualdad de Cauchy-Schwartz} en $L^2(\Omega)$,
+    \begin{equation*}
+        |(e,v)_{L^2(\Omega)}| \leq \|e\|_{L^2(\Omega)}\|v\|_{L^2(\Omega)}.
+    \end{equation*}
+    
+    Aplicamos ahora la \textbf{propiedad trivial} de la acotación superior  ${\|\cdot\|_{L^2(\Omega)}}$ por $\|\cdot\|_{H^1(\Omega)}$,
+    \begin{equation*}
+        |(e,v)_{L^2(\Omega)}| \leq \|e\|_{L^2(\Omega)}\|v\|_{H^1(\Omega)}.
+    \end{equation*}
+    Como $e=u-u^h$ es constante en este contexto, $e\in L^2(\Omega)$, luego tomamos $C_\text{L}=\|e\|_{L^2(\Omega)}$.
+\end{proof}
+\subsection{Propiedades de los B-Splines}
+\label{sec:B-Splines_proof}
+\begin{proof} Se demostrarán las propiedades en el orden en el que han sido establecidas:
+
+
+    \begin{enumerate}
+        \item \textbf{Soporte Local}: procederemos mediante inducción sobre $p$:
+            \begin{itemize}
+                \item \textbf{Caso Base ($p=0$)}: tenemos, $N_{i,0}(u)=1$ si $u\in [u_i, u_{i+1})$ por definición.
+                \item \textbf{Paso de inducción sobre $p$}: partiendo de la definición mediante el algoritmo de Cox-de Boor:
+                \begin{equation}
+                    N_{i,p}(u) = \frac{u - u_i}{u_{i+p} - u_i} N_{i,p-1}(u) + \frac{u_{i+p+1} - u}{u_{i+p+1} - u_{i+1}} N_{i+1,p-1}(u).
+                    \label{alg:Cox}
+                \end{equation}
+                Asumimos que $N_{i,p-1}(u)$ tiene soporte en $[u_i, u_{i+p})$ y $N_{i+1,p-1}(u)$ tiene soporte en $[u_{i+1}, u_{i+p+1})$, luego $N_{i,p}(u)$ tiene soporte $[u_{i}, u_{i+p+1})$.
+            \end{itemize}
+            \item \textbf{No Negatividad}: procederemos mediante inducción sobre $p$:
+            \begin{itemize}
+                \item \textbf{Caso Base ($p=0$)}: tenemos por definición que $N_{i,}=0$ o $1$, luego $N_{i,} \geq 0$.
+                \item \textbf{Paso de inducción sobre $p$}: asumimos cierta la hipótesis para $p-1$, tomando $u \in [u_i, u_{i+p+1})$ y aplicando el algoritmo \ref{alg:Cox}, la demostración se reduce a probar que:
+                \begin{itemize}
+                    \item $\frac{u - u_i}{u_{i+p} - u_i}\geq 0$, trivial pues por como esta definido el vector de nodos, $u_{i+p} \geq u_i$ y como $u \in [u_i, u_{i+p+1})$, $u \geq u_i$
+                    \item $\frac{u_{i+p+1} - u}{u_{i+p+1} - u_{i+1}}\geq 0$, de manera análoga tenemos $u_{i+p+1} \geq u_{i+1}$ y $u_{i+p+1}\geq u$.
+                \end{itemize}
+            
+            \end{itemize}
+            \item \textbf{Número de Bases Activas}: procederemos mediante inducción sobre $p$:
+                \begin{itemize}
+                    \item \textbf{Caso Base ($p=0$)}: por definición del caso $p=0$ de la funciones base y por la propiedad de no decrecimiento del vector de nudos, si $u\in [u_i, u_{i+1})$, existe unicamente una función base $N_{i,0}$ no nula en ese intervalo, luego el único indice $j$ que satisface la condición de tener una función base no nula asociada es $i=j$.
+                    \item \textbf{Paso de inducción sobre $p$}: asumimos que para el intervalo $[u_i, u_{i+1})$ existen a lo sumo $p$ funciones base $N_{j,p-1}$ no nulas con indices $j\in \{i-(p-1),\dots , i\}$, debido al algoritmo de Cox-de Boor
+                    \ref{alg:Cox} y a la no negatividad de los coeficientes y de las funciones base provada en el apartado anterior,si $u\in [u_i, u_{i+1})$, $N_{j,p}(u)$ será no nula en el intervalo $ [u_i, u_{i+1})$ si alguna de las funciones base $N_{j,p-1}(u)$ y $N_{j+1,p-1}(u)$ no lo son, luego:
+                    \begin{itemize}
+                        \item $N_{j,p-1}(u)$ es no nula a lo sumo cuando $j\in \{i-p+1, i-p+2, \dots ,i\}$
+                        \item $N_{j+1,p-1}(u)$ es no nula a lo sumo cuando $j\in \{i-p, i-p+1, \dots ,i-1\}$                 
+                    \end{itemize}
+                    Luego $N_{j,p}$ es no nula cuando $j\in [i-p, i]$, probando así las posibles $p+1$ funciones base no nulas con sus indices posibles correspondientes.
+                \end{itemize}
+                %Finalmente para probar la cantidad de funciones base nulas en un intervalo $[u_i, u_{i+1})$, suponemos que $u_j=u_{j+1}=\dots=u_{j+k-1}$, 
+                %ahora tenemos que una función base $\mathbf{N_{j, p}(u)}$ será activa en $[u_i, u_{i+1})$ si su soporte $\mathbf{(u_j, u_{j+p+1})}$ interseca a este, notamos que $\forall j \in [i-p, i-p+k-1]$, $\mathbf{N_{j, p}(u)}$ tiene soporte local que llega hasta $u_i$, luego su soporte no interseca con el intervalo, dandonos así $k$ funciones nulas y por ende, $p+1-k$ funciones base activas.
+                
+                Para demostrar la reducción, consideramos un nudo de valor $\mathbf{u^*}$ con multiplicidad $k$, tal que la secuencia de nudos coincidentes es $\mathbf{u_j=u_{j+1}=\dots=u_{i}}$, donde $\mathbf{i=j+k-1}$.
+
+                Una función base $\mathbf{N_{m, p}(u)}$ es nula en el intervalo $[u_i, u_{i+1})$ si su soporte $\mathbf{(u_m, u_{m+p+1})}$ no interseca dicho intervalo, es decir, si $\mathbf{u_{m+p+1} \leq u_i}$.
+
+                Las $\mathbf{k}$ funciones base con los índices más bajos en el rango máximo, dadas por el conjunto\\
+                 $\mathbf{J_{\text{nulo}} = \{i-p, i-p+1, \dots, i-p+k-1\}}$, se anulan.
+                Analizamos el índice final del soporte para el último elemento de este conjunto, $\mathbf{m = i-p+k-1}$:
+                $$\mathbf{u_{m+p+1}} = u_{(i-p+k-1) + p + 1} = \mathbf{u_{i+k}}$$.
+                Puesto que $\mathbf{u_i, u_{i+1}, \dots, u_{i+k-1}}$ son todos iguales a $\mathbf{u^*}$, la secuencia de $k$ nudos coincidentes fuerza a estas $\mathbf{k}$ bases a ser nulas. Por lo tanto, el número de funciones base nulas es $\mathbf{k}$. 
+                Consecuentemente, el número de funciones base activas o no nulas es:
+                $\mathbf{p+1} - \mathbf{k}$.
+                %\newpage
+            \item \textbf{Partición de la Unidad}:
+                \begin{itemize}
+                    \item \textbf{Caso Base ($p=0$)}: como hemos probado en el apartado anterior en $p=0$ por cada intervalo $[u_i, u_{i+1})$ hay una sola función base no nula, luego $\forall u \in [u_0, u_m), \, \exists j\in R^+$ tal que $u\in [u_j,u{j+1})$, luego,
+                    \begin{equation*}
+                        \sum_{i=0}^{n} N_{i,0}(u) = N_{j,0}(u) = 1.
+                    \end{equation*}
+                    \item \textbf{Paso de inducción sobre $p$}: asumimos ahora que se cumple $\sum_{i=0}^{n} N_{i,p}(u)=1$, empezamos entonces con el algoritmo de Cox-de Boor \ref{alg:Cox} talque,
+                    %\begin{align*}
+                        %\sum_{i=0}^{n} N_{i,p}(u) %=& \sum_{i=0}^{n} \left[\frac{u - u_i}{u_{i+p} - u_i} N_{i,p-1}(u) + \frac{u_{i+p+1} - u}{u_{i+p+1} - u_{i+1}} N_{i+1,p-1}(u)\right]=\\
+                                                 % =& \sum_{i=0}^{n} \left[ \frac{u - u_i}{u_{i+p} - u_i} N_{i,p-1}(u) \right] + \sum_{i=0}^{n} \left[ \frac{u_{i+p+1} - u}{u_{i+p+1} - u_{i+1}} N_{i+1,p-1}(u) \right]=\\
+                                                  %=& \sum_{i=0}^{n} \left[ \frac{u - u_i}{u_{i+p} - u_i} N_{i,p-1}(u) \right] + \sum_{i=1}^{n+1} \left[ \frac{u_{i+p} - u}{u_{i+p} - u_{i}} N_{i,p-1}(u) \right].
+                                                  
+                    %\end{align*}
+                    \begin{align*}
+                        \sum_{i=0}^{n} N_{i,p}(u) =& \sum_{i=0}^{n} \left[\frac{u - u_i}{u_{i+p} - u_i} N_{i,p-1}(u) + \frac{u_{i+p+1} - u}{u_{i+p+1} - u_{i+1}} N_{i+1,p-1}(u)\right]=\\
+                                                  =& \sum_{i=0}^{n} \left[ \frac{u - u_i}{u_{i+p} - u_i} N_{i,p-1}(u) \right] + \sum_{i=0}^{n} \left[ \frac{u_{i+p+1} - u}{u_{i+p+1} - u_{i+1}} N_{i+1,p-1}(u) \right]=\\
+                                                  =& \sum_{i=0}^{n} \left[ \frac{u - u_i}{u_{i+p} - u_i} N_{i,p-1}(u) \right] + \sum_{i=1}^{n+1} \left[ \frac{u_{i+p} - u}{u_{i+p} - u_{i}} N_{i,p-1}(u) \right].
+                    \end{align*}
+                    Tomando que el soporte de $N_{i,p-1}(u)$ es $[u_i,u_i+p)$ y que $U$ es abierto, luego $u_0=u_1=\dots = u_p$, por lo que $N_{0,p-1}(u)$, al tener soporte degenerado, es siempre nula, y $N_{n+1,p-1}$ es nula $\forall u \in [u_0, u_n]$ nos queda:
+                    \begin{align*}
+                        \sum_{i=0}^{n} N_{i,p}(u) =& \sum_{i=0}^{n} \left[ \frac{u - u_i}{u_{i+p} - u_i} N_{i,p-1}(u) \right] + \left[ \frac{u_{i+p} - u}{u_{i+p} - u_{i}} N_{i,p-1}(u) \right] =\\
+                                                  =& \sum_{i=0}^{n} \left[ \frac{u - u_i}{u_{i+p} - u_i} + \frac{u_{i+p} - u}{u_{i+p} - u_{i}}  \right]N_{i,p-1}(u) = \sum_{i=0}^{n}N_{i,p-1}(u) = 1.
+                    \end{align*}
+                \end{itemize}
+            
+            \item \textbf{Invarianza bajo Transformaciones Afines}: sea una transformación afín $T(\mathbf{P}) = \mathbf{M} \mathbf{P} + \mathbf{t}$, aplicamos esta a la curva obteniendo:
+            \begin{align*}
+                    T(\mathbf{C}(u)) &= \mathbf{M} \mathbf{C}(u) + \mathbf{t} = \mathbf{M} \left( \sum_{i=0}^{n} N_{i,p}(u) \mathbf{P}_i \right) + \mathbf{t} =\\
+                                     &=  \sum_{i=0}^{n} \mathbf{M} (N_{i,p}(u) \mathbf{P}_i) + 1 \cdot \mathbf{t} = \sum_{i=0}^{n} N_{i,p}(u) (\mathbf{M} \mathbf{P}_i) + \mathbf{t} \left( \sum_{i=0}^{n} N_{i,p}(u) \right)=\\
+                                     &= \sum_{i=0}^{n} N_{i,p}(u) (\mathbf{M} \mathbf{P}_i + \mathbf{t}).
+            \end{align*}
+
+            Siendo esta última serie la curva generada por los puntos de control transformados mediante la transformación afín.
+            
+            \item \textbf{Continuidad Controlable}: Suponemos que $u_j$ tiene multiplicidad $k \leq p$, aplicamos ahora la definición de la derivada de la curva:
+            \begin{equation*}
+                \mathbf{C}'(u) = \frac{d}{du} \left( \sum_{i=0}^{n} N_{i,p}(u) \mathbf{P}_i \right) = \sum_{i=0}^{n} N_{i,p}'(u) \mathbf{P}_i = \sum_{i=0}^{n} \left[ \frac{p}{u_{i+p} - u_i} N_{i,p-1}(u) - \frac{p}{u_{i+p+1} - u_{i+1}} N_{i+1,p-1}(u) \right] \mathbf{P}_i.
+            \end{equation*}
+            Reordenamos ahora los indices del término de la derecha de la suma, aplicando las mismas propiedades que en el apartado anterior, obteniendo así:
+            \begin{equation*}
+                \mathbf{C}'(u) = \sum_{i=0}^{n-1} N_{i,p-1}(u) \underbrace{\left[ p \frac{\mathbf{P}_{i+1} - \mathbf{P}_i}{u_{i+p+1} - u_{i+1}} \right]}_{\mathbf{P}_i^{(1)}}  = \sum_{i=0}^{n-1} N_{i,p-1}(u) \mathbf{P}_i^{(1)}.
+            \end{equation*}
+            Así, de manera recursiva definimos la derivada $r$-ésima de la curva:
+            \begin{equation*}
+                \mathbf{C}^{(r)}(u) = \sum_{i} N_{i, p-r}(u) \mathbf{P}_i^{(r)}, \quad \left(\mathbf{P}_i^{(r)} = p \frac{\mathbf{P}_{i+1}^{(r-1)} - \mathbf{P}_i^{(r-1)}}{u_{i+p+1} - u_{i+1}}\right)
+            \end{equation*}
+            Obteniendo así que para $r=p-k$, si $u=u_j$, $N_{j-1,k}=1$, luego:
+            \begin{align*}
+                \lim_{u \to u_j^-} \mathbf{C}^{(r)}(u) &= \sum_{i} \mathbf{P}_i^{(r)} \lim_{u \to u_j^-} N_{i, k}(u) = \mathbf{P}_{j-1}^{(r)} \cdot \lim_{u \to u_j^-} N_{j-1, k}(u) = \mathbf{P}_{j-1}^{(r)}.\\
+                \lim_{u \to u_j^+} \mathbf{C}^{(r)}(u) &= \sum_{i} \mathbf{P}_i^{(r)} \lim_{u \to u_j^+} N_{i, k}(u) = \mathbf{P}_{j-1}^{(r)} \cdot \lim_{u \to u_j^+} N_{j-1, k}(u) = \mathbf{P}_{j-1}^{(r)}.
+            \end{align*}
+            Para $r=p-k+1$, tenemos que:
+            \begin{align*}
+                &\lim_{u \to u_j^-} N_{j-1, k-1}(u) = 1, \, \lim_{u \to u_j^+} N_{j-1, k-1}(u) = 0.\\
+                &\lim_{u \to u_j^-} N_{j, k-1}(u) = 0, \, \lim_{u \to u_j^+} N_{j, k-1}(u) = 1.\\
+            \end{align*}
+            Por lo que en este caso:
+             \begin{align*}
+                \lim_{u \to u_j^-} \mathbf{C}^{(r)}(u) &= \sum_{i} \mathbf{P}_i^{(r)} \lim_{u \to u_j^-} N_{i, k-1}(u) = \mathbf{P}_{j-1}^{(r)} \cdot \lim_{u \to u_j^-} N_{j-1, k-1}(u) = \mathbf{P}_{j-1}^{(r)}.\\
+                \lim_{u \to u_j^+} \mathbf{C}^{(r)}(u) &= \sum_{i} \mathbf{P}_i^{(r)} \lim_{u \to u_j^+} N_{i, k-1}(u) = \mathbf{P}_{j}^{(r)} \cdot \lim_{u \to u_j^+} N_{j1, k-1}(u) = \mathbf{P}_{j}^{(r)}.
+            \end{align*}
+            Luego como la continuidad de $\mathbf{C}^{(r)}(u)$ depende de los puntos de control, $\mathbf{C}(u)\notin L^{p-k+1}(\Omega)$. 
+        \end{enumerate}
+\end{proof}
+\section{Código omitido}
+
+\subsection{Figuras de Bézier}
+\label{sec:codigo_bezier}
+
+
+\textbf{Código de las bases de Bernstein}
+\begin{listing}[H]
+\inputminted[
+    linenos,
+    breaklines,
+    frame=lines,
+    fontsize=\footnotesize
+]{octave}{plot_bernstein_bases.m}
+\end{listing}
+\newpage
+\textbf{Código de las curvas racionalizadas de Bernstein}
+\inputminted[
+    linenos,
+    breaklines,
+    breakanywhere,
+    frame=lines,
+    fontsize=\footnotesize
+]{octave}{RatBezier3d.m}
+
 
 \end{document}

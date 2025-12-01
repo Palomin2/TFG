@@ -1,0 +1,36 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{k}{function}\PYG{+w}{ }\PYG{n+nf}{plot\PYGZus{}bernstein\PYGZus{}bases}\PYG{p}{(}p\PYG{p}{)}
+
+\PYG{+w}{    }\PYG{n}{m} \PYG{p}{=} \PYG{l+m+mi}{100}\PYG{p}{;}
+    \PYG{n}{u} \PYG{p}{=} \PYG{n+nb}{linspace}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{m}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{);}
+
+    \PYG{n+nb}{figure}\PYG{p}{;}
+    \PYG{n+nb}{hold} \PYG{n}{on}\PYG{p}{;}
+    \PYG{n+nb}{grid} \PYG{n}{on}\PYG{p}{;}
+
+    \PYG{n}{colors} \PYG{p}{=} \PYG{n+nb}{hsv}\PYG{p}{(}\PYG{n}{p} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{);}
+
+    \PYG{k}{for} \PYG{n}{i} \PYG{p}{=} \PYG{l+m+mi}{0}\PYG{p}{:}\PYG{n}{p}
+
+
+        \PYG{n}{binom\PYGZus{}coeff} \PYG{p}{=} \PYG{n+nb}{nchoosek}\PYG{p}{(}\PYG{n}{p}\PYG{p}{,} \PYG{n}{i}\PYG{p}{);}
+        \PYG{n}{poly\PYGZus{}term} \PYG{p}{=} \PYG{n}{u}\PYG{o}{.\PYGZca{}}\PYG{n}{i} \PYG{o}{.*} \PYG{p}{(}\PYG{l+m+mi}{1} \PYG{o}{\PYGZhy{}} \PYG{n}{u}\PYG{p}{)}\PYG{o}{.\PYGZca{}}\PYG{p}{(}\PYG{n}{p} \PYG{o}{\PYGZhy{}} \PYG{n}{i}\PYG{p}{);}
+        \PYG{n}{B\PYGZus{}ip} \PYG{p}{=} \PYG{n}{binom\PYGZus{}coeff} \PYG{o}{*} \PYG{n}{poly\PYGZus{}term}\PYG{p}{;}
+        \PYG{n+nb}{plot}\PYG{p}{(}\PYG{n}{u}\PYG{p}{,} \PYG{n}{B\PYGZus{}ip}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}LineWidth\PYGZsq{}}\PYG{p}{,} \PYG{l+m+mi}{2}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}Color\PYGZsq{}}\PYG{p}{,} \PYG{n}{colors}\PYG{p}{(}\PYG{n}{i} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{p}{:),} \PYG{p}{...}
+             \PYG{l+s}{\PYGZsq{}DisplayName\PYGZsq{}}\PYG{p}{,} \PYG{p}{[}\PYG{l+s}{\PYGZsq{}B\PYGZus{}\PYGZob{}\PYGZsq{}}\PYG{p}{,} \PYG{n}{num2str}\PYG{p}{(}\PYG{n}{i}\PYG{p}{),} \PYG{l+s}{\PYGZsq{},\PYGZsq{}}\PYG{p}{,} \PYG{n}{num2str}\PYG{p}{(}\PYG{n}{p}\PYG{p}{),} \PYG{l+s}{\PYGZsq{}\PYGZcb{}(u)\PYGZsq{}}\PYG{p}{]);}
+    \PYG{k}{end}
+
+    \PYG{n+nb}{xlim}\PYG{p}{([}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{]);}
+    \PYG{n}{ylim}\PYG{p}{([}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mf}{1.1}\PYG{p}{]);}
+    \PYG{n+nb}{hold} \PYG{n}{off}\PYG{p}{;}
+
+    \PYG{c}{\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}}
+    \PYG{c}{\PYGZpc{} EXPORTACIÓN EN FORMATO SVG}
+    \PYG{c}{\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}}
+
+    \PYG{n}{filename} \PYG{p}{=} \PYG{p}{[}\PYG{l+s}{\PYGZsq{}bernstein\PYGZus{}bases\PYGZus{}p\PYGZsq{}}\PYG{p}{,} \PYG{n}{num2str}\PYG{p}{(}\PYG{n}{p}\PYG{p}{),} \PYG{l+s}{\PYGZsq{}.svg\PYGZsq{}}\PYG{p}{];}
+    \PYG{n+nb}{print}\PYG{p}{(}\PYG{n}{filename}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}\PYGZhy{}dsvg\PYGZsq{}}\PYG{p}{);}
+
+    \PYG{n+nb}{disp}\PYG{p}{([}\PYG{l+s}{\PYGZsq{}Figura guardada como: \PYGZsq{}}\PYG{p}{,} \PYG{n}{filename}\PYG{p}{]);}
+\PYG{k}{end}
+\end{MintedVerbatim}

@@ -4,6 +4,7 @@
  *******************************************************************************/
 #include <iostream>
 #include <stdexcept>
+#include <algorithm>
 #include "C:\Librerias\eigen-3.4.0\Eigen\Dense"   //windows version
 //#include "/home/carlo/Librerias/eigen-3.4.0/Eigen/Dense"  //linux version
 //#include "/home/carlo/Librerias/eigen-3.4.0/Eigen/Sparse" //linux version
@@ -165,7 +166,8 @@ class iMatrix{
 
 	template <class U> friend iMatrix<U> operator* (const std::vector<U>& v1, const std::vector<U>& v2);
 
-	
+	iMatrix<T>& operator+= (const iMatrix<T>& rhs);
+	iMatrix<T>& operator*= (const T& rhs);
 
     void PrintMatrix();
     void PrintMatrix(int precision);
@@ -504,6 +506,21 @@ iMatrix<T> operator- (const iMatrix<T>& lhs, const T& rhs)
 template <class T>
 iMatrix<T> operator* (const T& lhs, const iMatrix<T>& rhs)
 {
+    iMatrix<T> result(rhs.m_nRows, rhs.m_nCols);
+    std::transform(
+        rhs.m_matrixData.begin(), 
+        rhs.m_matrixData.end(),  
+        result.m_matrixData.begin(),
+        [&lhs](const T& element) { return lhs * element; } 
+    );
+    return result;
+}
+
+/* Old product operator for the scaler
+
+template <class T>
+iMatrix<T> operator* (const T& lhs, const iMatrix<T>& rhs)
+{
 	int numRows = rhs.m_nRows;
 	int numCols = rhs.m_nCols;
 	int numElements = rhs.m_matrixData.size();
@@ -516,7 +533,7 @@ iMatrix<T> operator* (const T& lhs, const iMatrix<T>& rhs)
 	return result;
 }
 
-// matrix * scaler
+
 template <class T>
 iMatrix<T> operator* (const iMatrix<T>& lhs, const T& rhs)
 {
@@ -530,6 +547,23 @@ iMatrix<T> operator* (const iMatrix<T>& lhs, const T& rhs)
 	iMatrix<T> result(numRows, numCols, tempResult);
 	delete[] tempResult;
 	return result;
+}
+
+*/
+// matrix * scaler
+template <class T>
+iMatrix<T> operator* (const iMatrix<T>& lhs, const T& rhs)
+{
+    iMatrix<T> result(lhs.m_nRows, lhs.m_nCols);
+
+    std::transform(
+        lhs.m_matrixData.begin(), 
+        lhs.m_matrixData.end(),   
+        result.m_matrixData.begin(), 
+        [&rhs](const T& element) { return element * rhs; }
+    );
+
+    return result;
 }
 
 // matrix * matrix
@@ -616,6 +650,38 @@ iMatrix<T> operator* (const std::vector<T>& v1, const std::vector<T>& v2)
 
     
     return result;
+}
+
+template <class T>
+iMatrix<T>& iMatrix<T>::operator+= (const iMatrix<T>& rhs)
+{
+
+    if (m_nRows != rhs.m_nRows || m_nCols != rhs.m_nCols)
+    {
+        throw std::invalid_argument("Error: Las matrices deben tener las mismas dimensiones para la suma in-place.");
+    }
+
+    int numElements = m_matrixData.size();
+    T* data_lhs = m_matrixData.data();
+    const T* data_rhs = rhs.m_matrixData.data(); 
+    for (int i = 0; i < numElements; ++i)
+    {
+        data_lhs[i] += data_rhs[i]; 
+    }
+    return *this;
+}
+
+template <class T>
+iMatrix<T>& iMatrix<T>::operator*= (const T& rhs)
+{
+    int numElements = m_matrixData.size();
+    T* data_lhs = m_matrixData.data();
+    for (int i = 0; i < numElements; ++i)
+    {
+        data_lhs[i] *= rhs; 
+    }
+
+    return *this;
 }
 
 // A simple function to print a matrix to stdout.
