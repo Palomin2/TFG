@@ -2,42 +2,60 @@
 \contentsline {chapter}{Resumen}{\es@scroman {iii}}{chapter*.2}%
 \contentsline {chapter}{\numberline {1}Introducción}{1}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Contexto y relación con el método de elementos finitos.}{1}{section.1.1}%
-\contentsline {section}{\numberline {1.2}Motivación.}{1}{section.1.2}%
-\contentsline {section}{\numberline {1.3}Evolución del análisis isogeométrico.}{1}{section.1.3}%
-\contentsline {section}{\numberline {1.4}Objetivos.}{1}{section.1.4}%
-\contentsline {section}{\numberline {1.5}Estructura del documento.}{2}{section.1.5}%
-\contentsline {chapter}{\numberline {2}Marco teórico}{3}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Formulación del problema}{3}{section.2.1}%
-\contentsline {section}{\numberline {2.2}Conceptos previos del método de los elementos finitos.}{4}{section.2.2}%
-\contentsline {section}{\numberline {2.3}Construcción de estructuras usando NURBS.}{7}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}Bézier}{7}{subsection.2.3.1}%
-\contentsline {subsection}{\numberline {2.3.2}B-Splines}{8}{subsection.2.3.2}%
-\contentsline {section}{\numberline {2.4}Introducción al análisis isogeométrico.}{9}{section.2.4}%
-\contentsline {chapter}{\numberline {3}Análisis isogeométrico.}{11}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Ensamblaje de matrices y vector de carga.}{11}{section.3.1}%
-\contentsline {subsection}{\numberline {3.1.1}Caso 1D.}{11}{subsection.3.1.1}%
-\contentsline {subsection}{\numberline {3.1.2}Caso 2D.}{11}{subsection.3.1.2}%
-\contentsline {section}{\numberline {3.2}Imposición de condiciones de contorno.}{11}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}Tipo Dirichlet.}{11}{subsection.3.2.1}%
-\contentsline {subsection}{\numberline {3.2.2}Tipo Neumann.}{11}{subsection.3.2.2}%
-\contentsline {subsection}{\numberline {3.2.3}Tipo Robin o mixtas.}{11}{subsection.3.2.3}%
-\contentsline {section}{\numberline {3.3}Convergencia en L2 y H1 y tiempo de computación teórico.}{11}{section.3.3}%
-\contentsline {chapter}{\numberline {4}Implementación computacional.}{13}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Lenguaje y librerías utilizadas.}{13}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Metodos numéricos empleados.}{13}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Estructura del programa.}{13}{section.4.3}%
-\contentsline {chapter}{\numberline {5}Resultados.}{15}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Resultados en 1D}{15}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Resultados en 2D}{15}{section.5.2}%
-\contentsline {chapter}{\numberline {6}Conclusiones.}{17}{chapter.6}%
-\contentsline {chapter}{Bibliograf\'{\i }a}{19}{section*.5}%
-\contentsline {chapter}{Anexos}{21}{chapter*.7}%
-\contentsline {section}{\numberline {6.1}Demmostraciones omitidas}{21}{section.6.1}%
-\contentsline {subsection}{\numberline {6.1.1}Condiciones del Lema de Lax-Millgram}{21}{subsection.6.1.1}%
-\contentsline {subsection}{\numberline {6.1.2}Equivalencia de la solución de la formulación variacional y fuerte}{22}{subsection.6.1.2}%
-\contentsline {subsection}{\numberline {6.1.3}Equivalencia de normas}{23}{subsection.6.1.3}%
-\contentsline {subsection}{\numberline {6.1.4}Condiciones del Lema de Céa}{24}{subsection.6.1.4}%
-\contentsline {subsection}{\numberline {6.1.5}Continuidad de la forma lineal dual}{25}{subsection.6.1.5}%
-\contentsline {subsection}{\numberline {6.1.6}Propiedades de los B-Splines}{25}{subsection.6.1.6}%
-\contentsline {section}{\numberline {6.2}Código omitido}{27}{section.6.2}%
-\contentsline {subsection}{\numberline {6.2.1}Figuras de Bézier}{27}{subsection.6.2.1}%
+\contentsline {section}{\numberline {1.2}Evolución del análisis isogeométrico.}{2}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Objetivos.}{2}{section.1.3}%
+\contentsline {section}{\numberline {1.4}El Problema Modelo: La Ecuación de Poisson.}{3}{section.1.4}%
+\contentsline {subsection}{\numberline {1.4.1}Formulación fuerte (o clásica).}{3}{subsection.1.4.1}%
+\contentsline {subsection}{\numberline {1.4.2}Formulación variacional (o débil).}{3}{subsection.1.4.2}%
+\contentsline {section}{\numberline {1.5}Estructura del documento.}{3}{section.1.5}%
+\contentsline {chapter}{\numberline {2}Construcción de estructuras mediante CAD}{5}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Bézier}{5}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Funciones base}{5}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Curvas}{6}{subsection.2.1.2}%
+\contentsline {section}{\numberline {2.2}B-Splines}{7}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Funciones base}{7}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Curvas}{8}{subsection.2.2.2}%
+\contentsline {section}{\numberline {2.3}NURBS}{8}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Funciones base}{8}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Curvas}{8}{subsection.2.3.2}%
+\contentsline {section}{\numberline {2.4}Creación de superficies mediante el producto tensorial.}{9}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Refinamiento de nudos (h-refinement)}{10}{section.2.5}%
+\contentsline {subsection}{\numberline {2.5.1}Implementación de la Inserción de Nudos}{11}{subsection.2.5.1}%
+\contentsline {paragraph}{Caso curvas (1D):}{11}{section*.9}%
+\contentsline {paragraph}{Caso superficies (2D):}{11}{section*.10}%
+\contentsline {chapter}{\numberline {3}Análisis isogeométrico.}{13}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Ensamblaje de matrices y vector de carga.}{13}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Caso 1D.}{13}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Caso 2D.}{13}{subsection.3.1.2}%
+\contentsline {section}{\numberline {3.2}Imposición de condiciones de contorno.}{13}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Tipo Dirichlet.}{13}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Tipo Neumann.}{13}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}Tipo Robin o mixtas.}{13}{subsection.3.2.3}%
+\contentsline {section}{\numberline {3.3}Convergencia en L2 y H1 y tiempo de computación teórico.}{13}{section.3.3}%
+\contentsline {chapter}{\numberline {4}Implementación computacional.}{15}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Lenguaje y librerías utilizadas.}{15}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Metodos numéricos empleados.}{15}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Estructura del programa.}{15}{section.4.3}%
+\contentsline {chapter}{\numberline {5}Resultados.}{17}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Resultados en 1D}{17}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Resultados en 2D}{17}{section.5.2}%
+\contentsline {chapter}{\numberline {6}Conclusiones.}{19}{chapter.6}%
+\contentsline {chapter}{Bibliograf\'{\i }a}{21}{section*.11}%
+\contentsline {chapter}{Anexos}{23}{chapter*.13}%
+\contentsline {section}{\numberline {6.1}Método de los elementos finitos.}{23}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Demmostraciones omitidas}{26}{section.6.2}%
+\contentsline {subsection}{\numberline {6.2.1}Paso de solución fuerte a solución variacional}{26}{subsection.6.2.1}%
+\contentsline {subsection}{\numberline {6.2.2}Existencia y unicidad de la solución variacional (Lema de Lax-Millgram)}{26}{subsection.6.2.2}%
+\contentsline {subsection}{\numberline {6.2.3}Equivalencia de la solución de la formulación variacional y fuerte}{28}{subsection.6.2.3}%
+\contentsline {subsection}{\numberline {6.2.4}Equivalencia de normas}{29}{subsection.6.2.4}%
+\contentsline {subsection}{\numberline {6.2.5}Condiciones del Lema de Céa}{30}{subsection.6.2.5}%
+\contentsline {subsection}{\numberline {6.2.6}Continuidad de la forma lineal dual}{30}{subsection.6.2.6}%
+\contentsline {subsection}{\numberline {6.2.7}Propiedades de los B-Splines}{31}{subsection.6.2.7}%
+\contentsline {subsection}{\numberline {6.2.8}Igualdad de las nuevas funciones base bajo refinamiento}{33}{subsection.6.2.8}%
+\contentsline {subsection}{\numberline {6.2.9}Equivalencia de curvas bajo refinamiento}{34}{subsection.6.2.9}%
+\contentsline {section}{\numberline {6.3}Código omitido}{35}{section.6.3}%
+\contentsline {subsection}{\numberline {6.3.1}FEM}{35}{subsection.6.3.1}%
+\contentsline {subsection}{\numberline {6.3.2}Figuras de Bézier}{37}{subsection.6.3.2}%
+\contentsline {subsection}{\numberline {6.3.3}Código fundamental para el funcionamiento en C++}{39}{subsection.6.3.3}%
+\contentsline {subsection}{\numberline {6.3.4}Curvas de NURBS}{75}{subsection.6.3.4}%
+\contentsline {subsection}{\numberline {6.3.5}Superficies de NURBS}{77}{subsection.6.3.5}%

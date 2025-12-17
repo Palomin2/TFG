@@ -1,0 +1,545 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{c+cm}{/******************************************************************************* }
+\PYG{c+cm}{ *AUTHOR: Carlos Palomera Oliva}
+\PYG{c+cm}{ *DATE: MARCH 2025}
+\PYG{c+cm}{ *******************************************************************************/}
+\PYG{c+cp}{\PYGZsh{}define \PYGZus{}USE\PYGZus{}MATH\PYGZus{}DEFINES}
+\PYG{c+cp}{\PYGZsh{}include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}iostream\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}unordered\PYGZus{}map\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}utility\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}cmath\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}iomanip\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}vector\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}algorithm\PYGZgt{}}\PYG{c+c1}{  }
+\PYG{c+cp}{\PYGZsh{}include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}fstream\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}string\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}limits\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZdq{}iMatrix.cpp\PYGZdq{}}
+\PYG{c+cp}{\PYGZsh{}include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZdq{}C:\PYGZbs{}Librerias\PYGZbs{}eigen\PYGZhy{}3.4.0\PYGZbs{}Eigen\PYGZbs{}Sparse\PYGZdq{}}\PYG{c+c1}{ //windows version}
+\PYG{c+cp}{\PYGZsh{}include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZdq{}C:\PYGZbs{}Librerias\PYGZbs{}eigen\PYGZhy{}3.4.0\PYGZbs{}Eigen\PYGZbs{}Dense\PYGZdq{}}\PYG{c+c1}{  //windows version}
+\PYG{c+c1}{//\PYGZsh{}include \PYGZdq{}/home/carlo/Librerias/eigen\PYGZhy{}3.4.0/Eigen/Dense\PYGZdq{}}
+\PYG{c+c1}{//\PYGZsh{}include \PYGZdq{}/home/carlo/Librerias/eigen\PYGZhy{}3.4.0/Eigen/Sparse\PYGZdq{}}
+\PYG{c+cp}{\PYGZsh{}ifndef FUNCIONES\PYGZus{}HPP}
+\PYG{c+cp}{\PYGZsh{}define FUNCIONES\PYGZus{}HPP}
+
+
+
+
+\PYG{c+cm}{/**************************************************************************************}
+\PYG{c+cm}{ * Structure of the Data File for Matrix}
+\PYG{c+cm}{ * Nrow Ncol}
+\PYG{c+cm}{ * vector of size Ncol representing the first variable where elements are separated by space Ex(x1 x2 x3 ...)}
+\PYG{c+cm}{ * vector of size Ncol ...}
+\PYG{c+cm}{ * .}
+\PYG{c+cm}{ * .  Nrow times in total}
+\PYG{c+cm}{ * . }
+\PYG{c+cm}{ * }
+\PYG{c+cm}{ **************************************************************************************/}
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: Direction of the data file}
+\PYG{c+cm}{*Output: iMatrix filled with the control points in data file}
+\PYG{c+cm}{*/}
+\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{ReadDataFile\PYGZus{}Matrix}\PYG{p}{(}\PYG{n}{std}\PYG{o}{::}\PYG{n}{string}\PYG{+w}{ }\PYG{n}{direction}\PYG{p}{);}
+
+\PYG{c+cm}{/**************************************************************************************}
+\PYG{c+cm}{ * Structure of the Data File for Tensors}
+\PYG{c+cm}{ * Ncol NSplits   *}
+\PYG{c+cm}{ * vector of size Ncol representing the first variable where elements are separated by space Ex(x1 x2 x3 ...)}
+\PYG{c+cm}{ * vector of size Ncol ...}
+\PYG{c+cm}{ * .}
+\PYG{c+cm}{ * .  3 times in total}
+\PYG{c+cm}{ * . }
+\PYG{c+cm}{ * \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}}
+\PYG{c+cm}{ * The previous repeated NSplits totals}
+\PYG{c+cm}{ **************************************************************************************/}
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: Direction of the data file}
+\PYG{c+cm}{*Output: vector of iMatrixes filled with the control points in data file}
+\PYG{c+cm}{*/}
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZgt{}}\PYG{+w}{ }\PYG{n}{ReadDataFile\PYGZus{}CtrlPts}\PYG{p}{(}\PYG{n}{std}\PYG{o}{::}\PYG{n}{string}\PYG{+w}{ }\PYG{n}{direction}\PYG{p}{);}
+
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: Value of the point where the polinomial is evaluated t, and degree of the polinomial n}
+\PYG{c+cm}{*Condition: t€[0,1]}
+\PYG{c+cm}{*Output: Values of all the Bernstein polinomial of degree n evaluated at t}
+\PYG{c+cm}{*/}
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{BernsteinPolinomial}\PYG{p}{(}\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{t}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{n}\PYG{p}{);}
+
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: iMatrix of control points and parameter of the curve t}
+\PYG{c+cm}{*Conditions: t€[0,1]}
+\PYG{c+cm}{*Output: Value of the Bezier curve of such control points in the point t}
+\PYG{c+cm}{*/}
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{BezierCurve\PYGZus{}Point\PYGZus{}t}\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{PtosControl}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{t}\PYG{p}{);}
+
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: iMatrix of control points and number of steps for the curve}
+\PYG{c+cm}{*Conditions: Steps must be \PYGZgt{}= 1}
+\PYG{c+cm}{*Output: Value of the Bezier curve at every point from 0 to 1 separated in N\PYGZus{}Steps steps}
+\PYG{c+cm}{*/}
+\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{BezierCurve}\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{PtosControl}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{N\PYGZus{}Steps}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: Tensor of control points and the 2 parameters of the curve t1, t2}
+\PYG{c+cm}{*Conditions: t1,t2€[0,1]}
+\PYG{c+cm}{*Output: Value of the Bezier surface at of such control points in the points t1 t2}
+\PYG{c+cm}{*/}
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{BezierSurface\PYGZus{}Point\PYGZus{}t1\PYGZus{}t2}\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{PtosControl}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{t1}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{t2}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: iMatrix of control points and number of steps for the curve in both parameters}
+\PYG{c+cm}{*Conditions: N\PYGZus{}Steps must be \PYGZgt{}= 1}
+\PYG{c+cm}{*Output: Value of the Bezier surface at every point from 0 to 1 separated in N\PYGZus{}Steps along both parameters}
+\PYG{c+cm}{*/}
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZgt{}}\PYG{+w}{ }\PYG{n}{BezierSurface}\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{PtosControl}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{N\PYGZus{}Steps}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: Bezier surface in form of a tensor}
+\PYG{c+cm}{*Output: Writes a file of 3 matrices one for each coordinate}
+\PYG{c+cm}{*/}
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{Write\PYGZus{}BezierSurface}\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{Tensor}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{string}\PYG{+w}{ }\PYG{n}{name}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: CtrlPts in format described before}
+\PYG{c+cm}{*Output: Writes a file of 3 matrices one for each coordinate}
+\PYG{c+cm}{*/}
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{Write\PYGZus{}CtrlPts}\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{CtrlPts}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{string}\PYG{+w}{ }\PYG{n}{name}\PYG{p}{);}
+
+
+
+\PYG{c+cm}{/************************************************************************************}
+\PYG{c+cm}{*}
+\PYG{c+cm}{* Classic funtions from the Nurbs Book}
+\PYG{c+cm}{*}
+\PYG{c+cm}{************************************************************************************/}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: A KnotVector,t the point of evalution, its polynomial degree, and n=the size of the Nurbs vector\PYGZhy{}p\PYGZhy{}2}
+\PYG{c+cm}{*Output: the span index}
+\PYG{c+cm}{*/}
+\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n+nf}{FindSpan}\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{KnotVector}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{t}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{n}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: i span index, t eval point, p polinomial degree and KnotVector}
+\PYG{c+cm}{*Output: vector of basis funcs}
+\PYG{c+cm}{*/}
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{BasisFuns}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{i}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{t}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{KnotVector}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: i span index, t eval point, p polinomial degree and KnotVector}
+\PYG{c+cm}{*Output: iMatrix where the i\PYGZhy{}th row is the i\PYGZhy{}th degree basis fun}
+\PYG{c+cm}{*/}
+\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{AllBasisFuns}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{i}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{t}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{KnotVector}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: i span index, t eval point, p polinomial degree, k derivate degree, KnotVector and an output vector ders;}
+\PYG{c+cm}{*Output: value of the k\PYGZhy{}derivate at point t in the ders vector on the k\PYGZhy{}row of the matrix}
+\PYG{c+cm}{*/}
+\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{DerBasisFuns}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{span}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{t}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{k}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{KnotVector}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: matrix of BasisFunctions or its derivates and the path where they will be written}
+\PYG{c+cm}{*Output: Writes the Functions as a matrix on selected path}
+\PYG{c+cm}{*/}
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{Write\PYGZus{}BasisFunctions}\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{BasisFunctions}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{string}\PYG{+w}{ }\PYG{n}{name}\PYG{p}{);}
+
+\PYG{c+cm}{/************************************************************************************}
+\PYG{c+cm}{*}
+\PYG{c+cm}{* Classic funtions for p spline curves/surfaces}
+\PYG{c+cm}{*}
+\PYG{c+cm}{************************************************************************************/}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: n=the size of the Nurbs vector\PYGZhy{}p\PYGZhy{}2, p polynomial degree, KnotVector, the CtrlPts ,t the point of evalution}
+\PYG{c+cm}{*Output: Evaluation of the curve at point t}
+\PYG{c+cm}{*/}
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{CurvePoint}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{n}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{KnotVector}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{CtrlPts}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{t}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: n=the size of the Nurbs vector\PYGZhy{}p\PYGZhy{}2, p polynomial degree, KnotVector, the CtrlPts ,}
+\PYG{c+cm}{*        t the point of evalution and d highest derivate order to compute}
+\PYG{c+cm}{*Output: iMatrix where the i\PYGZhy{}th row is the evaluation of the i\PYGZhy{}th derivate}
+\PYG{c+cm}{*/}
+\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{CurveDerivsAlg1}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{n}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{KnotVector}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{CtrlPts}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{t}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{d}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: n=the size of the Nurbs vector\PYGZhy{}p\PYGZhy{}2, p polynomial degree, KnotVector, the CtrlPts ,t the point of evalution, }
+\PYG{c+cm}{*         d highest derivate order to compute, r1 and r2 specify the intervals of CtrlPoints}
+\PYG{c+cm}{*Output: iMatrix where the i\PYGZhy{}th row is the vector of ctrl points}
+\PYG{c+cm}{*/}
+\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZgt{}}\PYG{+w}{ }\PYG{n}{CurveDerivsCpts}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{n}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{KnotVector}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{CtrlPts}\PYG{p}{,}
+\PYG{+w}{                                             }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{d}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{r1}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{r2}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: n=the size of the Nurbs vector\PYGZhy{}p\PYGZhy{}2, p polynomial degree, KnotVector, the CtrlPts ,}
+\PYG{c+cm}{*       t the point of evalution and d highest derivate order to compute}
+\PYG{c+cm}{*Output: iMatrix where the i\PYGZhy{}th row is the evaluation of the i\PYGZhy{}th derivate}
+\PYG{c+cm}{*/}
+\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{CurveDerivsAlg2}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{n}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{KnotVector}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{CtrlPts}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{t}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{d}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: Curve and path}
+\PYG{c+cm}{*Output: Writes the values of the Curve in the selected path}
+\PYG{c+cm}{*/}
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{Write\PYGZus{}Curve}\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{Curve}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{string}\PYG{+w}{ }\PYG{n}{filename}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: n\PYGZus{}i=the size of the Nurbs vector\PYGZus{}i\PYGZhy{}p\PYGZhy{}2, p\PYGZus{}i polynomial degree, KnotVector\PYGZus{}i, the CtrlPts ,t\PYGZus{}i the point of evalution}
+\PYG{c+cm}{*Output: Evaluation of the surface at point (t1,t2)}
+\PYG{c+cm}{*/}
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{SurfacePoint}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{n1}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{p1}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{KnotVector1}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{n2}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{p2}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{KnotVector2}\PYG{p}{,}
+\PYG{+w}{                                 }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{CtrlPts}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{t1}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{t2}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: n\PYGZus{}i=the size of the Nurbs vector\PYGZus{}i\PYGZhy{}p\PYGZhy{}2, p\PYGZus{}i polynomial degree, KnotVector\PYGZus{}i, the CtrlPts ,}
+\PYG{c+cm}{*       t\PYGZus{}i the point of evalution and d maximum order of the derivates}
+\PYG{c+cm}{*Output: Evaluation of the derivates up to degree d (maximum is p or q and would overwrite it if d\PYGZgt{}p,q) in (t1,t2) where Output[k\PYGZus{}1][k\PYGZus{}2] is been}
+\PYG{c+cm}{         derived k\PYGZus{}i times respect to the ith variable }
+\PYG{c+cm}{*/}
+\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZgt{}}\PYG{+w}{ }\PYG{n}{SurfaceDerivsAlg1}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{n1}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{p1}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{KnotVector1}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{n2}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{p2}\PYG{p}{,}
+\PYG{+w}{        }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{KnotVector2}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{CtrlPts}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{t1}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{t2}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{d}\PYG{p}{);}
+
+
+\PYG{c+cm}{/************************************************************************************}
+\PYG{c+cm}{*}
+\PYG{c+cm}{* Classic and support funtions for NURBS curves/surfaces}
+\PYG{c+cm}{*}
+\PYG{c+cm}{************************************************************************************/}
+
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: Vector of CtrlPts and their weights at each point in a separated vector}
+\PYG{c+cm}{*Output: iMatrix that each column is each of the coordinates of each CtrlPt except its last component that is it\PYGZsq{}s respective weight}
+\PYG{c+cm}{*/}
+\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{WeightCtrlPts}\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{CtrlPts}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{Weights}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: CtrlPts multiplied by their Weight with the respective weight at the end of each column}
+\PYG{c+cm}{*Output: The original CtrlPts}
+\PYG{c+cm}{*/}
+\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{UnWeightCtrlPts}\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{CtrlPtsW}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: Vector of CtrlPts and their weights at each point in a separated vector}
+\PYG{c+cm}{*Output: std::vector\PYGZlt{}iMatrix\PYGZlt{}double\PYGZgt{}\PYGZgt{} that keeps the format of the CtrlPts for Surface}
+\PYG{c+cm}{         operations with and extra 4th dimension on each coord thats\PYGZsq{}s occupied by the weight of such pt }
+\PYG{c+cm}{*/}
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZgt{}}\PYG{+w}{ }\PYG{n}{WeightCtrlPtsSurf}\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{CtrlPts}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{Weights}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: CtrlPts multiplied by their Weight with the respective weight at the end of each column}
+\PYG{c+cm}{*Output: The original CtrlPts}
+\PYG{c+cm}{*/}
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZgt{}}\PYG{+w}{ }\PYG{n}{UnWeightCtrlPtsSurf}\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{CtrlPtsW}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: n=the size of the Nurbs vector\PYGZhy{}p\PYGZhy{}2, p polynomial degree, KnotVector, the CtrlPts weighted with theris weight in the last component ,}
+\PYG{c+cm}{        t the point of evalution}
+\PYG{c+cm}{*Output: Evaluation of the NURBS curve at point t}
+\PYG{c+cm}{*/}
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{CurvePointRational}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{n}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{KnotVector}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{CtrlPtsWeighted}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{t}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: binomial coeficients k, i}
+\PYG{c+cm}{*Output: combinatiorial number given by upper number k and lower number i}
+\PYG{c+cm}{*/}
+\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n+nf}{Binomial}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{k}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{i}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: i span index, t eval point, p polinomial degree and KnotVector, weights vector}
+\PYG{c+cm}{*Output: vector of rational basis funcs}
+\PYG{c+cm}{*/}
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{RationalBasisFuns}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{i}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{t}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{KnotVector}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{WeightVector}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: i span index, t eval point, k derivate degree, p polinomial degree and KnotVector, weights vector}
+\PYG{c+cm}{*Output: vector of rational basis funcs}
+\PYG{c+cm}{*/}
+\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{RatDersBasisFuns}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{i}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{t}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{k}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{KnotVector}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{WeightVector}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: i span index, t eval point, k derivate degree, p polinomial degree and KnotVector, iMatrix of the derivates of the non\PYGZhy{}rational}
+\PYG{c+cm}{*         basis funs and weights vector}
+\PYG{c+cm}{*Output: vector of rational basis funcs}
+\PYG{c+cm}{*/}
+\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{RationalizeDersBasisFuns}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{i}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{t}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{k}\PYG{p}{,}\PYG{+w}{  }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{KnotVector}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{ders}\PYG{+w}{ }\PYG{p}{,}
+\PYG{+w}{         }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{WeightVector}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: Aders: derivates of the CtrlPtsWeighted using CurvDersAlg1 evaluated at some t, wders: same as Aders but with the weighted vector,}
+\PYG{c+cm}{*         maximum degree of the derivate}
+\PYG{c+cm}{*              \PYGZhy{}Aders = CurveDerivsAlgi(n, p,KnotVector, WeightedCtrlPts, t, d);}
+\PYG{c+cm}{*              \PYGZhy{}wders = CurveDerivsAlgi(n, p,KnotVector, WeightVector, t, d);  }
+\PYG{c+cm}{*Output: iMatrix on which each row is the i\PYGZhy{}th derivate of the rational curve made of the weighted CtrlPts and the weight vector}
+\PYG{c+cm}{*/}
+\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{RatCurveDerivs}\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{Aders}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{wders}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{d}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: n\PYGZus{}i=the size of the Nurbs vector\PYGZus{}i\PYGZhy{}p\PYGZhy{}2, p\PYGZus{}i polynomial degree, KnotVector\PYGZus{}i, the CtrlPtsWeighted ,t\PYGZus{}i the point of evalution}
+\PYG{c+cm}{*Output: Evaluation of the surface at point (t1,t2)}
+\PYG{c+cm}{*/}
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{SurfacePointRational}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{n1}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{p1}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{KnotVector1}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{n2}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{p2}\PYG{p}{,}
+\PYG{+w}{        }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{KnotVector2}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{CtrlPtsWeighted}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{t1}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{t2}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: derivates of the CtrlPtsWeighted using CurvDersAlg1 evaluated at some t, wders: same as Aders but with the weighted vector,}
+\PYG{c+cm}{*         maximum degree of the derivate}
+\PYG{c+cm}{*Output: iMatrix on which each row is the i\PYGZhy{}th derivate of the rational surface made of the weighted CtrlPts and the weight vector}
+\PYG{c+cm}{*/}
+\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZgt{}}\PYG{+w}{ }\PYG{n}{RatSurfaceDerivs}\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{Aders}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{wders}\PYG{p}{,}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{d}\PYG{p}{);}
+
+\PYG{c+cm}{/************************************************************************************}
+\PYG{c+cm}{*}
+\PYG{c+cm}{* Fundamental Geometric Algorithms}
+\PYG{c+cm}{*}
+\PYG{c+cm}{************************************************************************************/}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: KnotVector and element you want to introduce}
+\PYG{c+cm}{*Output: index i such that KnotVector[i\PYGZhy{}1] \PYGZlt{}= e \PYGZlt{} KnotVector[i]}
+\PYG{c+cm}{*Note: Applying insertion with this index using KnotVector.insert(KnotVector.begin()+index+1, r, e) will yield the KnotVector}
+\PYG{c+cm}{*         we want (r is number of insertions)}
+\PYG{c+cm}{*/}
+\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n+nf}{findInsertionIndex}\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{KnotVector}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{e}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: ordered vector and element you want to check it\PYGZsq{}s number of ocurrences}
+\PYG{c+cm}{*Output: number of times e appears on the vector}
+\PYG{c+cm}{*/}
+\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n+nf}{countOccurrences}\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{v}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{e}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: A KnotVector,t the point of evalution, its polynomial degree, and n=the size of the Nurbs vector\PYGZhy{}p\PYGZhy{}2}
+\PYG{c+cm}{*Output: the span index at k, its multiplicity at s}
+\PYG{c+cm}{*/}
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{FindSpanMult}\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{KnotVector}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{t}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{n}\PYG{p}{,}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{k}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{s}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: np number of initial CtrlPts\PYGZhy{}1, p polinomial degree, the initial KnotVector, the initial CtrlPts Weighted, u value of the inserted knot,}
+\PYG{c+cm}{        index such that KnotVector[k]\PYGZlt{}= u \PYGZlt{} KnotVector[k+1], s initial multiplicity of u in KnotVector, r number of insertions of u in Knotvector }
+\PYG{c+cm}{*Output: New CtrlPts Weighted that presserves the initial curve}
+\PYG{c+cm}{*Note: !! KnotVector will be updated !!}
+\PYG{c+cm}{*/}
+\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{CurveKnotsIns}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{np}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{KnotVector}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{CtrlPtsW}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{u}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{index}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{s}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{r}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: n=the size of the Knot vector\PYGZhy{}p\PYGZhy{}2, p polynomial degree, KnotVector, CtrlPts Weigthed, u point of evaluation }
+\PYG{c+cm}{*Output: Evaluation of the curve given by the KnotVector and the ControlPts at the given point of evaluation u}
+\PYG{c+cm}{*/}
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{CurvePntByCornerCut}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{n}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{KnotVector}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{CtrlPtsW}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{u}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: npi size of KnotVectori\PYGZhy{}pi\PYGZhy{}2, pi degree of KnotVectori, KnotVectori for i=1,2, CtrlPts Weigthed, dir(true= knot inserted in Knotvector1,}
+\PYG{c+cm}{         false= knot inserted in Knotvector2, uv knot we want to insert, index such that KnotVectori[k]\PYGZlt{}= u \PYGZlt{} KnotVectori[k+1], s initial}
+\PYG{c+cm}{          multiplicity of u in KnotVectori, r number of insertions of u in Knotvectori}
+\PYG{c+cm}{*Output: the KnotVectori will be updated and it will return new CtrlPtsW such that they generate the same surface.}
+\PYG{c+cm}{*/}
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZgt{}}\PYG{+w}{ }\PYG{n}{SurfaceKnotIns}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{np1}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{p1}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{KnotVector1}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{np2}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{p2}\PYG{p}{,}\PYG{+w}{ }
+\PYG{+w}{        }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{KnotVector2}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{CtrlPtsW}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{bool}\PYG{+w}{ }\PYG{n}{dir}\PYG{p}{,}
+\PYG{+w}{                    }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{uv}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{index}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{r}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{s}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: n=Knotvector.size()\PYGZhy{}2\PYGZhy{}p, p polynomial degree, KnotVector, CtrlPtsW, Insertions: vector of new elements to insert into KnotVector,}
+\PYG{c+cm}{         r=Insertion.size()\PYGZhy{}1. }
+\PYG{c+cm}{*Output: Update of the Knotvector with the new inserions, CtrlPtsW that generate the same curve with the new KnotVector.}
+\PYG{c+cm}{*/}
+\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{RefineKnotVectCurve}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{n}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{KnotVector}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{CtrlPtsW}\PYG{p}{,}
+\PYG{+w}{        }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{Insertions}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{r}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: npi size of KnotVectori\PYGZhy{}1, pi degree of KnotVectori, KnotVectori for i=1,2, CtrlPts Weigthed, dir(true= knot inserted in Knotvector1,}
+\PYG{c+cm}{         false= knot inserted in Knotvector2, Insertions: vector of new elements to insert into KnotVector,  r=Insertion.size()\PYGZhy{}1.}
+\PYG{c+cm}{*Output: the KnotVectori will be updated and it will return new CtrlPtsW such that they generate the same surface.}
+\PYG{c+cm}{*/}
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZgt{}}\PYG{+w}{ }\PYG{n}{RefineKnotVectSurface}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{np1}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{p1}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{KnotVector1}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{np2}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{p2}\PYG{p}{,}
+\PYG{+w}{                 }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{KnotVector2}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{CtrlPtsW}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{bool}\PYG{+w}{ }\PYG{n}{dir}\PYG{p}{,}
+\PYG{+w}{                    }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{Insertions}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{r}\PYG{p}{);}
+
+\PYG{c+cm}{/************************************************************************************}
+\PYG{c+cm}{*}
+\PYG{c+cm}{* Functions for the Assembly of the Matrix}
+\PYG{c+cm}{*}
+\PYG{c+cm}{************************************************************************************/}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: n: nº pts of integration}
+\PYG{c+cm}{*Output: nodes will contain the roots of the legendre polynomial and weights its weights (all in double precision).}
+\PYG{c+cm}{*/}
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{legendre\PYGZus{}pol}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{n}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Eigen}\PYG{o}{::}\PYG{n}{VectorXd}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{nodes}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Eigen}\PYG{o}{::}\PYG{n}{VectorXd}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{weights}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: ordered vector}
+\PYG{c+cm}{*Output: the original vector without duplicates}
+\PYG{c+cm}{*/}
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{removeDuplicates}\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{input}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: number of elements of evaluation}
+\PYG{c+cm}{*Output: vector of nElements+1 uniformly distributed}
+\PYG{c+cm}{*/}
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{createSubIntervals}\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{nElements}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{const}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{lower\PYGZus{}limit}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{const}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{upper\PYGZus{}limit}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: v1 vector where we remove the elements that appear in v2, v2 KnotVector}
+\PYG{c+cm}{*Output: v1 without the elements in v2}
+\PYG{c+cm}{*/}
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{removeMatches}\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{v1}\PYG{p}{,}\PYG{+w}{  }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{v2}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: n=the size of the Knot vector\PYGZhy{}p\PYGZhy{}2, i span index, t eval point, p polinomial degree, number of points of evaluations in the integral,}
+\PYG{c+cm}{*        KnotVector, upper and lower limits of the integration, weights vector, nodes of the legendre polynomial,  CtrlPtsW the control}
+\PYG{c+cm}{*        points weighted, the function f and the previoues evalPoint.}
+\PYG{c+cm}{*Output: BasisFunsEvals and DerBasisFunsEvals each row will store the evaluation of the value or derivate of the basis fun alongside each}
+\PYG{c+cm}{*        evaluation point, same for the JacobianEvals, InverseJacobianEvals and funcEvals.}
+\PYG{c+cm}{*/}
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{D1\PYGZus{}element\PYGZus{}eval}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{n}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{i}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{nEvals}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{lower\PYGZus{}limit}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{upper\PYGZus{}limit}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{KnotVector}\PYG{p}{,}
+\PYG{+w}{        }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{Weights}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{Eigen}\PYG{o}{::}\PYG{n}{VectorXd}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{nodes}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{CtrlPtsW}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{function}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{p}{(}\PYG{k+kt}{double}\PYG{p}{)}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{f}\PYG{p}{,}
+\PYG{+w}{        }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{preEvalPoint}\PYG{p}{,}\PYG{+w}{  }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{cumLenght}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{BasisFunsEvals}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{DerBasisFunsEvals}\PYG{p}{,}\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{JacobianEvals}\PYG{p}{,}
+\PYG{+w}{         }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{InverseJacobianEvals}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{funcEvals}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{Lenght}\PYG{o}{=}\PYG{l+m+mf}{1.0}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: p polinomial degree, upper and lower limits of the integration, number of points of evaluations in the integral,}
+\PYG{c+cm}{         evaluations of RationalDerivates, evaluation of the Inverse Jacobian and the legendre weights.}
+\PYG{c+cm}{*Output: Matrix of all the permutations of evaluations where the elements i,j of the matrix correspond to}
+\PYG{c+cm}{         the BasisFuns(init+i)*BasisFuns(init+j) where init=spanIndex()}
+\PYG{c+cm}{*/}\PYG{+w}{                        }
+\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{gauss\PYGZus{}legendre\PYGZus{}cuadrature\PYGZus{}integral\PYGZus{}bilinealForm}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{lower\PYGZus{}limit}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{upper\PYGZus{}limit}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{nEvals}\PYG{p}{,}
+\PYG{+w}{        }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{DerBasisFunsEvals}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{InverseJacobianEvals}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{Eigen}\PYG{o}{::}\PYG{n}{VectorXd}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{weights}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: p polinomial degree, upper and lower limits of the integration, number of points of evaluations in the integral,}
+\PYG{c+cm}{         evaluations of RationalBasisFuns, evaluations of the Jacobian, evaluations of the function and the legendre weights.}
+\PYG{c+cm}{*Output: Vector of evaluations which its components are l(index) where init=spanIndex()}
+\PYG{c+cm}{*/}\PYG{+w}{                        }
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{gauss\PYGZus{}legendre\PYGZus{}cuadrature\PYGZus{}integral\PYGZus{}linealForm}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{lower\PYGZus{}limit}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{upper\PYGZus{}limit}\PYG{p}{,}
+\PYG{+w}{         }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{nEvals}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{BasisFunsEvals}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{JacobianEvals}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{funcEvals}\PYG{p}{,}
+\PYG{+w}{         }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{Eigen}\PYG{o}{::}\PYG{n}{VectorXd}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{weights}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: p polinomial degree, size=LineraForm.size()\PYGZhy{}1, SparseMatrix with the system already assambled, }
+\PYG{c+cm}{        same with the LinearForm, Modify0(1) true if we have dirichlet condition at the start(end) of the boundary,}
+\PYG{c+cm}{*       vValueAt0(1) value set for the boundary condition, default is set at 0.}
+\PYG{c+cm}{*Output: Modification of the sparse matrix and the linear form to keep the system as symetric as posible.}
+\PYG{c+cm}{*/}\PYG{+w}{  }
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{impose\PYGZus{}Dirichlet\PYGZus{}Condition}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{size}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Eigen}\PYG{o}{::}\PYG{n}{SparseMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{global}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Eigen}\PYG{o}{::}\PYG{n}{VectorXd}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{LinearForm}\PYG{p}{,}
+\PYG{+w}{         }\PYG{k+kt}{bool}\PYG{+w}{ }\PYG{n}{Modify0}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{bool}\PYG{+w}{ }\PYG{n}{Modify1}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{ValueAt0}\PYG{o}{=}\PYG{l+m+mf}{0.0}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{ValueAt1}\PYG{o}{=}\PYG{l+m+mf}{0.0}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: size=LineraForm.size()\PYGZhy{}1, LinearForm, Modify0(1) true if we have dirichlet condition at the start(end) of the boundary,}
+\PYG{c+cm}{*       vValueAt0(1) value set for the boundary condition, default is set at 0.}
+\PYG{c+cm}{*Output: Modification of the linear form applying the conditions to the borders.}
+\PYG{c+cm}{*/}\PYG{+w}{ }
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{impose\PYGZus{}Newmann\PYGZus{}Condition}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{size}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Eigen}\PYG{o}{::}\PYG{n}{VectorXd}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{LinearForm}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{bool}\PYG{+w}{ }\PYG{n}{Modify0}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{bool}\PYG{+w}{ }\PYG{n}{Modify1}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{ValueAt0}\PYG{o}{=}\PYG{l+m+mf}{0.0}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{ValueAt1}\PYG{o}{=}\PYG{l+m+mf}{0.0}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: p polinomial degree, size=LineraForm.size()\PYGZhy{}1, SparseMatrix with the system already assambled, same with the LinearForm,}
+\PYG{c+cm}{         Modify0(1) true if we have dirichlet condition at the start(end) of the boundary,}
+\PYG{c+cm}{*       vValueAt0(1) value set for the boundary condition, default is set at 0.}
+\PYG{c+cm}{*       values alpha and beta come from the expresion alpha*u(x)+beta*u\PYGZsq{}(x)=ValueAtx.}
+\PYG{c+cm}{*Output: Modification of the sparse matrix and the linear form to keep the system as symetric as posible.}
+\PYG{c+cm}{*/}\PYG{+w}{  }
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{impose\PYGZus{}Robin\PYGZus{}Condition}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{size}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Eigen}\PYG{o}{::}\PYG{n}{SparseMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{global}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Eigen}\PYG{o}{::}\PYG{n}{VectorXd}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{LinearForm}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{alpha}\PYG{p}{,}
+\PYG{+w}{         }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{beta}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{bool}\PYG{+w}{ }\PYG{n}{Modify0}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{bool}\PYG{+w}{ }\PYG{n}{Modify1}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{ValueAt0}\PYG{o}{=}\PYG{l+m+mf}{0.0}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{ValueAt1}\PYG{o}{=}\PYG{l+m+mf}{0.0}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: vector of evaluations of the function, name of hte file where we write the evaluations}
+\PYG{c+cm}{*Output: writes the evaluation of the function in a txt}
+\PYG{c+cm}{*/}\PYG{+w}{  }
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{writeNumericFunction}\PYG{p}{(}\PYG{n}{Eigen}\PYG{o}{::}\PYG{n}{VectorXd}\PYG{+w}{ }\PYG{n}{funEvals}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{KnotVector}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{WeightVector}\PYG{p}{,}
+\PYG{+w}{         }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{n}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{nEvals}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{lowerLimit}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{upperLimit}\PYG{p}{,}\PYG{+w}{  }\PYG{n}{std}\PYG{o}{::}\PYG{n}{string}\PYG{+w}{ }\PYG{n}{name}\PYG{p}{,}
+\PYG{+w}{         }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{Intervals}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{nElements}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{Lenght}\PYG{p}{);}\PYG{+w}{ }
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: the function we evaluate, lower and upper limits of evaluation and number of steps of the evaluation, name of the }
+\PYG{c+cm}{        file where we write the evaluations, for the evaluation of the curve point, CtrlPtsW, KnotVector, n = KnotVector.size()\PYGZhy{}p\PYGZhy{}2,}
+\PYG{c+cm}{         p polynomial degree.}
+\PYG{c+cm}{*Output: writes the evaluation of the function in a txt}
+\PYG{c+cm}{*/}\PYG{+w}{  }
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{writeAnalyticFunction}\PYG{p}{(}\PYG{n}{std}\PYG{o}{::}\PYG{n}{function}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{p}{(}\PYG{k+kt}{double}\PYG{p}{)}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{f}\PYG{p}{,}\PYG{n}{std}\PYG{o}{::}\PYG{n}{function}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{p}{(}\PYG{k+kt}{double}\PYG{p}{)}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{f\PYGZus{}Ders}\PYG{p}{,}\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{Intervals}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{nEvals}\PYG{p}{,}
+\PYG{+w}{        }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{CtrlPtsW}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{KnotVector}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{n}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{string}\PYG{+w}{ }\PYG{n}{name}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{Lenght}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{nElements}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: name of the file, p polynomial degree}
+\PYG{c+cm}{*Output: vector of evaluations on each elements loaded}
+\PYG{c+cm}{*/}\PYG{+w}{  }
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZgt{}}\PYG{+w}{ }\PYG{n}{leerArchivo}\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{string}\PYG{o}{\PYGZam{}}\PYG{+w}{ }\PYG{n}{name}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: vector of evaluations of the function, name of hte file where we write the evaluations}
+\PYG{c+cm}{*Output: writes the evaluation of the derivates of the function in a txt}
+\PYG{c+cm}{*/}\PYG{+w}{ }
+\PYG{c+cm}{/*}
+\PYG{c+cm}{void writeFunctionDers(Eigen::VectorXd funEvals,const std::vector\PYGZlt{}double\PYGZgt{} \PYGZam{}KnotVector,const iMatrix\PYGZlt{}double\PYGZgt{} \PYGZam{}CtrlPtsW,}
+\PYG{c+cm}{        const std::vector\PYGZlt{}double\PYGZgt{} \PYGZam{}WeightVector, int n, int p, int nEvals, double lowerLimit, double upperLimit,  std::string name);}
+\PYG{c+cm}{*/}
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: the function we evaluate, lower and upper limits of evaluation and number of steps of the evaluation, name of hte file}
+\PYG{c+cm}{         where we write the evaluations, for the evaluation of the curve point, CtrlPtsW, KnotVector, n = KnotVector.size()\PYGZhy{}p\PYGZhy{}2, p polynomial degree.}
+\PYG{c+cm}{*Output: writes the evaluation of the function in a txt}
+\PYG{c+cm}{*/}\PYG{+w}{ }
+\PYG{c+cm}{/* }
+\PYG{c+cm}{void writeFunctionDers(std::function\PYGZlt{}double(double)\PYGZgt{} f, double lowerLimit, double upperLimit, double nEvals,}
+\PYG{c+cm}{        const iMatrix\PYGZlt{}double\PYGZgt{} \PYGZam{}CtrlPtsW,const std::vector\PYGZlt{}double\PYGZgt{} \PYGZam{}KnotVector,}
+\PYG{c+cm}{        int n, int p, std::string name, double Lenght=1.0);}
+\PYG{c+cm}{*/}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: lowerLimit of integration, upperLimit of integration, number of subintervals for the quadrature, CtrlPtsW, Knotvector, n, p}
+\PYG{c+cm}{*Output: numerical value of the integral between lowerLimit and upperLimit of the norm of the derivate of the curve}
+\PYG{c+cm}{*/}\PYG{+w}{ }
+\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n+nf}{IntegrateNormDer}\PYG{p}{(}\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{lowerLimit}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{upperLimit}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{nEvals}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{CtrlPtsW}\PYG{p}{,}
+\PYG{+w}{        }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{KnotVector}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{n}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: e fisical parameter, lowerLimit of integration, upperLimit of integration, number of subintervals for the quadrature,}
+\PYG{c+cm}{         CtrlPtsW, Knotvector, n, p}
+\PYG{c+cm}{*Output: numerical value parametric space parameter such that the analytic solution of it its equal to the fisical solution at e}
+\PYG{c+cm}{*/}\PYG{+w}{ }
+\PYG{k+kr}{inline}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n+nf}{Fisical\PYGZus{}to\PYGZus{}Parametric}\PYG{p}{(}\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{t2}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{t1}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{lowerLimit}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{Lenght}\PYG{p}{,}
+\PYG{+w}{         }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{nEvals}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{CtrlPtsW}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{KnotVector}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{n}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{)\PYGZob{}}
+\PYG{+w}{        }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{IntegrateNormDer}\PYG{p}{(}\PYG{n}{t2}\PYG{p}{,}\PYG{n}{t1}\PYG{p}{,}\PYG{n}{nEvals}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{CtrlPtsW}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{KnotVector}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{n}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{)}\PYG{o}{/}\PYG{n}{Lenght}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: i span index, p polynomial degree, k maximum derivate order, KnotVector, Intervals, nodes and weights}
+\PYG{c+cm}{         of the gauss\PYGZhy{}legendre cuadrature, vector of storage with spanIndex(memory has to be reserved before execution).}
+\PYG{c+cm}{*Output: vector that each element is a vector that evaluates the basis functions in each of the corresponding gauss\PYGZhy{}legendre}
+\PYG{c+cm}{         points of each interval, modification of the vector spanIndex.}
+\PYG{c+cm}{*/}\PYG{+w}{ }
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZgt{}\PYGZgt{}}\PYG{+w}{ }\PYG{n}{PreBasis\PYGZus{}and\PYGZus{}Ders}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{k}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{KnotVector}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{Intervals}\PYG{p}{,}
+\PYG{+w}{        }\PYG{n}{Eigen}\PYG{o}{::}\PYG{n}{VectorXd}\PYG{+w}{ }\PYG{n}{nodes}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{int}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{spanIndex}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: span index,nEvals number of points of the gauss\PYGZhy{}legendre cuadrature alongside the corresponding variable, nodes,}
+\PYG{c+cm}{        vector of the Gauss\PYGZhy{}Legendre cuadrature, lower\PYGZus{}limit, upper\PYGZus{}limit of the interval, p polynomial degree, k maximum derivate order, KnotVector,}
+\PYG{c+cm}{        Basis\PYGZus{}and\PYGZus{}DersY vector of the precomputed Basis and its corresponding derivates, nodes and weights of the gauss\PYGZhy{}legendre cuadrature }
+\PYG{c+cm}{        and Weights vector of the corresponding weights alongside the corresponding variables.}
+\PYG{c+cm}{*Output: vector that each element is thee evaluations of the basis functions and its derivates up to k\PYGZhy{}degree in each of the corresponding }
+\PYG{c+cm}{        gauss\PYGZhy{}legendre points of the interval.}
+\PYG{c+cm}{*/}\PYG{+w}{ }
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZgt{}}\PYG{+w}{ }\PYG{n}{RationalizeDersBasisFunsVec}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{span}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{nEvals}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Eigen}\PYG{o}{::}\PYG{n}{VectorXd}\PYG{+w}{ }\PYG{n}{nodes}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{lower\PYGZus{}limit}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{upper\PYGZus{}limit}\PYG{p}{,}
+\PYG{+w}{        }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{k}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{n}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{KnotVector}\PYG{p}{,}\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZgt{}}\PYG{+w}{ }\PYG{n}{Basis\PYGZus{}and\PYGZus{}DersY}\PYG{p}{,}\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{Weights}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: vector of Intervals, and vector of the correlated indexes for each interval}
+\PYG{c+cm}{*Output: unordered map such that given a span index returns its corresponding interval.}
+\PYG{c+cm}{*/}\PYG{+w}{ }
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{unordered\PYGZus{}map}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{int}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{std}\PYG{o}{::}\PYG{n}{pair}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{p}{,}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZgt{}\PYGZgt{}}\PYG{+w}{ }\PYG{n}{BuildSpanMap}\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{Intervals}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{int}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{spanIndices}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: vector of Intervals, and vector of the correlated indexes for each interval}
+\PYG{c+cm}{*Output: unordered map such that given a span index returns its corresponding interval.}
+\PYG{c+cm}{*/}\PYG{+w}{ }
+\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZgt{}}\PYG{+w}{ }\PYG{n}{RationalizeDersBasisFuns2D}\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{DersBasisX}\PYG{p}{,}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{DersBasisY}\PYG{p}{,}
+\PYG{+w}{        }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{activeWeights}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{unsigned}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{pX}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{unsigned}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{pY}\PYG{p}{);}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{*Input: SolEvals and Surface evaluations of the same points with the filename and the path}
+\PYG{c+cm}{*Output: writes the corresponding .txt with the Surface and its evaluations.}
+\PYG{c+cm}{*/}\PYG{+w}{ }
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{ExportToTxt}\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{SolEvals}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{Surf}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{string}\PYG{o}{\PYGZam{}}\PYG{+w}{ }\PYG{n}{filename}\PYG{p}{);}
+\PYG{c+cp}{\PYGZsh{}endif}
+\end{MintedVerbatim}

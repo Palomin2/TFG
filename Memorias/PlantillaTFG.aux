@@ -17,78 +17,124 @@
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{toc}{\contentsline {section}{\numberline {1.1}Contexto y relación con el método de elementos finitos.}{1}{section.1.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {1.2}Motivación.}{1}{section.1.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {1.3}Evolución del análisis isogeométrico.}{1}{section.1.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {1.4}Objetivos.}{1}{section.1.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {1.5}Estructura del documento.}{2}{section.1.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {2}Marco teórico}{3}{chapter.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {1.1}{\ignorespaces Comparación técnica entre FEM e IGA.}}{1}{table.caption.4}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{tab:fem_vs_iga}{{1.1}{1}{Comparación técnica entre FEM e IGA}{table.caption.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.2}Evolución del análisis isogeométrico.}{2}{section.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {1.3}Objetivos.}{2}{section.1.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {1.4}El Problema Modelo: La Ecuación de Poisson.}{3}{section.1.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.4.1}Formulación fuerte (o clásica).}{3}{subsection.1.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.4.2}Formulación variacional (o débil).}{3}{subsection.1.4.2}\protected@file@percent }
+\newlabel{eq:form_weak}{{1.1}{3}{}{equation.1.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.5}Estructura del documento.}{3}{section.1.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {2}Construcción de estructuras mediante CAD}{5}{chapter.2}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {2.1}Formulación del problema}{3}{section.2.1}\protected@file@percent }
-\newlabel{sec:formulacion}{{2.1}{3}{Formulación del problema}{section.2.1}{}}
-\newlabel{eq:2.1}{{2.1}{3}{}{equation.2.1}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {2.2}Conceptos previos del método de los elementos finitos.}{4}{section.2.2}\protected@file@percent }
-\citation{larson_finite_2013}
-\newlabel{eq:cea}{{2.2}{6}{}{equation.2.2}{}}
-\newlabel{eq:sob}{{2.3}{6}{}{equation.2.3}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {2.3}Construcción de estructuras usando NURBS.}{7}{section.2.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.1}Bézier}{7}{subsection.2.3.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.2}B-Splines}{8}{subsection.2.3.2}\protected@file@percent }
-\newlabel{prop:bspline_fundamentales}{{2.5}{8}{}{teorema.2.5}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {2.4}Introducción al análisis isogeométrico.}{9}{section.2.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {3}Análisis isogeométrico.}{11}{chapter.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2.1}Bézier}{5}{section.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1.1}Funciones base}{5}{subsection.2.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1.2}Curvas}{6}{subsection.2.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2.2}B-Splines}{7}{section.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.1}Funciones base}{7}{subsection.2.2.1}\protected@file@percent }
+\newlabel{prop:bspline_basis_fundamentales}{{2.4}{7}{}{teorema.2.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.2}Curvas}{8}{subsection.2.2.2}\protected@file@percent }
+\newlabel{prop:bspline_curvas_fundamentales}{{2.5}{8}{}{teorema.2.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {2.3}NURBS}{8}{section.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.1}Funciones base}{8}{subsection.2.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.2}Curvas}{8}{subsection.2.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2.4}Creación de superficies mediante el producto tensorial.}{9}{section.2.4}\protected@file@percent }
+\newlabel{prop:surf_tensor}{{2.8}{9}{}{teorema.2.8}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {2.5}Refinamiento de nudos (h-refinement)}{10}{section.2.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.5.1}Implementación de la Inserción de Nudos}{11}{subsection.2.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Caso curvas (1D):}{11}{section*.9}\protected@file@percent }
+\newlabel{lst:curve_ins}{{2.1}{11}{Parámetros para la función de inserción de nudos en curvas}{lstlisting.2.1}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {2.1}{\ignorespaces Parámetros para la función de inserción de nudos en curvas.}}{11}{lstlisting.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Caso superficies (2D):}{11}{section*.10}\protected@file@percent }
+\newlabel{lst:surf_ins}{{2.2}{11}{Parámetros para la función de inserción de nudos en superficies}{lstlisting.2.2}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {2.2}{\ignorespaces Parámetros para la función de inserción de nudos en superficies.}}{11}{lstlisting.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {3}Análisis isogeométrico.}{13}{chapter.3}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {3.1}Ensamblaje de matrices y vector de carga.}{11}{section.3.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.1}Caso 1D.}{11}{subsection.3.1.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.2}Caso 2D.}{11}{subsection.3.1.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {3.2}Imposición de condiciones de contorno.}{11}{section.3.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.1}Tipo Dirichlet.}{11}{subsection.3.2.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.2}Tipo Neumann.}{11}{subsection.3.2.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.3}Tipo Robin o mixtas.}{11}{subsection.3.2.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {3.3}Convergencia en L2 y H1 y tiempo de computación teórico.}{11}{section.3.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {4}Implementación computacional.}{13}{chapter.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.1}Ensamblaje de matrices y vector de carga.}{13}{section.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.1}Caso 1D.}{13}{subsection.3.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.2}Caso 2D.}{13}{subsection.3.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.2}Imposición de condiciones de contorno.}{13}{section.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.1}Tipo Dirichlet.}{13}{subsection.3.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.2}Tipo Neumann.}{13}{subsection.3.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.3}Tipo Robin o mixtas.}{13}{subsection.3.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.3}Convergencia en L2 y H1 y tiempo de computación teórico.}{13}{section.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {4}Implementación computacional.}{15}{chapter.4}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {4.1}Lenguaje y librerías utilizadas.}{13}{section.4.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4.2}Metodos numéricos empleados.}{13}{section.4.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4.3}Estructura del programa.}{13}{section.4.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {5}Resultados.}{15}{chapter.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.1}Lenguaje y librerías utilizadas.}{15}{section.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.2}Metodos numéricos empleados.}{15}{section.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.3}Estructura del programa.}{15}{section.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {5}Resultados.}{17}{chapter.5}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {5.1}Resultados en 1D}{15}{section.5.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {5.2}Resultados en 2D}{15}{section.5.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {6}Conclusiones.}{17}{chapter.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5.1}Resultados en 1D}{17}{section.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5.2}Resultados en 2D}{17}{section.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {6}Conclusiones.}{19}{chapter.6}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\bibstyle{apalike}
+\bibstyle{unsrtnat}
 \citation{*}
-\bibdata{Biblio}
-\bibcite{brezis_functional_2010}{{1}{2010}{{Brezis}}{{}}}
-\bibcite{cottrell_isogeometric_2009}{{2}{2009}{{Cottrell et~al.}}{{}}}
+\bibdata{Biblio2}
+\bibcite{larson_finite_2013}{{1}{2013}{{Larson and Bengzon}}{{}}}
+\bibcite{brezis_functional_2010}{{2}{2010}{{Brezis}}{{}}}
 \bibcite{evans_partial_1991}{{3}{1991}{{Evans}}{{}}}
-\bibcite{larson_finite_2013}{{4}{2013}{{Larson and Bengzon}}{{}}}
-\bibcite{piegl_nurbs_2012}{{5}{2012}{{Piegl and Tiller}}{{}}}
-\@writefile{toc}{\contentsline {chapter}{Bibliograf\'{\i }a}{19}{section*.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{Anexos}{21}{chapter*.7}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {6.1}Demmostraciones omitidas}{21}{section.6.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.1.1}Condiciones del Lema de Lax-Millgram}{21}{subsection.6.1.1}\protected@file@percent }
-\newlabel{sec:Lax}{{6.1.1}{21}{Condiciones del Lema de Lax-Millgram}{subsection.6.1.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.1.2}Equivalencia de la solución de la formulación variacional y fuerte}{22}{subsection.6.1.2}\protected@file@percent }
-\newlabel{sec:equivform}{{6.1.2}{22}{Equivalencia de la solución de la formulación variacional y fuerte}{subsection.6.1.2}{}}
-\newlabel{eq:6.1}{{6.1}{22}{Equivalencia de la solución de la formulación variacional y fuerte}{equation.6.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.1.3}Equivalencia de normas}{23}{subsection.6.1.3}\protected@file@percent }
-\newlabel{sec:normas}{{6.1.3}{23}{Equivalencia de normas}{subsection.6.1.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.1.4}Condiciones del Lema de Céa}{24}{subsection.6.1.4}\protected@file@percent }
-\newlabel{sec:Cea}{{6.1.4}{24}{Condiciones del Lema de Céa}{subsection.6.1.4}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.1.5}Continuidad de la forma lineal dual}{25}{subsection.6.1.5}\protected@file@percent }
-\newlabel{sec:cont}{{6.1.5}{25}{Continuidad de la forma lineal dual}{subsection.6.1.5}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.1.6}Propiedades de los B-Splines}{25}{subsection.6.1.6}\protected@file@percent }
-\newlabel{sec:B-Splines_proof}{{6.1.6}{25}{Propiedades de los B-Splines}{subsection.6.1.6}{}}
-\newlabel{alg:Cox}{{6.2}{25}{Propiedades de los B-Splines}{equation.6.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {6.2}Código omitido}{27}{section.6.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.2.1}Figuras de Bézier}{27}{subsection.6.2.1}\protected@file@percent }
-\newlabel{sec:codigo_bezier}{{6.2.1}{27}{Figuras de Bézier}{subsection.6.2.1}{}}
+\bibcite{piegl_nurbs_2012}{{4}{2012}{{Piegl and Tiller}}{{}}}
+\bibcite{cottrell_isogeometric_2009}{{5}{2009}{{Cottrell et~al.}}{{Cottrell, Hughes, and Bazilevs}}}
+\bibcite{farin_curves_2002}{{6}{2002{}}{{Farin}}{{}}}
+\bibcite{ahlberg_theory_2016}{{7}{2016}{{Ahlberg et~al.}}{{Ahlberg, Nilson, Walsh, and Bellman}}}
+\bibcite{langer_space-time_2016}{{8}{2016}{{Langer et~al.}}{{Langer, Moore, and Neumüller}}}
+\bibcite{bazilevs_isogeometric_2010}{{9}{2010}{{Bazilevs et~al.}}{{Bazilevs, Calo, Cottrell, Evans, Hughes, Lipton, Scott, and Sederberg}}}
+\bibcite{benson_large_2011}{{10}{2011}{{Benson et~al.}}{{Benson, Bazilevs, Hsu, and Hughes}}}
+\bibcite{bazilevs_patient-specific_2009}{{11}{2009}{{Bazilevs et~al.}}{{Bazilevs, Gohean, Hughes, Moser, and Zhang}}}
+\bibcite{kiendl_isogeometric_2009}{{12}{2009}{{Kiendl et~al.}}{{Kiendl, Bletzinger, Linhard, and Wüchner}}}
+\@writefile{toc}{\contentsline {chapter}{Bibliograf\'{\i }a}{21}{section*.11}\protected@file@percent }
+\bibcite{brechner_developing_2024}{{13}{2024}{{Brechner}}{{}}}
+\bibcite{liming_practical_1944}{{14}{1944}{{Liming}}{{}}}
+\bibcite{versprille_computer_1975}{{15}{1975}{{Versprille}}{{}}}
+\bibcite{fazanaro_nurbs_2016}{{16}{2016}{{Fazanaro et~al.}}{{Fazanaro, Amorim, Franco~de Moraes, Silva, and Pedrini}}}
+\bibcite{farin_history_2002}{{17}{2002{}}{{Farin}}{{}}}
+\@writefile{toc}{\contentsline {chapter}{Anexos}{23}{chapter*.13}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6.1}Método de los elementos finitos.}{23}{section.6.1}\protected@file@percent }
+\newlabel{FEM}{{6.1}{23}{Método de los elementos finitos}{section.6.1}{}}
+\citation{larson_finite_2013}
+\newlabel{eq:cea}{{6.1}{24}{}{equation.6.1}{}}
+\newlabel{eq:sob}{{6.2}{24}{}{equation.6.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6.2}Demmostraciones omitidas}{26}{section.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2.1}Paso de solución fuerte a solución variacional}{26}{subsection.6.2.1}\protected@file@percent }
+\newlabel{sec:Paso_Soluciones}{{6.2.1}{26}{Paso de solución fuerte a solución variacional}{subsection.6.2.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2.2}Existencia y unicidad de la solución variacional (Lema de Lax-Millgram)}{26}{subsection.6.2.2}\protected@file@percent }
+\newlabel{sec:Lax}{{6.2.2}{26}{Existencia y unicidad de la solución variacional (Lema de Lax-Millgram)}{subsection.6.2.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2.3}Equivalencia de la solución de la formulación variacional y fuerte}{28}{subsection.6.2.3}\protected@file@percent }
+\newlabel{sec:equivform}{{6.2.3}{28}{Equivalencia de la solución de la formulación variacional y fuerte}{subsection.6.2.3}{}}
+\newlabel{eq:6.1}{{6.4}{28}{Equivalencia de la solución de la formulación variacional y fuerte}{equation.6.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2.4}Equivalencia de normas}{29}{subsection.6.2.4}\protected@file@percent }
+\newlabel{sec:normas}{{6.2.4}{29}{Equivalencia de normas}{subsection.6.2.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2.5}Condiciones del Lema de Céa}{30}{subsection.6.2.5}\protected@file@percent }
+\newlabel{sec:Cea}{{6.2.5}{30}{Condiciones del Lema de Céa}{subsection.6.2.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2.6}Continuidad de la forma lineal dual}{30}{subsection.6.2.6}\protected@file@percent }
+\newlabel{sec:cont}{{6.2.6}{30}{Continuidad de la forma lineal dual}{subsection.6.2.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2.7}Propiedades de los B-Splines}{31}{subsection.6.2.7}\protected@file@percent }
+\newlabel{sec:B-Splines_proof}{{6.2.7}{31}{Propiedades de los B-Splines}{subsection.6.2.7}{}}
+\newlabel{alg:Cox}{{6.5}{31}{Propiedades de los B-Splines}{equation.6.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2.8}Igualdad de las nuevas funciones base bajo refinamiento}{33}{subsection.6.2.8}\protected@file@percent }
+\newlabel{sec:dem_new_bases}{{6.2.8}{33}{Igualdad de las nuevas funciones base bajo refinamiento}{subsection.6.2.8}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2.9}Equivalencia de curvas bajo refinamiento}{34}{subsection.6.2.9}\protected@file@percent }
+\newlabel{sec:refinement_proof}{{6.2.9}{34}{Equivalencia de curvas bajo refinamiento}{subsection.6.2.9}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6.3}Código omitido}{35}{section.6.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3.1}FEM}{35}{subsection.6.3.1}\protected@file@percent }
+\newlabel{sec:codigo_FEM}{{6.3.1}{35}{FEM}{subsection.6.3.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3.2}Figuras de Bézier}{37}{subsection.6.3.2}\protected@file@percent }
+\newlabel{sec:codigo_bezier}{{6.3.2}{37}{Figuras de Bézier}{subsection.6.3.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3.3}Código fundamental para el funcionamiento en C++}{39}{subsection.6.3.3}\protected@file@percent }
+\newlabel{sec:codigo_fund}{{6.3.3}{39}{Código fundamental para el funcionamiento en C++}{subsection.6.3.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3.4}Curvas de NURBS}{75}{subsection.6.3.4}\protected@file@percent }
+\newlabel{sec:codigo_NURBS1}{{6.3.4}{75}{Curvas de NURBS}{subsection.6.3.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3.5}Superficies de NURBS}{77}{subsection.6.3.5}\protected@file@percent }
+\newlabel{sec:codigo_NURBS2}{{6.3.5}{77}{Superficies de NURBS}{subsection.6.3.5}{}}
 \gdef\svg@ink@ver@settings{{\m@ne }{inkscape}{1}}
-\xdef \mintedoldcachechecksum{\detokenize{F75911A384CA99203F49BFCACB9E743F:3}}
-\gdef \@abspage@last{36}
+\xdef \mintedoldcachechecksum{\detokenize{7ED030D281B518D9500244AE3AD7BBCF:13}}
+\gdef \@abspage@last{84}

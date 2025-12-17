@@ -1,0 +1,31 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZgt{}}\PYG{+w}{ }\PYG{n}{CtrlPts}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{ReadDataFile\PYGZus{}CtrlPts}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}path+nameCtrlPts\PYGZdq{}}\PYG{p}{);}
+\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{Weights}\PYG{+w}{ }\PYG{o}{=}\PYG{n}{ReadDataFile\PYGZus{}Matrix}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}path+nameWeights\PYGZdq{}}\PYG{p}{);}
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZgt{}}\PYG{+w}{ }\PYG{n}{CtrlPtsW}\PYG{o}{=}\PYG{n}{WeightCtrlPtsSurf}\PYG{p}{(}\PYG{n}{CtrlPts}\PYG{p}{,}\PYG{n}{Weights}\PYG{p}{);}
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{V1}\PYG{o}{=}\PYG{p}{\PYGZob{}}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mf}{0.5}\PYG{p}{,}\PYG{l+m+mf}{0.5}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{\PYGZcb{};}
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{V2}\PYG{o}{=}\PYG{p}{\PYGZob{}}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{\PYGZcb{};}
+\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{p1}\PYG{o}{=}\PYG{l+m+mi}{2}\PYG{p}{;}
+\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{p2}\PYG{o}{=}\PYG{l+m+mi}{3}\PYG{p}{;}
+\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{N\PYGZus{}Steps\PYGZus{}1}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{25}\PYG{p}{;}
+\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{N\PYGZus{}Steps\PYGZus{}2}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{25}\PYG{p}{;}
+
+\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{Step\PYGZus{}1}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{o}{/}\PYG{n}{N\PYGZus{}Steps\PYGZus{}1}\PYG{p}{;}
+\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{Step\PYGZus{}2}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{o}{/}\PYG{n}{N\PYGZus{}Steps\PYGZus{}2}\PYG{p}{;}
+
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZgt{}}\PYG{+w}{ }\PYG{n}{eval}\PYG{p}{(}\PYG{n}{N\PYGZus{}Steps\PYGZus{}1}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{);}
+\PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{unsigned}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{i}\PYG{o}{\PYGZlt{}}\PYG{n}{N\PYGZus{}Steps\PYGZus{}1}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{;}\PYG{n}{i}\PYG{o}{++}\PYG{p}{)\PYGZob{}}
+
+\PYG{+w}{    }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{auxMatrix}\PYG{p}{(}\PYG{l+m+mi}{3}\PYG{p}{,}\PYG{n}{N\PYGZus{}Steps\PYGZus{}2}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{);}
+\PYG{+w}{    }\PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{unsigned}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{j}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{j}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{N\PYGZus{}Steps\PYGZus{}2}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{;}\PYG{n}{j}\PYG{o}{++}\PYG{p}{)\PYGZob{}}
+
+\PYG{+w}{        }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{aux}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{SurfacePointRational}\PYG{p}{(}\PYG{n}{V1}\PYG{p}{.}\PYG{n}{size}\PYG{p}{()}\PYG{l+m+mi}{\PYGZhy{}2}\PYG{o}{\PYGZhy{}}\PYG{n}{p1}\PYG{p}{,}\PYG{n}{p1}\PYG{p}{,}\PYG{n}{V1}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{V2}\PYG{p}{.}\PYG{n}{size}\PYG{p}{()}\PYG{l+m+mi}{\PYGZhy{}2}\PYG{o}{\PYGZhy{}}\PYG{n}{p2}\PYG{p}{,}\PYG{n}{p2}\PYG{p}{,}\PYG{n}{V2}\PYG{p}{,}\PYG{n}{CtrlPtsW}\PYG{p}{,}\PYG{n}{i}\PYG{o}{*}\PYG{n}{Step\PYGZus{}1}\PYG{p}{,}\PYG{n}{j}\PYG{o}{*}\PYG{n}{Step\PYGZus{}2}\PYG{p}{);}
+\PYG{+w}{        }\PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{unsigned}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{k}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{k}\PYG{o}{\PYGZlt{}}\PYG{l+m+mi}{3}\PYG{p}{;}\PYG{n}{k}\PYG{o}{++}\PYG{p}{)\PYGZob{}}
+\PYG{+w}{            }\PYG{n}{auxMatrix}\PYG{p}{(}\PYG{n}{k}\PYG{p}{,}\PYG{n}{j}\PYG{p}{)}\PYG{o}{=}\PYG{n}{aux}\PYG{p}{[}\PYG{n}{k}\PYG{p}{];}
+\PYG{+w}{        }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{    }\PYG{n}{eval}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{=}\PYG{n}{auxMatrix}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{n}{Write\PYGZus{}BezierSurface}\PYG{p}{(}\PYG{n}{eval}\PYG{p}{,}\PYG{l+s}{\PYGZdq{}path+nameSurf\PYGZdq{}}\PYG{+w}{ }\PYG{p}{);}
+\PYG{n}{Write\PYGZus{}CtrlPts}\PYG{p}{(}\PYG{n}{CtrlPts}\PYG{p}{,}\PYG{l+s}{\PYGZdq{}path+nameCtrlPts\PYGZdq{}}\PYG{p}{);}
+\end{MintedVerbatim}

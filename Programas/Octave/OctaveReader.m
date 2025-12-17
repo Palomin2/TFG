@@ -124,17 +124,29 @@ elseif(it==6)
   endfor
 
   elseif(it==7)
-  data1=dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\RationalBasisFuncts.txt');
+  data1=dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\BasisFuncts2.txt');
 
 
   [n1 n2] = size(data1);
-  hold on
-  for i=1:n1
-    plot(data1(i,:), color='r');
-    #pause(0.5)
-  plot(data1(2,:), color='b');
+  colores = {'r', 'g', 'b', 'm', 'c', [1, 0.5, 0], [0.5, 0.5, 0.5], [0.2, 0.8, 0.2]};
+  num_colores = length(colores);
+
+  figure;
+  hold on;
+  grid on;
+
+  for i = 1:n1
+      color_index = mod(i - 1, num_colores) + 1;
+      plot(data1(i,:), 'color', colores{color_index}, 'LineWidth', 1.5);
   endfor
-  hold off
+  hold off;
+
+  xlim([1, n2]);
+  posiciones_ticks_fisicas = [1, 251, 501, 751, 1001];
+  etiquetas_deseadas = {'0', '0.25', '0.5', '0.75', '1'};
+  set(gca, 'xtick', posiciones_ticks_fisicas, 'xticklabel', etiquetas_deseadas);
+  nombre_archivo_svg = 'funciones_base_NURBS_2.svg';
+  print(nombre_archivo_svg, '-dsvg');
   elseif(it==8)
   dataX =  dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\Superficies\SuperficieRationalEj2X.txt', ' ');
   dataY =  dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\Superficies\SuperficieRationalEj2Y.txt', ' ');
@@ -156,6 +168,13 @@ elseif(it==6)
   for j=1:n2
     plot3(dataCtrlX(:,j),dataCtrlY(:,j),dataCtrlZ(:,j), color='r');
   endfor
+
+  scatter3(dataCtrlX(:), dataCtrlY(:), dataCtrlZ(:), 30, 'k', 'filled', 'MarkerEdgeColor', 'w');
+  view(30, 45);
+  grid on;
+
+  print -dsvg 'Superficie_NURBS_Ej1.svg';
+  hold off;
   elseif(it==10)
   data1=dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\Curvas\CurvaEj1CornerCut.txt');
   [n1 n2] = size(data1);
@@ -251,6 +270,12 @@ elseif(it==6)
   for j=1:n2
     plot3(dataCtrlX(:,j),dataCtrlY(:,j),dataCtrlZ(:,j), color='r');
   endfor
+  scatter3(dataCtrlX(:), dataCtrlY(:), dataCtrlZ(:), 30, 'k', 'filled', 'MarkerEdgeColor', 'w');
+  view(30, 45);
+  grid on;
+
+  print -dsvg 'Superficie_NURBS_Ej2.svg';
+  hold off;
   elseif(it==15)
   dataX =  dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\Superficies\SuperficieRationalEj3RefinedX.txt', ' ');
   dataY =  dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\Superficies\SuperficieRationalEj3RefinedY.txt', ' ');
@@ -264,6 +289,7 @@ elseif(it==6)
   dataCtrlZ =  dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\CtrlPts\Ej3RefinedZ.txt', ' ');
 
   [n1 n2] = size(dataCtrlX);
+  ;
 
   for i=1:n1
     plot3(dataCtrlX(i,:),dataCtrlY(i,:),dataCtrlZ(i,:), color='r');
@@ -272,6 +298,12 @@ elseif(it==6)
   for j=1:n2
     plot3(dataCtrlX(:,j),dataCtrlY(:,j),dataCtrlZ(:,j), color='r');
   endfor
+  scatter3(dataCtrlX(:), dataCtrlY(:), dataCtrlZ(:), 30, 'k', 'filled', 'MarkerEdgeColor', 'w');
+  view(30, 45);
+  grid on;
+
+  print -dsvg 'Superficie_NURBS_Ej2_Refined.svg';
+  hold off
   elseif(it==16)
   data1=dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\SolEvals\EjSin_h=80_p=2.txt');
   data2=dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\SolEvals\EjSin_Analytic_h=80.txt');

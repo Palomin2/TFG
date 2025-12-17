@@ -311,12 +311,12 @@ int main(int argc, char *argv[]) {
 
     else if(stoi(argv[1])==6){//test CurvePoint
         
-        iMatrix matrix = ReadDataFile_Matrix("C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/CtrlPts/Ej1.txt");
+        iMatrix matrix = ReadDataFile_Matrix("C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/CtrlPts/EjCurva3d.txt");
         //cout<<"abierto"<<endl;
         matrix.PrintMatrix();
-        std::vector<double> KnotVector={0,0,0,0.2,0.4,0.6,0.8,1,1,1};
-        int p=2;
-        int dim=2;
+        std::vector<double> KnotVector={0,0,0,0.5,1,1,1,1};
+        int p=3;
+        int dim=3;
         double N_Steps = 100;
 
         iMatrix<double> sol(dim,N_Steps+1);
@@ -435,12 +435,12 @@ int main(int argc, char *argv[]) {
     }
 
     if(stoi(argv[1])==10){ //Test CurvePointRational
-        iMatrix CtrlPts = ReadDataFile_Matrix("C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/CtrlPts/Ej1.txt");        
+        iMatrix CtrlPts = ReadDataFile_Matrix("C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/CtrlPts/EjCurva3d.txt");        
         CtrlPts.PrintMatrix();
-        std::vector<double> KnotVector={0,0,0,0.2,0.4,0.6,0.8,1,1,1};
-        std::vector<double> Weights={1,1,0.5,1,1,1,1};
-        int p=2;
-        int dim=2;
+        std::vector<double> KnotVector={0,0,0,0,0.5,1,1,1,1};
+        std::vector<double> Weights={1,1,5,1,1};
+        int p=3;
+        int dim=3;
         double N_Steps = 1000;
         iMatrix<double> sol(dim,N_Steps+1);
         std::vector<double> eval(dim);
@@ -454,15 +454,14 @@ int main(int argc, char *argv[]) {
             //std::cout << eval[0] << "|" << eval[1] << std::endl;
             sol.SetCol(i,eval);
         }
-        Write_Curve(sol,"C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/Curvas/CurvaEj1Nurbs.txt");
+        Write_Curve(sol,"C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/Curvas/EjCurva3d.txt");
         std::cout<<"fin 10"<<endl;
     }
     else if(stoi(argv[1])==11){ //test RationalBasisFuns
-
-        int p=4;
+        int p=3;
         double N_Steps = 1000;
-        std::vector<double> KnotVector={0.000, 0.000, 0.000, 0.000, 0.000, 0.050, 0.100, 0.150, 0.200, 0.250, 0.300, 0.350, 0.400, 0.450, 0.500, 0.550, 0.600, 0.650, 0.700, 0.750, 0.800, 0.850, 0.900, 0.950, 1.000, 1.000, 1.000, 1.000, 1.000};
-        std::vector<double> WeightVector={1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000,1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000};
+        std::vector<double> KnotVector={0,0,0,0,0.5,1,1,1,1};
+        std::vector<double> WeightVector={1,1,5,1,1};
         iMatrix<double> sol(KnotVector.size()-p-1,N_Steps+1);
         //std::vector<double> Nurb(NurbsVector.size());
         double Step=1/(N_Steps);
@@ -486,14 +485,7 @@ int main(int argc, char *argv[]) {
             //std::cout << "Iteración completada " << i<< std::endl;
         }
         Write_BasisFunctions(sol, "C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/RationalBasisFuncts");
-
-
-
-
-
         std::cout<<"fin 11"<<endl;
-
-
     }
 
 
@@ -501,8 +493,8 @@ int main(int argc, char *argv[]) {
 
         int p=2;
         double N_Steps = 100;
-        std::vector<double>KnotVector= {0,0,0,1,2,3,3,3};
-        std::vector<double>WeightVector= {1,4,1,1,1};
+        std::vector<double>KnotVector= {0,0,0,0.5,1,2,2.5,3,3,3};
+        std::vector<double>WeightVector= {1,1,2,3,2,1,1};
         iMatrix<double> sol(KnotVector.size()-p-1,N_Steps+1);
         //std::vector<double> Nurb(NurbsVector.size());
         double Step=1/(N_Steps);
@@ -627,8 +619,8 @@ int main(int argc, char *argv[]) {
         std::vector<double> V2={0,0,0,0,1,1,1,1};
         int p1=2;
         int p2=3;
-        double N_Steps_1 = 100;
-        double N_Steps_2 = 100;
+        double N_Steps_1 = 25;
+        double N_Steps_2 = 25;
 
         double Step_1=1/N_Steps_1;
         double Step_2=1/N_Steps_2;
@@ -1168,11 +1160,11 @@ int main(int argc, char *argv[]) {
 
     if(stoi(argv[1])==24){//test RatDersBasisFuns
         int p=3;
-        std::vector<double> Nurbs={0,0,0,0,2,4,4,6,6,6,8,8,8,8};
-        std::vector<double> weights={1,1,2,0.5,0.5,7,1,1,1};
+        std::vector<double> Nurbs={0,0,0,0,0.5,1,1,1,1};
+        std::vector<double> weights={1,1,5,1,1};
 
 
-        double N_Steps = 100;
+        double N_Steps = 1000;
         std::vector<double> eval(Nurbs.size()-p);
         iMatrix<double> ders(p+1,p+1);
         iMatrix<double> sol(Nurbs.size()-p,N_Steps+1);
@@ -1181,7 +1173,7 @@ int main(int argc, char *argv[]) {
         auto start = std::chrono::high_resolution_clock::now();
         for(unsigned int i = 0; i<N_Steps+1; i++){
             
-            double t=Step*i*8;
+            double t=Step*i;
             //std::cout << "Iteración iniciada " << i<< std::endl;
             int span = FindSpan(Nurbs, t, p, Nurbs.size()-2-p);
             ders = RatDersBasisFuns(span,t,p,1,Nurbs, weights);

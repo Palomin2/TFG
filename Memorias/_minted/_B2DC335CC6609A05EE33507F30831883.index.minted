@@ -1,11 +1,21 @@
 {
   "jobname": "PlantillaTFG",
   "md5": "B2DC335CC6609A05EE33507F30831883",
-  "timestamp": "20251129205343",
+  "timestamp": "20251216212554",
   "cachefiles": [
+    "1E4D02B17077466A88EBA252F0208FBA.highlight.minted",
     "2E95F284C3C3176C9665CAEBDABB8892.highlight.minted",
+    "4F61E5451EA391AA88513E9271C0652C.highlight.minted",
     "54E4978D7A7E44E4A53B764606380A2D.highlight.minted",
+    "7E8F16D3F878B570E439FA54D23A97E5.highlight.minted",
+    "96C0F2AB1B5CEAD57CB737C53F598B66.highlight.minted",
+    "C00C2DC27262BFBCD84D78469D92CE7F.highlight.minted",
+    "C032565F51A6E03AC3C5DD38B323922B.highlight.minted",
+    "F261615064A3F132D240BB01085C516F.highlight.minted",
+    "F386561303BC387322998CF1051D62E7.highlight.minted",
+    "FFC3511D9E15C7AF0482C1D651DAD8BF.highlight.minted",
     "_B2DC335CC6609A05EE33507F30831883.index.minted",
-    "colorful.style.minted"
+    "colorful.style.minted",
+    "dracula.style.minted"
   ]
 }

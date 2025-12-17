@@ -1,0 +1,845 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{c+cm}{/******************************************************************************* }
+\PYG{c+cm}{ *AUTHOR: Carlos Palomera Oliva}
+\PYG{c+cm}{ *DATE: MARCH 2025}
+\PYG{c+cm}{ *******************************************************************************/}
+\PYG{c+cp}{\PYGZsh{}include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}iostream\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}stdexcept\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}algorithm\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZdq{}C:\PYGZbs{}Librerias\PYGZbs{}eigen\PYGZhy{}3.4.0\PYGZbs{}Eigen\PYGZbs{}Dense\PYGZdq{}}\PYG{c+c1}{   //windows version}
+\PYG{c+c1}{//\PYGZsh{}include \PYGZdq{}/home/carlo/Librerias/eigen\PYGZhy{}3.4.0/Eigen/Dense\PYGZdq{}  //linux version}
+\PYG{c+c1}{//\PYGZsh{}include \PYGZdq{}/home/carlo/Librerias/eigen\PYGZhy{}3.4.0/Eigen/Sparse\PYGZdq{} //linux version}
+\PYG{c+cp}{\PYGZsh{}include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}iomanip\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}vector\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}cmath\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}numeric\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}type\PYGZus{}traits\PYGZgt{}}
+
+\PYG{c+cp}{\PYGZsh{}ifndef IMATRIX\PYGZus{}H}
+\PYG{c+cp}{\PYGZsh{}define IMATRIX\PYGZus{}H}
+
+\PYG{c+c1}{// This file is part of the qbLinAlg linear algebra library.}
+
+\PYG{c+cm}{/*}
+\PYG{c+cm}{MIT License}
+\PYG{c+cm}{Copyright (c) 2023 Michael Bennett	}
+
+\PYG{c+cm}{Permission is hereby granted, free of charge, to any person obtaining a copy of this software}
+\PYG{c+cm}{and associated documentation files (the \PYGZdq{}Software\PYGZdq{}), to deal in the Software without restriction, }
+\PYG{c+cm}{including without limitation the rights to use, copy, modify, merge, publish, distribute, }
+\PYG{c+cm}{sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is }
+\PYG{c+cm}{furnished to do so, subject to the following conditions:}
+
+\PYG{c+cm}{The above copyright notice and this permission notice shall be included in all copies or }
+\PYG{c+cm}{substantial portions of the Software.}
+
+\PYG{c+cm}{THE SOFTWARE IS PROVIDED \PYGZdq{}AS IS\PYGZdq{}, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING }
+\PYG{c+cm}{BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND }
+\PYG{c+cm}{NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, }
+\PYG{c+cm}{DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, }
+\PYG{c+cm}{OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.}
+\PYG{c+cm}{*/}
+
+
+
+
+\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{T}\PYG{o}{\PYGZgt{}}
+\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{iMatrix}\PYG{p}{\PYGZob{}}
+\PYG{+w}{	}\PYG{k}{public}\PYG{o}{:}
+\PYG{+w}{		}\PYG{c+c1}{// Define the various constructors.}
+\PYG{+w}{    }\PYG{n}{iMatrix}\PYG{p}{();}
+\PYG{+w}{    }\PYG{n}{iMatrix}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{nRows}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{nCols}\PYG{p}{);}
+\PYG{+w}{    }\PYG{n}{iMatrix}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{nRows}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{nCols}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{T}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{inputData}\PYG{p}{);}
+\PYG{+w}{	}\PYG{n}{iMatrix}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{nRows}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{nCols}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{Eigen}\PYG{o}{::}\PYG{n}{VectorXd}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{inputData}\PYG{p}{);}
+\PYG{+w}{    }\PYG{n}{iMatrix}\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{inputMatrix}\PYG{p}{);}
+
+\PYG{+w}{    }\PYG{c+c1}{// And the destructor.}
+\PYG{+w}{    }\PYG{o}{\PYGZti{}}\PYG{n}{iMatrix}\PYG{p}{();}
+
+\PYG{+w}{    }\PYG{c+c1}{// Configuration methods.}
+\PYG{+w}{    }\PYG{k+kt}{bool}\PYG{+w}{ }\PYG{n+nf}{Resize}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{numRows}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{numCols}\PYG{p}{);}
+\PYG{+w}{    }\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{SetToIdentity}\PYG{p}{();}
+
+\PYG{+w}{    }\PYG{c+c1}{// Element access methods.}
+\PYG{+w}{    }\PYG{n}{T}\PYG{+w}{ }\PYG{n+nf}{GetElement}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{row}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{col}\PYG{p}{)}\PYG{+w}{ }\PYG{k}{const}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{GetRow}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{row}\PYG{p}{)}\PYG{+w}{ }\PYG{k}{const}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{GetCol}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{col}\PYG{p}{)}\PYG{+w}{ }\PYG{k}{const}\PYG{p}{;}\PYG{+w}{    }
+\PYG{+w}{    }\PYG{k+kt}{bool}\PYG{+w}{ }\PYG{n+nf}{SetElement}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{row}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{col}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{T}\PYG{+w}{ }\PYG{n}{elementValue}\PYG{p}{);}
+\PYG{+w}{	}\PYG{k+kt}{bool}\PYG{+w}{ }\PYG{n+nf}{SetCol}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{col}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{elements}\PYG{p}{);}
+\PYG{+w}{	}\PYG{k+kt}{bool}\PYG{+w}{ }\PYG{n+nf}{SetRow}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{row}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{elements}\PYG{p}{);}
+\PYG{+w}{    }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n+nf}{GetNumRows}\PYG{p}{()}\PYG{+w}{ }\PYG{k}{const}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n+nf}{GetNumCols}\PYG{p}{()}\PYG{+w}{ }\PYG{k}{const}\PYG{p}{;}
+\PYG{+w}{	}\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{GetSubMat}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{rowIni}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{rowEnd}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{colIni}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{colEnd}\PYG{p}{)}\PYG{+w}{ }\PYG{k}{const}\PYG{p}{;}
+
+
+\PYG{+w}{    }\PYG{c+c1}{// Overload the assignment operator.}
+\PYG{+w}{	}\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{k}{operator}\PYG{o}{=}\PYG{+w}{ }\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{rhs}\PYG{p}{);}
+
+
+\PYG{+w}{	}\PYG{c+c1}{// Write}
+\PYG{+w}{    }\PYG{k+kr}{inline}\PYG{+w}{ }\PYG{n}{T}\PYG{o}{\PYGZam{}}\PYG{+w}{ }\PYG{n+nf}{operator}\PYG{p}{()(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{i}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{j}\PYG{p}{)}\PYG{+w}{ }\PYG{k}{noexcept}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{[}\PYG{n}{i}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{m\PYGZus{}nCols}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{j}\PYG{p}{];}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{};}
+
+\PYG{+w}{    }\PYG{c+c1}{// Read}
+\PYG{+w}{    }\PYG{k+kr}{inline}\PYG{+w}{ }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{T}\PYG{o}{\PYGZam{}}\PYG{+w}{ }\PYG{n+nf}{operator}\PYG{p}{()(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{i}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{j}\PYG{p}{)}\PYG{+w}{ }\PYG{k}{const}\PYG{+w}{ }\PYG{k}{noexcept}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{[}\PYG{n}{i}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{m\PYGZus{}nCols}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{j}\PYG{p}{];}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{};}
+
+
+\PYG{+w}{	}\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{invert}\PYG{p}{()}\PYG{+w}{ }\PYG{k}{const}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{c+c1}{//Uses LU factorization with partial pivoting}
+\PYG{+w}{        }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{m\PYGZus{}nRows}\PYG{+w}{ }\PYG{o}{!=}\PYG{+w}{ }\PYG{n}{m\PYGZus{}nCols}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{            }\PYG{k}{throw}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{runtime\PYGZus{}error}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}Matrix must be square for inversion.\PYGZdq{}}\PYG{p}{);}
+\PYG{+w}{        }\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{        }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{n}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{m\PYGZus{}nRows}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{A}\PYG{p}{(}\PYG{o}{*}\PYG{k}{this}\PYG{p}{);}\PYG{+w}{ }
+\PYG{+w}{        }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{int}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{piv}\PYG{p}{(}\PYG{n}{n}\PYG{p}{);}
+\PYG{+w}{        }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{n}\PYG{p}{;}\PYG{+w}{ }\PYG{o}{++}\PYG{n}{i}\PYG{p}{)}\PYG{+w}{ }\PYG{n}{piv}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{i}\PYG{p}{;}
+
+\PYG{+w}{        }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{k}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{k}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{n}\PYG{p}{;}\PYG{+w}{ }\PYG{o}{++}\PYG{n}{k}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{            }\PYG{n}{T}\PYG{+w}{ }\PYG{n}{maxVal}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{abs}\PYG{p}{(}\PYG{n}{A}\PYG{p}{(}\PYG{n}{k}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{k}\PYG{p}{));}
+\PYG{+w}{            }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{pivotRow}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{k}\PYG{p}{;}
+\PYG{+w}{            }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{k}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{n}\PYG{p}{;}\PYG{+w}{ }\PYG{o}{++}\PYG{n}{i}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{                }\PYG{n}{T}\PYG{+w}{ }\PYG{n}{val}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{abs}\PYG{p}{(}\PYG{n}{A}\PYG{p}{(}\PYG{n}{i}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{k}\PYG{p}{));}
+\PYG{+w}{                }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{val}\PYG{+w}{ }\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{maxVal}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{                    }\PYG{n}{maxVal}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{val}\PYG{p}{;}
+\PYG{+w}{                    }\PYG{n}{pivotRow}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{i}\PYG{p}{;}
+\PYG{+w}{                }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{            }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{            }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{maxVal}\PYG{+w}{ }\PYG{o}{==}\PYG{+w}{ }\PYG{n}{T}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{))}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{                }\PYG{k}{throw}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{runtime\PYGZus{}error}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}Matrix is singular.\PYGZdq{}}\PYG{p}{);}
+\PYG{+w}{            }\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{            }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{pivotRow}\PYG{+w}{ }\PYG{o}{!=}\PYG{+w}{ }\PYG{n}{k}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{                }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{j}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{j}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{n}\PYG{p}{;}\PYG{+w}{ }\PYG{o}{++}\PYG{n}{j}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{                    }\PYG{n}{std}\PYG{o}{::}\PYG{n}{swap}\PYG{p}{(}\PYG{n}{A}\PYG{p}{(}\PYG{n}{k}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{j}\PYG{p}{),}\PYG{+w}{ }\PYG{n}{A}\PYG{p}{(}\PYG{n}{pivotRow}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{j}\PYG{p}{));}
+\PYG{+w}{                }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{                }\PYG{n}{std}\PYG{o}{::}\PYG{n}{swap}\PYG{p}{(}\PYG{n}{piv}\PYG{p}{[}\PYG{n}{k}\PYG{p}{],}\PYG{+w}{ }\PYG{n}{piv}\PYG{p}{[}\PYG{n}{pivotRow}\PYG{p}{]);}
+\PYG{+w}{            }\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{            }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{k}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{n}\PYG{p}{;}\PYG{+w}{ }\PYG{o}{++}\PYG{n}{i}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{                }\PYG{n}{A}\PYG{p}{(}\PYG{n}{i}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{k}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{/=}\PYG{+w}{ }\PYG{n}{A}\PYG{p}{(}\PYG{n}{k}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{k}\PYG{p}{);}
+\PYG{+w}{                }\PYG{n}{T}\PYG{+w}{ }\PYG{n}{factor}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{A}\PYG{p}{(}\PYG{n}{i}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{k}\PYG{p}{);}
+\PYG{+w}{                }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{j}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{k}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{j}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{n}\PYG{p}{;}\PYG{+w}{ }\PYG{o}{++}\PYG{n}{j}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{                    }\PYG{n}{A}\PYG{p}{(}\PYG{n}{i}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{j}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZhy{}=}\PYG{+w}{ }\PYG{n}{factor}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{A}\PYG{p}{(}\PYG{n}{k}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{j}\PYG{p}{);}
+\PYG{+w}{                }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{            }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{        }\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{        }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{inv}\PYG{p}{(}\PYG{n}{n}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{n}\PYG{p}{);}
+\PYG{+w}{        }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{col}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{col}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{n}\PYG{p}{;}\PYG{+w}{ }\PYG{o}{++}\PYG{n}{col}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{            }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{b}\PYG{p}{(}\PYG{n}{n}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{T}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{));}
+\PYG{+w}{            }\PYG{n}{b}\PYG{p}{[}\PYG{n}{piv}\PYG{p}{[}\PYG{n}{col}\PYG{p}{]]}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{T}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{);}
+
+\PYG{+w}{            }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{n}\PYG{p}{;}\PYG{+w}{ }\PYG{o}{++}\PYG{n}{i}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{                }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{j}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{j}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{i}\PYG{p}{;}\PYG{+w}{ }\PYG{o}{++}\PYG{n}{j}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{                    }\PYG{n}{b}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{\PYGZhy{}=}\PYG{+w}{ }\PYG{n}{A}\PYG{p}{(}\PYG{n}{i}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{j}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{b}\PYG{p}{[}\PYG{n}{j}\PYG{p}{];}
+\PYG{+w}{                }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{            }\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{            }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{n}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{\PYGZgt{}=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{o}{\PYGZhy{}\PYGZhy{}}\PYG{n}{i}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{                }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{j}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{j}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{n}\PYG{p}{;}\PYG{+w}{ }\PYG{o}{++}\PYG{n}{j}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{                    }\PYG{n}{b}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{\PYGZhy{}=}\PYG{+w}{ }\PYG{n}{A}\PYG{p}{(}\PYG{n}{i}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{j}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{b}\PYG{p}{[}\PYG{n}{j}\PYG{p}{];}
+\PYG{+w}{                }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{                }\PYG{n}{b}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{/=}\PYG{+w}{ }\PYG{n}{A}\PYG{p}{(}\PYG{n}{i}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{i}\PYG{p}{);}
+\PYG{+w}{            }\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{            }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{n}\PYG{p}{;}\PYG{+w}{ }\PYG{o}{++}\PYG{n}{i}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{                }\PYG{n}{inv}\PYG{p}{(}\PYG{n}{i}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{col}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{b}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}
+\PYG{+w}{            }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{        }\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{        }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{inv}\PYG{p}{;}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{    }\PYG{c+c1}{// Overload +, \PYGZhy{} and * operators (friends).}
+\PYG{+w}{    }\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{U}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{k}{friend}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{U}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{k}{operator}\PYG{o}{+}\PYG{+w}{ }\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{U}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{lhs}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{U}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{);}
+\PYG{+w}{    }\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{U}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{k}{friend}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{U}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{k}{operator}\PYG{o}{+}\PYG{+w}{ }\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{U}\PYG{o}{\PYGZam{}}\PYG{+w}{ }\PYG{n}{lhs}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{U}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{);}
+\PYG{+w}{    }\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{U}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{k}{friend}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{U}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{k}{operator}\PYG{o}{+}\PYG{+w}{ }\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{U}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{lhs}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{U}\PYG{o}{\PYGZam{}}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{);}
+\PYG{+w}{        }
+\PYG{+w}{    }\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{U}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{k}{friend}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{U}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{k}{operator}\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{U}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{lhs}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{U}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{);}
+\PYG{+w}{    }\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{U}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{k}{friend}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{U}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{k}{operator}\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{U}\PYG{o}{\PYGZam{}}\PYG{+w}{ }\PYG{n}{lhs}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{U}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{);}
+\PYG{+w}{    }\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{U}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{k}{friend}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{U}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{k}{operator}\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{U}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{lhs}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{U}\PYG{o}{\PYGZam{}}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{);}
+\PYG{+w}{        }
+\PYG{+w}{    }\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{U}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{k}{friend}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{U}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{k}{operator}\PYG{o}{*}\PYG{+w}{ }\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{U}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{lhs}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{U}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{);}
+\PYG{+w}{    }\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{U}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{k}{friend}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{U}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{k}{operator}\PYG{o}{*}\PYG{+w}{ }\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{U}\PYG{o}{\PYGZam{}}\PYG{+w}{ }\PYG{n}{lhs}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{U}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{);}
+\PYG{+w}{    }\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{U}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{k}{friend}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{U}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{k}{operator}\PYG{o}{*}\PYG{+w}{ }\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{U}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{lhs}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{U}\PYG{o}{\PYGZam{}}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{);}
+
+\PYG{+w}{	}\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{U}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{k}{friend}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{U}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{k}{operator}\PYG{o}{*}\PYG{+w}{ }\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{U}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{v1}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{U}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{v2}\PYG{p}{);}
+
+\PYG{+w}{	}\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{k}{operator}\PYG{o}{+=}\PYG{+w}{ }\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{);}
+\PYG{+w}{	}\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{k}{operator}\PYG{o}{*=}\PYG{+w}{ }\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{T}\PYG{o}{\PYGZam{}}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{);}
+
+\PYG{+w}{    }\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{PrintMatrix}\PYG{p}{();}
+\PYG{+w}{    }\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{PrintMatrix}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{precision}\PYG{p}{);}
+\PYG{+w}{	}\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{Vectorize}\PYG{p}{()}\PYG{+w}{ }\PYG{k}{const}\PYG{p}{;}
+\PYG{+w}{	}\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{Transpose}\PYG{p}{()}\PYG{+w}{ }\PYG{k}{const}\PYG{p}{;}
+
+
+\PYG{+w}{    }\PYG{k+kt}{bool}\PYG{+w}{ }\PYG{n+nf}{IsSquare}\PYG{p}{();}
+\PYG{+w}{	}\PYG{n}{T}\PYG{+w}{ }\PYG{n+nf}{Determinant}\PYG{p}{()}\PYG{+w}{ }\PYG{k}{const}\PYG{p}{;}
+
+\PYG{+w}{	}\PYG{c+c1}{// Función estática para calcular el Producto Punto entre dos std::vector\PYGZlt{}T\PYGZgt{}.}
+\PYG{+w}{	}\PYG{k}{static}\PYG{+w}{ }\PYG{n}{T}\PYG{+w}{ }\PYG{n+nf}{dot\PYGZus{}product}\PYG{+w}{ }\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{v1}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{v2}\PYG{p}{);}
+
+\PYG{+w}{	}\PYG{k}{private}\PYG{o}{:}
+\PYG{+w}{		}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{Sub2Ind}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{row}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{col}\PYG{p}{)}\PYG{+w}{ }\PYG{k}{const}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k}{private}\PYG{o}{:}
+\PYG{+w}{    }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{m\PYGZus{}nRows}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{m\PYGZus{}nCols}\PYG{p}{;}
+\PYG{p}{\PYGZcb{};}\PYG{+w}{   }
+
+
+\PYG{c+cm}{/* **************************************************************************************************}
+\PYG{c+cm}{CONSTRUCTOR / DESTRUCTOR FUNCTIONS}
+\PYG{c+cm}{/* *************************************************************************************************/}
+\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{T}\PYG{o}{\PYGZgt{}}
+\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}::}\PYG{n}{iMatrix}\PYG{p}{()}\PYG{+w}{ }\PYG{o}{:}\PYG{+w}{ }\PYG{n}{m\PYGZus{}nRows}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{),}\PYG{+w}{ }\PYG{n}{m\PYGZus{}nCols}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{  }\PYG{c+c1}{// Inicializamos el vector con 1 elemento (por defecto 0 o T())}
+\PYG{+w}{  }\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{.}\PYG{n}{resize}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{);}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+c1}{// Construct empty matrix (all elements 0)}
+\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{T}\PYG{o}{\PYGZgt{}}
+\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}::}\PYG{n}{iMatrix}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{nRows}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{nCols}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{:}\PYG{+w}{ }\PYG{n}{m\PYGZus{}nRows}\PYG{p}{(}\PYG{n}{nRows}\PYG{p}{),}\PYG{+w}{ }\PYG{n}{m\PYGZus{}nCols}\PYG{p}{(}\PYG{n}{nCols}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{  }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{nElements}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{m\PYGZus{}nRows}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{m\PYGZus{}nCols}\PYG{p}{;}
+\PYG{+w}{  }\PYG{k}{if}\PYG{+w}{ }\PYG{k}{constexpr}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{std}\PYG{o}{::}\PYG{n}{is\PYGZus{}arithmetic\PYGZus{}v}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{		}\PYG{c+c1}{// Redimensionar e inicializar a 0.0f}
+\PYG{+w}{		}\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{.}\PYG{n}{resize}\PYG{p}{(}\PYG{n}{nElements}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{static\PYGZus{}cast}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{p}{(}\PYG{l+m+mf}{0.0f}\PYG{p}{));}
+\PYG{+w}{	}\PYG{p}{\PYGZcb{}}\PYG{+w}{ }\PYG{k}{else}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{		}\PYG{c+c1}{// Redimensionar e inicializar con el constructor por defecto T()}
+\PYG{+w}{		}\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{.}\PYG{n}{resize}\PYG{p}{(}\PYG{n}{nElements}\PYG{p}{);}\PYG{+w}{ }
+\PYG{+w}{	}\PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+\PYG{c+c1}{// Construct from Eigen::VectorXd}
+\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{T}\PYG{o}{\PYGZgt{}}
+\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}::}\PYG{n}{iMatrix}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{nRows}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{nCols}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{Eigen}\PYG{o}{::}\PYG{n}{VectorXd}\PYG{o}{\PYGZam{}}\PYG{+w}{ }\PYG{n}{inputData}\PYG{p}{)}
+\PYG{+w}{    }\PYG{o}{:}\PYG{+w}{ }\PYG{n}{m\PYGZus{}nRows}\PYG{p}{(}\PYG{n}{nRows}\PYG{p}{),}\PYG{+w}{ }\PYG{n}{m\PYGZus{}nCols}\PYG{p}{(}\PYG{n}{nCols}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{nElements}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{m\PYGZus{}nRows}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{m\PYGZus{}nCols}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{inputData}\PYG{p}{.}\PYG{n}{size}\PYG{p}{()}\PYG{+w}{ }\PYG{o}{!=}\PYG{+w}{ }\PYG{n}{nElements}\PYG{p}{)}
+\PYG{+w}{        }\PYG{k}{throw}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{invalid\PYGZus{}argument}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}Eigen::VectorXd no tiene el tamaño correcto para llenar la matriz.\PYGZdq{}}\PYG{p}{);}
+
+\PYG{+w}{    }\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{.}\PYG{n}{resize}\PYG{p}{(}\PYG{n}{nElements}\PYG{p}{);}
+\PYG{+w}{    }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{nElements}\PYG{p}{;}\PYG{+w}{ }\PYG{o}{++}\PYG{n}{i}\PYG{p}{)}
+\PYG{+w}{        }\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{static\PYGZus{}cast}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{p}{(}\PYG{n}{inputData}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]);}
+\PYG{p}{\PYGZcb{}}
+\PYG{c+c1}{// Construct from const linear array.}
+\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{T}\PYG{o}{\PYGZgt{}}
+\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}::}\PYG{n}{iMatrix}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{nRows}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{nCols}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{T}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{inputData}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{:}\PYG{+w}{ }\PYG{n}{m\PYGZus{}nRows}\PYG{p}{(}\PYG{n}{nRows}\PYG{p}{),}\PYG{+w}{ }\PYG{n}{m\PYGZus{}nCols}\PYG{p}{(}\PYG{n}{nCols}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{nElements}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{m\PYGZus{}nRows}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{m\PYGZus{}nCols}\PYG{p}{;}
+\PYG{+w}{	}\PYG{c+c1}{// Usamos el constructor de rango de std::vector para la copia eficiente.}
+\PYG{+w}{	}\PYG{n}{m\PYGZus{}matrixData}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{p}{(}\PYG{n}{inputData}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{inputData}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{nElements}\PYG{p}{);}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+c1}{// The copy constructor.}
+\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{T}\PYG{o}{\PYGZgt{}}
+\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}::}\PYG{n}{iMatrix}\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{inputMatrix}\PYG{p}{)}\PYG{+w}{ }
+\PYG{+w}{    }\PYG{o}{:}\PYG{+w}{ }\PYG{n}{m\PYGZus{}nRows}\PYG{p}{(}\PYG{n}{inputMatrix}\PYG{p}{.}\PYG{n}{m\PYGZus{}nRows}\PYG{p}{),}\PYG{+w}{ }
+\PYG{+w}{      }\PYG{n}{m\PYGZus{}nCols}\PYG{p}{(}\PYG{n}{inputMatrix}\PYG{p}{.}\PYG{n}{m\PYGZus{}nCols}\PYG{p}{),}\PYG{+w}{ }
+\PYG{+w}{      }\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{(}\PYG{n}{inputMatrix}\PYG{p}{.}\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{)}\PYG{+w}{ }
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{	}\PYG{c+c1}{// Cuerpo del constructor vacío (RAII).}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{T}\PYG{o}{\PYGZgt{}}
+\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}::\PYGZti{}}\PYG{n}{iMatrix}\PYG{p}{()}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{	}\PYG{c+c1}{// El destructor de std::vector se llama automáticamente (RAII).}
+\PYG{p}{\PYGZcb{}}
+\PYG{c+cm}{/* **************************************************************************************************}
+\PYG{c+cm}{CONFIGURATION FUNCTIONS}
+\PYG{c+cm}{/* *************************************************************************************************/}
+\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{T}\PYG{o}{\PYGZgt{}}
+\PYG{k+kt}{bool}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}::}\PYG{n}{Resize}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{numRows}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{numCols}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{	}\PYG{n}{m\PYGZus{}nRows}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{numRows}\PYG{p}{;}
+\PYG{+w}{	}\PYG{n}{m\PYGZus{}nCols}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{numCols}\PYG{p}{;}
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{nElements}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{m\PYGZus{}nRows}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{m\PYGZus{}nCols}\PYG{p}{);}
+\PYG{+w}{	}
+\PYG{+w}{	}
+\PYG{+w}{	}\PYG{k}{if}\PYG{+w}{ }\PYG{k}{constexpr}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{std}\PYG{o}{::}\PYG{n}{is\PYGZus{}arithmetic\PYGZus{}v}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{		}\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{.}\PYG{n}{resize}\PYG{p}{(}\PYG{n}{nElements}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{static\PYGZus{}cast}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{p}{(}\PYG{l+m+mf}{0.0f}\PYG{p}{));}
+\PYG{+w}{	}\PYG{p}{\PYGZcb{}}\PYG{+w}{ }\PYG{k}{else}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{		}\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{.}\PYG{n}{resize}\PYG{p}{(}\PYG{n}{nElements}\PYG{p}{);}\PYG{+w}{ }
+\PYG{+w}{	}\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{	}\PYG{k}{return}\PYG{+w}{ }\PYG{n+nb}{true}\PYG{p}{;}\PYG{+w}{ }
+\PYG{p}{\PYGZcb{}}
+\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{T}\PYG{o}{\PYGZgt{}}
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}::}\PYG{n}{SetToIdentity}\PYG{p}{()}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{	}\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{o}{!}\PYG{n}{IsSquare}\PYG{p}{())}
+\PYG{+w}{		}\PYG{k}{throw}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{invalid\PYGZus{}argument}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}Cannot form an identity matrix that is not square.\PYGZdq{}}\PYG{p}{);}
+\PYG{+w}{		}
+\PYG{+w}{	}\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{row}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{row}\PYG{o}{\PYGZlt{}}\PYG{n}{m\PYGZus{}nRows}\PYG{p}{;}\PYG{+w}{ }\PYG{o}{++}\PYG{n}{row}\PYG{p}{)}
+\PYG{+w}{	}\PYG{p}{\PYGZob{}}
+\PYG{+w}{		}\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{col}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{col}\PYG{o}{\PYGZlt{}}\PYG{n}{m\PYGZus{}nCols}\PYG{p}{;}\PYG{+w}{ }\PYG{o}{++}\PYG{n}{col}\PYG{p}{)}
+\PYG{+w}{		}\PYG{p}{\PYGZob{}}
+\PYG{+w}{			}\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{col}\PYG{+w}{ }\PYG{o}{==}\PYG{+w}{ }\PYG{n}{row}\PYG{p}{)}
+\PYG{+w}{				}\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{[}\PYG{n}{Sub2Ind}\PYG{p}{(}\PYG{n}{row}\PYG{p}{,}\PYG{n}{col}\PYG{p}{)]}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mf}{1.0}\PYG{p}{;}
+\PYG{+w}{			}\PYG{k}{else}
+\PYG{+w}{				}\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{[}\PYG{n}{Sub2Ind}\PYG{p}{(}\PYG{n}{row}\PYG{p}{,}\PYG{n}{col}\PYG{p}{)]}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mf}{0.0}\PYG{p}{;}
+\PYG{+w}{		}\PYG{p}{\PYGZcb{}}
+\PYG{+w}{	}\PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{T}\PYG{o}{\PYGZgt{}}
+\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}::}\PYG{n}{GetNumRows}\PYG{p}{()}\PYG{+w}{ }\PYG{k}{const}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{	}\PYG{k}{return}\PYG{+w}{ }\PYG{n}{m\PYGZus{}nRows}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{T}\PYG{o}{\PYGZgt{}}
+\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}::}\PYG{n}{GetNumCols}\PYG{p}{()}\PYG{+w}{ }\PYG{k}{const}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{	}\PYG{k}{return}\PYG{+w}{ }\PYG{n}{m\PYGZus{}nCols}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\PYG{c+cm}{/* **************************************************************************************************}
+\PYG{c+cm}{ELEMENT FUNCTIONS}
+\PYG{c+cm}{/* *************************************************************************************************/}
+\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{T}\PYG{o}{\PYGZgt{}}
+\PYG{n}{T}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}::}\PYG{n}{GetElement}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{row}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{col}\PYG{p}{)}\PYG{+w}{ }\PYG{k}{const}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{linearIndex}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{Sub2Ind}\PYG{p}{(}\PYG{n}{row}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{col}\PYG{p}{);}
+\PYG{+w}{	}\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{linearIndex}\PYG{+w}{ }\PYG{o}{\PYGZgt{}=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{)}
+\PYG{+w}{		}\PYG{k}{return}\PYG{+w}{ }\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{[}\PYG{n}{linearIndex}\PYG{p}{];}
+\PYG{+w}{	}\PYG{k}{else}\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{k}{if}\PYG{+w}{ }\PYG{k}{constexpr}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{std}\PYG{o}{::}\PYG{n}{is\PYGZus{}arithmetic\PYGZus{}v}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{            }\PYG{k}{return}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{c+c1}{// Para tipos numéricos (int, float, double)}
+\PYG{+w}{        }\PYG{p}{\PYGZcb{}}\PYG{+w}{ }\PYG{k}{else}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{            }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{T}\PYG{p}{();}\PYG{+w}{ }\PYG{c+c1}{// Para contenedores (std::vector\PYGZlt{}float\PYGZgt{}, etc.)}
+\PYG{+w}{        }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{T}\PYG{o}{\PYGZgt{}}
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}::}\PYG{n}{GetRow}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{row}\PYG{p}{)}\PYG{+w}{ }\PYG{k}{const}
+\PYG{p}{\PYGZob{}}\PYG{+w}{   }
+\PYG{+w}{    }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{linearIndex}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{Sub2Ind}\PYG{p}{(}\PYG{n}{row}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{);}
+\PYG{+w}{    }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{AuxRow}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{unsigned}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{n}{i}\PYG{o}{\PYGZlt{}}\PYG{k}{this}\PYG{o}{\PYGZhy{}\PYGZgt{}}\PYG{n}{GetNumCols}\PYG{p}{();}\PYG{n}{i}\PYG{o}{++}\PYG{p}{)\PYGZob{}}
+\PYG{+w}{        }\PYG{n}{AuxRow}\PYG{p}{.}\PYG{n}{push\PYGZus{}back}\PYG{p}{(}\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{[}\PYG{n}{linearIndex}\PYG{p}{]);}
+\PYG{+w}{        }\PYG{n}{linearIndex}\PYG{o}{++}\PYG{p}{;}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{    }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{AuxRow}\PYG{p}{;}
+
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{T}\PYG{o}{\PYGZgt{}}
+\PYG{k+kt}{bool}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}::}\PYG{n}{SetElement}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{row}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{col}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{T}\PYG{+w}{ }\PYG{n}{elementValue}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{linearIndex}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{Sub2Ind}\PYG{p}{(}\PYG{n}{row}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{col}\PYG{p}{);}
+\PYG{+w}{	}\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{linearIndex}\PYG{+w}{ }\PYG{o}{\PYGZgt{}=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{)}
+\PYG{+w}{	}\PYG{p}{\PYGZob{}}
+\PYG{+w}{		}\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{[}\PYG{n}{linearIndex}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{elementValue}\PYG{p}{;}
+\PYG{+w}{		}\PYG{k}{return}\PYG{+w}{ }\PYG{n+nb}{true}\PYG{p}{;}
+\PYG{+w}{	}\PYG{p}{\PYGZcb{}}\PYG{+w}{ }
+\PYG{+w}{	}\PYG{k}{else}\PYG{+w}{ }
+\PYG{+w}{	}\PYG{p}{\PYGZob{}}
+\PYG{+w}{		}\PYG{k}{return}\PYG{+w}{ }\PYG{n+nb}{false}\PYG{p}{;}
+\PYG{+w}{	}\PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{T}\PYG{o}{\PYGZgt{}}
+\PYG{k+kt}{bool}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}::}\PYG{n}{SetCol}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{col}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{elements}\PYG{p}{)\PYGZob{}}
+\PYG{+w}{    }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{col}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{+w}{ }\PYG{o}{||}\PYG{+w}{ }\PYG{n}{col}\PYG{+w}{ }\PYG{o}{\PYGZgt{}=}\PYG{+w}{ }\PYG{n}{m\PYGZus{}nCols}\PYG{+w}{ }\PYG{o}{||}\PYG{+w}{ }\PYG{k}{static\PYGZus{}cast}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{int}\PYG{o}{\PYGZgt{}}\PYG{p}{(}\PYG{n}{elements}\PYG{p}{.}\PYG{n}{size}\PYG{p}{())}\PYG{+w}{ }\PYG{o}{!=}\PYG{+w}{ }\PYG{n}{m\PYGZus{}nRows}\PYG{p}{)}
+\PYG{+w}{        }\PYG{k}{return}\PYG{+w}{ }\PYG{n+nb}{false}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{m\PYGZus{}nRows}\PYG{p}{;}\PYG{+w}{ }\PYG{o}{++}\PYG{n}{i}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{[}\PYG{n}{i}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{m\PYGZus{}nCols}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{col}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{elements}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{    }\PYG{k}{return}\PYG{+w}{ }\PYG{n+nb}{true}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+
+\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{T}\PYG{o}{\PYGZgt{}}
+\PYG{k+kt}{bool}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}::}\PYG{n}{SetRow}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{row}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{elements}\PYG{p}{)\PYGZob{}}
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{linearIndex}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{Sub2Ind}\PYG{p}{(}\PYG{n}{row}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{);}
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{aux}\PYG{+w}{ }\PYG{o}{=}\PYG{k}{this}\PYG{o}{\PYGZhy{}\PYGZgt{}}\PYG{n}{GetNumCols}\PYG{p}{();}
+\PYG{+w}{	}\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{linearIndex}\PYG{+w}{ }\PYG{o}{\PYGZgt{}=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{)\PYGZob{}}
+\PYG{+w}{		}\PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{unsigned}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{n}{i}\PYG{o}{\PYGZlt{}}\PYG{n}{aux}\PYG{p}{;}\PYG{n}{i}\PYG{o}{++}\PYG{p}{)\PYGZob{}}
+\PYG{+w}{			}\PYG{p}{(}\PYG{o}{*}\PYG{k}{this}\PYG{p}{)(}\PYG{n}{row}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{i}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{elements}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}
+\PYG{+w}{			}\PYG{c+c1}{//this\PYGZhy{}\PYGZgt{}SetElement(row,i,elements[i]);}
+\PYG{+w}{			}\PYG{n}{linearIndex}\PYG{o}{=}\PYG{n}{linearIndex}\PYG{o}{+}\PYG{n}{aux}\PYG{p}{;}
+\PYG{+w}{		}\PYG{p}{\PYGZcb{}}
+\PYG{+w}{		}\PYG{k}{return}\PYG{+w}{ }\PYG{n+nb}{true}\PYG{p}{;}
+\PYG{+w}{	}\PYG{p}{\PYGZcb{}}
+\PYG{+w}{	}\PYG{k}{else}\PYG{p}{\PYGZob{}}
+\PYG{+w}{		}\PYG{k}{return}\PYG{+w}{ }\PYG{n+nb}{false}\PYG{p}{;}
+\PYG{+w}{	}\PYG{p}{\PYGZcb{}}
+
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{T}\PYG{o}{\PYGZgt{}}
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}::}\PYG{n}{GetCol}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{col}\PYG{p}{)}\PYG{+w}{ }\PYG{k}{const}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{result}\PYG{p}{(}\PYG{n}{m\PYGZus{}nRows}\PYG{p}{);}
+\PYG{+w}{    }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{m\PYGZus{}nRows}\PYG{p}{;}\PYG{+w}{ }\PYG{o}{++}\PYG{n}{i}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n}{result}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{[}\PYG{n}{i}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{m\PYGZus{}nCols}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{col}\PYG{p}{];}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{    }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{result}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{T}\PYG{o}{\PYGZgt{}}
+\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}::}\PYG{n}{GetSubMat}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{rowIni}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{rowEnd}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{colIni}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{colEnd}\PYG{p}{)}\PYG{+w}{ }\PYG{k}{const}
+\PYG{p}{\PYGZob{}}\PYG{+w}{   }
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{numRows}\PYG{o}{=}\PYG{+w}{ }\PYG{n}{rowEnd}\PYG{o}{\PYGZhy{}}\PYG{n}{rowIni}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{;}
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{numCols}\PYG{o}{=}\PYG{+w}{ }\PYG{n}{colEnd}\PYG{o}{\PYGZhy{}}\PYG{n}{colIni}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{;}
+
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{aux}\PYG{+w}{ }\PYG{o}{=}\PYG{k}{this}\PYG{o}{\PYGZhy{}\PYGZgt{}}\PYG{n}{GetNumCols}\PYG{p}{();}
+\PYG{+w}{    }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{AuxMat}\PYG{p}{(}\PYG{n}{numRows}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{numCols}\PYG{p}{);}
+
+\PYG{+w}{	}\PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{unsigned}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{i}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{numRows}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{i}\PYG{o}{++}\PYG{p}{)\PYGZob{}}
+\PYG{+w}{		}\PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{unsigned}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{j}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{j}\PYG{o}{\PYGZlt{}}\PYG{n}{numCols}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{j}\PYG{o}{++}\PYG{p}{)\PYGZob{}}
+\PYG{+w}{			}\PYG{n}{AuxMat}\PYG{p}{(}\PYG{n}{i}\PYG{p}{,}\PYG{n}{j}\PYG{p}{)}\PYG{o}{=}\PYG{p}{(}\PYG{o}{*}\PYG{k}{this}\PYG{p}{)(}\PYG{n}{i}\PYG{o}{+}\PYG{n}{rowIni}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{j}\PYG{o}{+}\PYG{n}{colIni}\PYG{p}{);}
+\PYG{+w}{		}\PYG{p}{\PYGZcb{}}
+\PYG{+w}{	}\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{	}\PYG{k}{return}\PYG{+w}{ }\PYG{n}{AuxMat}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+cm}{/* **************************************************************************************************}
+\PYG{c+cm}{THE + OPERATOR}
+\PYG{c+cm}{/* *************************************************************************************************/}
+\PYG{c+c1}{// matrix + matrx.}
+\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{T}\PYG{o}{\PYGZgt{}}
+\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{k}{operator}\PYG{o}{+}\PYG{+w}{ }\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{lhs}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{numRows}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{lhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}nRows}\PYG{p}{;}
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{numCols}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{lhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}nCols}\PYG{p}{;}
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{numElements}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{lhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{.}\PYG{n}{size}\PYG{p}{();}
+\PYG{+w}{	}\PYG{n}{T}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{tempResult}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{T}\PYG{p}{[}\PYG{n}{numElements}\PYG{p}{];}
+\PYG{+w}{	}\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{i}\PYG{o}{\PYGZlt{}}\PYG{n}{numElements}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{i}\PYG{o}{++}\PYG{p}{)}
+\PYG{+w}{		}\PYG{n}{tempResult}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{lhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}
+\PYG{+w}{		}
+\PYG{+w}{	}\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{result}\PYG{p}{(}\PYG{n}{numRows}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{numCols}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{tempResult}\PYG{p}{);}
+\PYG{+w}{	}\PYG{k}{delete}\PYG{p}{[]}\PYG{+w}{ }\PYG{n}{tempResult}\PYG{p}{;}
+\PYG{+w}{	}\PYG{k}{return}\PYG{+w}{ }\PYG{n}{result}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+c1}{// scaler + matrix}
+\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{T}\PYG{o}{\PYGZgt{}}
+\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{k}{operator}\PYG{o}{+}\PYG{+w}{ }\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{T}\PYG{o}{\PYGZam{}}\PYG{+w}{ }\PYG{n}{lhs}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{numRows}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}nRows}\PYG{p}{;}
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{numCols}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}nCols}\PYG{p}{;}
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{numElements}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{.}\PYG{n}{size}\PYG{p}{();}
+\PYG{+w}{	}\PYG{n}{T}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{tempResult}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{T}\PYG{p}{[}\PYG{n}{numElements}\PYG{p}{];}
+\PYG{+w}{	}\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{i}\PYG{o}{\PYGZlt{}}\PYG{n}{numElements}\PYG{p}{;}\PYG{+w}{ }\PYG{o}{++}\PYG{n}{i}\PYG{p}{)}
+\PYG{+w}{		}\PYG{n}{tempResult}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{lhs}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}
+\PYG{+w}{		}
+\PYG{+w}{	}\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{result}\PYG{p}{(}\PYG{n}{numRows}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{numCols}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{tempResult}\PYG{p}{);}
+\PYG{+w}{	}\PYG{k}{delete}\PYG{p}{[]}\PYG{+w}{ }\PYG{n}{tempResult}\PYG{p}{;}
+\PYG{+w}{	}\PYG{k}{return}\PYG{+w}{ }\PYG{n}{result}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+c1}{// matrix + scaler}
+\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{T}\PYG{o}{\PYGZgt{}}
+\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{k}{operator}\PYG{o}{+}\PYG{+w}{ }\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{lhs}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{T}\PYG{o}{\PYGZam{}}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{numRows}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{lhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}nRows}\PYG{p}{;}
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{numCols}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{lhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}nCols}\PYG{p}{;}
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{numElements}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{lhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{.}\PYG{n}{size}\PYG{p}{();}
+\PYG{+w}{	}\PYG{n}{T}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{tempResult}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{T}\PYG{p}{[}\PYG{n}{numElements}\PYG{p}{];}
+\PYG{+w}{	}\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{i}\PYG{o}{\PYGZlt{}}\PYG{n}{numElements}\PYG{p}{;}\PYG{+w}{ }\PYG{o}{++}\PYG{n}{i}\PYG{p}{)}
+\PYG{+w}{		}\PYG{n}{tempResult}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{lhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{;}
+\PYG{+w}{		}
+\PYG{+w}{	}\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{result}\PYG{p}{(}\PYG{n}{numRows}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{numCols}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{tempResult}\PYG{p}{);}
+\PYG{+w}{	}\PYG{k}{delete}\PYG{p}{[]}\PYG{+w}{ }\PYG{n}{tempResult}\PYG{p}{;}
+\PYG{+w}{	}\PYG{k}{return}\PYG{+w}{ }\PYG{n}{result}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+cm}{/* **************************************************************************************************}
+\PYG{c+cm}{THE \PYGZhy{} OPERATOR}
+\PYG{c+cm}{/* *************************************************************************************************/}
+\PYG{c+c1}{// matrix \PYGZhy{} matrix}
+\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{T}\PYG{o}{\PYGZgt{}}
+\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{k}{operator}\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{lhs}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{numRows}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{lhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}nRows}\PYG{p}{;}
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{numCols}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{lhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}nCols}\PYG{p}{;}
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{numElements}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{lhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{.}\PYG{n}{size}\PYG{p}{();}
+\PYG{+w}{	}\PYG{n}{T}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{tempResult}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{T}\PYG{p}{[}\PYG{n}{numElements}\PYG{p}{];}
+\PYG{+w}{	}\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{i}\PYG{o}{\PYGZlt{}}\PYG{n}{numElements}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{i}\PYG{o}{++}\PYG{p}{)}
+\PYG{+w}{		}\PYG{n}{tempResult}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{lhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}
+\PYG{+w}{		}
+\PYG{+w}{	}\PYG{n}{iMatrix}\PYG{+w}{ }\PYG{n+nf}{result}\PYG{p}{(}\PYG{n}{numRows}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{numCols}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{tempResult}\PYG{p}{);}
+\PYG{+w}{	}\PYG{k}{delete}\PYG{p}{[]}\PYG{+w}{ }\PYG{n}{tempResult}\PYG{p}{;}
+\PYG{+w}{	}\PYG{k}{return}\PYG{+w}{ }\PYG{n}{result}\PYG{p}{;}\PYG{+w}{    }
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+c1}{// scaler \PYGZhy{} matrix}
+\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{T}\PYG{o}{\PYGZgt{}}
+\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{k}{operator}\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{T}\PYG{o}{\PYGZam{}}\PYG{+w}{ }\PYG{n}{lhs}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{numRows}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}nRows}\PYG{p}{;}
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{numCols}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}nCols}\PYG{p}{;}
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{numElements}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{.}\PYG{n}{size}\PYG{p}{();}
+\PYG{+w}{	}\PYG{n}{T}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{tempResult}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{T}\PYG{p}{[}\PYG{n}{numElements}\PYG{p}{];}
+\PYG{+w}{	}\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{i}\PYG{o}{\PYGZlt{}}\PYG{n}{numElements}\PYG{p}{;}\PYG{+w}{ }\PYG{o}{++}\PYG{n}{i}\PYG{p}{)}
+\PYG{+w}{		}\PYG{n}{tempResult}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{lhs}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}
+\PYG{+w}{		}
+\PYG{+w}{	}\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{result}\PYG{p}{(}\PYG{n}{numRows}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{numCols}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{tempResult}\PYG{p}{);}
+\PYG{+w}{	}\PYG{k}{delete}\PYG{p}{[]}\PYG{+w}{ }\PYG{n}{tempResult}\PYG{p}{;}
+\PYG{+w}{	}\PYG{k}{return}\PYG{+w}{ }\PYG{n}{result}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+c1}{// matrix \PYGZhy{} scaler}
+\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{T}\PYG{o}{\PYGZgt{}}
+\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{k}{operator}\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{lhs}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{T}\PYG{o}{\PYGZam{}}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{numRows}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{lhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}nRows}\PYG{p}{;}
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{numCols}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{lhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}nCols}\PYG{p}{;}
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{numElements}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{lhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{.}\PYG{n}{size}\PYG{p}{();}
+\PYG{+w}{	}\PYG{n}{T}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{tempResult}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{T}\PYG{p}{[}\PYG{n}{numElements}\PYG{p}{];}
+\PYG{+w}{	}\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{i}\PYG{o}{\PYGZlt{}}\PYG{n}{numElements}\PYG{p}{;}\PYG{+w}{ }\PYG{o}{++}\PYG{n}{i}\PYG{p}{)}
+\PYG{+w}{		}\PYG{n}{tempResult}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{lhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{;}
+\PYG{+w}{		}
+\PYG{+w}{	}\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{result}\PYG{p}{(}\PYG{n}{numRows}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{numCols}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{tempResult}\PYG{p}{);}
+\PYG{+w}{	}\PYG{k}{delete}\PYG{p}{[]}\PYG{+w}{ }\PYG{n}{tempResult}\PYG{p}{;}
+\PYG{+w}{	}\PYG{k}{return}\PYG{+w}{ }\PYG{n}{result}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+c1}{// scaler * matrix}
+\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{T}\PYG{o}{\PYGZgt{}}
+\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{k}{operator}\PYG{o}{*}\PYG{+w}{ }\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{T}\PYG{o}{\PYGZam{}}\PYG{+w}{ }\PYG{n}{lhs}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{result}\PYG{p}{(}\PYG{n}{rhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}nRows}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}nCols}\PYG{p}{);}
+\PYG{+w}{    }\PYG{n}{std}\PYG{o}{::}\PYG{n}{transform}\PYG{p}{(}
+\PYG{+w}{        }\PYG{n}{rhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{.}\PYG{n}{begin}\PYG{p}{(),}\PYG{+w}{ }
+\PYG{+w}{        }\PYG{n}{rhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{.}\PYG{n}{end}\PYG{p}{(),}\PYG{+w}{  }
+\PYG{+w}{        }\PYG{n}{result}\PYG{p}{.}\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{.}\PYG{n}{begin}\PYG{p}{(),}
+\PYG{+w}{        }\PYG{p}{[}\PYG{o}{\PYGZam{}}\PYG{n}{lhs}\PYG{p}{](}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{T}\PYG{o}{\PYGZam{}}\PYG{+w}{ }\PYG{n}{element}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{lhs}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{element}\PYG{p}{;}\PYG{+w}{ }\PYG{p}{\PYGZcb{}}\PYG{+w}{ }
+\PYG{+w}{    }\PYG{p}{);}
+\PYG{+w}{    }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{result}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+cm}{/* Old product operator for the scaler}
+
+\PYG{c+cm}{template \PYGZlt{}class T\PYGZgt{}}
+\PYG{c+cm}{iMatrix\PYGZlt{}T\PYGZgt{} operator* (const T\PYGZam{} lhs, const iMatrix\PYGZlt{}T\PYGZgt{}\PYGZam{} rhs)}
+\PYG{c+cm}{\PYGZob{}}
+\PYG{c+cm}{	int numRows = rhs.m\PYGZus{}nRows;}
+\PYG{c+cm}{	int numCols = rhs.m\PYGZus{}nCols;}
+\PYG{c+cm}{	int numElements = rhs.m\PYGZus{}matrixData.size();}
+\PYG{c+cm}{	T *tempResult = new T[numElements];}
+\PYG{c+cm}{	for (int i=0; i\PYGZlt{}numElements; ++i)}
+\PYG{c+cm}{		tempResult[i] = lhs * rhs.m\PYGZus{}matrixData[i];}
+\PYG{c+cm}{		}
+\PYG{c+cm}{	iMatrix\PYGZlt{}T\PYGZgt{} result(numRows, numCols, tempResult);}
+\PYG{c+cm}{	delete[] tempResult;}
+\PYG{c+cm}{	return result;}
+\PYG{c+cm}{\PYGZcb{}}
+
+
+\PYG{c+cm}{template \PYGZlt{}class T\PYGZgt{}}
+\PYG{c+cm}{iMatrix\PYGZlt{}T\PYGZgt{} operator* (const iMatrix\PYGZlt{}T\PYGZgt{}\PYGZam{} lhs, const T\PYGZam{} rhs)}
+\PYG{c+cm}{\PYGZob{}}
+\PYG{c+cm}{	int numRows = lhs.m\PYGZus{}nRows;}
+\PYG{c+cm}{	int numCols = lhs.m\PYGZus{}nCols;}
+\PYG{c+cm}{	int numElements = lhs.m\PYGZus{}matrixData.size();}
+\PYG{c+cm}{	T *tempResult = new T[numElements];}
+\PYG{c+cm}{	for (int i=0; i\PYGZlt{}numElements; ++i)}
+\PYG{c+cm}{		tempResult[i] = lhs.m\PYGZus{}matrixData[i] * rhs;}
+\PYG{c+cm}{		}
+\PYG{c+cm}{	iMatrix\PYGZlt{}T\PYGZgt{} result(numRows, numCols, tempResult);}
+\PYG{c+cm}{	delete[] tempResult;}
+\PYG{c+cm}{	return result;}
+\PYG{c+cm}{\PYGZcb{}}
+
+\PYG{c+cm}{*/}
+\PYG{c+c1}{// matrix * scaler}
+\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{T}\PYG{o}{\PYGZgt{}}
+\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{k}{operator}\PYG{o}{*}\PYG{+w}{ }\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{lhs}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{T}\PYG{o}{\PYGZam{}}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{result}\PYG{p}{(}\PYG{n}{lhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}nRows}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{lhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}nCols}\PYG{p}{);}
+
+\PYG{+w}{    }\PYG{n}{std}\PYG{o}{::}\PYG{n}{transform}\PYG{p}{(}
+\PYG{+w}{        }\PYG{n}{lhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{.}\PYG{n}{begin}\PYG{p}{(),}\PYG{+w}{ }
+\PYG{+w}{        }\PYG{n}{lhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{.}\PYG{n}{end}\PYG{p}{(),}\PYG{+w}{   }
+\PYG{+w}{        }\PYG{n}{result}\PYG{p}{.}\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{.}\PYG{n}{begin}\PYG{p}{(),}\PYG{+w}{ }
+\PYG{+w}{        }\PYG{p}{[}\PYG{o}{\PYGZam{}}\PYG{n}{rhs}\PYG{p}{](}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{T}\PYG{o}{\PYGZam{}}\PYG{+w}{ }\PYG{n}{element}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{element}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{;}\PYG{+w}{ }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{    }\PYG{p}{);}
+
+\PYG{+w}{    }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{result}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+c1}{// matrix * matrix}
+\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{T}\PYG{o}{\PYGZgt{}}
+\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{k}{operator}\PYG{o}{*}\PYG{+w}{ }\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{lhs}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{r\PYGZus{}numRows}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}nRows}\PYG{p}{;}
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{r\PYGZus{}numCols}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}nCols}\PYG{p}{;}
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{l\PYGZus{}numRows}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{lhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}nRows}\PYG{p}{;}
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{l\PYGZus{}numCols}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{lhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}nCols}\PYG{p}{;}
+
+\PYG{+w}{	}\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{l\PYGZus{}numCols}\PYG{+w}{ }\PYG{o}{==}\PYG{+w}{ }\PYG{n}{r\PYGZus{}numRows}\PYG{p}{)}
+\PYG{+w}{	}\PYG{p}{\PYGZob{}}
+\PYG{+w}{		}\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{rhs\PYGZus{}T}\PYG{p}{(}\PYG{n}{r\PYGZus{}numCols}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{r\PYGZus{}numRows}\PYG{p}{);}
+\PYG{+w}{		}\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{r\PYGZus{}numRows}\PYG{p}{;}\PYG{+w}{ }\PYG{o}{++}\PYG{n}{i}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{			}\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{j}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{j}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{r\PYGZus{}numCols}\PYG{p}{;}\PYG{+w}{ }\PYG{o}{++}\PYG{n}{j}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{				}\PYG{n}{rhs\PYGZus{}T}\PYG{p}{(}\PYG{n}{j}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{i}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{(}\PYG{n}{i}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{j}\PYG{p}{);}
+\PYG{+w}{			}\PYG{p}{\PYGZcb{}}
+\PYG{+w}{		}\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{		}\PYG{n}{T}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{tempResult}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{T}\PYG{p}{[}\PYG{n}{lhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}nRows}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}nCols}\PYG{p}{];}
+
+\PYG{+w}{		}\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{lhsRow}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{lhsRow}\PYG{o}{\PYGZlt{}}\PYG{n}{l\PYGZus{}numRows}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{lhsRow}\PYG{o}{++}\PYG{p}{)}\PYG{+w}{ }
+\PYG{+w}{		}\PYG{p}{\PYGZob{}}
+\PYG{+w}{			}\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{rhsCol}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{rhsCol}\PYG{o}{\PYGZlt{}}\PYG{n}{r\PYGZus{}numCols}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{rhsCol}\PYG{o}{++}\PYG{p}{)}\PYG{+w}{ }
+\PYG{+w}{			}\PYG{p}{\PYGZob{}}
+\PYG{+w}{				}\PYG{n}{T}\PYG{+w}{ }\PYG{n}{elementResult}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{static\PYGZus{}cast}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{p}{(}\PYG{l+m+mf}{0.0}\PYG{p}{);}
+\PYG{+w}{				}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{lhsLinearIndex}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{lhsRow}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{l\PYGZus{}numCols}\PYG{p}{);}\PYG{+w}{ }
+\PYG{+w}{				}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{rhsTLinearIndex}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{rhsCol}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{r\PYGZus{}numRows}\PYG{p}{);}\PYG{+w}{ }
+\PYG{+w}{				}
+\PYG{+w}{				}
+\PYG{+w}{				}\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{k}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{k}\PYG{o}{\PYGZlt{}}\PYG{n}{l\PYGZus{}numCols}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{k}\PYG{o}{++}\PYG{p}{)}\PYG{+w}{ }
+\PYG{+w}{				}\PYG{p}{\PYGZob{}}
+\PYG{+w}{					}
+\PYG{+w}{					}\PYG{n}{elementResult}\PYG{+w}{ }\PYG{o}{+=}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{lhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{[}\PYG{n}{lhsLinearIndex}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{k}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{rhs\PYGZus{}T}\PYG{p}{.}\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{[}\PYG{n}{rhsTLinearIndex}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{k}\PYG{p}{]);}
+\PYG{+w}{				}\PYG{p}{\PYGZcb{}}
+\PYG{+w}{				}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{resultLinearIndex}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{lhsRow}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{r\PYGZus{}numCols}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{rhsCol}\PYG{p}{;}
+\PYG{+w}{				}\PYG{n}{tempResult}\PYG{p}{[}\PYG{n}{resultLinearIndex}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{elementResult}\PYG{p}{;}
+\PYG{+w}{			}\PYG{p}{\PYGZcb{}}\PYG{+w}{		}
+\PYG{+w}{		}\PYG{p}{\PYGZcb{}}
+\PYG{+w}{		}
+\PYG{+w}{		}\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{result}\PYG{p}{(}\PYG{n}{l\PYGZus{}numRows}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{r\PYGZus{}numCols}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{tempResult}\PYG{p}{);}
+\PYG{+w}{		}\PYG{k}{delete}\PYG{p}{[]}\PYG{+w}{ }\PYG{n}{tempResult}\PYG{p}{;}
+\PYG{+w}{		}\PYG{k}{return}\PYG{+w}{ }\PYG{n}{result}\PYG{p}{;}
+\PYG{+w}{	}\PYG{p}{\PYGZcb{}}
+\PYG{+w}{	}\PYG{k}{else}
+\PYG{+w}{	}\PYG{p}{\PYGZob{}}
+\PYG{+w}{		}\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{result}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{);}
+\PYG{+w}{		}\PYG{k}{return}\PYG{+w}{ }\PYG{n}{result}\PYG{p}{;}
+\PYG{+w}{	}\PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{T}\PYG{o}{\PYGZgt{}}
+\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}::}\PYG{k}{operator}\PYG{o}{=}\PYG{+w}{ }\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{rhs}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{	}
+\PYG{+w}{	}\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{k}{this}\PYG{+w}{ }\PYG{o}{!=}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{rhs}\PYG{p}{)}
+\PYG{+w}{	}\PYG{p}{\PYGZob{}}
+\PYG{+w}{		}\PYG{n}{m\PYGZus{}nRows}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}nRows}\PYG{p}{;}
+\PYG{+w}{		}\PYG{n}{m\PYGZus{}nCols}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}nCols}\PYG{p}{;}
+\PYG{+w}{		}\PYG{n}{m\PYGZus{}matrixData}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{;}\PYG{+w}{ }
+\PYG{+w}{	}\PYG{p}{\PYGZcb{}}
+\PYG{+w}{	}
+\PYG{+w}{	}\PYG{k}{return}\PYG{+w}{ }\PYG{o}{*}\PYG{k}{this}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+
+\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{T}\PYG{o}{\PYGZgt{}}
+\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{k}{operator}\PYG{o}{*}\PYG{+w}{ }\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{v1}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{v2}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{N}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{v1}\PYG{p}{.}\PYG{n}{size}\PYG{p}{();}
+\PYG{+w}{    }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{M}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{v2}\PYG{p}{.}\PYG{n}{size}\PYG{p}{();}\PYG{+w}{ }
+\PYG{+w}{    }
+\PYG{+w}{    }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{result}\PYG{p}{(}\PYG{n}{N}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{M}\PYG{p}{);}\PYG{+w}{ }
+\PYG{+w}{    }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{N}\PYG{p}{;}\PYG{+w}{ }\PYG{o}{++}\PYG{n}{i}\PYG{p}{)}\PYG{+w}{ }
+\PYG{+w}{    }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n}{T}\PYG{+w}{ }\PYG{n}{v1\PYGZus{}i}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{v1}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}\PYG{+w}{ }
+\PYG{+w}{        }
+\PYG{+w}{        }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{j}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{j}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{M}\PYG{p}{;}\PYG{+w}{ }\PYG{o}{++}\PYG{n}{j}\PYG{p}{)}\PYG{+w}{ }
+\PYG{+w}{        }\PYG{p}{\PYGZob{}}
+\PYG{+w}{            }\PYG{n}{result}\PYG{p}{(}\PYG{n}{i}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{j}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{v1\PYGZus{}i}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{v2}\PYG{p}{[}\PYG{n}{j}\PYG{p}{];}\PYG{+w}{ }
+\PYG{+w}{        }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{    }
+\PYG{+w}{    }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{result}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{T}\PYG{o}{\PYGZgt{}}
+\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}::}\PYG{k}{operator}\PYG{o}{+=}\PYG{+w}{ }\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}
+
+\PYG{+w}{    }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{m\PYGZus{}nRows}\PYG{+w}{ }\PYG{o}{!=}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}nRows}\PYG{+w}{ }\PYG{o}{||}\PYG{+w}{ }\PYG{n}{m\PYGZus{}nCols}\PYG{+w}{ }\PYG{o}{!=}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}nCols}\PYG{p}{)}
+\PYG{+w}{    }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{k}{throw}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{invalid\PYGZus{}argument}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}Error: Las matrices deben tener las mismas dimensiones para la suma in\PYGZhy{}place.\PYGZdq{}}\PYG{p}{);}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{    }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{numElements}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{.}\PYG{n}{size}\PYG{p}{();}
+\PYG{+w}{    }\PYG{n}{T}\PYG{o}{*}\PYG{+w}{ }\PYG{n}{data\PYGZus{}lhs}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{.}\PYG{n}{data}\PYG{p}{();}
+\PYG{+w}{    }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{T}\PYG{o}{*}\PYG{+w}{ }\PYG{n}{data\PYGZus{}rhs}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{.}\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{.}\PYG{n}{data}\PYG{p}{();}\PYG{+w}{ }
+\PYG{+w}{    }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{numElements}\PYG{p}{;}\PYG{+w}{ }\PYG{o}{++}\PYG{n}{i}\PYG{p}{)}
+\PYG{+w}{    }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n}{data\PYGZus{}lhs}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{+=}\PYG{+w}{ }\PYG{n}{data\PYGZus{}rhs}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}\PYG{+w}{ }
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{    }\PYG{k}{return}\PYG{+w}{ }\PYG{o}{*}\PYG{k}{this}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{T}\PYG{o}{\PYGZgt{}}
+\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}::}\PYG{k}{operator}\PYG{o}{*=}\PYG{+w}{ }\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{T}\PYG{o}{\PYGZam{}}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{numElements}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{.}\PYG{n}{size}\PYG{p}{();}
+\PYG{+w}{    }\PYG{n}{T}\PYG{o}{*}\PYG{+w}{ }\PYG{n}{data\PYGZus{}lhs}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{.}\PYG{n}{data}\PYG{p}{();}
+\PYG{+w}{    }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{numElements}\PYG{p}{;}\PYG{+w}{ }\PYG{o}{++}\PYG{n}{i}\PYG{p}{)}
+\PYG{+w}{    }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n}{data\PYGZus{}lhs}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{*=}\PYG{+w}{ }\PYG{n}{rhs}\PYG{p}{;}\PYG{+w}{ }
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{    }\PYG{k}{return}\PYG{+w}{ }\PYG{o}{*}\PYG{k}{this}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+c1}{// A simple function to print a matrix to stdout.}
+\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{T}\PYG{o}{\PYGZgt{}}
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}::}\PYG{n}{PrintMatrix}\PYG{p}{()}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{nRows}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{this}\PYG{o}{\PYGZhy{}\PYGZgt{}}\PYG{n}{GetNumRows}\PYG{p}{();}
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{nCols}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{this}\PYG{o}{\PYGZhy{}\PYGZgt{}}\PYG{n}{GetNumCols}\PYG{p}{();}
+\PYG{+w}{	}\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{row}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{row}\PYG{o}{\PYGZlt{}}\PYG{n}{nRows}\PYG{p}{;}\PYG{+w}{ }\PYG{o}{++}\PYG{n}{row}\PYG{p}{)}
+\PYG{+w}{  }\PYG{p}{\PYGZob{}}
+\PYG{+w}{	  }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{col}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{col}\PYG{o}{\PYGZlt{}}\PYG{n}{nCols}\PYG{p}{;}\PYG{+w}{ }\PYG{o}{++}\PYG{n}{col}\PYG{p}{)}
+\PYG{+w}{    }\PYG{p}{\PYGZob{}}
+\PYG{+w}{	    }\PYG{n}{std}\PYG{o}{::}\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{fixed}\PYG{+w}{ }\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{setprecision}\PYG{p}{(}\PYG{l+m+mi}{3}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{+w}{ }\PYG{p}{(}\PYG{o}{*}\PYG{k}{this}\PYG{p}{)(}\PYG{n}{row}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{col}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}  \PYGZdq{}}\PYG{p}{;}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{	}\PYG{n}{std}\PYG{o}{::}\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{endl}\PYG{p}{;}
+\PYG{+w}{	}\PYG{p}{\PYGZcb{}}\PYG{+w}{    }
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+c1}{// A simple function to print a matrix to stdout, with specified precision.}
+\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{T}\PYG{o}{\PYGZgt{}}
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}::}\PYG{n}{PrintMatrix}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{precision}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{nRows}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{this}\PYG{o}{\PYGZhy{}\PYGZgt{}}\PYG{n}{GetNumRows}\PYG{p}{();}
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{nCols}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{this}\PYG{o}{\PYGZhy{}\PYGZgt{}}\PYG{n}{GetNumCols}\PYG{p}{();}
+\PYG{+w}{	}\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{row}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{row}\PYG{o}{\PYGZlt{}}\PYG{n}{nRows}\PYG{p}{;}\PYG{+w}{ }\PYG{o}{++}\PYG{n}{row}\PYG{p}{)}
+\PYG{+w}{  }\PYG{p}{\PYGZob{}}
+\PYG{+w}{	  }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{col}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{col}\PYG{o}{\PYGZlt{}}\PYG{n}{nCols}\PYG{p}{;}\PYG{+w}{ }\PYG{o}{++}\PYG{n}{col}\PYG{p}{)}
+\PYG{+w}{    }\PYG{p}{\PYGZob{}}
+\PYG{+w}{	    }\PYG{n}{std}\PYG{o}{::}\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{fixed}\PYG{+w}{ }\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{setprecision}\PYG{p}{(}\PYG{n}{precision}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{+w}{ }\PYG{p}{(}\PYG{o}{*}\PYG{k}{this}\PYG{p}{)(}\PYG{n}{row}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{col}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}  \PYGZdq{}}\PYG{p}{;}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{	}\PYG{n}{std}\PYG{o}{::}\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{endl}\PYG{p}{;}
+\PYG{+w}{	}\PYG{p}{\PYGZcb{}}\PYG{+w}{    }
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+c1}{// Function to test whether the matrix is square.}
+\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{T}\PYG{o}{\PYGZgt{}}
+\PYG{k+kt}{bool}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}::}\PYG{n}{IsSquare}\PYG{p}{()}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{	}\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{m\PYGZus{}nCols}\PYG{+w}{ }\PYG{o}{==}\PYG{+w}{ }\PYG{n}{m\PYGZus{}nRows}\PYG{p}{)}
+\PYG{+w}{		}\PYG{k}{return}\PYG{+w}{ }\PYG{n+nb}{true}\PYG{p}{;}
+\PYG{+w}{	}\PYG{k}{else}
+\PYG{+w}{		}\PYG{k}{return}\PYG{+w}{ }\PYG{n+nb}{false}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{T}\PYG{o}{\PYGZgt{}}
+\PYG{n}{T}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}::}\PYG{n}{Determinant}\PYG{p}{()}\PYG{+w}{ }\PYG{k}{const}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{o}{!}\PYG{k}{this}\PYG{o}{\PYGZhy{}\PYGZgt{}}\PYG{n}{IsSquare}\PYG{p}{())\PYGZob{}}
+\PYG{+w}{        }\PYG{k}{return}\PYG{+w}{ }\PYG{k}{static\PYGZus{}cast}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{p}{(}\PYG{l+m+mf}{0.0}\PYG{p}{);}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{    }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{N}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{this}\PYG{o}{\PYGZhy{}\PYGZgt{}}\PYG{n}{m\PYGZus{}nRows}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{N}\PYG{+w}{ }\PYG{o}{==}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{)\PYGZob{}}
+\PYG{+w}{        }\PYG{k}{return}\PYG{+w}{ }\PYG{p}{(}\PYG{o}{*}\PYG{k}{this}\PYG{p}{)(}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{);}\PYG{+w}{ }
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{    }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{tempMatrix}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{o}{*}\PYG{k}{this}\PYG{p}{;}\PYG{+w}{ }
+
+\PYG{+w}{    }\PYG{n}{T}\PYG{+w}{ }\PYG{n}{det}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{static\PYGZus{}cast}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{p}{(}\PYG{l+m+mf}{1.0}\PYG{p}{);}
+\PYG{+w}{    }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{sign}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{k}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{k}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{N}\PYG{p}{;}\PYG{+w}{ }\PYG{o}{++}\PYG{n}{k}\PYG{p}{)\PYGZob{}}
+\PYG{+w}{        }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{pivotRow}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{k}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{T}\PYG{+w}{ }\PYG{n}{maxValue}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{abs}\PYG{p}{(}\PYG{n}{tempMatrix}\PYG{p}{(}\PYG{n}{k}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{k}\PYG{p}{));}
+\PYG{+w}{        }
+\PYG{+w}{        }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{k}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{N}\PYG{p}{;}\PYG{+w}{ }\PYG{o}{++}\PYG{n}{i}\PYG{p}{)}\PYG{+w}{ }
+\PYG{+w}{        }\PYG{p}{\PYGZob{}}
+\PYG{+w}{            }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{std}\PYG{o}{::}\PYG{n}{abs}\PYG{p}{(}\PYG{n}{tempMatrix}\PYG{p}{(}\PYG{n}{i}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{k}\PYG{p}{))}\PYG{+w}{ }\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{maxValue}\PYG{p}{)}\PYG{+w}{ }
+\PYG{+w}{            }\PYG{p}{\PYGZob{}}
+\PYG{+w}{                }\PYG{n}{maxValue}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{abs}\PYG{p}{(}\PYG{n}{tempMatrix}\PYG{p}{(}\PYG{n}{i}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{k}\PYG{p}{));}
+\PYG{+w}{                }\PYG{n}{pivotRow}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{i}\PYG{p}{;}
+\PYG{+w}{            }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{        }\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{        }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{pivotRow}\PYG{+w}{ }\PYG{o}{!=}\PYG{+w}{ }\PYG{n}{k}\PYG{p}{)\PYGZob{}}
+\PYG{+w}{            }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{j}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{j}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{N}\PYG{p}{;}\PYG{+w}{ }\PYG{o}{++}\PYG{n}{j}\PYG{p}{)\PYGZob{}}
+\PYG{+w}{                }\PYG{n}{std}\PYG{o}{::}\PYG{n}{swap}\PYG{p}{(}\PYG{n}{tempMatrix}\PYG{p}{(}\PYG{n}{k}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{j}\PYG{p}{),}\PYG{+w}{ }\PYG{n}{tempMatrix}\PYG{p}{(}\PYG{n}{pivotRow}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{j}\PYG{p}{));}\PYG{+w}{ }
+\PYG{+w}{            }\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{            }\PYG{n}{sign}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{n}{sign}\PYG{p}{;}\PYG{+w}{ }
+\PYG{+w}{        }\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{        }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{std}\PYG{o}{::}\PYG{n}{abs}\PYG{p}{(}\PYG{n}{tempMatrix}\PYG{p}{(}\PYG{n}{k}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{k}\PYG{p}{))}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{k}{static\PYGZus{}cast}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{p}{(}\PYG{l+m+mf}{1e\PYGZhy{}9}\PYG{p}{))\PYGZob{}}
+\PYG{+w}{            }\PYG{k}{return}\PYG{+w}{ }\PYG{k}{static\PYGZus{}cast}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{p}{(}\PYG{l+m+mf}{0.0}\PYG{p}{);}\PYG{+w}{ }
+\PYG{+w}{        }\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{        }\PYG{n}{T}\PYG{+w}{ }\PYG{n}{pivotValue}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{tempMatrix}\PYG{p}{(}\PYG{n}{k}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{k}\PYG{p}{);}
+\PYG{+w}{        }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{k}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{N}\PYG{p}{;}\PYG{+w}{ }\PYG{o}{++}\PYG{n}{i}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{            }\PYG{n}{T}\PYG{+w}{ }\PYG{n}{factor}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{tempMatrix}\PYG{p}{(}\PYG{n}{i}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{k}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{/}\PYG{+w}{ }\PYG{n}{pivotValue}\PYG{p}{;}
+\PYG{+w}{            }
+\PYG{+w}{            }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{j}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{k}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{j}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{N}\PYG{p}{;}\PYG{+w}{ }\PYG{o}{++}\PYG{n}{j}\PYG{p}{)\PYGZob{}}
+\PYG{+w}{                }\PYG{n}{tempMatrix}\PYG{p}{(}\PYG{n}{i}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{j}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZhy{}=}\PYG{+w}{ }\PYG{n}{factor}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{tempMatrix}\PYG{p}{(}\PYG{n}{k}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{j}\PYG{p}{);}
+\PYG{+w}{            }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{        }\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{        }\PYG{n}{det}\PYG{+w}{ }\PYG{o}{*=}\PYG{+w}{ }\PYG{n}{pivotValue}\PYG{p}{;}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{    }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{sign}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{det}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{T}\PYG{o}{\PYGZgt{}}
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}::}\PYG{n}{Vectorize}\PYG{p}{()}\PYG{+w}{ }\PYG{k}{const}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{m\PYGZus{}matrixData}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{T}\PYG{o}{\PYGZgt{}}
+\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}::}\PYG{n}{Transpose}\PYG{p}{()}\PYG{+w}{ }\PYG{k}{const}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{result}\PYG{p}{(}\PYG{n}{m\PYGZus{}nCols}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{m\PYGZus{}nRows}\PYG{p}{);}\PYG{+w}{  }\PYG{c+c1}{// ← filas y columnas intercambiadas}
+
+\PYG{+w}{    }\PYG{c+c1}{// Recorremos todos los elementos de la matriz original}
+\PYG{+w}{    }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{m\PYGZus{}nRows}\PYG{p}{;}\PYG{+w}{ }\PYG{o}{++}\PYG{n}{i}\PYG{p}{)}
+\PYG{+w}{    }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{j}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{j}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{m\PYGZus{}nCols}\PYG{p}{;}\PYG{+w}{ }\PYG{o}{++}\PYG{n}{j}\PYG{p}{)}
+\PYG{+w}{        }\PYG{p}{\PYGZob{}}
+\PYG{+w}{            }\PYG{c+c1}{// Elemento (i,j) en la original → posición (j,i) en la transpuesta}
+\PYG{+w}{            }\PYG{n}{result}\PYG{p}{(}\PYG{n}{j}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{i}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{p}{(}\PYG{o}{*}\PYG{k}{this}\PYG{p}{)(}\PYG{n}{i}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{j}\PYG{p}{);}
+\PYG{+w}{        }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{    }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{result}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+
+
+\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{T}\PYG{o}{\PYGZgt{}}
+\PYG{n}{T}\PYG{+w}{ }\PYG{n}{dot\PYGZus{}product}\PYG{+w}{ }\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{v1}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{v2}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{v1}\PYG{p}{.}\PYG{n}{size}\PYG{p}{()}\PYG{+w}{ }\PYG{o}{!=}\PYG{+w}{ }\PYG{n}{v2}\PYG{p}{.}\PYG{n}{size}\PYG{p}{())}
+\PYG{+w}{    }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{k}{throw}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{invalid\PYGZus{}argument}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}Error: Los vectores deben tener la misma dimensión para el Producto Punto.\PYGZdq{}}\PYG{p}{);}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{    }
+\PYG{+w}{    }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{N}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{v1}\PYG{p}{.}\PYG{n}{size}\PYG{p}{();}
+\PYG{+w}{    }\PYG{n}{T}\PYG{+w}{ }\PYG{n}{resultValue}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{static\PYGZus{}cast}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{p}{(}\PYG{l+m+mf}{0.0}\PYG{p}{);}
+\PYG{+w}{    }
+\PYG{+w}{    }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{N}\PYG{p}{;}\PYG{+w}{ }\PYG{o}{++}\PYG{n}{i}\PYG{p}{)}
+\PYG{+w}{    }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n}{resultValue}\PYG{+w}{ }\PYG{o}{+=}\PYG{+w}{ }\PYG{n}{v1}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{v2}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{    }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{resultValue}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\PYG{c+cm}{/* **************************************************************************************************}
+\PYG{c+cm}{PRIVATE FUNCTIONS}
+\PYG{c+cm}{/* *************************************************************************************************/}
+\PYG{c+c1}{// Function to return the linear index corresponding to the supplied row and column values.}
+\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{T}\PYG{o}{\PYGZgt{}}
+\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{iMatrix}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}::}\PYG{n}{Sub2Ind}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{row}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{col}\PYG{p}{)}\PYG{+w}{ }\PYG{k}{const}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{	}\PYG{k}{if}\PYG{+w}{ }\PYG{p}{((}\PYG{n}{row}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{m\PYGZus{}nRows}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZam{}\PYGZam{}}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{row}\PYG{+w}{ }\PYG{o}{\PYGZgt{}=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZam{}\PYGZam{}}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{col}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{m\PYGZus{}nCols}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZam{}\PYGZam{}}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{col}\PYG{+w}{ }\PYG{o}{\PYGZgt{}=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{))}
+\PYG{+w}{		}\PYG{k}{return}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{row}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{m\PYGZus{}nCols}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{col}\PYG{p}{;}
+\PYG{+w}{	}\PYG{k}{else}
+\PYG{+w}{		}\PYG{k}{return}\PYG{+w}{ }\PYG{l+m+mi}{\PYGZhy{}1}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+
+
+\PYG{c+cp}{\PYGZsh{}endif}
+\end{MintedVerbatim}

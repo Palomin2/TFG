@@ -1,32 +1,150 @@
-\begin{thebibliography}{}
+\begin{thebibliography}{17}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
 
-\bibitem[Brezis, 2010]{brezis_functional_2010}
-Brezis, H. (2010).
-\newblock {\em Functional {Analysis}, {Sobolev} {Spaces} and {Partial}
-  {Differential} {Equations}}.
-\newblock Universitext. Springer New York.
-
-\bibitem[Cottrell et~al., 2009]{cottrell_isogeometric_2009}
-Cottrell, J., Hughes, T., and Bazilevs, Y. (2009).
-\newblock {\em Isogeometric {Analysis}: {Toward} {Integration} of {CAD} and
-  {FEA}}.
-\newblock Wiley.
-
-\bibitem[Evans, 1991]{evans_partial_1991}
-Evans, L. (1991).
-\newblock {\em Partial {Differential} {Equations}}.
-\newblock Graduate studies in mathematics. American Mathematical Society.
-
-\bibitem[Larson and Bengzon, 2013]{larson_finite_2013}
-Larson, M. and Bengzon, F. (2013).
-\newblock {\em The {Finite} {Element} {Method}: {Theory}, {Implementation}, and
-  {Applications}}.
+\bibitem[Larson and Bengzon(2013)]{larson_finite_2013}
+M.G. Larson and F.~Bengzon.
+\newblock \emph{The {Finite} {Element} {Method}: {Theory}, {Implementation},
+  and {Applications}}.
 \newblock Texts in {Computational} {Science} and {Engineering}. Springer Berlin
-  Heidelberg.
+  Heidelberg, 2013.
+\newblock ISBN 978-3-642-33287-6.
+\newblock URL \url{https://books.google.es/books?id=Vek_AAAAQBAJ}.
 
-\bibitem[Piegl and Tiller, 2012]{piegl_nurbs_2012}
-Piegl, L. and Tiller, W. (2012).
-\newblock {\em The {NURBS} {Book}}.
-\newblock Monographs in {Visual} {Communication}. Springer Berlin Heidelberg.
+\bibitem[Brezis(2010)]{brezis_functional_2010}
+H.~Brezis.
+\newblock \emph{Functional {Analysis}, {Sobolev} {Spaces} and {Partial}
+  {Differential} {Equations}}.
+\newblock Universitext. Springer New York, 2010.
+\newblock ISBN 978-0-387-70913-0.
+\newblock URL \url{https://books.google.es/books?id=GAA2XqOIIGoC}.
+
+\bibitem[Evans(1991)]{evans_partial_1991}
+L.C. Evans.
+\newblock \emph{Partial {Differential} {Equations}}.
+\newblock Graduate studies in mathematics. American Mathematical Society, 1991.
+\newblock URL \url{https://books.google.es/books?id=TF8EzQEACAAJ}.
+
+\bibitem[Piegl and Tiller(2012)]{piegl_nurbs_2012}
+L.~Piegl and W.~Tiller.
+\newblock \emph{The {NURBS} {Book}}.
+\newblock Monographs in {Visual} {Communication}. Springer Berlin Heidelberg,
+  2012.
+\newblock ISBN 978-3-642-59223-2.
+\newblock URL \url{https://books.google.es/books?id=58KqCAAAQBAJ}.
+
+\bibitem[Cottrell et~al.(2009)Cottrell, Hughes, and
+  Bazilevs]{cottrell_isogeometric_2009}
+J.A. Cottrell, T.J.R. Hughes, and Y.~Bazilevs.
+\newblock \emph{Isogeometric {Analysis}: {Toward} {Integration} of {CAD} and
+  {FEA}}.
+\newblock Wiley, 2009.
+\newblock ISBN 978-0-470-74873-2.
+\newblock URL \url{https://books.google.es/books?id=Sf0UDAEACAAJ}.
+
+\bibitem[Farin(2002{\natexlab{a}})]{farin_curves_2002}
+G.E. Farin.
+\newblock \emph{Curves and {Surfaces} for {CAGD}: {A} {Practical} {Guide}}.
+\newblock Computer graphics and geometric modeling. Elsevier Science,
+  2002{\natexlab{a}}.
+\newblock ISBN 978-1-55860-737-8.
+\newblock URL \url{https://books.google.es/books?id=5HYTP1dIAp4C}.
+
+\bibitem[Ahlberg et~al.(2016)Ahlberg, Nilson, Walsh, and
+  Bellman]{ahlberg_theory_2016}
+J.H. Ahlberg, E.N. Nilson, J.L. Walsh, and R.~Bellman.
+\newblock \emph{The {Theory} of {Splines} and {Their} {Applications}:
+  {Mathematics} in {Science} and {Engineering}: {A} {Series} of {Monographs}
+  and {Textbooks}, {Vol}. 38}.
+\newblock Number v. 38. Academic Press, 2016.
+\newblock ISBN 978-1-4832-2295-0.
+\newblock URL \url{https://books.google.es/books?id=3bZlDAAAQBAJ}.
+
+\bibitem[Langer et~al.(2016)Langer, Moore, and
+  Neumüller]{langer_space-time_2016}
+Ulrich Langer, Stephen~E Moore, and Martin Neumüller.
+\newblock Space-time isogeometric analysis of parabolic evolution equations.
+\newblock \emph{Computer Methods in Applied Mechanics and Engineering},
+  306:\penalty0 342--363, 2016.
+\newblock \doi{10.1016/j.cma.2016.03.042}.
+\newblock Publisher: Elsevier.
+
+\bibitem[Bazilevs et~al.(2010)Bazilevs, Calo, Cottrell, Evans, Hughes, Lipton,
+  Scott, and Sederberg]{bazilevs_isogeometric_2010}
+Y.~Bazilevs, V.M. Calo, J.A. Cottrell, J.A. Evans, T.J.R. Hughes, S.~Lipton,
+  M.A. Scott, and T.W. Sederberg.
+\newblock Isogeometric analysis using {T}-splines.
+\newblock \emph{Computer Methods in Applied Mechanics and Engineering},
+  199\penalty0 (5-8):\penalty0 229--263, 2010.
+\newblock \doi{10.1016/j.cma.2009.02.036}.
+\newblock Publisher: Elsevier.
+
+\bibitem[Benson et~al.(2011)Benson, Bazilevs, Hsu, and
+  Hughes]{benson_large_2011}
+David~J. Benson, Yuri Bazilevs, Ming-Chen Hsu, and Thomas~J.R. Hughes.
+\newblock A large deformation, rotation-free, isogeometric shell.
+\newblock \emph{Computer Methods in Applied Mechanics and Engineering},
+  200\penalty0 (13-16):\penalty0 1367--1378, 2011.
+\newblock \doi{10.1016/j.cma.2010.12.003}.
+\newblock Publisher: Elsevier.
+
+\bibitem[Bazilevs et~al.(2009)Bazilevs, Gohean, Hughes, Moser, and
+  Zhang]{bazilevs_patient-specific_2009}
+Yuri Bazilevs, Jeffrey Gohean, Thomas Hughes, R.~Moser, and Yongjie Zhang.
+\newblock Patient-specific isogeometric fluid-structure interaction analysis of
+  thoracic aortic blood flow due to implantation of the {Jarvik} 2000 left
+  ventricular assist device.
+\newblock \emph{Computer Methods in Applied Mechanics and Engineering},
+  198:\penalty0 3534--3550, September 2009.
+\newblock \doi{10.1016/j.cma.2009.04.015}.
+
+\bibitem[Kiendl et~al.(2009)Kiendl, Bletzinger, Linhard, and
+  Wüchner]{kiendl_isogeometric_2009}
+Josef Kiendl, Kai-Uwe Bletzinger, J.~Linhard, and Roland Wüchner.
+\newblock Isogeometric shell analysis with {Kirchhoff}-{Love} elements.
+\newblock \emph{Computer Methods in Applied Mechanics and Engineering - COMPUT
+  METHOD APPL MECH ENG}, 198:\penalty0 3902--3914, November 2009.
+\newblock \doi{10.1016/j.cma.2009.08.013}.
+
+\bibitem[Brechner(2024)]{brechner_developing_2024}
+Eric Brechner.
+\newblock Developing and {Using} {CAD}/{CAM}/{CAE} {Systems} in {Boeing}.
+\newblock \emph{IEEE Annals of the History of Computing}, 46\penalty0
+  (1):\penalty0 38--49, January 2024.
+\newblock ISSN 1058-6180.
+\newblock \doi{10.1109/MAHC.2024.3468340}.
+
+\bibitem[Liming(1944)]{liming_practical_1944}
+R.A. Liming.
+\newblock \emph{Practical {Analytic} {Geometry} with {Applications} to
+  {Aircraft}}.
+\newblock Macmillan, 1944.
+\newblock ISBN 978-0-598-45557-4.
+\newblock URL \url{https://books.google.es/books?id=x99EAAAAMAAJ}.
+
+\bibitem[Versprille(1975)]{versprille_computer_1975}
+K.J. Versprille.
+\newblock \emph{Computer {Aided} {Design} {Applications} of the {Rational}
+  {B}-spline {Approximation} {Form}}.
+\newblock University Microfilms, 1975.
+\newblock URL \url{https://books.google.es/books?id=DOwvjwEACAAJ}.
+
+\bibitem[Fazanaro et~al.(2016)Fazanaro, Amorim, Franco~de Moraes, Silva, and
+  Pedrini]{fazanaro_nurbs_2016}
+Dalton Fazanaro, Paulo Amorim, Thiago Franco~de Moraes, Jorge Silva, and Helio
+  Pedrini.
+\newblock {NURBS} {Parameterization} for {Medical} {Surface} {Reconstruction}.
+\newblock \emph{Applied Mathematics}, 07:\penalty0 137--144, January 2016.
+\newblock \doi{10.4236/am.2016.72013}.
+
+\bibitem[Farin(2002{\natexlab{b}})]{farin_history_2002}
+Gerald Farin.
+\newblock A {History} of {Curves} and {Surfaces} in {CAGD}.
+\newblock \emph{Computer Aided Geometric Design - CAGD}, December
+  2002{\natexlab{b}}.
+\newblock \doi{10.1016/B978-044451104-1/50002-2}.
 
 \end{thebibliography}

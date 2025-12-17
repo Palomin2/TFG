@@ -1,0 +1,43 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{n}{RUTA\PYGZus{}ARCHIVO\PYGZus{}CURVA} \PYG{p}{=} \PYG{l+s}{\PYGZsq{}C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/Curvas/EjCurva3d.txt\PYGZsq{}}\PYG{p}{;}
+\PYG{n}{NOMBRE\PYGZus{}ARCHIVO\PYGZus{}SVG} \PYG{p}{=} \PYG{l+s}{\PYGZsq{}CurvaNurbs\PYGZus{}3D\PYGZus{}Plot.svg\PYGZsq{}}\PYG{p}{;}
+
+\PYG{n}{PC} \PYG{p}{=} \PYG{p}{[}
+    \PYG{l+m+mi}{10}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{l+m+mi}{15}\PYG{p}{,} \PYG{l+m+mi}{10}\PYG{p}{,} \PYG{l+m+mi}{5}\PYG{p}{;}
+    \PYG{l+m+mi}{5}\PYG{p}{,} \PYG{l+m+mi}{15}\PYG{p}{,} \PYG{l+m+mi}{20}\PYG{p}{;}
+    \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{5}\PYG{p}{,} \PYG{l+m+mi}{10}\PYG{p}{;}
+    \PYG{l+m+mi}{10}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}
+\PYG{p}{];}
+
+\PYG{k}{try}
+    \PYG{n}{D} \PYG{p}{=} \PYG{n+nb}{load}\PYG{p}{(}\PYG{n}{RUTA\PYGZus{}ARCHIVO\PYGZus{}CURVA}\PYG{p}{);}
+\PYG{k}{catch}
+    \PYG{n+nb}{error}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}ERROR: No se pudo cargar el archivo. Comprueba que la ruta sea correcta: \PYGZpc{}s\PYGZsq{}}\PYG{p}{,} \PYG{n}{RUTA\PYGZus{}ARCHIVO\PYGZus{}CURVA}\PYG{p}{);}
+\PYG{k}{end}
+
+\PYG{p}{[}\PYG{n}{M}\PYG{p}{,} \PYG{n}{N}\PYG{p}{]} \PYG{p}{=} \PYG{n+nb}{size}\PYG{p}{(}\PYG{n}{D}\PYG{p}{);}
+
+\PYG{n}{C} \PYG{p}{=} \PYG{n}{D}\PYG{o}{\PYGZsq{}}\PYG{p}{;}
+
+\PYG{n+nb}{figure}\PYG{p}{;}
+\PYG{n+nb}{hold} \PYG{n}{on}\PYG{p}{;}
+\PYG{n+nb}{grid} \PYG{n}{on}\PYG{p}{;}
+
+
+\PYG{n}{plot3}\PYG{p}{(}\PYG{n}{C}\PYG{p}{(:,}\PYG{l+m+mi}{1}\PYG{p}{),} \PYG{n}{C}\PYG{p}{(:,}\PYG{l+m+mi}{2}\PYG{p}{),} \PYG{n}{C}\PYG{p}{(:,}\PYG{l+m+mi}{3}\PYG{p}{),} \PYG{l+s}{\PYGZsq{}b\PYGZhy{}\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}LineWidth\PYGZsq{}}\PYG{p}{,} \PYG{l+m+mi}{2}\PYG{p}{);}
+\PYG{n}{plot3}\PYG{p}{(}\PYG{n}{PC}\PYG{p}{(:,}\PYG{l+m+mi}{1}\PYG{p}{),} \PYG{n}{PC}\PYG{p}{(:,}\PYG{l+m+mi}{2}\PYG{p}{),} \PYG{n}{PC}\PYG{p}{(:,}\PYG{l+m+mi}{3}\PYG{p}{),} \PYG{l+s}{\PYGZsq{}r\PYGZhy{}\PYGZhy{}\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}LineWidth\PYGZsq{}}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}DisplayName\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}Polígono de Control\PYGZsq{}}\PYG{p}{);}
+\PYG{n}{plot3}\PYG{p}{(}\PYG{n}{PC}\PYG{p}{(:,}\PYG{l+m+mi}{1}\PYG{p}{),} \PYG{n}{PC}\PYG{p}{(:,}\PYG{l+m+mi}{2}\PYG{p}{),} \PYG{n}{PC}\PYG{p}{(:,}\PYG{l+m+mi}{3}\PYG{p}{),} \PYG{l+s}{\PYGZsq{}ro\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}MarkerSize\PYGZsq{}}\PYG{p}{,} \PYG{l+m+mi}{4}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}MarkerFaceColor\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}r\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}DisplayName\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}Puntos de Control\PYGZsq{}}\PYG{p}{);}
+
+\PYG{n}{min\PYGZus{}coords} \PYG{p}{=} \PYG{n+nb}{min}\PYG{p}{([}\PYG{n}{C}\PYG{p}{;} \PYG{n}{PC}\PYG{p}{]);}
+\PYG{n}{max\PYGZus{}coords} \PYG{p}{=} \PYG{n+nb}{max}\PYG{p}{([}\PYG{n}{C}\PYG{p}{;} \PYG{n}{PC}\PYG{p}{]);}
+\PYG{n}{margen} \PYG{p}{=} \PYG{l+m+mi}{2}\PYG{p}{;}
+\PYG{n+nb}{axis}\PYG{p}{([}\PYG{n}{min\PYGZus{}coords}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{o}{\PYGZhy{}}\PYG{n}{margen} \PYG{n}{max\PYGZus{}coords}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{o}{+}\PYG{n}{margen} \PYG{p}{...}
+      \PYG{n}{min\PYGZus{}coords}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{)}\PYG{o}{\PYGZhy{}}\PYG{n}{margen} \PYG{n}{max\PYGZus{}coords}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{)}\PYG{o}{+}\PYG{n}{margen} \PYG{p}{...}
+      \PYG{n}{min\PYGZus{}coords}\PYG{p}{(}\PYG{l+m+mi}{3}\PYG{p}{)}\PYG{o}{\PYGZhy{}}\PYG{n}{margen} \PYG{n}{max\PYGZus{}coords}\PYG{p}{(}\PYG{l+m+mi}{3}\PYG{p}{)}\PYG{o}{+}\PYG{n}{margen}\PYG{p}{]);}
+
+\PYG{n+nb}{view}\PYG{p}{(}\PYG{l+m+mi}{3}\PYG{p}{);}
+\PYG{k}{set}\PYG{p}{(}\PYG{n+nb}{gca}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}Box\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}on\PYGZsq{}}\PYG{p}{);}
+\PYG{n+nb}{print}\PYG{p}{(}\PYG{n}{NOMBRE\PYGZus{}ARCHIVO\PYGZus{}SVG}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}\PYGZhy{}dsvg\PYGZsq{}}\PYG{p}{);}
+\PYG{n+nb}{disp}\PYG{p}{([}\PYG{l+s}{\PYGZsq{}Gráfico final guardado en: \PYGZsq{}}\PYG{p}{,} \PYG{n+nb}{fullfile}\PYG{p}{(}\PYG{n+nb}{pwd}\PYG{p}{,} \PYG{n}{NOMBRE\PYGZus{}ARCHIVO\PYGZus{}SVG}\PYG{p}{)]);}
+\end{MintedVerbatim}
