@@ -176,7 +176,7 @@ urlcolor=black]{hyperref}
 \clearemptydoublepage
 
 %--- RESUMEN
-\chapter{Resumen}
+\chapter{Summary}
 
 Se creará al finalizar el trabajo.
 %--- FIN DEL RESUMEN
@@ -194,7 +194,7 @@ Se creará al finalizar el trabajo.
 %--- CAPÍTULO 1 DEL TFG
 \chapter{Introducción}
 
-\section{Contexto y relación con el método de elementos finitos.}
+\section{Contexto y Relación con el Método de Elementos Finitos}
 
 El análisis isogeométrico (IGA) es un método numérico, cuya finalidad se basa en la resolución de problemas de ecuaciones en derivadas parciales.
 
@@ -269,7 +269,7 @@ Se asemeja al método de elementos finitos (FEM), ambos buscan la solución medi
 \end{figure}
 
 
-\section{Evolución del análisis isogeométrico.}
+\section{Evolución del Análisis Isogeométrico}
 
 Para comprender el IGA, es necesario comprender la evolución del diseño asistido por ordenador (CAD), en \textbf{1967} Ahlberg, Nilson y Walsh publican su obra \textit{Theory of Splines and Their Applications},
 pionera en formalizar la teoría de los \textbf{splines}.
@@ -286,9 +286,11 @@ Actualmente IGA se usa en diferenctes industrias como: \textbf{automoción},  si
 
 Finalmente mencionamos los campos de estudio en los que se avanzan actualmente en referencia a IGA como son los \textbf{T-Splines}, para un mayor refinamiento local, y los métodos \textbf{espacio-temporales}, campo actualmente en investigación.
 
-\section{Objetivos.}
+\section{Objetivos}
 
 El objetivo principal del trabajo es entender el marco teórico y las ventajas del IGA frente al FEM, tanto en costo computacional como en orden de convergencia, en problemas de contorno de ecuaciones en derivadas parciales.
+
+Nos centraremos el estudio de los casos 1D y 2D, pues la generalización a dimensiones superiores es análoga.
 
 Con el fin de cumplir este objetivo, este se segmentará en los siguientes puntos que se seguiran en el orden siguiente:
 
@@ -298,11 +300,11 @@ Con el fin de cumplir este objetivo, este se segmentará en los siguientes punto
     \item \textbf{Validación y comparación:} Validar los resultados numéricos comparandolos con las soluciones analíticas de los problemas y comprobar las diferencias en velocidad de convergencia con el FEM.
 \end{enumerate}
 
-\section{El Problema Modelo: La Ecuación de Poisson.}
+\section{El Problema Modelo: la Ecuación de Poisson}
 
 Durante la realización del trabajo nos centraremos en el problema de Poisson como benchmark para mostrar en este las propiedades del IGA.
 
-\subsection{Formulación fuerte (o clásica).}
+\subsection{Formulación Fuerte (o Clásica)}
 \begin{defin} Sea $\Omega \subset \mathbb{R}^n$ un conjunto abierto y acotado, donde $n \in \mathbb{N}$,
      con frontera $\partial\Omega = \Gamma = \overline{\Gamma_D \cup \Gamma_R \cup \Gamma_N}$, que sea suficientemente regular, tal que $\Gamma_D \cap \Gamma_R = \emptyset$, $ \Gamma_D \cap \Gamma_N = \emptyset$, $  \Gamma_R \cap \Gamma_N = \emptyset$ .
 
@@ -329,7 +331,7 @@ Donde las formas bilineal $a(\cdot,\cdot)$ y lineal $L(\cdot)$ se definen como:
 \end{itemize}
 \end{defin}
 
-\subsection{Formulación variacional (o débil).}
+\subsection{Formulación Variacional (o Débil)}\label{sec:Debil}
 \begin{defin} Buscamos  $u \in V(\Omega)=\{v \in H^1(\Omega) \mid v=g \text{ en } \Gamma_D\}$, tal que para  
 $v \in V_0(\Omega)=\{v \in H^1(\Omega) \mid v=0 \text{ en } \Gamma_D\}$, se cumple que:
 
@@ -348,7 +350,7 @@ Donde:
 \textit{Nota:} El desarrollo detallado para obtener \eqref{eq:form_weak} a partir de la formulación fuerte, la demostración de existencia y unicidad de la solución variacional, así como la prueba de que esta (bajo suficiente regularidad) es también solución del problema fuerte, se detallan en los Anexos \ref{sec:Paso_Soluciones}, \ref{sec:Lax} y \ref{sec:equivform}.
 %nota aqui sobre que las demostraciones de la equivalencia de las soluciones y del paso a la formulación clasica a variacional se encuentran en el anexo x e y
 
-\section{Estructura del documento.}
+\section{Estructura del Documento}
 
 resumen rapido de los posteriores capitulos asi como explicación de donde apareceran el codigo o diferentes elementos en el anexo.
 
@@ -358,7 +360,7 @@ Se creará al finalizar el trabajo.
 \clearemptydoublepage
 
 %--- CAPÍTULO 2 DEL TFG
-\chapter{Construcción de estructuras mediante CAD}
+\chapter{Construcción de Estructuras mediante CAD}
 
 
 %Se mencionara rapidamente conceptos como el paso de formulación fuerte a formulación débil o variacional, las funciones base polinómicas clásicas con su espacio de funciones y la suavidad que estas aportan, así como su convergencia en L2 y H1.
@@ -376,7 +378,7 @@ Las curvas y superficies creadas mediante \textbf{NURBS} son la base y el están
 
 En los años 60, impulsados por la industria de la automoción francesa y su necesidad de pasar los diseños en arcilla y papel a ordenador. Pierre Bézier y Paul Casteljau desarrollan la manera de crear curvas parametrizadas mediante el uso de \textbf{polinomios de Bernstein} como funciones base y \textbf{puntos de conttrol}.
 
-\subsection{Funciones base}
+\subsection{Funciones Base}
 \begin{defin}
 Los polinomios de Bernstein se definen como: $$B_{i,p}(u) = \binom{p}{i} u^{i} (1-u)^{p-i}.$$
 \end{defin}
@@ -471,7 +473,7 @@ A pesar de que la racionalización de las curvas de Bézier permitió la represe
 se transiciona entonces a la implementacion de funciones base \textbf{B-spline} que permitian, debido a tener un soporte local y un número de elemtos no ligado obligatoriamente al grado polinomial de estas, superar las limitaciones de las funciones base de Bernstein.
 
 %Debido a las limitaciones que tienen las curvas de Bézier, como pueden ser el requirimiento de un orden polinomial $n-1$ para $n$ puntos de control, aperece en este contexto los \textbf{B-Splines}.
-\subsection{Funciones base}
+\subsection{Funciones Base}
 
 \begin{defin}
     El \textbf{Vector de nudos} se define como $$U = \{u_0, u_1, \ldots, u_m\},$$ cumplen $u_i \le u_{i+1}, \quad i = 0, \ldots, m-1$, el número de nudos $m+1$ está relacionado con $p$ y $n$ tal que cumple: $m=n+p+1$.
@@ -547,12 +549,13 @@ segmentado, usando un programa basado en B-splines para el fuselaje y otro basad
 
 En este caos Boeing inicia el proyecto \textbf{TIGER}, reescribiendo así todo su sistema CAD interno basándose en la tesis de \textbf{Verspille}, proponiendo así en \textbf{1981} a la IGES que las \textbf{NURBS} sean el estandar universal, transicionando así la industria de manera natural entre \textbf{1983} y \textbf{1990}.
 
-\subsection{Funciones base}
+\subsection{Funciones Base}
 \begin{defin}
     Las \textbf{Funciones base NURBS} se definen como:
-    \begin{equation*}
-        R_{i,p}(u)=\frac{N_{i,p}(u) w_i}{\sum_{j=0}^{n} N_{j,p}(u) w_j}.
-    \end{equation*}
+    \begin{equation}
+        \label{eq:NURBS_Curve_Basis}
+        R_i^p(u)=\frac{N_{i,p}(u) w_i}{\sum_{j=0}^{n} N_{j,p}(u) w_j}.
+    \end{equation}
 \end{defin}
 
 \begin{proposicion}
@@ -563,9 +566,10 @@ En este caos Boeing inicia el proyecto \textbf{TIGER}, reescribiendo así todo s
 \begin{defin}
     Podemos ahora definir las curvas generadas por NURBS como:
 
-    \begin{equation*}
-        \mathbf{C}(u) = \sum_{i=0}^{n} R_{i,p}(u) \cdot \mathbf{P}_i = \frac{\sum_{i=0}^{n} N_{i,p}(u) w_i \mathbf{P}_i}{\sum_{j=0}^{n} N_{j,p}(u) w_j}.
-    \end{equation*}
+    \begin{equation}
+        \label{eq:NURBS_Curve}
+        \mathbf{C}(u) = \sum_{i=0}^{n} R_i^p(u) \cdot \mathbf{P}_i = \frac{\sum_{i=0}^{n} N_{i,p}(u) w_i \mathbf{P}_i}{\sum_{j=0}^{n} N_{j,p}(u) w_j}.
+    \end{equation}
 
 \end{defin}
 
@@ -599,7 +603,7 @@ En este caos Boeing inicia el proyecto \textbf{TIGER}, reescribiendo así todo s
     % -------------------------------
 \end{figure}
 
-\section{Creación de superficies mediante el producto tensorial.}
+\section{Creación de Superficies (Producto Tensorial)}
 El producto tensorial es el estándar de CAD para la creación de superficies, se define como:
 \begin{equation*}
     \mathbf{B}_{i,j}(u, v) = N_{i,p}(u) \cdot M_{j,q}(v).
@@ -613,9 +617,16 @@ Mediante este producto definimos la superficie generada por \textbf{B-Splines} m
 Redefiniendo la estructura en la que se encuentran los puntos de control, pasando a formar ahora una matriz.
 
 Podemos ahora racionalizar estas curvas para obtener superficies generadas mediante \textbf{NURBS}, para ello utilizamos una matriz de pesos $w_{i,j}$ y la fórmula:
-\begin{equation*}
-    \mathbf{S}(u, v) = \frac{\sum_{i=0}^{n} \sum_{j=0}^{m} N_{i,p}(u) M_{j,q}(v) \mathbf{w}_{i,j} \mathbf{P}_{i,j}}{\sum_{i=0}^{n} \sum_{j=0}^{m} N_{i,p}(u) M_{j,q}(v) \mathbf{w}_{i,j}}.
-\end{equation*}
+\begin{equation}
+    \label{eq:NURBS_Surf}
+    \mathbf{S}(u, v) = \frac{\sum_{i=0}^{n} \sum_{j=0}^{m} N_{i,p}(u) M_{j,q}(v) \mathbf{w}_{i,j} \mathbf{P}_{i,j}}{\sum_{i=0}^{n} \sum_{j=0}^{m} N_{i,p}(u) M_{j,q}(v) \mathbf{w}_{i,j}}= \sum_{i=0}^{n} \sum_{j=0}^{m} R_{i,j}^{p,q}(u, v) \mathbf{P}_{i,j}.
+\end{equation}
+
+Donde 
+\begin{equation} 
+    \label{eq:NURBS_Surf_Basis}
+    R_{i,j}^{p,q}(u, v) = \frac{N_{i,p}(u) M_{j,q}(v) w_{i,j}}{\sum_{k=0}^{n} \sum_{l=0}^{m} N_{k,p}(u) M_{l,q}(v) w_{k,l}} 
+\end{equation}
 
 \begin{proposicion}
     \label{prop:surf_tensor}
@@ -665,7 +676,7 @@ Podemos ahora racionalizar estas curvas para obtener superficies generadas media
     % -------------------------------
 \end{figure}
 
-\section{Refinamiento de nudos (h-refinement)}
+\section{Refinamiento de Nudos (h-Refinement)}
 En las figuras anteriores podemos observar un refinamiento de la superfice del ejemplo 2, este procedimiento se basa en insertar nuevos valores en un vector de nudos, introduciendo nuevos puntos de control y pesos para mantener la misma figura geométrica.
 
 El refinamiento de nudos tiene como finalidad aumentar el control local donde se añade el nudo, obteniendo un mayor número de funciones base donde se inserta y decreciendo el tamaño de los elementos sobre los que se trabaja. 
@@ -745,29 +756,343 @@ El código fuente de estas implementaciones puede encontrarse en el anexo \ref{s
 \clearemptydoublepage
 
 %--- CAPÍTULO 3 DEL TFG
-\chapter{Análisis isogeométrico.}
+\chapter{Análisis Isogeométrico}
 
-No estoy seguro del orden que debería seguir este capítulo, si debería poner antes las velocidades de convergencia o de tiempo de computación o mejor al final.
+Durante el capítulo definiremos las bases necesarias para el IGA y profundizaremos en estas, luego sobre esta base desarrollaremos la teoría necesaria para resolver el problema de Poisson.
 
-Resumen de los casos que se van a tratar en este capitulo (1D y 2D), y formulaciones debiles de estos para trabajar posteriormente sobre ellas.
+\section{Espacios Funcionales}
 
 
-\section{Ensamblaje de matrices y vector de carga.}
 
-\subsection{Caso 1D.}
-Aplicar aqui los apuntes que hice para aclararme que os mande sobre el ensamblado en 1D.
-\subsection{Caso 2D.}
-Aplicar aqui los apuntes que hice para aclararme que os mande sobre el ensamblado en 2D.
 
-\section{Imposición de condiciones de contorno.}
-En este capitulo no sé si es necesario que les de una explicación a por qué son necesarias o puedo asumir que partiendo de elementos finitos puedo asumir que el lector esta familirizado.
-\subsection{Tipo Dirichlet.}
 
-\subsection{Tipo Neumann.}
+\begin{defin}    
+    Sea $\hat{\Omega}$ el \textbf{dominio paramétrico} definido en 1D por el vector de nodos $U$ y en 2D por el producto tensorial de los vectores de nodos $U \times V$.
+\end{defin}
 
-\subsection{Tipo Robin o mixtas.}
 
-\section{Convergencia en L2 y H1 y tiempo de computación teórico.}
+
+El \textbf{espacio físico} $\Omega$ queda parametrizado así mediante el mapeo geométrico $\mathbf{G}: \hat{\Omega} \to \Omega$ definido en \ref{eq:NURBS_Curve} en 1D y en \ref{eq:NURBS_Surf} en 2D.
+
+\begin{defin}
+    \textbf{Elemento:} denotado por $\Omega_e\subset \Omega$, parametrizado mediante la restricción sobre $\hat{\Omega}$ de $\mathbf{G}$, dada por el intervalo no nulo $[u_n, u_{(n+1)})$ en 1D, o por $[u_n, u_{(n+1)})\times [v_k, v_{(k+1)})$ en 2D, 
+\end{defin}
+
+\begin{defin}
+    \textbf{Malla física:} Sea $N_{el}$ el número de intervalos de nudos no nulos formados por nudos consecutivos, definimos la malla física como $\mathcal{T}_h = \{ \Omega_e \}_{e=1}^{N_{el}}$.
+\end{defin}
+
+\begin{defin}
+    \textbf{Diámetro de un elemento:} $h_e = \text{diam}(\Omega_e) = \sup_{\mathbf{x}, \mathbf{y} \in \Omega_e} \| \mathbf{x} - \mathbf{y} \|_2$.
+\end{defin}
+
+\begin{defin}
+    \textbf{Parámetro de discretización global:} $h = \max_{e} h_e$
+\end{defin}
+
+
+
+\begin{defin}
+    Sea $\hat{V}_h$ el \textbf{espacio de funciones NURBS} definido en 1D en \ref{eq:NURBS_Curve_Basis} y en 2D en \ref{eq:NURBS_Surf_Basis}
+
+    Definimos ahora el \textbf{espacio de aproximación} $V_h$ como
+    \begin{equation*}
+        V_h = \Big\{ v : \Omega \to \mathbb{R} \mid v \circ \mathbf{G} \in \hat{V}_h \Big\}.
+    \end{equation*}
+\end{defin}
+
+\begin{defin}
+    Las \textbf{funciones de forma} $\phi_i$ en 1D y  $\phi_{i,j}$ en 2D se definen como:\footnote{A lo largo de esta sección y las siguientes, todas aquellas funciones que tomen como dominio a $\hat{\Omega}$ serán diferenciadas mediante la imposición del acento circunflejo en estas ($\hat{\cdot}$).} 
+    \begin{align*}
+        \phi_i &= \hat{R}_i^p \circ \mathbf{G}^{-1}.\\
+        \phi_{i,j} &= \hat{R}_{i,j}^{p,q} \circ \mathbf{G}^{-1}.
+    \end{align*}
+\end{defin}
+
+\section{Formulación Discreta de Galerkin}
+
+Partiendo del espacio de aproximación $V_h \subset V$ (mismo V que en la sección \ref{sec:Debil}), aplicamos el principio de Galerkin al problema variacional (\ref{sec:Debil}). Buscamos una solución aproximada $u_h \in V_h$ tal que:
+\begin{equation} \label{eq:Galerkin_Form}
+    a(u_h, v_h) = L(v_h), \quad \forall v_h \in V_h.
+\end{equation}
+
+Expresamos la solución discreta $u_h$ como una combinación lineal de las funciones de forma definidas anteriormente:
+\begin{equation*}
+    u_h(\mathbf{x}) = \sum_{j=1}^{N_b} d_j \phi_j(\mathbf{x}),
+\end{equation*}
+donde $d_j$ son los \textbf{coeficientes de control} a determinar y $N_b$ es el número total de funciones base globales.
+
+Sustituyendo $u_h$ en la ecuación \ref{eq:Galerkin_Form} y tomando sucesivamente cada función de base como función de test ($v_h = \phi_i$ para $i=1,\dots,N_b$), obtenemos el sistema lineal de ecuaciones:
+\begin{equation*}
+    \sum_{j=1}^{N_b} a(\phi_j, \phi_i) d_i = L(\phi_i), \quad \forall i=1,\dots,N_b.
+\end{equation*}
+
+Reescribiendo ahora en forma matricial como:
+\begin{equation*}
+    \mathbf{K} \mathbf{d} = \mathbf{F},
+\end{equation*}
+donde $\mathbf{K}\in \mathbb{R}^{N_b \times N_b}$ es la matriz de rigidez global con elementos $K_{i,j} = a(\phi_j, \phi_i)$, $\mathbf{d}$ es el vector de coeficientes de control a determinar y $\mathbf{F}$ es el vector de carga con componentes $F_i = L(\phi_i)$.
+
+\section{Propiedades del sistema}
+\begin{proposicion}
+    
+
+Las siguientes propiedades se cumplen para problemas en un abierto $\Omega \subset \R^n$, con $N_{el}$ elementos.
+
+\begin{enumerate}
+    \item \textbf{Dipsersión:} cada fila tiene a lo sumo $(2p+1)^n$, el cual no crece en función del número de elementos del problema, creando la relación asitótica
+    \begin{equation*} 
+        \lim_{N_{el} \to \infty} \frac{(2p+1)^n}{N_B} = 0.
+    \end{equation*}
+    \item \textbf{Simetría:} los elementos $\mathbf{K}_{(i,j)}=a(\phi_j,\phi_i)=a(\phi_i,\phi_j)=\mathbf{K}_{(j,i)}$, esta propiedad ocurre si y solo la forma bilineal es simétrica, que depende de que el operador diferencial del problema sea autoadjunto.
+    \item \textbf{Condicionamiento:} $\kappa(\mathbf{K}) \approx O(h^{-2})$
+\end{enumerate}
+\begin{proof}
+    Omitida temporalmente.
+\end{proof}
+\end{proposicion}
+
+\section{Caso 1D}
+
+
+\subsection{Elementos de la matriz global y el vector de carga}
+Transformamos la \textbf{forma bilineal} basada en las funciones de forma en la siguiente integral basada en las funciones base NURBS,
+
+\begin{align*}
+    &a(\phi_j(\mathbf{x}),\phi_i(\mathbf{x})) = \int_{\Omega}\nabla \phi_j(\mathbf{x}) \cdot \nabla \phi_i(\mathbf{x}) \, d\Omega + \int_{\Gamma_R}\frac{\alpha}{\beta}\phi_j(\mathbf{x})\phi_i(\mathbf{x}) \, d\Gamma =\\[10pt]
+    &= \int_{\hat{\Omega}} \left( \frac{d\hat{R}_{j}^p(\xi)}{d\xi} J^{-1}(\xi) \right) \left( \frac{d\hat{R}_{i}^p(\xi)}{d\xi} J^{-1}(\xi) \right) |\det J(\xi)| \, d\hat{\Omega} + \left[ \frac{\alpha}{\beta}\hat{R}_{j}^p(\xi)\hat{R}_{i}^p(\xi) \right]_{\xi \in \hat{\Gamma}_R}= \\[10pt]
+    &= \int_{\hat{\Omega}} \frac{d\hat{R}_{j}^p(\xi)}{d\xi} \frac{d\hat{R}_{i}^p(\xi)}{d\xi} \frac{1}{|\det J(\xi)|} \, d\hat{\Omega} + \left[ \frac{\alpha}{\beta}\hat{R}_{j}^p(\xi)\hat{R}_{i}^p(\xi) \right]_{\xi \in \hat{\Gamma}_R}.
+\end{align*}
+
+Aplicamos lo mismo a la \textbf{forma lineal},
+
+\begin{align*}
+    &L(\phi_i(\mathbf{x})) = \int_{\Omega}f(\mathbf{x})\phi_i(\mathbf{x}) \, d\Omega + \int_{\Gamma_N}h(\mathbf{x})\phi_i(\mathbf{x}) \, d\Gamma + \int_{\Gamma_R}\frac{r}{\beta}\phi_i(\mathbf{x}) \, d\Gamma =\\[10pt]
+    &= \int_{\hat{\Omega}}f(\mathbf{G}(\xi))\hat{R}_i^p(\xi)|\det J(\xi)| \, d\hat{\Omega} + \left[ h(\mathbf{G}(\xi))\hat{R}_i^p(\xi) \right]_{\xi \in \hat{\Gamma}_N} + \left[ \frac{r}{\beta}\hat{R}_i^p(\xi) \right]_{\xi \in \hat{\Gamma}_R}.
+\end{align*}
+
+\subsection{Cálculo de las integrales}
+
+El cálculo de las integrales definidas anteriormente se realizará elemento a elemento, entendiendo por elementos los intervalos no nulos, $\hat{\Omega}_e=[u_n, u_{n+1})$.
+
+Dentro de cada elemento se calcularán todas las combinaciones de funciones base activas, que gracias a la teoría de NURBS y por estar las funciones de forma directamente relacionadas con estas, sabemos que hay a lo sumo $p+1$ funciones base activas en cada elemento, obteniendo así una \textbf{matriz local} $\mathbf{K}^e$ de tamaño $(p+1) \times (p+1)$.
+
+Teniendo ahora los elementos de esta matriz la forma,
+
+\enlargethispage{3\baselineskip}
+
+\begin{equation*}
+    \mathbf{K}_{i,j}^e=\int_{u_n}^{u_{n+1}} \frac{d\hat{R}_{(j+ n - p - 1)}^p(\boldsymbol{\xi})}{d\xi}\cdot \frac{d\hat{R}_{(i+ n - p - 1)}^p(\boldsymbol{\xi})}{d\xi} \frac{1}{|\det J|} \, d\xi.
+\end{equation*}
+
+Para formalizar el proceso de ensamblaje, definimos la \textbf{matriz de rigidez local extendida}, denotada por $\tilde{\mathbf{K}}^e \in \mathbb{R}^{N_b \times N_b}$, la cual se construye explícitamente mediante la asignación
+
+\begin{equation*}
+    \tilde{\mathbf{K}}^e_{(i + n - p - 1,  j + n - p - 1)} = \mathbf{K}_{i,j}^e,\quad \forall i,j \in \{1,2, \dots, p+1\}, \footnote{En la práctica estas matrices no existirán, se sumarán directamente los elementos de $\mathbf{K}^e$ en $\mathbf{K}$.}
+\end{equation*}
+
+siendo cero cualquier otro elemento de $\tilde{\mathbf{K}}^e$ cuyos índices no satisfagan esta correspondencia.
+
+Finalmente la matriz global $\mathbf{K}$ se obtiene al sumar estas matrices extendidas
+\begin{equation*}
+    \mathbf{K} = \sum_{e=1}^{N_{el}} \tilde{\mathbf{K}}^e.
+\end{equation*}
+
+Aplicamos el mismo procedimiento ahora a la forma lineal, definimos el \textbf{vector de carga local}  $\mathbf{F}^e \in \R^{(p+1)}$ cuyos elementos definimos,
+
+\begin{equation*}
+    \mathbf{F}^e_i=\int_{u_n}^{u_{n+1}}f(\mathbf{G}(\xi))R_{(i+ n - p - 1)}^p(\xi)|det J|d\xi.
+\end{equation*}
+
+Definimos el \textbf{vector de carga local extendido} $\tilde{\mathbf{F}}^e_i \in \R^{N_b}$, construido mediante la signación
+
+\begin{equation*}
+    \tilde{\mathbf{F}}^e_{(i+ n - p - 1)}=\mathbf{F}^e_i, \quad \forall i \in \{ 1,2, \dots ,p+1 \},\footnote{Al igual que en las matrices extendidas anteriores, estos vectores no existirán en la práctica y los elementos de $\mathbf{F}^e$ serán ensamblados directamente sobre $\mathbf{F}$.}
+\end{equation*}
+
+siendo cero cualquier otro elemento de $\tilde{\mathbf{F}}^e$ que no satisfaga la correspondencia.
+
+Para finalizar se obtiene el vector global $\mathbf{F}$ al sumar todos los vectores extendidos
+
+\begin{equation*}
+    \mathbf{F} = \sum_{e=1}^{N_{el}} \tilde{\mathbf{F}}^e.
+\end{equation*}
+
+\subsection{Imposición de condiciones de contorno.}
+Tras el ensamblado de la matriz de rigidez global y del vector de carga se implementan las condiciones de contorno,
+
+Al ser en el caso 1D, solo es posible aplicar condiciones de contorno a dos puntos del dominio, explicaremos como se aplican al punto $u_0$ que será análogo para el punto $u_m$.
+
+
+\begin{flushleft}
+    \footnotesize{\textit{Nota}: La expliación de por qué se realizan así las imposiciones de contorno esta omitida temporalmente.}
+\end{flushleft}
+
+\subsubsection{Tipo Dirichlet}
+
+Sustituimos la primera (última en el caso $u_m$) fila de $\mathbf{K}$, el elemento (1,1) será 1, y el resto pasarán a ser 0, $\mathbf{F}_1$ tomará el valor de la condición de contorno $g(u_0)$.
+
+Con el fin de mantener la simetría del sistema se modificarán las $p$ filas siguientes (anteriores), estableceremos a 0 los elementos de la forma (1,j), y modificaremos los elementos $\mathbf{F}_j$ restandoles el valor $\mathbf{K}_{(1,j)}g(u_0)$.
+
+\subsubsection{Tipo Neumann}
+
+Actualizaremos el valor de $\mathbf{F}_1\rightarrow \mathbf{F}_1+h(u_0)$  ($\mathbf{F}_{N_b} \rightarrow \mathbf{F}_{N_b}+h(u_m)$).
+
+\subsubsection{Tipo Robin o Mixtas}
+
+Actualizaremos tanto $\mathbf{K}_{(1,1)}\rightarrow \mathbf{K}_{(1,1)} + \frac{\alpha}{\beta}$, $\left( \mathbf{K}_{(N_b,N_b)}\rightarrow \mathbf{K}_{(N_b,N_b)} + \frac{\alpha}{\beta}\right)$ y $\mathbf{F}_1 \rightarrow \mathbf{F}_1 + \frac{r}{\beta}$, $\left( \mathbf{F}_{N_b} \rightarrow \mathbf{F}_{N_b} + \frac{r}{\beta} \right)$.
+
+\section{Caso 2D}
+
+\subsection{Elementos de la matriz global y el vector de carga}
+
+\begin{align*}
+    &a(\phi_{(i_2,j_2)}(\mathbf{x}),\phi_{(i_1,j_1)}(\mathbf{x})) = \int_{\Omega}\nabla \phi_{(i_2,j_2)}(\mathbf{x}) \cdot \nabla \phi_{(i_1,j_1)}(\mathbf{x}) \, d\Omega \nonumber + \int_{\Gamma_R}\frac{\alpha}{\beta}\phi_{(i_2,j_2)}(\mathbf{x})\phi_{(i_1,j_1)}(\mathbf{x}) \, d\Gamma =\\[10pt]
+    &= \int_{v_0}^{v_{m_v}}\int_{u_0}^{u_{m_u}} \left( \mathbf{J}^{-T}(\xi,\eta) \hat{\nabla} \hat{R}_{(i_2,j_2)}^{(p,q)}(\xi,\eta) \right)^T \cdot \left( \mathbf{J}^{-T}(\xi,\eta) \hat{\nabla} \hat{R}_{(i_1,j_1)}^{(p,q)}(\xi,\eta) \right) |\det \mathbf{J}(\xi,\eta)| \, d\xi d\eta \nonumber \\
+    &\quad + \int_{\hat{\Gamma}_R}\frac{\alpha}{\beta}\hat{R}_{(i_2,j_2)}^{(p,q)}(\xi,\eta)\hat{R}_{(i_1,j_1)}^{(p,q)}(\xi,\eta) J|_{\hat{\Gamma}}(\xi,\eta) \, d\hat{\Gamma} =\\[10pt]
+    &= \int_{v_0}^{v_{m_v}}\int_{u_0}^{u_{m_u}} \left(\hat{\nabla}\hat{R}_{(i_2,j_2)}^{(p,q)}(\xi,\eta)\right)^T \left( \mathbf{J}^{-1}(\xi,\eta) \mathbf{J}^{-T}(\xi,\eta) \right) \left(\hat{\nabla}\hat{R}_{(i_1,j_1)}^{(p,q)}(\xi,\eta)\right) |\det \mathbf{J}(\xi,\eta)| \, d\xi d\eta \nonumber \\
+    &\quad + \int_{\hat{\Gamma}_R}\frac{\alpha}{\beta}\hat{R}_{(i_2,j_2)}^{(p,q)}(\xi,\eta)\hat{R}_{(i_1,j_1)}^{(p,q)}(\xi,\eta) J|_{\hat{\Gamma}}(\xi,\eta) \, d\hat{\Gamma}.
+\end{align*}
+
+Denotaremos $\mathbf{M}=J^TJ$, de manera que $\mathbf{M}^{-1}=(J^TJ)^{-1}=J^{-1}J^{-T}$.
+
+\begin{align*}
+    &L(\phi_{(i_1,j_1)}(\mathbf{x})) = \int_{\Omega}f(\mathbf{x})\phi_{(i_1,j_1)}(\mathbf{x}) \, d\Omega \nonumber \\
+    &\quad + \int_{\Gamma_N}h(\mathbf{x})\phi_{(i_1,j_1)}(\mathbf{x}) \, d\Gamma + \int_{\Gamma_R}\frac{r}{\beta}\phi_{(i_1,j_1)}(\mathbf{x}) \, d\Gamma =\\[10pt]
+    &= \int_{v_0}^{v_{m_v}}\int_{u_0}^{u_{m_u}}f(\mathbf{G}(\xi,\eta))\hat{R}_{(i_1,j_1)}^{(p,q)}(\xi,\eta)|\det \mathbf{J}(\xi,\eta)| \, d\xi d\eta \nonumber \\
+    &\quad + \int_{\hat{\Gamma}_N} h(\mathbf{G}(\xi,\eta))\hat{R}_{(i_1,j_1)}^{(p,q)}(\xi,\eta) J|_{\hat{\Gamma}}(\xi,\eta) \, d\hat{\Gamma} + \int_{\hat{\Gamma}_R} \frac{r}{\beta}\hat{R}_{(i_1,j_1)}^{(p,q)}(\xi,\eta) J|_{\hat{\Gamma}}(\xi,\eta) \, d\hat{\Gamma}.
+\end{align*}
+
+\subsection{Cálculo de las integrales}
+
+Tomaremos ahora intervalos no nulos de la forma $\hat{\Omega}_e=[u_{n},u_{{n}+1})\times[v_{k}, v_{{k}+1})$.
+
+Para este caso la \textbf{matriz local} $\mathbf{K}^e$ será de tamaño $(p+1)(q+1)\times(p+1)(q+1)$, con el fin de facilitar la comprensión de la correlación entre funciones base y elementos de la matriz tomaremos una apliación que relacione los indices de los elementos $\mathbf{K}^e_{(i,j)}$ con el número de funciones activas en cada dirección del elemento correspondiente:
+
+\begin{align}
+    \label{eq:indices}
+    &i=(i_1-1)\cdot(q+1)+j_1=(i_1,j_1), \\
+    &j=(i_2-1)\cdot(q+1)+j_2=(i_2,j_2), \quad i_1, i_2 \in \{1,2,\dots,p+1\}, \quad j_1, j_2 \in \{1,2,\dots,q+1\}.
+\end{align}
+
+Teniendo así la integral que le corresponde al elemento:
+
+\begin{equation*} 
+    \mathbf{K}^e_{((i_1,j_1),(i_2,j_2))} =\int_{v_k}^{v_{(k+1)}}\int_{u_n}^{u_{(n+1)}} \left(\hat{\nabla}\hat{R}_{(i_2 + n - p - 1, , j_2 + k - q - 1)}^{(p,q)}\right)^T \left( \mathbf{J}^{-1} \mathbf{J}^{-T} \right) \left(\hat{\nabla}\hat{R}_{(i_1 + n - p - 1, , j_1 + k - q - 1)}^{(p,q)}\right) |\det \mathbf{J}| \, d\xi d\eta.
+\end{equation*}
+
+Definimos de la misma manera ahora la \textbf{matriz local extendida} $\tilde{\mathbf{K}}^e$,
+
+\begin{equation*}
+    \tilde{\mathbf{K}}^e_{((i_1+n-p-1,j_1+k-q-1),(i_2+n-p-1, j_2+k-q-1))}=\mathbf{K}^e_{((i_1,j_1)(i_2,j_2))}.
+\end{equation*}
+
+Formando así la \textbf{matriz de rigidez} $\mathbf{K}$ mediante la suma de estas matrices:
+
+\begin{equation*}
+    \mathbf{K} = \sum_{e=1}^{N_{el}} \tilde{\mathbf{K}}^e.
+\end{equation*}
+
+Realicamos el mismo procedimiento para el vector de carga:
+
+\begin{align*}
+    &\mathbf{F}^e_{(i_1,j_1)}=\int_{v_k}^{v_{(k+1)}}\int_{u_n}^{u_{(n+1)}}f(\mathbf{G})\hat{R}_{(i_1,j_1)}^{(p,q)}|\det \mathbf{J}| \, d\xi d\eta. \\
+    &\tilde{\mathbf{F}}^e_{(i_1+n-p-1,j_1+k-q-1)}=\mathbf{F}^e_{(i_1,j_1)}.\\
+    &\mathbf{F}= \sum_{e=1}^{N_{el}} \tilde{\mathbf{F}}^e.
+\end{align*}
+
+\subsection{Imposición de condiciones de contorno}
+Se aplicarán los siguientes algoritmos para los elementos que contengan a la forntera de nuestro espacio físico.
+
+Sea $\hat{\Omega}_e=[u_{n},u_{{n}+1})\times[v_{k}, v_{{k}+1})$, un elemento paramétrico tal que $\mathbf{G}(\hat{\Omega_e})$ contiene parte de la frontera de $\Omega$, 
+dado que la frontera de $\Omega$ coincide con la frontera paramétrica, suponemos, sin pérdida de generalidad, que la frontera correspondiente a $\mathbf{G}(\hat{\Omega_e})$ coincide únicamente 
+con la frontera al borde paramétrico inferior, es decir, $\xi \in [u_{n},u_{{n}+1})$ y $\eta=v_k$\footnote{Para los elementos esquina basta aplicar el algoritmo dos veces, una para cada borde.}.
+
+Recorreremos las funciones base asociadas a esta frontera, (en este caso recorremos el indice $i_1$ y fijamos $j_1=1$), para ello proyectamos de vuelta nuestros indices $I=(i_1,1)$ para $i_2=1,\dots,p+1$, mediante la ecuación \ref{eq:indices}.
+
+\subsubsection{Tipo Dirichlet}
+\begin{enumerate}
+    \item Para cada índice $I$:
+    \begin{itemize}
+        \item Sustituimos la fila $I$-ésima de la matriz global $\mathbf{K}$ por ceros, imponiendo 1 en la diagonal ($\mathbf{K}_{I,I} = 1$).
+        \item Actualizamos el vector de carga: $\mathbf{F}_I = g(\mathbf{x}_I)$.
+    \end{itemize}
+    \item Para mantener la simetría del sistema, eliminamos las columnas $I$ correspondientes:
+    \begin{itemize}
+        \item Para cada fila distinta de $I_2 \neq I$ donde $\mathbf{K}_{I_2,I} \neq 0$, modificamos el vector de carga restando la contribución conocida: $\mathbf{F}_K \leftarrow \mathbf{F}_K - \mathbf{K}_{I_2,I} \cdot g(\mathbf{x}_I)$.
+        \item Establecemos $\mathbf{K}_{I_2,I} = 0$.
+    \end{itemize}
+\end{enumerate}
+
+
+\subsubsection{Tipo Neumann}
+Para cada índice $I$:
+\begin{equation*}
+        \mathbf{F}_I \leftarrow \mathbf{F}_I + \int_{u_n}^{u_{n+1}} h(\mathbf{G}(\xi, v_k)) \cdot \hat{R}_{(i_1,1)}^{(p,q)}(\xi, v_k) \cdot J_{\Gamma}(\xi) \, d\xi.
+\end{equation*}
+
+\subsubsection{Tipo Robin o Mixtas}
+
+Proyectamos también en este caso $J = (i_2, 1)$ para $i_2=1,\dots,p+1$.
+
+Para cada índice $I$:
+    \begin{equation*}
+        \mathbf{F}_I \leftarrow \mathbf{F}_I + \int_{u_n}^{u_{n+1}} \frac{r}{\beta} \cdot \hat{R}_{(i_1,1)}^{(p,q)}(\xi, v_k) \cdot J_{\Gamma}(\xi) \, d\xi.
+    \end{equation*}
+
+Para cada par de índices $(I, J)$:
+    \begin{equation*}
+        \mathbf{K}_{I,J} \leftarrow \mathbf{K}_{I,J} + \int_{u_n}^{u_{n+1}} \frac{\alpha}{\beta} \cdot \hat{R}_{(i_1,1)}^{(p,q)}(\xi, v_k) \cdot \hat{R}_{(i_2,1)}^{(p,q)}(\xi, v_k) \cdot J_{\Gamma}(\xi) \, d\xi.
+    \end{equation*}
+
+
+
+
+
+\section{Convergencia en L2 y H1 y Tiempo de Computación Teórico}
+
+\subsection{Convergencia}
+
+Para asegurar la convergencia debemos partir de unas condiciones iniciales:
+\begin{itemize}
+    \item \textbf{Regularidad de la solución:} $u\in H^{p+1}(\Omega)$.
+    \item \textbf{Malla no degenerada:} det($J$)$>0$.
+\end{itemize}
+
+Bajo estas condiciones podemos tomar cotas del error en diferentes espacios:
+
+\begin{itemize}
+    \item \textbf{Norma en $H^1(\Omega)$:} $\| u - u_h \|_{H^1(\Omega)} \leq C_1 h^p | u |_{H^{p+1}(\Omega)}$.
+    \item \textbf{Norma en $L^2(\Omega)$:} $\| u - u_h \|_{L^2(\Omega)} \le C_2 h^{p+1} | u |_{H^{p+1}(\Omega)}$.
+\end{itemize}
+
+\begin{proof}
+    Las demostraciones están omitidas temporalmente.
+\end{proof}
+
+\subsection{Tiempo de Computación}
+
+Separaremos el tiempo de computación en sus fases independientes:
+
+\subsubsection{Fase de Evaluación}
+
+Fase previa al ensamblado para dimensiones mayores o iguales que dos, que aprovecha las propiedades del producto tensorial para evitar recalcular evaluaciones de funciones base, su coste computacional:
+
+$$\sum_{i=1}^{d}Q_i\cdot n_i=\mathcal{O}(d\cdot\text{max}_i\{Q_i\cdot n_i\}),$$ donde $Q_i$ es el número de evaluaciones direccionales y $n_i$ el número de divisiones correspondientes a la dimensión $i$.
+
+\subsubsection{Fase de Ensamblado}
+
+Fase en la que se realizan las integrales numéricas y se ensamblan, su coste computacional:
+
+\begin{equation*}
+    \prod_{i=1}^d Q_i^2 \cdot n_i \cdot C, 
+\end{equation*}
+
+Donde $C$ es el coste de la integración numérica, calculo del jacobiano y manipulación de la memoria.
+
+\subsubsection{Fase de Resolución}
+
+Depende del tamaño final del sistema y del método elegido para resolver el sistema resultante.
 
 %--- FIN DEL CAPÍTULO 3
 
