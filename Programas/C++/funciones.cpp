@@ -1633,7 +1633,7 @@ void D1_element_eval(int n, int i, int p, int nEvals, double lower_limit, double
         //funcEvals[k]=f(EvalPoint)/(M_PI *M_PI ); //Case Jacobian is constant at 1
         //funcEvals[k] = 10*10*M_PI*M_PI*sin(10*M_PI*CurvePointRational(n, p, KnotVector, CtrlPtsW, EvalPoint)[0]);
         //funcEvals[k] = f(CurvePointRational(n, p, KnotVector, CtrlPtsW, EvalPoint)[0]); //Case unidimensional curve
-        funcEvals[k]= f(cumLenght)/(M_PI*M_PI); //Generic case (optimization needed)
+        funcEvals[k]= f(cumLenght); //Generic case (optimization needed)
     }
 
 }
@@ -1781,7 +1781,7 @@ void writeNumericFunction(Eigen::VectorXd funEvals,const std::vector<double> &Kn
                 //std::cout << "funEvals[" << span-p+j<< "]= " << funEvals[span-p+j]<< std::endl;
                 //std::cout << "eval[" << j << "]= " << eval[j]<< std::endl;
                 AuxVal1+=funEvals[span-p+j]*eval1[j];
-                AuxVal2+=funEvals[span-p+j]*eval2[j]*Lenght;
+                AuxVal2+=funEvals[span-p+j]*eval2[j];
             }
             fichero1 << AuxVal1 << " ";
             fichero2 << AuxVal2 << " ";

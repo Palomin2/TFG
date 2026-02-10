@@ -1648,7 +1648,7 @@
 \PYG{+w}{        }\PYG{c+c1}{//funcEvals[k]=f(EvalPoint)/(M\PYGZus{}PI *M\PYGZus{}PI ); //Case Jacobian is constant at 1}
 \PYG{+w}{        }\PYG{c+c1}{//funcEvals[k] = 10*10*M\PYGZus{}PI*M\PYGZus{}PI*sin(10*M\PYGZus{}PI*CurvePointRational(n, p, KnotVector, CtrlPtsW, EvalPoint)[0]);}
 \PYG{+w}{        }\PYG{c+c1}{//funcEvals[k] = f(CurvePointRational(n, p, KnotVector, CtrlPtsW, EvalPoint)[0]); //Case unidimensional curve}
-\PYG{+w}{        }\PYG{n}{funcEvals}\PYG{p}{[}\PYG{n}{k}\PYG{p}{]}\PYG{o}{=}\PYG{+w}{ }\PYG{n}{f}\PYG{p}{(}\PYG{n}{cumLenght}\PYG{p}{)}\PYG{o}{/}\PYG{p}{(}\PYG{n}{M\PYGZus{}PI}\PYG{o}{*}\PYG{n}{M\PYGZus{}PI}\PYG{p}{);}\PYG{+w}{ }\PYG{c+c1}{//Generic case (optimization needed)}
+\PYG{+w}{        }\PYG{n}{funcEvals}\PYG{p}{[}\PYG{n}{k}\PYG{p}{]}\PYG{o}{=}\PYG{+w}{ }\PYG{n}{f}\PYG{p}{(}\PYG{n}{cumLenght}\PYG{p}{);}\PYG{+w}{ }\PYG{c+c1}{//Generic case (optimization needed)}
 \PYG{+w}{    }\PYG{p}{\PYGZcb{}}
 
 \PYG{p}{\PYGZcb{}}
@@ -1802,7 +1802,7 @@
 \PYG{+w}{                }\PYG{c+c1}{//std::cout \PYGZlt{}\PYGZlt{} \PYGZdq{}funEvals[\PYGZdq{} \PYGZlt{}\PYGZlt{} span\PYGZhy{}p+j\PYGZlt{}\PYGZlt{} \PYGZdq{}]= \PYGZdq{} \PYGZlt{}\PYGZlt{} funEvals[span\PYGZhy{}p+j]\PYGZlt{}\PYGZlt{} std::endl;}
 \PYG{+w}{                }\PYG{c+c1}{//std::cout \PYGZlt{}\PYGZlt{} \PYGZdq{}eval[\PYGZdq{} \PYGZlt{}\PYGZlt{} j \PYGZlt{}\PYGZlt{} \PYGZdq{}]= \PYGZdq{} \PYGZlt{}\PYGZlt{} eval[j]\PYGZlt{}\PYGZlt{} std::endl;}
 \PYG{+w}{                }\PYG{n}{AuxVal1}\PYG{o}{+=}\PYG{n}{funEvals}\PYG{p}{[}\PYG{n}{span}\PYG{o}{\PYGZhy{}}\PYG{n}{p}\PYG{o}{+}\PYG{n}{j}\PYG{p}{]}\PYG{o}{*}\PYG{n}{eval1}\PYG{p}{[}\PYG{n}{j}\PYG{p}{];}
-\PYG{+w}{                }\PYG{n}{AuxVal2}\PYG{o}{+=}\PYG{n}{funEvals}\PYG{p}{[}\PYG{n}{span}\PYG{o}{\PYGZhy{}}\PYG{n}{p}\PYG{o}{+}\PYG{n}{j}\PYG{p}{]}\PYG{o}{*}\PYG{n}{eval2}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]}\PYG{o}{*}\PYG{n}{Lenght}\PYG{p}{;}
+\PYG{+w}{                }\PYG{n}{AuxVal2}\PYG{o}{+=}\PYG{n}{funEvals}\PYG{p}{[}\PYG{n}{span}\PYG{o}{\PYGZhy{}}\PYG{n}{p}\PYG{o}{+}\PYG{n}{j}\PYG{p}{]}\PYG{o}{*}\PYG{n}{eval2}\PYG{p}{[}\PYG{n}{j}\PYG{p}{];}
 \PYG{+w}{            }\PYG{p}{\PYGZcb{}}
 \PYG{+w}{            }\PYG{n}{fichero1}\PYG{+w}{ }\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{+w}{ }\PYG{n}{AuxVal1}\PYG{+w}{ }\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{} \PYGZdq{}}\PYG{p}{;}
 \PYG{+w}{            }\PYG{n}{fichero2}\PYG{+w}{ }\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{+w}{ }\PYG{n}{AuxVal2}\PYG{+w}{ }\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{} \PYGZdq{}}\PYG{p}{;}
@@ -1860,15 +1860,17 @@
 \PYG{+w}{            }\PYG{n}{Jacobian}\PYG{o}{=}\PYG{n}{sqrt}\PYG{p}{(}\PYG{n}{Jacobian}\PYG{p}{);}
 \PYG{+w}{            }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{FisicalP}\PYG{o}{=}\PYG{n}{Fisical\PYGZus{}to\PYGZus{}Parametric}\PYG{p}{(}\PYG{n}{preVal}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{t}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Lenght}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{20}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{CtrlPtsW}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{KnotVector}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{n}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{);}
 \PYG{+w}{            }\PYG{n}{cumLenght}\PYG{o}{+=}\PYG{n}{FisicalP}\PYG{p}{;}
-\PYG{+w}{            }\PYG{c+c1}{//std::cout \PYGZlt{}\PYGZlt{} \PYGZdq{}tanalytic = \PYGZdq{} \PYGZlt{}\PYGZlt{} Fisical\PYGZus{}to\PYGZus{}Parametric(auxeval1*nodes(i)+auxeval2, 0, Lenght, 50, CtrlPtsW, KnotVector, n, p)\PYGZlt{}\PYGZlt{} \PYGZdq{} ,EvalPoint= \PYGZdq{}\PYGZlt{}\PYGZlt{} auxeval1*nodes(i)+auxeval2 \PYGZlt{}\PYGZlt{} std::endl;}
 \PYG{+w}{            }\PYG{c+c1}{//double auxval = CurvePointRational(n, p, KnotVector, CtrlPtsW, lowerLimit + i*Step)[0];}
 \PYG{+w}{            }\PYG{c+c1}{//std::cout \PYGZlt{}\PYGZlt{} \PYGZdq{}point is: \PYGZdq{}\PYGZlt{}\PYGZlt{} lowerLimit + (auxeval1*nodes(i)+auxeval2) \PYGZlt{}\PYGZlt{} std::endl;}
 \PYG{+w}{            }\PYG{c+c1}{//fichero \PYGZlt{}\PYGZlt{} f(auxeval1*nodes(i)+auxeval2) \PYGZlt{}\PYGZlt{} \PYGZdq{} \PYGZdq{}; //case Jacobian is constant at value 1}
-\PYG{+w}{            }\PYG{c+c1}{//fichero \PYGZlt{}\PYGZlt{} f(CurvePointRational(n, p, KnotVector, CtrlPtsW, auxeval1*nodes(i)+auxeval2)[0]) \PYGZlt{}\PYGZlt{} \PYGZdq{} \PYGZdq{}; //case jacobian is not constant but f only takes 1 dimensional parameters}
-\PYG{+w}{            }\PYG{n}{fichero1}\PYG{+w}{ }\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{+w}{ }\PYG{n}{f}\PYG{p}{(}\PYG{n}{cumLenght}\PYG{p}{)}\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{} \PYGZdq{}}\PYG{p}{;}\PYG{+w}{ }\PYG{c+c1}{//optimization needed, not neccesary to commpute the lagranje pol pts in each interation}
+\PYG{+w}{            }\PYG{c+c1}{//fichero \PYGZlt{}\PYGZlt{} f(CurvePointRational(n, p, KnotVector, CtrlPtsW, auxeval1*nodes(i)+auxeval2)[0]) }
+\PYG{+w}{            }\PYG{c+c1}{//\PYGZlt{}\PYGZlt{} \PYGZdq{} \PYGZdq{}; //case jacobian is not constant but f only takes 1 dimensional parameters}
+\PYG{+w}{            }\PYG{n}{fichero1}\PYG{+w}{ }\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{+w}{ }\PYG{n}{f}\PYG{p}{(}\PYG{n}{cumLenght}\PYG{p}{)}\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{} \PYGZdq{}}\PYG{p}{;}\PYG{+w}{ }\PYG{c+c1}{//optimization needed, not neccesary to }
+\PYG{+w}{                                            }\PYG{c+c1}{//commpute the lagranje pol pts in each interation}
 \PYG{+w}{            }\PYG{n}{fichero2}\PYG{+w}{ }\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{+w}{ }\PYG{n}{f\PYGZus{}Ders}\PYG{p}{(}\PYG{n}{cumLenght}\PYG{p}{)}\PYG{o}{*}\PYG{n}{Jacobian}\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{} \PYGZdq{}}\PYG{p}{;}
 \PYG{+w}{            }\PYG{n}{preVal}\PYG{o}{=}\PYG{n}{t}\PYG{p}{;}
-\PYG{+w}{            }\PYG{c+c1}{//fichero1 \PYGZlt{}\PYGZlt{} f(auxeval1*nodes(i)+auxeval2)\PYGZlt{}\PYGZlt{} \PYGZdq{} \PYGZdq{}; //optimization needed, not neccesary to commpute the lagranje pol pts in each interation}
+\PYG{+w}{            }\PYG{c+c1}{//fichero1 \PYGZlt{}\PYGZlt{} f(auxeval1*nodes(i)+auxeval2)\PYGZlt{}\PYGZlt{} \PYGZdq{} \PYGZdq{}; }
+\PYG{+w}{            }\PYG{c+c1}{//optimization needed, not neccesary to commpute the lagranje pol pts in each interation}
 \PYG{+w}{            }\PYG{c+c1}{//fichero2 \PYGZlt{}\PYGZlt{} f\PYGZus{}Ders(auxeval1*nodes(i)+auxeval2)*Jacobian\PYGZlt{}\PYGZlt{} \PYGZdq{} \PYGZdq{};}
 \PYG{+w}{            }\PYG{c+c1}{//std::cout \PYGZlt{}\PYGZlt{} CurvePointRational(n, p, KnotVector, CtrlPtsW, time[i])[0] \PYGZlt{}\PYGZlt{} std::endl;}
 \PYG{+w}{            }\PYG{c+c1}{//fichero1 \PYGZlt{}\PYGZlt{} f(CurvePointRational(n, p, KnotVector, CtrlPtsW, time[i])[0]) \PYGZlt{}\PYGZlt{} \PYGZdq{} \PYGZdq{};}
@@ -1924,7 +1926,8 @@
 
 \PYG{c+cm}{/******************************************************************************* */}
 \PYG{c+cm}{/*}
-\PYG{c+cm}{void writeFunctionDers(Eigen::VectorXd funEvals,const std::vector\PYGZlt{}double\PYGZgt{} \PYGZam{}KnotVector,const iMatrix\PYGZlt{}double\PYGZgt{} \PYGZam{}CtrlPtsW ,const std::vector\PYGZlt{}double\PYGZgt{} \PYGZam{}WeightVector, int n, int p, int nEvals, double lowerLimit, double upperLimit,  std::string name)\PYGZob{}}
+\PYG{c+cm}{void writeFunctionDers(Eigen::VectorXd funEvals,const std::vector\PYGZlt{}double\PYGZgt{} \PYGZam{}KnotVector,const iMatrix\PYGZlt{}double\PYGZgt{} \PYGZam{}CtrlPtsW ,}
+\PYG{c+cm}{                       const std::vector\PYGZlt{}double\PYGZgt{} \PYGZam{}WeightVector, int n, int p, int nEvals, double lowerLimit, double upperLimit,  std::string name)\PYGZob{}}
 \PYG{c+cm}{    std::ofstream fichero;}
 \PYG{c+cm}{    fichero.open(name);}
 \PYG{c+cm}{    Eigen::VectorXd nodes, weights;}
@@ -1954,8 +1957,8 @@
 
 \PYG{c+cm}{/******************************************************************************* */}
 \PYG{c+cm}{/*}
-\PYG{c+cm}{void writeFunctionDers(std::function\PYGZlt{}double(double)\PYGZgt{} f, double lowerLimit, double upperLimit, double nEvals,const iMatrix\PYGZlt{}double\PYGZgt{} \PYGZam{}CtrlPtsW,const std::vector\PYGZlt{}double\PYGZgt{} \PYGZam{}KnotVector,}
-\PYG{c+cm}{                    int n, int p, std::string name, double Lenght)\PYGZob{}}
+\PYG{c+cm}{void writeFunctionDers(std::function\PYGZlt{}double(double)\PYGZgt{} f, double lowerLimit, double upperLimit, double nEvals,const iMatrix\PYGZlt{}double\PYGZgt{} \PYGZam{}CtrlPtsW,}
+\PYG{c+cm}{                        const std::vector\PYGZlt{}double\PYGZgt{} \PYGZam{}KnotVector, int n, int p, std::string name, double Lenght)\PYGZob{}}
 \PYG{c+cm}{    std::ofstream fichero;}
 \PYG{c+cm}{    fichero.open(name);}
 \PYG{c+cm}{    Eigen::VectorXd nodes, weights;}

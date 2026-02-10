@@ -1647,7 +1647,7 @@ void D1_element_eval(int n, int i, int p, int nEvals, double lower_limit, double
         //funcEvals[k]=f(EvalPoint)/(M_PI *M_PI ); //Case Jacobian is constant at 1
         //funcEvals[k] = 10*10*M_PI*M_PI*sin(10*M_PI*CurvePointRational(n, p, KnotVector, CtrlPtsW, EvalPoint)[0]);
         //funcEvals[k] = f(CurvePointRational(n, p, KnotVector, CtrlPtsW, EvalPoint)[0]); //Case unidimensional curve
-        funcEvals[k]= f(cumLenght)/(M_PI*M_PI); //Generic case (optimization needed)
+        funcEvals[k]= f(cumLenght); //Generic case (optimization needed)
     }
 
 }
@@ -1801,7 +1801,7 @@ void writeNumericFunction(Eigen::VectorXd funEvals,const std::vector<double> &Kn
                 //std::cout << "funEvals[" << span-p+j<< "]= " << funEvals[span-p+j]<< std::endl;
                 //std::cout << "eval[" << j << "]= " << eval[j]<< std::endl;
                 AuxVal1+=funEvals[span-p+j]*eval1[j];
-                AuxVal2+=funEvals[span-p+j]*eval2[j]*Lenght;
+                AuxVal2+=funEvals[span-p+j]*eval2[j];
             }
             fichero1 << AuxVal1 << " ";
             fichero2 << AuxVal2 << " ";
@@ -1859,15 +1859,17 @@ void writeAnalyticFunction(std::function<double(double)> f,std::function<double(
             Jacobian=sqrt(Jacobian);
             double FisicalP=Fisical_to_Parametric(preVal, t, 0, Lenght, 20, CtrlPtsW, KnotVector, n, p);
             cumLenght+=FisicalP;
-            //std::cout << "tanalytic = " << Fisical_to_Parametric(auxeval1*nodes(i)+auxeval2, 0, Lenght, 50, CtrlPtsW, KnotVector, n, p)<< " ,EvalPoint= "<< auxeval1*nodes(i)+auxeval2 << std::endl;
             //double auxval = CurvePointRational(n, p, KnotVector, CtrlPtsW, lowerLimit + i*Step)[0];
             //std::cout << "point is: "<< lowerLimit + (auxeval1*nodes(i)+auxeval2) << std::endl;
             //fichero << f(auxeval1*nodes(i)+auxeval2) << " "; //case Jacobian is constant at value 1
-            //fichero << f(CurvePointRational(n, p, KnotVector, CtrlPtsW, auxeval1*nodes(i)+auxeval2)[0]) << " "; //case jacobian is not constant but f only takes 1 dimensional parameters
-            fichero1 << f(cumLenght)<< " "; //optimization needed, not neccesary to commpute the lagranje pol pts in each interation
+            //fichero << f(CurvePointRational(n, p, KnotVector, CtrlPtsW, auxeval1*nodes(i)+auxeval2)[0]) 
+            //<< " "; //case jacobian is not constant but f only takes 1 dimensional parameters
+            fichero1 << f(cumLenght)<< " "; //optimization needed, not neccesary to 
+                                            //commpute the lagranje pol pts in each interation
             fichero2 << f_Ders(cumLenght)*Jacobian<< " ";
             preVal=t;
-            //fichero1 << f(auxeval1*nodes(i)+auxeval2)<< " "; //optimization needed, not neccesary to commpute the lagranje pol pts in each interation
+            //fichero1 << f(auxeval1*nodes(i)+auxeval2)<< " "; 
+            //optimization needed, not neccesary to commpute the lagranje pol pts in each interation
             //fichero2 << f_Ders(auxeval1*nodes(i)+auxeval2)*Jacobian<< " ";
             //std::cout << CurvePointRational(n, p, KnotVector, CtrlPtsW, time[i])[0] << std::endl;
             //fichero1 << f(CurvePointRational(n, p, KnotVector, CtrlPtsW, time[i])[0]) << " ";
@@ -1923,7 +1925,8 @@ std::vector<std::vector<double>> leerArchivo(const std::string& name, int p) {
 
 /******************************************************************************* */
 /*
-void writeFunctionDers(Eigen::VectorXd funEvals,const std::vector<double> &KnotVector,const iMatrix<double> &CtrlPtsW ,const std::vector<double> &WeightVector, int n, int p, int nEvals, double lowerLimit, double upperLimit,  std::string name){
+void writeFunctionDers(Eigen::VectorXd funEvals,const std::vector<double> &KnotVector,const iMatrix<double> &CtrlPtsW ,
+                       const std::vector<double> &WeightVector, int n, int p, int nEvals, double lowerLimit, double upperLimit,  std::string name){
     std::ofstream fichero;
     fichero.open(name);
     Eigen::VectorXd nodes, weights;
@@ -1953,8 +1956,8 @@ void writeFunctionDers(Eigen::VectorXd funEvals,const std::vector<double> &KnotV
 
 /******************************************************************************* */
 /*
-void writeFunctionDers(std::function<double(double)> f, double lowerLimit, double upperLimit, double nEvals,const iMatrix<double> &CtrlPtsW,const std::vector<double> &KnotVector,
-                    int n, int p, std::string name, double Lenght){
+void writeFunctionDers(std::function<double(double)> f, double lowerLimit, double upperLimit, double nEvals,const iMatrix<double> &CtrlPtsW,
+                        const std::vector<double> &KnotVector, int n, int p, std::string name, double Lenght){
     std::ofstream fichero;
     fichero.open(name);
     Eigen::VectorXd nodes, weights;

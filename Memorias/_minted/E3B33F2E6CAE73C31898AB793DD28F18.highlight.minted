@@ -1,0 +1,29 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{n}{dataX} \PYG{p}{=}  \PYG{n+nb}{dlmread}\PYG{p}{(}\PYG{n}{PATH} \PYG{o}{+} \PYG{l+s}{\PYGZsq{}SuperficieRationalEj2X.txt\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{} \PYGZsq{}}\PYG{p}{);}
+\PYG{n}{dataY} \PYG{p}{=}  \PYG{n+nb}{dlmread}\PYG{p}{(}\PYG{n}{PATH} \PYG{o}{+} \PYG{l+s}{\PYGZsq{}SuperficieRationalEj2Y.txt\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{} \PYGZsq{}}\PYG{p}{);}
+\PYG{n}{dataZ} \PYG{p}{=}  \PYG{n+nb}{dlmread}\PYG{p}{(}\PYG{n}{PATH} \PYG{o}{+} \PYG{l+s}{\PYGZsq{}SuperficieRationalEj2Z.txt\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{} \PYGZsq{}}\PYG{p}{);}
+
+\PYG{n+nb}{hold} \PYG{n}{on}
+\PYG{n+nb}{surf}\PYG{p}{(}\PYG{n}{dataX}\PYG{p}{,} \PYG{n}{dataY}\PYG{p}{,} \PYG{n}{dataZ}\PYG{p}{);}
+
+\PYG{n}{dataCtrlX} \PYG{p}{=}  \PYG{n+nb}{dlmread}\PYG{p}{(}\PYG{n}{PATH} \PYG{o}{+} \PYG{l+s}{\PYGZsq{}Ej2X.txt\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{} \PYGZsq{}}\PYG{p}{);}
+\PYG{n}{dataCtrlY} \PYG{p}{=}  \PYG{n+nb}{dlmread}\PYG{p}{(}\PYG{n}{PATH} \PYG{o}{+} \PYG{l+s}{\PYGZsq{}Ej2Y.txt\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{} \PYGZsq{}}\PYG{p}{);}
+\PYG{n}{dataCtrlZ} \PYG{p}{=}  \PYG{n+nb}{dlmread}\PYG{p}{(}\PYG{n}{PATH} \PYG{o}{+} \PYG{l+s}{\PYGZsq{}Ej2Z.txt\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{} \PYGZsq{}}\PYG{p}{);}
+
+\PYG{p}{[}\PYG{n}{n1} \PYG{n}{n2}\PYG{p}{]} \PYG{p}{=} \PYG{n+nb}{size}\PYG{p}{(}\PYG{n}{dataCtrlX}\PYG{p}{);}
+
+\PYG{k}{for} \PYG{n}{i}\PYG{p}{=}\PYG{l+m+mi}{1}\PYG{p}{:}\PYG{n}{n1}
+  \PYG{n}{plot3}\PYG{p}{(}\PYG{n}{dataCtrlX}\PYG{p}{(}\PYG{n}{i}\PYG{p}{,:),}\PYG{n}{dataCtrlY}\PYG{p}{(}\PYG{n}{i}\PYG{p}{,:),}\PYG{n}{dataCtrlZ}\PYG{p}{(}\PYG{n}{i}\PYG{p}{,:),} \PYG{n}{color}\PYG{p}{=}\PYG{l+s}{\PYGZsq{}r\PYGZsq{}}\PYG{p}{);}
+\PYG{k}{endfor}
+
+\PYG{k}{for} \PYG{n}{j}\PYG{p}{=}\PYG{l+m+mi}{1}\PYG{p}{:}\PYG{n}{n2}
+  \PYG{n}{plot3}\PYG{p}{(}\PYG{n}{dataCtrlX}\PYG{p}{(:,}\PYG{n}{j}\PYG{p}{),}\PYG{n}{dataCtrlY}\PYG{p}{(:,}\PYG{n}{j}\PYG{p}{),}\PYG{n}{dataCtrlZ}\PYG{p}{(:,}\PYG{n}{j}\PYG{p}{),} \PYG{n}{color}\PYG{p}{=}\PYG{l+s}{\PYGZsq{}r\PYGZsq{}}\PYG{p}{);}
+\PYG{k}{endfor}
+
+\PYG{n}{scatter3}\PYG{p}{(}\PYG{n}{dataCtrlX}\PYG{p}{(:),} \PYG{n}{dataCtrlY}\PYG{p}{(:),} \PYG{n}{dataCtrlZ}\PYG{p}{(:),} \PYG{l+m+mi}{30}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}k\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}filled\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}MarkerEdgeColor\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}w\PYGZsq{}}\PYG{p}{);}
+\PYG{n+nb}{view}\PYG{p}{(}\PYG{l+m+mi}{30}\PYG{p}{,} \PYG{l+m+mi}{45}\PYG{p}{);}
+\PYG{n+nb}{grid} \PYG{n}{on}\PYG{p}{;}
+
+\PYG{n+nb}{print} \PYG{o}{\PYGZhy{}}\PYG{n}{dsvg} \PYG{l+s}{\PYGZsq{}Superficie\PYGZus{}NURBS\PYGZus{}Ej1.svg\PYGZsq{}}\PYG{p}{;}
+\PYG{n+nb}{hold} \PYG{n}{off}\PYG{p}{;}
+\end{MintedVerbatim}

@@ -8,7 +8,7 @@
 clear; close all; clc;
 
 %% --- Parámetros configurables ---
-h_val = 512;
+h_val = 256;
 p_val = 2;
 test_name = 'testCircle';
 
@@ -39,17 +39,17 @@ hold on; grid on; axis equal;
 
 % Graficar con color dependiente del valor escalar
 colormap jet; % puedes usar 'parula', 'turbo', 'hot', etc.
-scatter3(x, y, z, 40, values, 'filled'); % puntos coloreados
-plot3(x, y, z, 'Color', [0.3 0.3 0.3], 'LineWidth', 1.0); % línea gris
+scatter3(x, y, values, 40, values, 'filled'); % puntos coloreados
+plot3(x, y, values, 'Color', [0.3 0.3 0.3], 'LineWidth', 1.0); % línea gris
 
 colorbar;
-title(sprintf('Curva en R^3 coloreada (h=%d, p=%d)', h_val, p_val), 'FontSize', 20);
+%title(sprintf('Curva en R^3 coloreada (h=%d, p=%d)', h_val, p_val), 'FontSize', 20);
 xlabel('x'); ylabel('y'); zlabel('z');
 view(3); % vista 3D
 
 % Guardar figura
-print(h1, sprintf('CurvaColor_h%d_p%d.svg', h_val, p_val), '-dsvg');
-print(h1, sprintf('CurvaColor_h%d_p%d.png', h_val, p_val), '-dpng', '-r300');
+print(h1, sprintf('CurvaColor_h%d_p%d_Z.svg', h_val, p_val), '-dsvg');
+print(h1, sprintf('CurvaColor_h%d_p%d_Z.png', h_val, p_val), '-dpng', '-r300');
 hold off;
 
 fprintf('Figura 3D generada y guardada correctamente.\n');

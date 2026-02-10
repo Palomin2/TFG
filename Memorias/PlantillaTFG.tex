@@ -12,7 +12,7 @@
 %
 % Escrito para pdfLaTeX
 %
-%Imporatante para la bilbiografia: bibtex PlantillaTFG
+%Importante para la bilbiografia: bibtex PlantillaTFG
 \documentclass[11pt]{book}
 
 % Paquetes y fuentes
@@ -168,6 +168,7 @@ urlcolor=black]{hyperref}
 \Huge{Universidad de Zaragoza}\\%
 
 \vfill
+{\huge Directores del trabajo: Álvaro Pé de la Riva y\\Carmen Rodrigo Cardiel} \\
 \huge{Noviembre de 2025}
 \end{center}
 \end{titlepage}
@@ -194,11 +195,11 @@ Se creará al finalizar el trabajo.
 %--- CAPÍTULO 1 DEL TFG
 \chapter{Introducción}
 
-\section{Contexto y Relación con el Método de Elementos Finitos}
+\section{Contexto y relación con el método de elementos finitos}
 
 El análisis isogeométrico (IGA) es un método numérico, cuya finalidad se basa en la resolución de problemas de ecuaciones en derivadas parciales.
 
-Se asemeja al método de elementos finitos (FEM), ambos buscan la solución mediante una combinación lineal de funciones base a partir de la formulación variacional ,su principal diferencia con él radica en la preservación de la geometría original del espacio en el que se trabaja.
+Se asemeja al método de elementos finitos (FEM), ambos buscan la solución mediante una combinación lineal de funciones base a partir de la formulación variacional; su principal diferencia con él radica en la preservación de la geometría original del espacio en el que se trabaja.
 
 \begin{table}[htbp]
     \centering
@@ -232,16 +233,16 @@ Se asemeja al método de elementos finitos (FEM), ambos buscan la solución medi
         
         \textbf{Coste Ensamblaje} & 
         \cellcolor{ventaja} \textbf{Económico.} Cuadratura sencilla. & 
-        \cellcolor{desventaja} \textbf{Elevado.} Requiere reglas de cuadratura mas complejas. \\
+        \cellcolor{desventaja} \textbf{Elevado.} Requiere reglas de cuadratura más complejas. \\
         \midrule
         
         \textbf{Mapeo Inverso} & 
         \cellcolor{ventaja} \textbf{Directo.} Inversión simple o analítica.  & 
-        \cellcolor{desventaja} \textbf{Complejo.} aumento en el coste computacional. \\
+        \cellcolor{desventaja} \textbf{Complejo.} Aumento del coste computacional. \\
         \bottomrule
     \end{tabular}
 \end{table}
-\textit{Nota:} Si se desea conocer mas en detalle los distintos elementos del FEM para comparar más meticulosamente ambos métodos refierase al anexo \ref{FEM}.
+\textit{Nota:} Si se desea conocer más en detalle los distintos elementos del FEM para comparar más meticulosamente ambos métodos refiérase al anexo \ref{FEM}.
 
 \begin{figure}[H]
     \centering
@@ -269,9 +270,9 @@ Se asemeja al método de elementos finitos (FEM), ambos buscan la solución medi
 \end{figure}
 
 
-\section{Evolución del Análisis Isogeométrico}
+\section{Evolución del análisis isogeométrico}
 
-Para comprender el IGA, es necesario comprender la evolución del diseño asistido por ordenador (CAD), en \textbf{1967} Ahlberg, Nilson y Walsh publican su obra \textit{Theory of Splines and Their Applications},
+Para comprender el IGA, es necesario conocer la evolución del diseño asistido por ordenador (CAD), en \textbf{1967} Ahlberg, Nilson y Walsh publican su obra \textit{Theory of Splines and Their Applications},
 pionera en formalizar la teoría de los \textbf{splines}.
 
 Con la llegada de la industria de automoción y aeronáutica en los 70 y 80, comienza la necesidad de representar formas complejas de manera eficiente impulsando así el CAD.
@@ -280,9 +281,9 @@ Durante esta época se estandarizaron las técnicas y los algoritmos esenciales 
 
 Paralelamente a este proceso, en los años 50 y 60, impulsado por la industria aeroespacial, con el fin de resolver ecuaciones en derivadas parciales en dominios complejos, surgió el FEM, ignorando el CAD y creando una brecha entre ellos que duró décadas.
 
-En una búsqueda de unificar el diseño asistido por ordenador (CAD) y el análisis asistido por ordenador (CAE), tratando de eliminar la necesidad de crear una conversión geométrica que afecta a la precisión, nace el análisis isogeométrico.
+En una búsqueda de unificar el diseño asistido por ordenador (CAD) y el análisis asistido por ordenador (CAE), en busca de eliminar la necesidad de crear una conversión geométrica que afecta a la precisión, nace el análisis isogeométrico.
 
-Actualmente IGA se usa en diferenctes industrias como: \textbf{automoción},  simulación de choques, \textbf{aeroespacial}, diseño de álabes de turbinas, \textbf{biomedicina}, simulación de flujo sanguíneo, \textbf{eólica}, Interacción fluido-estructura en las palas.
+Actualmente IGA se usa en diferentes industrias como: \textbf{automoción},  simulación de choques, \textbf{aeroespacial}, diseño de álabes de turbinas, \textbf{biomedicina}, simulación de flujo sanguíneo, \textbf{eólica}, Interacción fluido-estructura en las palas.
 
 Finalmente mencionamos los campos de estudio en los que se avanzan actualmente en referencia a IGA como son los \textbf{T-Splines}, para un mayor refinamiento local, y los métodos \textbf{espacio-temporales}, campo actualmente en investigación.
 
@@ -290,23 +291,23 @@ Finalmente mencionamos los campos de estudio en los que se avanzan actualmente e
 
 El objetivo principal del trabajo es entender el marco teórico y las ventajas del IGA frente al FEM, tanto en costo computacional como en orden de convergencia, en problemas de contorno de ecuaciones en derivadas parciales.
 
-Nos centraremos el estudio de los casos 1D y 2D, pues la generalización a dimensiones superiores es análoga.
+Nos centraremos en el estudio de los casos 1D y 2D, pues la generalización a dimensiones superiores es análoga.
 
-Con el fin de cumplir este objetivo, este se segmentará en los siguientes puntos que se seguiran en el orden siguiente:
+Con el fin de cumplir este objetivo, este se segmentará en los siguientes puntos que se seguirán en el orden siguiente:
 
 \begin{enumerate}
     \item \textbf{Marco teórico:} Establecer el marco teórico del IGA, contrastando la formulación variacional basada en las funciones NURBS con la aproximación polinómica del FEM.
-    \item \textbf{Implementación computacional:} Desarrollo e implementación de código propio que pueda resolver porblemas de contorno de edps usando el IGA.
-    \item \textbf{Validación y comparación:} Validar los resultados numéricos comparandolos con las soluciones analíticas de los problemas y comprobar las diferencias en velocidad de convergencia con el FEM.
+    \item \textbf{Implementación computacional:} Desarrollo e implementación de código propio que pueda resolver problemas de contorno de EDPs usando el IGA.
+    \item \textbf{Validación y comparación:} Validar los resultados numéricos comparándolos con las soluciones analíticas de los problemas y comprobar las diferencias en velocidad de convergencia con el FEM.
 \end{enumerate}
 
-\section{El Problema Modelo: la Ecuación de Poisson}
+\section{El problema modelo: la ecuación de Poisson}
 
 Durante la realización del trabajo nos centraremos en el problema de Poisson como benchmark para mostrar en este las propiedades del IGA.
 
-\subsection{Formulación Fuerte (o Clásica)}
+\subsection{Formulación fuerte (o clásica)}
 \begin{defin} Sea $\Omega \subset \mathbb{R}^n$ un conjunto abierto y acotado, donde $n \in \mathbb{N}$,
-     con frontera $\partial\Omega = \Gamma = \overline{\Gamma_D \cup \Gamma_R \cup \Gamma_N}$, que sea suficientemente regular, tal que $\Gamma_D \cap \Gamma_R = \emptyset$, $ \Gamma_D \cap \Gamma_N = \emptyset$, $  \Gamma_R \cap \Gamma_N = \emptyset$ .
+     con frontera $\partial\Omega = \Gamma = \overline{\Gamma_D \cup \Gamma_R \cup \Gamma_N}$, que sea suficientemente regular, tal que $\Gamma_D \cap \Gamma_R = \Gamma_D \cap \Gamma_N =  \Gamma_R \cap \Gamma_N = \emptyset$ .
 
 Buscamos una función solución $u: \Omega \to \mathbb{R}$, que cumpla $u \in C^2(\Omega)$ y tal que: 
 
@@ -331,7 +332,7 @@ Donde las formas bilineal $a(\cdot,\cdot)$ y lineal $L(\cdot)$ se definen como:
 \end{itemize}
 \end{defin}
 
-\subsection{Formulación Variacional (o Débil)}\label{sec:Debil}
+\subsection{Formulación variacional (o débil)}\label{sec:Debil}
 \begin{defin} Buscamos  $u \in V(\Omega)=\{v \in H^1(\Omega) \mid v=g \text{ en } \Gamma_D\}$, tal que para  
 $v \in V_0(\Omega)=\{v \in H^1(\Omega) \mid v=0 \text{ en } \Gamma_D\}$, se cumple que:
 
@@ -350,7 +351,7 @@ Donde:
 \textit{Nota:} El desarrollo detallado para obtener \eqref{eq:form_weak} a partir de la formulación fuerte, la demostración de existencia y unicidad de la solución variacional, así como la prueba de que esta (bajo suficiente regularidad) es también solución del problema fuerte, se detallan en los Anexos \ref{sec:Paso_Soluciones}, \ref{sec:Lax} y \ref{sec:equivform}.
 %nota aqui sobre que las demostraciones de la equivalencia de las soluciones y del paso a la formulación clasica a variacional se encuentran en el anexo x e y
 
-\section{Estructura del Documento}
+\section{Estructura del documento}
 
 resumen rapido de los posteriores capitulos asi como explicación de donde apareceran el codigo o diferentes elementos en el anexo.
 
@@ -360,7 +361,7 @@ Se creará al finalizar el trabajo.
 \clearemptydoublepage
 
 %--- CAPÍTULO 2 DEL TFG
-\chapter{Construcción de Estructuras mediante CAD}
+\chapter{Construcción de estructuras mediante CAD}
 
 
 %Se mencionara rapidamente conceptos como el paso de formulación fuerte a formulación débil o variacional, las funciones base polinómicas clásicas con su espacio de funciones y la suavidad que estas aportan, así como su convergencia en L2 y H1.
@@ -376,9 +377,9 @@ Las curvas y superficies creadas mediante \textbf{NURBS} son la base y el están
 \end{equation*}
 \section{Bézier}
 
-En los años 60, impulsados por la industria de la automoción francesa y su necesidad de pasar los diseños en arcilla y papel a ordenador. Pierre Bézier y Paul Casteljau desarrollan la manera de crear curvas parametrizadas mediante el uso de \textbf{polinomios de Bernstein} como funciones base y \textbf{puntos de conttrol}.
+En los años 60, impulsados por la industria de la automoción francesa y su necesidad de pasar los diseños en arcilla y papel a ordenador. Pierre Bézier y Paul Casteljau desarrollan la manera de crear curvas parametrizadas mediante el uso de \textbf{polinomios de Bernstein} como funciones base y \textbf{puntos de control}.
 
-\subsection{Funciones Base}
+\subsection{Funciones base}
 \begin{defin}
 Los polinomios de Bernstein se definen como: $$B_{i,p}(u) = \binom{p}{i} u^{i} (1-u)^{p-i}.$$
 \end{defin}
@@ -386,13 +387,13 @@ Los polinomios de Bernstein se definen como: $$B_{i,p}(u) = \binom{p}{i} u^{i} (
 \begin{proposicion}
     Algunas de las propiedades fundamentales de los \textbf{polinomios de Bernstein} en este contexto son:
     \begin{itemize}
-        \item \textbf{No Negatividad}: $B_{i,p}(u) \geq 0, \forall u \in [0,1]$.
-        \item \textbf{Partición de la Unidad}: $\sum_{i=0}^{p} B_{i,p}(u) = 1, \quad \forall u \in [0,1]$.
+        \item \textbf{No negatividad}: $B_{i,p}(u) \geq 0, \forall u \in [0,1]$.
+        \item \textbf{Partición de la unidad}: $\sum_{i=0}^{p} B_{i,p}(u) = 1, \quad \forall u \in [0,1]$.
         \item \textbf{Interpolación de los extremos}: $B_{0,p}(0) = 1, \quad B_{p,p}(1) = 1$.
-        \item \textbf{Soporte Global}: $B_{i,p}(u) > 0, \quad \forall u \in (0,1)$.
+        \item \textbf{Soporte global}: $B_{i,p}(u) > 0, \quad \forall u \in (0,1)$.
     \end{itemize}
     \begin{proof}
-        Demostraciones omitidas temporalmente.
+        La demostración se encuentra en el anexo \ref{sec:Bezier_proof}.
     \end{proof}
 \end{proposicion}
 
@@ -427,11 +428,11 @@ Los polinomios de Bernstein se definen como: $$B_{i,p}(u) = \binom{p}{i} u^{i} (
         \end{equation*}
     \end{enumerate}
     \begin{proof}
-        Demostraciones omitidas temporalmente.
+        La demostración se encuentra en el anexo \ref{sec:Bezier_proof}.
     \end{proof}
 \end{proposicion}
 
-Uno de los principales inconvenientes de las curvas de Bézier es su incapacida de representar cónicas de forma exacta, para ello se introduce el concepto de racionalizarlas.
+Uno de los principales inconvenientes de las curvas de Bézier es su incapacidad de representar cónicas de forma exacta, para ello se introduce el concepto de racionalizarlas.
 
 \begin{proposicion} Racionalización de las curvas de Bézier.
 
@@ -469,11 +470,11 @@ Uno de los principales inconvenientes de las curvas de Bézier es su incapacida 
 \end{figure}
 
 \section{B-Splines}
-A pesar de que la racionalización de las curvas de Bézier permitió la representación de cónicas exactas, hubo otros problemas intrínsecos a estas que motivaron la transición en los años 70 debido a la necesidad de representar estructuras mas complejas en la industria aeroespacial y de automoción,
-se transiciona entonces a la implementacion de funciones base \textbf{B-spline} que permitian, debido a tener un soporte local y un número de elemtos no ligado obligatoriamente al grado polinomial de estas, superar las limitaciones de las funciones base de Bernstein.
+A pesar de que la racionalización de las curvas de Bézier permitió la representación de cónicas exactas, hubo otros problemas intrínsecos a estas que motivaron la transición en los años 70 debido a la necesidad de representar estructuras más complejas en la industria aeroespacial y de automoción,
+se transiciona entonces a la implementación de funciones base \textbf{B-spline} que permitían, debido a tener un soporte local y un número de elementos no ligado obligatoriamente al grado polinomial de estas, superar las limitaciones de las funciones base de Bernstein.
 
-%Debido a las limitaciones que tienen las curvas de Bézier, como pueden ser el requirimiento de un orden polinomial $n-1$ para $n$ puntos de control, aperece en este contexto los \textbf{B-Splines}.
-\subsection{Funciones Base}
+%Debido a las limitaciones que tienen las curvas de Bézier, como pueden ser el requerimiento de un orden polinomial $n-1$ para $n$ puntos de control, aparece en este contexto los \textbf{B-Splines}.
+\subsection{Funciones base}
 
 \begin{defin}
     El \textbf{Vector de nudos} se define como $$U = \{u_0, u_1, \ldots, u_m\},$$ cumplen $u_i \le u_{i+1}, \quad i = 0, \ldots, m-1$, el número de nudos $m+1$ está relacionado con $p$ y $n$ tal que cumple: $m=n+p+1$.
@@ -512,7 +513,7 @@ se transiciona entonces a la implementacion de funciones base \textbf{B-spline} 
         
         Por tanto el número de funciones base no nulas en el intervalo es a lo sumo $p+1$.
 
-        El número exacto de funciones base no nulas decrece con la multiplicidad $k$ de $u_i$, reduciendose a $\mathbf{p+1-k}$.
+        El número exacto de funciones base no nulas decrece con la multiplicidad $k$ de $u_i$, reduciéndose a $\mathbf{p+1-k}$.
 
         \item \textbf{Partición de la Unidad}: $\forall u\in [u_0, u_m]$, se cumple,
         $\sum_{i=0}^{n} N_{i,p}(u) = 1$.
@@ -547,9 +548,9 @@ se transiciona entonces a la implementacion de funciones base \textbf{B-spline} 
 La transición de \textbf{B-splines} a \textbf{NURBS} no fue instantánea, se tuvo que esperar hasta \textbf{1979}, donde Boeing sufría las consecuencias de no poder representar cónicas exactas mediante B-splines, teniendo así su software
 segmentado, usando un programa basado en B-splines para el fuselaje y otro basado en las \textbf{cónicas de Rho} para las partes cónicas, siendo incapaces de conectarlos sin perder precisión.
 
-En este caos Boeing inicia el proyecto \textbf{TIGER}, reescribiendo así todo su sistema CAD interno basándose en la tesis de \textbf{Verspille}, proponiendo así en \textbf{1981} a la IGES que las \textbf{NURBS} sean el estandar universal, transicionando así la industria de manera natural entre \textbf{1983} y \textbf{1990}.
+En este caos Boeing inicia el proyecto \textbf{TIGER}, reescribiendo así todo su sistema CAD interno basándose en la tesis de \textbf{Verspille}, proponiendo así en \textbf{1981} a la IGES que las \textbf{NURBS} sean el estándar universal, transicionando así la industria de manera natural entre \textbf{1983} y \textbf{1990}.
 
-\subsection{Funciones Base}
+\subsection{Funciones base}
 \begin{defin}
     Las \textbf{Funciones base NURBS} se definen como:
     \begin{equation}
@@ -603,7 +604,7 @@ En este caos Boeing inicia el proyecto \textbf{TIGER}, reescribiendo así todo s
     % -------------------------------
 \end{figure}
 
-\section{Creación de Superficies (Producto Tensorial)}
+\section{Creación de superficies (producto tensorial)}
 El producto tensorial es el estándar de CAD para la creación de superficies, se define como:
 \begin{equation*}
     \mathbf{B}_{i,j}(u, v) = N_{i,p}(u) \cdot M_{j,q}(v).
@@ -630,7 +631,7 @@ Donde
 
 \begin{proposicion}
     \label{prop:surf_tensor}
-    Las superficies generadas mediante el prodcuto tensorial mantienen la suavidad de las curvas que la generan en las direcciones de estas.
+    Las superficies generadas mediante el producto tensorial mantienen la suavidad de las curvas que la generan en las direcciones de estas.
     \begin{proof}
         Tomaremos una dirección arbitraria, $v$ en este caso, y fijaremos $u=u_0$, la demostración es análoga para la dirección $u$.
         \begin{equation*}
@@ -666,7 +667,7 @@ Donde
     \hfill
     \begin{subfigure}{0.32\textwidth}
         \includesvg[width=\linewidth]{Superficie_NURBS_Ej2_Refined.svg}
-        \caption{Ejemplo 2 refininada.}
+        \caption{Ejemplo 2 refinada.}
     \end{subfigure}
     % --- NOTA DEL CÓDIGO FUENTE ---
     \vspace{0.5em} 
@@ -676,8 +677,8 @@ Donde
     % -------------------------------
 \end{figure}
 
-\section{Refinamiento de Nudos (h-Refinement)}
-En las figuras anteriores podemos observar un refinamiento de la superfice del ejemplo 2, este procedimiento se basa en insertar nuevos valores en un vector de nudos, introduciendo nuevos puntos de control y pesos para mantener la misma figura geométrica.
+\section{Refinamiento de nudos (h-refinement)}
+En las figuras anteriores podemos observar un refinamiento de la superficie del ejemplo 2, este procedimiento se basa en insertar nuevos valores en un vector de nudos, introduciendo nuevos puntos de control y pesos para mantener la misma figura geométrica.
 
 El refinamiento de nudos tiene como finalidad aumentar el control local donde se añade el nudo, obteniendo un mayor número de funciones base donde se inserta y decreciendo el tamaño de los elementos sobre los que se trabaja. 
 
@@ -686,10 +687,10 @@ El refinamiento de nudos tiene como finalidad aumentar el control local donde se
         \begin{itemize}
             \item \textbf{Puntos de control ponderados}, $\mathbf{P}_i^w$: Sea $\mathbf{P}_i$ un punto de control y $\mathbf{w}_i$ su peso asociado, definimos $\mathbf{P}_i^w$ = ($\mathbf{w}_i\mathbf{P}_i, \mathbf{w}_i)^T$.
             \item \textbf{Nuevo nudo}, $\xi$: aunque ya tenemos el concepto de nudo definido es necesario declarar en que intervalo se encuentra, tomaremos que $\xi \in [u_k, u_{k+1})$.
-            \item \textbf{Nuevo vector de nodos}, $U^*=\{u_0,u_1, \dots , u_k, \xi, u_{k+1}, \dots, u_m\}$.
-            \item \textbf{Nuevos puntos de control ponderados}, $\mathbf{Q}_i^w$: estrán definidos mediante $\mathbf{Q}_{i}^{w} = \alpha_i \mathbf{P}_{i}^{w} + (1 - \alpha_i) \mathbf{P}_{i-1}^{w}$, donde $\alpha_i$ se define mediante la fórmula:
+            \item \textbf{Nuevo vector de nudos}, $U^*=\{u_0,u_1, \dots , u_k, \xi, u_{k+1}, \dots, u_m\}$.
+            \item \textbf{Nuevos puntos de control ponderados}, $\mathbf{Q}_i^w$: estarán definidos mediante $\mathbf{Q}_{i}^{w} = \alpha_i \mathbf{P}_{i}^{w} + (1 - \alpha_i) \mathbf{P}_{i-1}^{w}$, donde $\alpha_i$ se define mediante la fórmula:
                 $$\alpha_i = \begin{cases} 1 & \text{si } i \le k-p, \\ \frac{\xi - u_i}{u_{i+p} - u_i} & \text{si } k-p+1 \le i \le k, \\ 0 & \text{si } i > k. \end{cases}$$
-            \item \textbf{Nuevas funciones base}, $N_{i,p}^*(u)$, asociadas al nuevo vector de nodos $U^*$, que cumplen la igualdad: $N_{i,p}(u) = \alpha_{i} N_{i,p}^*(u) + (1 - \alpha_{i+1}) N_{i+1,p}^*(u)$\footnote{Demostración en el anexo \ref{sec:dem_new_bases}}.
+            \item \textbf{Nuevas funciones base}, $N_{i,p}^*(u)$, asociadas al nuevo vector de nudos $U^*$, que cumplen la igualdad: $N_{i,p}(u) = \alpha_{i} N_{i,p}^*(u) + (1 - \alpha_{i+1}) N_{i+1,p}^*(u)$\footnote{Demostración en el anexo \ref{sec:dem_new_bases}}.
         \end{itemize}
 \end{defin}
 \begin{proposicion}
@@ -702,14 +703,14 @@ El refinamiento de nudos tiene como finalidad aumentar el control local donde se
     \end{proof}
 \end{proposicion}
 
-La inserción de nudos en superficies se realiza de manera direccional, introduciendo unicamente elementos a uno de los dos vectores de nudos,
- modificando así una de las dos curvas que generan la superficie, pero al ser invariante bajo la inserción de nudos esta, la superficie generada final es identica a la orginal,
+La inserción de nudos en superficies se realiza de manera direccional, introduciendo únicamente elementos a uno de los dos vectores de nudos,
+ modificando así una de las dos curvas que generan la superficie, pero al ser invariante bajo la inserción de nudos esta, la superficie generada final es idéntica a la original,
   los pesos y puntos de control en forma matricial son tratados como en la demostración de la proposición \ref{prop:surf_tensor}, trabajando con ellos de forma vectorial 
-  ,relacionandolos con el vector de nudos que recibe la inserción.
+  ,relacionándolos con el vector de nudos que recibe la inserción.
 
-\subsection{Implementación de la Inserción de Nudos}
+\subsection{Implementación de la inserción de nudos}
 
-Durante el trabajo se utilizaran las siguientes funciones para la inserción de nudos en las estructuras correspondientes:
+Durante el trabajo se utilizarán las siguientes funciones para la inserción de nudos en las estructuras correspondientes:
 
 \paragraph{Caso curvas (1D):}
 La función \texttt{CurveKnotsIns} calcula los nuevos puntos de control tras insertar un nudo $u$ con multiplicidad $r$.
@@ -756,50 +757,74 @@ El código fuente de estas implementaciones puede encontrarse en el anexo \ref{s
 \clearemptydoublepage
 
 %--- CAPÍTULO 3 DEL TFG
-\chapter{Análisis Isogeométrico}
+\chapter{Análisis isogeométrico}
 
-Durante el capítulo definiremos las bases necesarias para el IGA y profundizaremos en estas, luego sobre esta base desarrollaremos la teoría necesaria para resolver el problema de Poisson.
+Aunque las bases matemáticas del diseño CAD mediante NURBS se consolidaron en los años 80, 
+hasta mediados de los 2000 existió un cuello de botella en el trabajo de ingeniería: los modelos creados en CAD debían ser transformados y aproximados por mallas poligonales para poder aplicar el FEM. 
+Se estima que en industrias complejas, como automoción o naval, este proceso tomaba hasta el 80\% del tiempo total de análisis.
 
-\section{Espacios Funcionales}
+En 2005, Hughes, Cottrell y Bazilevs proponen unificar el diseño CAD y la simulación, empleando las mismas funciones NURBS como base del IGA.
+
+Desde entonces, el IGA ha trascendido el ámbito académico, consolidánsose así en industrias como la aeroespacial, de automoción y la naval, lo cual podemos observar mediante las integraciones de módulos isogeométricos en software comercial de simulación como LS-DYNA.
+
+%Durante el capítulo definiremos las bases necesarias para el IGA y profundizaremos en estas, luego sobre esta base desarrollaremos la teoría necesaria para resolver el problema de Poisson.
+
+\section{Espacios funcionales}
 
 
-
+\vspace{-0.1cm}
 
 
 \begin{defin}    
-    Sea $\hat{\Omega}$ el \textbf{dominio paramétrico} definido en 1D por el vector de nodos $U$ y en 2D por el producto tensorial de los vectores de nodos $U \times V$.
+    Sea $\hat{\Omega}$ el \textbf{dominio paramétrico} definido en 1D por el vector de nudos $U$ y en 2D por el producto tensorial de los vectores de nudos $U \times V$.
 \end{defin}
 
+\vspace{-0.12cm}
 
 
 El \textbf{espacio físico} $\Omega$ queda parametrizado así mediante el mapeo geométrico $\mathbf{G}: \hat{\Omega} \to \Omega$ definido en \ref{eq:NURBS_Curve} en 1D y en \ref{eq:NURBS_Surf} en 2D.
+
+\vspace{-0.12cm}
 
 \begin{defin}
     \textbf{Elemento:} denotado por $\Omega_e\subset \Omega$, parametrizado mediante la restricción sobre $\hat{\Omega}$ de $\mathbf{G}$, dada por el intervalo no nulo $[u_n, u_{(n+1)})$ en 1D, o por $[u_n, u_{(n+1)})\times [v_k, v_{(k+1)})$ en 2D, 
 \end{defin}
 
+\vspace{-0.27cm}
+
+
 \begin{defin}
     \textbf{Malla física:} Sea $N_{el}$ el número de intervalos de nudos no nulos formados por nudos consecutivos, definimos la malla física como $\mathcal{T}_h = \{ \Omega_e \}_{e=1}^{N_{el}}$.
 \end{defin}
+
+\vspace{-0.27cm}
+
 
 \begin{defin}
     \textbf{Diámetro de un elemento:} $h_e = \text{diam}(\Omega_e) = \sup_{\mathbf{x}, \mathbf{y} \in \Omega_e} \| \mathbf{x} - \mathbf{y} \|_2$.
 \end{defin}
 
+\vspace{-0.27cm}
+
+
 \begin{defin}
     \textbf{Parámetro de discretización global:} $h = \max_{e} h_e$
 \end{defin}
 
+\vspace{-0.27cm}
 
 
 \begin{defin}
     Sea $\hat{V}_h$ el \textbf{espacio de funciones NURBS} definido en 1D en \ref{eq:NURBS_Curve_Basis} y en 2D en \ref{eq:NURBS_Surf_Basis}
 
     Definimos ahora el \textbf{espacio de aproximación} $V_h$ como
+    \vspace{-0.1cm}
+
     \begin{equation*}
         V_h = \Big\{ v : \Omega \to \mathbb{R} \mid v \circ \mathbf{G} \in \hat{V}_h \Big\}.
     \end{equation*}
 \end{defin}
+\vspace{-0.27cm}
 
 \begin{defin}
     Las \textbf{funciones de forma} $\phi_i$ en 1D y  $\phi_{i,j}$ en 2D se definen como:\footnote{A lo largo de esta sección y las siguientes, todas aquellas funciones que tomen como dominio a $\hat{\Omega}$ serán diferenciadas mediante la imposición del acento circunflejo en estas ($\hat{\cdot}$).} 
@@ -808,30 +833,46 @@ El \textbf{espacio físico} $\Omega$ queda parametrizado así mediante el mapeo 
         \phi_{i,j} &= \hat{R}_{i,j}^{p,q} \circ \mathbf{G}^{-1}.
     \end{align*}
 \end{defin}
+\vspace{-0.2cm}
 
-\section{Formulación Discreta de Galerkin}
+\section{Formulación discreta de Galerkin}
+\vspace{-0.2cm}
 
 Partiendo del espacio de aproximación $V_h \subset V$ (mismo V que en la sección \ref{sec:Debil}), aplicamos el principio de Galerkin al problema variacional (\ref{sec:Debil}). Buscamos una solución aproximada $u_h \in V_h$ tal que:
+\vspace{-0.7cm}
+
 \begin{equation} \label{eq:Galerkin_Form}
+    \vspace{-0.06cm}
     a(u_h, v_h) = L(v_h), \quad \forall v_h \in V_h.
 \end{equation}
-
+%\vspace{-0.2cm}
 Expresamos la solución discreta $u_h$ como una combinación lineal de las funciones de forma definidas anteriormente:
+
+\vspace{-0.7cm}
 \begin{equation*}
     u_h(\mathbf{x}) = \sum_{j=1}^{N_b} d_j \phi_j(\mathbf{x}),
 \end{equation*}
 donde $d_j$ son los \textbf{coeficientes de control} a determinar y $N_b$ es el número total de funciones base globales.
 
 Sustituyendo $u_h$ en la ecuación \ref{eq:Galerkin_Form} y tomando sucesivamente cada función de base como función de test ($v_h = \phi_i$ para $i=1,\dots,N_b$), obtenemos el sistema lineal de ecuaciones:
+
+\vspace{-0.3cm}
 \begin{equation*}
+    \vspace{-0.1cm}
     \sum_{j=1}^{N_b} a(\phi_j, \phi_i) d_i = L(\phi_i), \quad \forall i=1,\dots,N_b.
 \end{equation*}
 
 Reescribiendo ahora en forma matricial como:
+\vspace{-0.1cm}
 \begin{equation*}
+    \vspace{-0.2cm}
     \mathbf{K} \mathbf{d} = \mathbf{F},
 \end{equation*}
+
+
 donde $\mathbf{K}\in \mathbb{R}^{N_b \times N_b}$ es la matriz de rigidez global con elementos $K_{i,j} = a(\phi_j, \phi_i)$, $\mathbf{d}$ es el vector de coeficientes de control a determinar y $\mathbf{F}$ es el vector de carga con componentes $F_i = L(\phi_i)$.
+
+\vspace{-0.15cm}
 
 \section{Propiedades del sistema}
 \begin{proposicion}
@@ -839,8 +880,9 @@ donde $\mathbf{K}\in \mathbb{R}^{N_b \times N_b}$ es la matriz de rigidez global
 
 Las siguientes propiedades se cumplen para problemas en un abierto $\Omega \subset \R^n$, con $N_{el}$ elementos.
 
+\vspace{-0.2cm}
 \begin{enumerate}
-    \item \textbf{Dipsersión:} cada fila tiene a lo sumo $(2p+1)^n$, el cual no crece en función del número de elementos del problema, creando la relación asitótica
+    \item \textbf{Dispersión:} cada fila tiene a lo sumo $(2p+1)^n$, el cual no crece en función del número de elementos del problema, creando la relación asintótica
     \begin{equation*} 
         \lim_{N_{el} \to \infty} \frac{(2p+1)^n}{N_B} = 0.
     \end{equation*}
@@ -848,7 +890,7 @@ Las siguientes propiedades se cumplen para problemas en un abierto $\Omega \subs
     \item \textbf{Condicionamiento:} $\kappa(\mathbf{K}) \approx O(h^{-2})$
 \end{enumerate}
 \begin{proof}
-    Omitida temporalmente.
+    La demostración puede encontrarse en el anexo \ref{prop_sistema}.
 \end{proof}
 \end{proposicion}
 
@@ -904,7 +946,7 @@ Aplicamos el mismo procedimiento ahora a la forma lineal, definimos el \textbf{v
     \mathbf{F}^e_i=\int_{u_n}^{u_{n+1}}f(\mathbf{G}(\xi))R_{(i+ n - p - 1)}^p(\xi)|det J|d\xi.
 \end{equation*}
 
-Definimos el \textbf{vector de carga local extendido} $\tilde{\mathbf{F}}^e_i \in \R^{N_b}$, construido mediante la signación
+Definimos el \textbf{vector de carga local extendido} $\tilde{\mathbf{F}}^e_i \in \R^{N_b}$, construido mediante la asignación
 
 \begin{equation*}
     \tilde{\mathbf{F}}^e_{(i+ n - p - 1)}=\mathbf{F}^e_i, \quad \forall i \in \{ 1,2, \dots ,p+1 \},\footnote{Al igual que en las matrices extendidas anteriores, estos vectores no existirán en la práctica y los elementos de $\mathbf{F}^e$ serán ensamblados directamente sobre $\mathbf{F}$.}
@@ -919,33 +961,36 @@ Para finalizar se obtiene el vector global $\mathbf{F}$ al sumar todos los vecto
 \end{equation*}
 
 \subsection{Imposición de condiciones de contorno.}
+\label{sec:cond1D}
 Tras el ensamblado de la matriz de rigidez global y del vector de carga se implementan las condiciones de contorno,
 
 Al ser en el caso 1D, solo es posible aplicar condiciones de contorno a dos puntos del dominio, explicaremos como se aplican al punto $u_0$ que será análogo para el punto $u_m$.
 
 
 \begin{flushleft}
-    \footnotesize{\textit{Nota}: La expliación de por qué se realizan así las imposiciones de contorno esta omitida temporalmente.}
+    \footnotesize{\textit{Nota}: La explicación de por qué se realizan así las imposiciones de contorno puede consultarse en el anexo \ref{cond:contorno}.}
 \end{flushleft}
 
 \subsubsection{Tipo Dirichlet}
 
 Sustituimos la primera (última en el caso $u_m$) fila de $\mathbf{K}$, el elemento (1,1) será 1, y el resto pasarán a ser 0, $\mathbf{F}_1$ tomará el valor de la condición de contorno $g(u_0)$.
 
-Con el fin de mantener la simetría del sistema se modificarán las $p$ filas siguientes (anteriores), estableceremos a 0 los elementos de la forma (1,j), y modificaremos los elementos $\mathbf{F}_j$ restandoles el valor $\mathbf{K}_{(1,j)}g(u_0)$.
+Con el fin de mantener la simetría del sistema se modificarán las $p$ filas siguientes (anteriores), estableceremos a 0 los elementos de la forma (1,j), y modificaremos los elementos $\mathbf{F}_j$ restándoles el valor $\mathbf{K}_{(1,j)}g(u_0)$.
 
 \subsubsection{Tipo Neumann}
 
 Actualizaremos el valor de $\mathbf{F}_1\rightarrow \mathbf{F}_1+h(u_0)$  ($\mathbf{F}_{N_b} \rightarrow \mathbf{F}_{N_b}+h(u_m)$).
 
-\subsubsection{Tipo Robin o Mixtas}
+\subsubsection{Tipo Robin o mixtas}
 
 Actualizaremos tanto $\mathbf{K}_{(1,1)}\rightarrow \mathbf{K}_{(1,1)} + \frac{\alpha}{\beta}$, $\left( \mathbf{K}_{(N_b,N_b)}\rightarrow \mathbf{K}_{(N_b,N_b)} + \frac{\alpha}{\beta}\right)$ y $\mathbf{F}_1 \rightarrow \mathbf{F}_1 + \frac{r}{\beta}$, $\left( \mathbf{F}_{N_b} \rightarrow \mathbf{F}_{N_b} + \frac{r}{\beta} \right)$.
 
 \section{Caso 2D}
 
 \subsection{Elementos de la matriz global y el vector de carga}
-
+\textbf{Forma bilineal:}
+{\setlength{\abovedisplayskip}{1pt}
+\setlength{\belowdisplayskip}{3pt}
 \begin{align*}
     &a(\phi_{(i_2,j_2)}(\mathbf{x}),\phi_{(i_1,j_1)}(\mathbf{x})) = \int_{\Omega}\nabla \phi_{(i_2,j_2)}(\mathbf{x}) \cdot \nabla \phi_{(i_1,j_1)}(\mathbf{x}) \, d\Omega \nonumber + \int_{\Gamma_R}\frac{\alpha}{\beta}\phi_{(i_2,j_2)}(\mathbf{x})\phi_{(i_1,j_1)}(\mathbf{x}) \, d\Gamma =\\[10pt]
     &= \int_{v_0}^{v_{m_v}}\int_{u_0}^{u_{m_u}} \left( \mathbf{J}^{-T}(\xi,\eta) \hat{\nabla} \hat{R}_{(i_2,j_2)}^{(p,q)}(\xi,\eta) \right)^T \cdot \left( \mathbf{J}^{-T}(\xi,\eta) \hat{\nabla} \hat{R}_{(i_1,j_1)}^{(p,q)}(\xi,\eta) \right) |\det \mathbf{J}(\xi,\eta)| \, d\xi d\eta \nonumber \\
@@ -953,21 +998,23 @@ Actualizaremos tanto $\mathbf{K}_{(1,1)}\rightarrow \mathbf{K}_{(1,1)} + \frac{\
     &= \int_{v_0}^{v_{m_v}}\int_{u_0}^{u_{m_u}} \left(\hat{\nabla}\hat{R}_{(i_2,j_2)}^{(p,q)}(\xi,\eta)\right)^T \left( \mathbf{J}^{-1}(\xi,\eta) \mathbf{J}^{-T}(\xi,\eta) \right) \left(\hat{\nabla}\hat{R}_{(i_1,j_1)}^{(p,q)}(\xi,\eta)\right) |\det \mathbf{J}(\xi,\eta)| \, d\xi d\eta \nonumber \\
     &\quad + \int_{\hat{\Gamma}_R}\frac{\alpha}{\beta}\hat{R}_{(i_2,j_2)}^{(p,q)}(\xi,\eta)\hat{R}_{(i_1,j_1)}^{(p,q)}(\xi,\eta) J|_{\hat{\Gamma}}(\xi,\eta) \, d\hat{\Gamma}.
 \end{align*}
+}
+\vspace{0.2cm}
 
-Denotaremos $\mathbf{M}=J^TJ$, de manera que $\mathbf{M}^{-1}=(J^TJ)^{-1}=J^{-1}J^{-T}$.
-
+\textbf{Forma lineal:}
+{\setlength{\abovedisplayskip}{3pt}
+\setlength{\belowdisplayskip}{3pt}
 \begin{align*}
-    &L(\phi_{(i_1,j_1)}(\mathbf{x})) = \int_{\Omega}f(\mathbf{x})\phi_{(i_1,j_1)}(\mathbf{x}) \, d\Omega \nonumber \\
-    &\quad + \int_{\Gamma_N}h(\mathbf{x})\phi_{(i_1,j_1)}(\mathbf{x}) \, d\Gamma + \int_{\Gamma_R}\frac{r}{\beta}\phi_{(i_1,j_1)}(\mathbf{x}) \, d\Gamma =\\[10pt]
+    &L(\phi_{(i_1,j_1)}(\mathbf{x})) = \int_{\Omega}f(\mathbf{x})\phi_{(i_1,j_1)}(\mathbf{x}) \, d\Omega \nonumber + \int_{\Gamma_N}h(\mathbf{x})\phi_{(i_1,j_1)}(\mathbf{x}) \, d\Gamma + \int_{\Gamma_R}\frac{r}{\beta}\phi_{(i_1,j_1)}(\mathbf{x}) \, d\Gamma =\\[10pt]
     &= \int_{v_0}^{v_{m_v}}\int_{u_0}^{u_{m_u}}f(\mathbf{G}(\xi,\eta))\hat{R}_{(i_1,j_1)}^{(p,q)}(\xi,\eta)|\det \mathbf{J}(\xi,\eta)| \, d\xi d\eta \nonumber \\
     &\quad + \int_{\hat{\Gamma}_N} h(\mathbf{G}(\xi,\eta))\hat{R}_{(i_1,j_1)}^{(p,q)}(\xi,\eta) J|_{\hat{\Gamma}}(\xi,\eta) \, d\hat{\Gamma} + \int_{\hat{\Gamma}_R} \frac{r}{\beta}\hat{R}_{(i_1,j_1)}^{(p,q)}(\xi,\eta) J|_{\hat{\Gamma}}(\xi,\eta) \, d\hat{\Gamma}.
 \end{align*}
-
+}
 \subsection{Cálculo de las integrales}
 
 Tomaremos ahora intervalos no nulos de la forma $\hat{\Omega}_e=[u_{n},u_{{n}+1})\times[v_{k}, v_{{k}+1})$.
 
-Para este caso la \textbf{matriz local} $\mathbf{K}^e$ será de tamaño $(p+1)(q+1)\times(p+1)(q+1)$, con el fin de facilitar la comprensión de la correlación entre funciones base y elementos de la matriz tomaremos una apliación que relacione los indices de los elementos $\mathbf{K}^e_{(i,j)}$ con el número de funciones activas en cada dirección del elemento correspondiente:
+Para este caso la \textbf{matriz local} $\mathbf{K}^e$ será de tamaño $(p+1)(q+1)\times(p+1)(q+1)$, con el fin de facilitar la comprensión de la correlación entre funciones base y elementos de la matriz tomaremos una aplicación que relacione los índices de los elementos $\mathbf{K}^e_{(i,j)}$ con el número de funciones activas en cada dirección del elemento correspondiente:
 
 \begin{align}
     \label{eq:indices}
@@ -976,11 +1023,12 @@ Para este caso la \textbf{matriz local} $\mathbf{K}^e$ será de tamaño $(p+1)(q
 \end{align}
 
 Teniendo así la integral que le corresponde al elemento:
-
+{\setlength{\abovedisplayskip}{2pt}
+\setlength{\belowdisplayskip}{2pt}
 \begin{equation*} 
-    \mathbf{K}^e_{((i_1,j_1),(i_2,j_2))} =\int_{v_k}^{v_{(k+1)}}\int_{u_n}^{u_{(n+1)}} \left(\hat{\nabla}\hat{R}_{(i_2 + n - p - 1, , j_2 + k - q - 1)}^{(p,q)}\right)^T \left( \mathbf{J}^{-1} \mathbf{J}^{-T} \right) \left(\hat{\nabla}\hat{R}_{(i_1 + n - p - 1, , j_1 + k - q - 1)}^{(p,q)}\right) |\det \mathbf{J}| \, d\xi d\eta.
+    \mathbf{K}^e_{((i_1,j_1),(i_2,j_2))} =\int_{v_k}^{v_{(k+1)}}\int_{u_n}^{u_{(n+1)}} \left(\hat{\nabla}\hat{R}_{(i_2 + n - p - 1, j_2 + k - q - 1)}^{(p,q)}\right)^T \left( \mathbf{J}^{-1} \mathbf{J}^{-T} \right) \left(\hat{\nabla}\hat{R}_{(i_1 + n - p - 1, , j_1 + k - q - 1)}^{(p,q)}\right) |\det \mathbf{J}| \, d\xi d\eta.
 \end{equation*}
-
+}
 Definimos de la misma manera ahora la \textbf{matriz local extendida} $\tilde{\mathbf{K}}^e$,
 
 \begin{equation*}
@@ -993,22 +1041,24 @@ Formando así la \textbf{matriz de rigidez} $\mathbf{K}$ mediante la suma de est
     \mathbf{K} = \sum_{e=1}^{N_{el}} \tilde{\mathbf{K}}^e.
 \end{equation*}
 
-Realicamos el mismo procedimiento para el vector de carga:
-
+Realizamos el mismo procedimiento para el vector de carga:
+{\setlength{\abovedisplayskip}{2pt}
+\setlength{\belowdisplayskip}{2pt}
 \begin{align*}
     &\mathbf{F}^e_{(i_1,j_1)}=\int_{v_k}^{v_{(k+1)}}\int_{u_n}^{u_{(n+1)}}f(\mathbf{G})\hat{R}_{(i_1,j_1)}^{(p,q)}|\det \mathbf{J}| \, d\xi d\eta. \\
     &\tilde{\mathbf{F}}^e_{(i_1+n-p-1,j_1+k-q-1)}=\mathbf{F}^e_{(i_1,j_1)}.\\
     &\mathbf{F}= \sum_{e=1}^{N_{el}} \tilde{\mathbf{F}}^e.
 \end{align*}
-
+}
 \subsection{Imposición de condiciones de contorno}
-Se aplicarán los siguientes algoritmos para los elementos que contengan a la forntera de nuestro espacio físico.
+\label{sec:cond2D}
+Se aplicarán los siguientes algoritmos para los elementos que contengan a la frontera de nuestro espacio físico.
 
 Sea $\hat{\Omega}_e=[u_{n},u_{{n}+1})\times[v_{k}, v_{{k}+1})$, un elemento paramétrico tal que $\mathbf{G}(\hat{\Omega_e})$ contiene parte de la frontera de $\Omega$, 
 dado que la frontera de $\Omega$ coincide con la frontera paramétrica, suponemos, sin pérdida de generalidad, que la frontera correspondiente a $\mathbf{G}(\hat{\Omega_e})$ coincide únicamente 
 con la frontera al borde paramétrico inferior, es decir, $\xi \in [u_{n},u_{{n}+1})$ y $\eta=v_k$\footnote{Para los elementos esquina basta aplicar el algoritmo dos veces, una para cada borde.}.
 
-Recorreremos las funciones base asociadas a esta frontera, (en este caso recorremos el indice $i_1$ y fijamos $j_1=1$), para ello proyectamos de vuelta nuestros indices $I=(i_1,1)$ para $i_2=1,\dots,p+1$, mediante la ecuación \ref{eq:indices}.
+Recorreremos las funciones base asociadas a esta frontera, (en este caso recorremos el indice $i_1$ y fijamos $j_1=1$), para ello proyectamos de vuelta nuestros índices $I=(i_1,1)$ para $i_2=1,\dots,p+1$, mediante la ecuación \ref{eq:indices}.
 
 \subsubsection{Tipo Dirichlet}
 \begin{enumerate}
@@ -1027,36 +1077,42 @@ Recorreremos las funciones base asociadas a esta frontera, (en este caso recorre
 
 \subsubsection{Tipo Neumann}
 Para cada índice $I$:
+{\setlength{\abovedisplayskip}{1pt}
+\setlength{\belowdisplayskip}{1pt}
 \begin{equation*}
         \mathbf{F}_I \leftarrow \mathbf{F}_I + \int_{u_n}^{u_{n+1}} h(\mathbf{G}(\xi, v_k)) \cdot \hat{R}_{(i_1,1)}^{(p,q)}(\xi, v_k) \cdot J_{\Gamma}(\xi) \, d\xi.
 \end{equation*}
-
-\subsubsection{Tipo Robin o Mixtas}
+}
+\subsubsection{Tipo Robin o mixtas}
 
 Proyectamos también en este caso $J = (i_2, 1)$ para $i_2=1,\dots,p+1$.
 
 Para cada índice $I$:
+{\setlength{\abovedisplayskip}{2pt}
+\setlength{\belowdisplayskip}{2pt}
     \begin{equation*}
         \mathbf{F}_I \leftarrow \mathbf{F}_I + \int_{u_n}^{u_{n+1}} \frac{r}{\beta} \cdot \hat{R}_{(i_1,1)}^{(p,q)}(\xi, v_k) \cdot J_{\Gamma}(\xi) \, d\xi.
     \end{equation*}
-
+}
 Para cada par de índices $(I, J)$:
+{\setlength{\abovedisplayskip}{3pt}
+\setlength{\belowdisplayskip}{2pt}
     \begin{equation*}
         \mathbf{K}_{I,J} \leftarrow \mathbf{K}_{I,J} + \int_{u_n}^{u_{n+1}} \frac{\alpha}{\beta} \cdot \hat{R}_{(i_1,1)}^{(p,q)}(\xi, v_k) \cdot \hat{R}_{(i_2,1)}^{(p,q)}(\xi, v_k) \cdot J_{\Gamma}(\xi) \, d\xi.
     \end{equation*}
+}
 
 
 
 
-
-\section{Convergencia en L2 y H1 y Tiempo de Computación Teórico}
+\section{Convergencia en L2 y H1 y tiempo de computación teórico}
 
 \subsection{Convergencia}
 
 Para asegurar la convergencia debemos partir de unas condiciones iniciales:
 \begin{itemize}
     \item \textbf{Regularidad de la solución:} $u\in H^{p+1}(\Omega)$.
-    \item \textbf{Malla no degenerada:} det($J$)$>0$.
+    \item \textbf{Malla no degenerada:} $\det(J)>0$ y $|\det(J)|$$<\infty$.
 \end{itemize}
 
 Bajo estas condiciones podemos tomar cotas del error en diferentes espacios:
@@ -1066,31 +1122,43 @@ Bajo estas condiciones podemos tomar cotas del error en diferentes espacios:
     \item \textbf{Norma en $L^2(\Omega)$:} $\| u - u_h \|_{L^2(\Omega)} \le C_2 h^{p+1} | u |_{H^{p+1}(\Omega)}$.
 \end{itemize}
 
+Donde $C_1$ y $C_2$ dependen de la continuidad de las estructuras de NURBS asociadas al problema, a medida que la suavidad crece, estas decrecen.
 \begin{proof}
-    Las demostraciones están omitidas temporalmente.
+    Se demostrará para dimensión 2, siendo análoga la demostración para el caso de dimensión 1.
+
+    Buscamos demostrar que $\forall v_h \in V_h, v_h \in H^1(\Omega)$, para ello tomamos la siguiente igualdad:
+    
+    \begin{equation*}
+        \| \nabla v_h \|_{L^2(\Omega)}^2 = \int_{\Omega} \left| \nabla v_h(\mathbf{x}) \right|^2 d\mathbf{x} = \int_{\hat{\Omega}} \left| J^{-T} \left( \sum_{i,j} c_{i,j} \nabla \hat{R}^{p,q}_{i,j} \right) \right|^2 |\det(J)| \, d\hat{\Omega}.
+    \end{equation*}
+
+    Esta norma está acotada en $\Omega$ gracias a la regularidad de las funciones base NURBS y las condiciones expuestas anteriormente,
+    gracias a esto la demostración de convergencia es análoga a la del teorema \ref{teor:FEM_cotas}, en el caso de dimensión 2.
 \end{proof}
 
-\subsection{Tiempo de Computación}
+\subsection{Tiempo de computación}
 
 Separaremos el tiempo de computación en sus fases independientes:
 
-\subsubsection{Fase de Evaluación}
+\subsubsection{Fase de evaluación}
 
 Fase previa al ensamblado para dimensiones mayores o iguales que dos, que aprovecha las propiedades del producto tensorial para evitar recalcular evaluaciones de funciones base, su coste computacional:
-
+{\setlength{\abovedisplayskip}{2pt}
+\setlength{\belowdisplayskip}{2pt}
 $$\sum_{i=1}^{d}Q_i\cdot n_i=\mathcal{O}(d\cdot\text{max}_i\{Q_i\cdot n_i\}),$$ donde $Q_i$ es el número de evaluaciones direccionales y $n_i$ el número de divisiones correspondientes a la dimensión $i$.
-
-\subsubsection{Fase de Ensamblado}
+}
+\subsubsection{Fase de ensamblado}
 
 Fase en la que se realizan las integrales numéricas y se ensamblan, su coste computacional:
-
+{\setlength{\abovedisplayskip}{2pt}
+\setlength{\belowdisplayskip}{2pt}
 \begin{equation*}
     \prod_{i=1}^d Q_i^2 \cdot n_i \cdot C, 
 \end{equation*}
+}
+Donde $C$ es el coste de la integración numérica, cálculo del jacobiano y manipulación de la memoria.
 
-Donde $C$ es el coste de la integración numérica, calculo del jacobiano y manipulación de la memoria.
-
-\subsubsection{Fase de Resolución}
+\subsubsection{Fase de resolución}
 
 Depende del tamaño final del sistema y del método elegido para resolver el sistema resultante.
 
@@ -1099,41 +1167,48 @@ Depende del tamaño final del sistema y del método elegido para resolver el sis
 \clearemptydoublepage
 
 %--- CAPÍTULO 4 DEL TFG
-\chapter{Implementación computacional.}
+\chapter{Implementación computacional}
 
-Resumen breve de la intención del capitulo en ilustrar ejemplos con código funcional que se ha utilizado para obtener resultados numéricos.
+A lo largo del siguiente capítulo mostraremos como se ha implementado numéricamente todo lo referente a IGA.
 
-Así como el uso de diferentes estructuras como matrices sparse o tensores y su necesidad para el correcto funcionamiento del código.
+\section{Lenguaje y librerías utilizadas}
 
-\section{Lenguaje y librerías utilizadas.}
+El lenguaje principal utilizado ha sido C++, los cálculos de las curvas y superficies NURBS y el análisis isogeométrico, han sido escritos en este lenguaje, Octave ha sido empleado como visualizador de los ficheros de salida del código en C++.
 
-Se mencionará C++ como lenguaje principal usando la librería Eigen para el uso de matrices sparse, así como clases y funciones que se añadirán en el anexo para tema NURBS. también habrá mención a Octave para visualizar los resultados.
+Se ha implementado la clase \textbf{iMatrix} que define una matriz de elementos abstractos, así como todos los métodos y operadores necesarios.
 
-\section{Metodos numéricos empleados.}
+Las librerías necesarias para el funcionamiento e implementación son:
+\begin{itemize}
+    \item \textbf{Eigen:} matrices \textit{sparse}, optimización en el ensamblado y solvers.
+    \item \textbf{Librería estándar:} Para contenedores y algoritmos (vector y algorithm), cálculo del tiempo de ejecución (chrono), funciones matemáticas básica (CMath) y Entrada y salida para creación de ficheros (iostream, fstream, iomanip y string).
+\end{itemize}
 
-Explicación de integración numérica para las integrales que aparecen en las matrices de ensamblado y vector de cargo mediante la cuadratura de Gauss-Legendre, el metodo LU para resolver el sistema 1D y el método del gradiente conjugada con precondicionador de Choleski incompleto para resolver el sistema de 2D.
+\section{Métodos numéricos empleados}
 
-\section{Estructura del programa.}
+Trataremos ahora los métodos numéricos que no son inherentes al IGA que hemos utilizado:
 
-Se explicaran con detalle y en orden como es la ejecución del programa y que funciones/operaciones se ejecutan en cada paso.
+\begin{itemize}
+    \item \textbf{Integración numérica:} Se ha utilizado la cuadratura de Gauss-Legendre, con $p_i+1$ puntos de cuadratura en la dirección de la dimensión $i$, dándonos así $\prod_{i=1}^d (p_i+1)$ puntos de cuadratura totales.
+    \item \textbf{Solvers numéricos:} Se ha utilizado el método LU para el caso 1D y el método del gradiente conjugado precondicionado (Cholesky incompleto o Jacobi en su defecto).
+\end{itemize}
 
-Creación de la estructura mediante NURBS.
+\section{Estructura del programa}
 
-Refinamiento del mallado.
+Explicaremos el orden de ejecución del programa y que se realiza en cada fase de este.
 
-Ensamblado elemento a elemento (dependiendo de cuanto tome este apartado se fragmentará).
+\begin{enumerate}
+    \item \textbf{Estructuras NURBS:} Se crearán el espacio físico y paramétrico referente al problema que se quiere tratar, luego se aplicará el refinado correspondiente para
+    ajustar el tiempo de ejecución y una cota buscada.
+    \item \textbf{Fase de evaluaciones:} Fase opcional que nos permite calcular evaluaciones direccionales de las funciones base pre-racionalizadas (B-Splines), con el fin de luego solo tener que racionalizarlas en cada elemento.
+    \item \textbf{Fase de ensamblado:} Fase en la cual calculamos las integrales numéricas pertinentes a los elementos correspondientes y se ensamblan en los elementos de la matriz global y el vector de carga global, en el caso 2D se ha utilizado \textit{multithreading} con el fin de demostrar su posibilidad de paralelización y reducir el tiempo de esta fase en un escalar.
+    \item \textbf{Imposición de condiciones de contorno:} Se aplicarán los algoritmos dados en las secciones \ref{sec:cond1D} y \ref{sec:cond2D}.
+    \item \textbf{Resolver el sistema final:} Se implementará el solver adaptado al tamaño de la matriz, aprovechando en la medida de lo posible su estructura simétrica y su propiedad \textit{sparse}.
+    \item \textbf{Construcción y evaluación de la solución:} Partiendo de la solución del sistema, la cual nos aporta el valor de los coeficientes de control, para evaluar la solución en un punto concreto, sumamos las funciones base activas multiplicadas por sus coeficientes correspondientes.
+    \item \textbf{Cálculo de la norma L2 y H1:} Con las evaluaciones correspondientes calcularemos las aproximaciones numéricas a las normas mediante la cuadratura de Gauss-Lengedre en cada elemento.
+    \item \textbf{Representación gráfica en octave:} Tomaremos los ficheros de salida del código en C++ y mediante octave crearemos las visualizaciones.
+\end{enumerate}
 
-Imposición de las condiciones de frontera.
-
-Resolver el sistema final.
-
-Construcción y evaluación de la solución a partir de las soluciones del sistema.
-
-Cálculo de la norma L2 y H1.
-
-Representación Gráfica en Octave.
-
-(Con el fin de no superar el máximo de hojas permitidas, el codigo se mostrará en el anexo y no en este apartado)
+Puede encontrarse código de ejemplo en el Anexo \ref{sec:IGAimp}, para el caso 1D y 2D.
 
 
 %--- FIN DEL CAPÍTULO 4
@@ -1142,21 +1217,302 @@ Representación Gráfica en Octave.
 
 %--- CAPÍTULO 5 DEL TFG
 \chapter{Resultados.}
-
-En este capítulo se mostrarán tanto los resultados de convergencia como las gráficas de las soluciones, la frecuencia de estas respecto al refinamiento dependerá de cuantas páginas hayan sido escritas en total.
-En ambas secciones se verificará que el codigo se ha ejecutado correctamente y su validación.
-
+\vspace{-1cm}
 \section{Resultados en 1D}
 
-\section{Resultados en 2D}
+Tomaremos el problema en 1D definido mediante $f(x)=100\frac{\pi^2}{L^2} \sin(10\pi \frac{x}{L})$, $u(0)=0$, $u(L)=0$.
+    \vspace{-0.3cm}
+\subsubsection{Problema 1}
+    \vspace{-0.2cm}
+\begin{itemize}
+    \item \textbf{Grado polinomial p:} 2.
+    \vspace{-0.2cm}
+    \item \textbf{Dominio paramétrico:} $U=\{0,0,0,\frac{1}{2},\frac{1}{2},1,1,1\}$.
+    \vspace{-0.2cm}
+    \item \textbf{Dominio físico:} Semicircunferencia contenida en el plano XY, centrada en el origen de radio 1.
+    \vspace{-0.2cm}
+    \item \textbf{Solución y derivada analítica:} $u(x)=\sin(10\pi\frac{x}{\pi})$, $u'(x)=10\cos(10\pi\frac{x}{\pi})$.
+    \vspace{-0.2cm}
+    \item \textbf{Puntos de control y pesos:} 
+    {\setlength{\abovedisplayskip}{2pt}
+    \setlength{\belowdisplayskip}{0pt}
+    \begin{equation*}
+        \mathbf{P} = \left[ 
+        \begin{pmatrix} -1 \\ 0 \\ 0 \end{pmatrix}, 
+        \begin{pmatrix} -1 \\ 1 \\ 0 \end{pmatrix}, 
+        \begin{pmatrix} 0 \\ 1 \\ 0 \end{pmatrix}, 
+        \begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix}, 
+        \begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix} 
+        \right],
+        \qquad 
+        \mathbf{w} = \left[ 1, \ \frac{\sqrt{2}}{2}, \ 1, \ \frac{\sqrt{2}}{2}, \ 1 \right].
+    \end{equation*}
+    }
+\end{itemize}
+\vspace{-0.6cm}
+\begin{table}[h]
+    \centering
+    \caption{Tabla de convergencia y costes computacionales.}
+    \vspace{-0.2cm}
+    \begin{tabular}{cccc}
+        \toprule
+        \textbf{Nº Elementos} & \textbf{Tiempo (s)} & \textbf{Error} $\boldsymbol{L^2}$ & \textbf{Error} $\boldsymbol{H^1}$ \\
+        \midrule
+        16    & $0.0034002$ & $0.0512509$ & $5.15944$ \\
+        32    & $0.0074421$ & $0.00415079$ & $0.827538$ \\
+        64    & $0,0123962$ & $0.000451444$ & $0.182791$ \\
+        128   & $0,0244885$ & $5.43459 \cdot 10^{-5}$ & $0.0442749$ \\
+        256   & $0,0484195$ & $6.72829 \cdot 10^{-6}$ & $0.010981$ \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+\vspace{-0.3cm}
+\subsubsection{Problema 2}
+    \vspace{-0.2cm}
+\begin{itemize}
+    \item \textbf{Grado polinomial p:} 3.
+    \vspace{-0.2cm}
+    \item \textbf{Dominio paramétrico:} $U=\{0,0,0,0,1,1,1,1\}$.
+    \vspace{-0.2cm}
+    \item \textbf{Dominio físico:} Curva Alabeada $x=(\xi,\xi^2,\xi^3)$, $L\approx 1.86302298656134$.
+    \vspace{-0.2cm}
+    \item \textbf{Solución y derivada analítica:} $u(x)=\sin(10\pi\frac{x}{L})$, $u'(x)=10\frac{\pi}{L}\cos(10\pi\frac{x}{L})$.
+    \vspace{-0.2cm}
+    \item \textbf{Puntos de control y pesos:} 
+    {\setlength{\abovedisplayskip}{2pt}
+    \setlength{\belowdisplayskip}{0pt}
+    \begin{equation*}
+        \mathbf{P} = \left[ 
+        \begin{pmatrix} 0 \\ 0 \\ 0 \end{pmatrix}, 
+        \begin{pmatrix} \frac{1}{3} \\ 0 \\ 0 \end{pmatrix}, 
+        \begin{pmatrix} \frac{2}{3} \\ \frac{1}{3} \\ 0 \end{pmatrix}, 
+        \begin{pmatrix} 1 \\ 1 \\ 1 \end{pmatrix} 
+        \right],
+        \qquad 
+        \mathbf{w} = \left[ 1, \ 1, \ 1, \ 1 \right].
+    \end{equation*}
+    }
+\end{itemize}
+\vspace{-0.6cm}
+\begin{table}[h]
+    \centering
+    \caption{Tabla de convergencia y costes computacionales.}
+    \vspace{-0.2cm}
+    \begin{tabular}{cccc}
+        \toprule
+        \textbf{Nº Elementos} & \textbf{Tiempo (s)} & \textbf{Error} $\boldsymbol{L^2}$ & \textbf{Error} $\boldsymbol{H^1}$ \\
+        \midrule
+        16    & $0.004775$ & $0.19235$ & $7.23543$ \\
+        32    & $0.0095162$ & $0.00634774$ & $0.742005$ \\
+        64    & $0.0149659$ & $0.000235597$ & $0.0739008$ \\
+        128   & $0.0443802$ & $1.15083 \cdot 10^{-5}$ & $0.00816382$ \\
+        256   & $0,0857816$ & $6.75238 \cdot 10^{-7}$ & $1.06953 \cdot 10^{-5}$ \\
+        \bottomrule
+    \end{tabular}
+\end{table}
 
+
+
+ \begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.32\textwidth}
+        \includesvg[width=\linewidth]{CurvaColor_h256_p2.svg}
+        \caption{Semicircunferencia, p=2.}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.33\textwidth}
+        \includesvg[width=\linewidth]{CurvaColor_h256_p2_Z.svg}
+        \caption{Eje Z tomando valores solución.}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.32\textwidth}
+        \includesvg[width=\linewidth]{CurvaColor_h256_p3.svg}
+        \caption{Curva Alabeada, p=3.}
+    \end{subfigure}
+    %\caption{Código para las figuras en el anexo}
+    % --- NOTA DEL CÓDIGO FUENTE ---
+    %\vspace{0.5em} % Pequeño espacio vertical para separar de las subfiguras
+    %\begin{flushleft}
+    %    \footnotesize{\textit{Nota}: El código fuente de estas figuras se encuentra disponible en los anexos \ref{sec:codigo_FEM} y \ref{sec:codigo_NURBS1}.}
+    %\end{flushleft}
+    % -------------------------------
+\end{figure}
+
+\section{Resultados en 2D}
+\vspace{-0.2cm}
+\subsubsection{Problema 1}
+ \vspace{-0.2cm}
+\begin{itemize}
+    \item \textbf{Grados polinomiales:} $q=p=2$.
+    \vspace{-0.2cm}
+    \item \textbf{Dominio paramétrico:} $U=V=\{0,0,0,2,2,2\}$.
+     \vspace{-0.2cm}
+    \item \textbf{Dominio físico:} $[0,2]\times[0,2]\times\{0\}$, parametrizado mediante la identidad sobre los valores X e Y.
+     \vspace{-0.2cm}
+    \item \textbf{Ecuaciones del problema:} $f(x,y)=2\pi^2\sin(\pi x)\sin(\pi y)$, $u(\Gamma)=0$.
+     \vspace{-0.2cm}
+    \item \textbf{Solución y derivadas analíticas:}
+    \vspace{-0.3cm}
+    \begin{itemize}
+        \item $u(x,y)=\sin(\pi x)\sin(\pi y)$.
+        \vspace{-0.15cm}
+        \item $\frac{\partial u}{\partial x}(x,y)=\pi \cos(\pi x)\sin(\pi y)$.
+        \vspace{-0.15cm}
+        \item $\frac{\partial u}{\partial y}(x,y)=\pi \sin(\pi x)\cos(\pi y)$.
+        \vspace{-0.2cm}
+    \end{itemize}
+    \item \textbf{Puntos de control y pesos:}
+    \begin{equation*}
+        \mathbf{P} = 
+        %\footnotesize % Reducimos tamaño de fuente solo aquí
+        \begin{pmatrix}
+            (0, 0, 0) & (1, 0, 1) & (2, 0, 0) \\
+            (0, 1, 0) & (1, 1, 0) & (2, 1, 0) \\
+            (0, 2, 0) & (1, 2, 0) & (2, 2, 0)
+        \end{pmatrix}
+        ,\qquad
+        \mathbf{w}=
+        \begin{pmatrix}
+            1 & 1 & 1 \\
+            1 & 1 & 1 \\
+            1 & 1 & 1
+        \end{pmatrix}
+        .
+    \end{equation*}
+\end{itemize}
+\vspace{-0.6cm}
+
+\begin{table}[htbp]
+    \centering
+    \setlength{\tabcolsep}{4pt} % Ajusta el espacio entre columnas si queda muy ancha
+    \caption{Tabla de convergencia y costes computacionales.}
+    \vspace{-0.2cm}
+    \begin{tabular}{cccccc}
+        \toprule
+        \textbf{Nº Elementos} & \textbf{T. Ensamblado (s)} & \textbf{T. Resolución (s)} & \textbf{Error} $\boldsymbol{L^2}$ & \textbf{Error} $\boldsymbol{H^1}$ \\
+        \midrule
+        16$\times$16  & $0.0070$ & $0.0013$ & $4.36 \cdot 10^{-4}$ & $2.60 \cdot 10^{-2}$ \\
+        32$\times$32  & $0.0251$ & $0.0013$ & $5.23 \cdot 10^{-5}$ & $6.42 \cdot 10^{-3}$ \\
+        64$\times$64  & $0.0604$ & $0.0244$ & $6.46 \cdot 10^{-6}$ & $1.60 \cdot 10^{-3}$ \\
+        128$\times$128 & $0.2064$ & $0.1083$ & $8.06 \cdot 10^{-7}$ & $3.99 \cdot 10^{-4}$ \\
+        256$\times$256 & $0.6724$ & $0.7157$ & $1.01 \cdot 10^{-7}$ & $9.97 \cdot 10^{-5}$ \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+
+\subsubsection{Problema 2}
+ \vspace{-0.2cm}
+\begin{itemize}
+    \item \textbf{Grados polinomiales:} $q=p=2$.
+    \vspace{-0.2cm}
+    \item \textbf{Dominio paramétrico:} $U=V=\{0,0,0,1,1,1\}$.
+     \vspace{-0.2cm}
+    \item \textbf{Dominio físico:} Círculo contenido en el plano XY de radio 1 y centrado en el origen.
+     \vspace{-0.2cm}
+    \item \textbf{Ecuaciones del problema:} $f(x,y)=1$, $u(\Gamma)=0$.
+     \vspace{-0.2cm}
+    \item \textbf{Solución y derivadas analíticas:}
+    \vspace{-0.3cm}
+    \begin{itemize}
+        \item $u(x,y)=\frac{1-x^2-y^2}{4}$.
+        \vspace{-0.15cm}
+        \item $\frac{\partial u}{\partial x}(x,y)=-\frac{x}{2}$.
+        \vspace{-0.15cm}
+        \item $\frac{\partial u}{\partial y}(x,y)=-\frac{y}{2}$.
+        \vspace{-0.2cm}
+    \end{itemize}
+    \item \textbf{Puntos de control y pesos:}
+    \begin{equation*}
+        \mathbf{P} = 
+        %\footnotesize % Reducimos tamaño de fuente solo aquí
+        \begin{pmatrix}
+            (-1, 0, 0) & (-1, -1, 0) & (0, -1, 0) \\
+            (-1, 1, 0) & (0, 0, 0) & (1, -1, 0) \\
+            (0, 1, 0) & (1, 1, 0) & (1, 0, 0)
+        \end{pmatrix}
+        ,\qquad
+        \mathbf{w}=
+        \begin{pmatrix}
+            1 & \frac{\sqrt{2}}{2} & 1 \\
+            \frac{\sqrt{2}}{2} & 1 & \frac{\sqrt{2}}{2} \\
+            1 & \frac{\sqrt{2}}{2} & 1
+        \end{pmatrix}
+        .
+    \end{equation*}
+\end{itemize}
+\vspace{-0.6cm}
+
+\begin{table}[htbp]
+    \centering
+    \caption{Tabla de convergencia y costes computacionales.}    \vspace{-0.2cm}
+    \setlength{\tabcolsep}{5pt}
+    \begin{tabular}{ccccc}
+        \toprule
+        \textbf{Nº Elementos} & \textbf{T. Ensamblado (s)} & \textbf{T. Resolución (s)} & \textbf{Error} $\boldsymbol{L^2}$ & \textbf{Error} $\boldsymbol{H^1}$ \\
+        \midrule
+        16$\times$16  & $0.0068$ & $0.0016$ & $1.42 \cdot 10^{-6}$  & $1.21 \cdot 10^{-4}$ \\
+        32$\times$32  & $0.0084$ & $0.0198$ & $1.74 \cdot 10^{-7}$  & $3.02 \cdot 10^{-5}$ \\
+        64$\times$64  & $0.0663$ & $0.0283$ & $2.17 \cdot 10^{-8}$  & $7.53 \cdot 10^{-6}$ \\
+        128$\times$128 & $0.2076$ & $0.1179$ & $2.71 \cdot 10^{-9}$  & $1.88 \cdot 10^{-6}$ \\
+        256$\times$256 & $0.6902$ & $0.9705$ & $3.42 \cdot 10^{-10}$ & $4.70 \cdot 10^{-7}$ \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.47\textwidth}%surface_hX=256_CROP_HQ.png
+        \includegraphics[width=\linewidth]{surface_hX=256_CROP_HQ1.png}
+        \caption{Problema 1.}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.47\textwidth}
+        \includegraphics[width=\linewidth]{surface_hX=256_CROP_HQ.png}
+        \caption{Problema 2.}
+    \end{subfigure}
+    %\caption{Código para las figuras en el anexo}
+    % --- NOTA DEL CÓDIGO FUENTE ---
+    \vspace{0.5em} % Pequeño espacio vertical para separar de las subfiguras
+    \begin{flushleft}
+        \footnotesize{\textit{Nota}: El eje Z, originalmente constante a 0 en ambas soluciones, se ha modificado para representar el valor de la solución en cada punto.}
+    \end{flushleft}
+    % -------------------------------
+\end{figure}
 %--- FIN DEL CAPÍTULO 5
 
 \clearemptydoublepage
 
 %--- CAPÍTULO 6 DEL TFG
-\chapter{Conclusiones.}
+\chapter{Conclusiones}
 
+
+Durante el trabajo hemos enfocado el IGA como alternativa al FEM, analizando sus bases teóricas, realizando una implementación de este en C++ y validando las soluciones obtenidas y el tiempo de computación.
+
+A la vista del desarrollo teórico y de los resultados numéricos obtenidos en los capítulos previos, extraemos las siguientes conclusiones:
+
+\begin{itemize}
+    \item \textbf{Exactitud Geométrica:} principal ventaja del IGA frente al FEM, elimina el error de aproximación geométrico y ahorra el desarrollo de una malla intermedia.
+
+    \item \textbf{Alta Continuidad y Suavidad:} debido a las propiedades de las funciones base NURBS, obtenemos una suavidad de clase $C^{(p-1)}$, en contraposición al FEM, que ofrece suavidad de clase $C^0$ en las fronteras de los elementos.
+
+    \item \textbf{Convergencia Numérica:} los resultados experimentales presentados en el Capítulo 5 confirman las tasas de convergencia en norma $H^1$, decrece con orden $\mathcal{O}(h^p)$, y el error en norma $L^2$, con orden $\mathcal{O}(h^{p+1})$.
+
+    \item \textbf{Coste Computacional:} la fase de ensamblado del IGA es computacionalmente más costosa por grado de libertad que del FEM.
+    
+    \item \textbf{Implementación:} la implementación de programas que permitan resolver EDPs mediante IGA requieren de una gestión más detallada de la información geométrica.
+\end{itemize}
+
+\section{Trabajo futuro}
+
+Debido a limitaciones de espacio y tiempo, hay temas que no se han tratado en el trabajo que tienen una alta importancia en referencia al IGA.
+
+\begin{itemize}
+    \item \textbf{k-refinamiento:} refinamiento elevando el orden y la continuidad simultáneamente, una característica exclusiva de IGA que maximiza la eficiencia computacional.
+    \item \textbf{Refinamiento local (T-Splines):} superar las limitaciones intrínsecas del producto tensorial de las NURBS implementando T-Splines, permitiendo así refinar de manera local un elemento concreto sin afectar a vecinos relativamente lejanos que mediante NURBS sería imposible, empleado en biotecnología para representar estructuras orgánicas complejas localmente.
+    \item \textbf{Problemas dependientes del tiempo:} implementaciones discretizando el tiempo mediante métodos como Crank-Nicolson al igual que en el FEM, actualmente se encuentra en investigación la unificación de métodos que implementen únicamente IGA para problemas espacio-temporales.
+    \item \textbf{Comparación de cotas respecto a FEM:} demostrar que, aun siendo más costoso computacionalmente, el IGA puede compensar esta desventaja al ofrecer una mejor cota del error por grado de libertad que el FEM.
+\end{itemize}
 %-------------
 \backmatter                      % Parte final del texto
 
@@ -1174,9 +1530,26 @@ En ambas secciones se verificará que el codigo se ha ejecutado correctamente y 
 \nocite{*}
 \bibliography{Biblio2}
 %--- FIN DE LA BIBLIOGRAFÍA
+\clearemptydoublepage
 
+% --- CONFIGURACIÓN DE LOS ANEXOS ---
+
+% 1. Estilo de cabecera limpio (sin "Capítulo 6")
+\newpagestyle{estiloanexos}{
+    \sethead[\thepage][][\textsl{Anexos}]
+    {\textsl{Análisis isogeométrico \ - \ Carlos Palomera Oliva}}{}{\thepage}
+}
+
+\pagestyle{estiloanexos}
+
+\setcounter{section}{0}        
+\renewcommand{\thechapter}{A}  
+\renewcommand{\thesection}{A.\arabic{section}} 
+
+\phantomsection
 \chapter*{Anexos}
 \addcontentsline{toc}{chapter}{Anexos}
+
 
 \section{Método de los elementos finitos.}
 \label{FEM}
@@ -1185,7 +1558,7 @@ Partiendo de la formulación variacional, con la garantía de la existencia y un
 Para ello se realizan dos pasos previos:
 
 \begin{itemize}
-    \item \textbf{Discretización del dominio ($\Omega$):} este se divide en una colección de subdominios principales denominados \textbf{elementos}, estos elementos son politopos cerrados y simples (en 2D normalmente son triángulos, pero pueden ser también otro tipo de poligonos). Los denotaremos como $K_j$, de manera que se cumple que $\Omega \cup \Gamma = \overline{\Omega} = \bigcup_{j=1}^{M} K_j $. Esta subdivisión se conoce como malla ($T_h=\{K_1, K_2,\dots,K_M\})$.
+    \item \textbf{Discretización del dominio ($\Omega$):} este se divide en una colección de subdominios principales denominados \textbf{elementos}, estos elementos son politopos cerrados y simples (en 2D normalmente son triángulos, pero pueden ser también otro tipo de polígonos). Los denotaremos como $K_j$, de manera que se cumple que $\Omega \cup \Gamma = \overline{\Omega} = \bigcup_{j=1}^{M} K_j $. Esta subdivisión se conoce como malla ($T_h=\{K_1, K_2,\dots,K_M\})$.
     \item \textbf{Discretización del espacio ($V(\Omega$)):} el subespacio de dimensión finita construido a base de funciones polinómicas $V^h = \{ v \in H^1(\Omega) \mid v = g \text{ en } \Gamma_D \text{ y } v|_{K_j} \in P_p(K_j), \forall K_j \in T_h \}$, donde $p\in \mathbb{N}$ es el grado polinomial elegido y $h = \max_{K_j \in \mathcal{T}_h} h_j, \, h_j = \text{diam}(K_j) = \sup_{x, y \in K_j} \|x - y\|$, de manera que podemos definir una base de este de la forma $\{\phi_1, \phi_2, \dots, \phi_N\}$.
     
         Definimos adicionalmente los nodos $x_i \in \overline{\Omega}$ y el conjunto nodal $\mathcal{N} = \{ x_1, x_2, \dots, x_N \} \subset \overline{\Omega}$, donde N es la dimensión de $V^h$. El lugar que ocupa cada $x_i$ depende tanto del tipo de elementos utilizados para crear la malla como del grado polinomial $p$ elegido, además, cada uno de estos está asociado a una única función base, de manera que se cumplen las siguientes propiedades:
@@ -1246,7 +1619,8 @@ Definimos ahora la norma inducida por la forma bilineal $a( \cdot , \cdot)$, que
 
 
     
-\begin{teorema} El error $e=u-u^h$ del FEM converge en las normas $\|\cdot\|_{L^2(\Omega)}$ y $\|\cdot\|_{H^1(\Omega)}$, tal que:
+\begin{teorema}\label{teor:FEM_cotas}
+     El error $e=u-u^h$ del FEM converge en las normas $\|\cdot\|_{L^2(\Omega)}$ y $\|\cdot\|_{H^1(\Omega)}$, tal que:
     \begin{itemize}
         \item $\|e\|_{H^1(\Omega)}$, se reduce con orden  $\mathcal{O}(h^{p})$.
         \item $\|e\|_{L^2(\Omega)}$, se reduce con orden  $\mathcal{O}(h^{p+1})$.
@@ -1290,10 +1664,11 @@ Definimos ahora la norma inducida por la forma bilineal $a( \cdot , \cdot)$, que
         a(v,w) = (e,v)_{L^2(\Omega)}=\int_\Omega ev \, d\Omega, \quad \forall v \in V(\Omega).
     \end{equation*}
 
-    Debido a la coercividad y continuidad de la forma bilineal y la continuidad de la forma lineal\footnote{La demostración de la continuidad de la forma lineal se encuentra en el anexo \ref{sec:cont}}, debido al \textbf{Lema de Lax-Millgram}, la solución w existe y es única, su regularidad viene dada por las condiciones de regularidad elípticas asumidas en el anexo \ref{sec:equivform}, luego $\exists \, C_{\text{Reg}}\in \R^+$ tal que:
-    \begin{equation*}
+    Debido a la coercividad y continuidad de la forma bilineal y la continuidad de la forma lineal\footnote{La demostración de la continuidad de la forma lineal se encuentra en el anexo \ref{sec:cont}}, debido al \textbf{Lema de Lax-Milgram}, la solución w existe y es única, su regularidad viene dada por las condiciones de regularidad elípticas asumidas en el anexo \ref{sec:equivform}, luego $\exists \, C_{\text{Reg}}\in \R^+$ tal que:
+    \begin{equation}
+        \label{eq:Lax-Millgram}
         \|w\|_{H^2(\Omega)} \leq C_{\text{reg}} \|e\|_{L^2(\Omega)}
-    \end{equation*}
+    \end{equation}
 
     Tomamos ahora $v=e$, obteniendo así la identidad
     \begin{equation*}
@@ -1325,18 +1700,24 @@ Definimos ahora la norma inducida por la forma bilineal $a( \cdot , \cdot)$, que
         \|w - w_h\|_{H^1(\Omega)} \leq C_{2} h^{2-1} \|w\|_{H^{2}(\Omega)} = C_{2} h^{1} \|w\|_{H^{2}(\Omega)}.
     \end{equation*}
 
-    Culminando en la desigualdad:
+    Obteniendo en la desigualdad:
     \begin{equation*}
         \|e\|_{L^2(\Omega)}^2 \leq \left( C_{\text{cont}}C_{\text{Céa}}C_{Sob}C_{2} \|u\|_{H^{p+1}(\Omega)} \|w\|_{H^{2}(\Omega)} \right)h^{p+1}.
     \end{equation*}
+
+    Aplicando finalmente \ref{eq:Lax-Millgram}, y dividiendo en ambos lados de la igualdad por $\|e\|_{L^2(\Omega)}$\footnote{Notar que si $\|e\|_{L^2(\Omega)}=0$, $\|e\|_{L^2(\Omega)} \leq C h^{p+1}, \, \forall C,h>0$, luego asumimos $\|e\|_{L^2(\Omega)}>0$.}:
+    \begin{equation*}
+        \|e\|_{L^2(\Omega)} \leq \left(C_{\text{reg}} C_{\text{cont}}C_{\text{Céa}}C_{Sob}C_{2} \|u\|_{H^{p+1}(\Omega)} \right)h^{p+1}.
+    \end{equation*}
+
     obteniendo así un error en $L^2(\Omega)$ que converge con orden $\mathcal{O}(h^{p+1})$, siempre que $u\in H^{p+1}(\Omega)$.
 \end{itemize}
 \end{proof}
 \end{teorema}
 
 
-\section{Demmostraciones omitidas}
-\subsection{Paso de solución fuerte a solución variacional}
+\section{Demostraciones omitidas}
+\subsection{Paso de Solución Fuerte a Solución Variacional}
 \label{sec:Paso_Soluciones}
 \begin{proof}
     
@@ -1382,7 +1763,7 @@ Por último sustituimos y reordenamos en forma bilineal $a(u,v)$ igualada a la f
      &=\int_{\Omega}fv \, d\Omega+\int_{\Gamma_N}hv\, d\Gamma+\int_{\Gamma_R}\frac{r}{\beta}v\, d\Gamma={L(v)}.
 \end{align*}
 \end{proof}
-\subsection{Existencia y unicidad de la solución variacional (Lema de Lax-Millgram)}
+\subsection{Existencia y unicidad de la solución variacional (lema de Lax-Milgram)}
 \label{sec:Lax}
 \begin{teorema}
 La existencia y unicidad de la solución al problema variacional $u \in V(\Omega)$ está garantizada gracias al \textbf{Lema de Lax-Milgram}, pues se cumplen las tres siguientes condiciones de este:
@@ -1394,6 +1775,8 @@ La existencia y unicidad de la solución al problema variacional $u \in V(\Omega
     
 \end{itemize}
 \end{teorema}
+
+Demostraremos ahora cada una de las propiedades:
 
 \begin{itemize}
     \item \textbf{Continuidad de la Forma Bilineal:}\begin{proof} aplicaremos la \textbf{desigualdad triangular},
@@ -1528,7 +1911,7 @@ u = g & \text{en } \Gamma_D \quad (u\in V(\Omega)), \\[6pt]
     
 
 \end{proof}
-\subsection{Condiciones del Lema de Céa}
+\subsection{Condiciones del lema de Céa}
 \label{sec:Cea}
 \begin{proof} Probaremos la coercividad y la continuidad en $\|\cdot\|_V$:
 \begin{itemize}
@@ -1578,15 +1961,75 @@ u = g & \text{en } \Gamma_D \quad (u\in V(\Omega)), \\[6pt]
     \end{equation*}
     Como $e=u-u^h$ es constante en este contexto, $e\in L^2(\Omega)$, luego tomamos $C_\text{L}=\|e\|_{L^2(\Omega)}$.
 \end{proof}
+\subsection{Propiedades de Bezier}
+\label{sec:Bezier_proof}
+\subsubsection{Funciones base}
+\begin{proof}Se demostrarán las propiedades en el orden en el que han sido establecidas:
+    \begin{enumerate}
+        \item \textbf{No negatividad}: dado que $\binom{p}{i}\geq 0$ y $u \in [0,1]$ implica que $u^i \geq 0$ y $(1-u)^{p-i}\geq 0$, obtenemos la condición.
+        \item \textbf{Partición de la unidad}: mediante el \textbf{Teorema del Binomio de Newton}, que establece que para cualesquiera variables $x, y$:
+                                                $$(x+y)^p = \sum_{i=0}^{p} \binom{p}{i} x^i y^{p-i}.$$
+                                                Si sustituimos $x = u$ y $y = 1-u$, obtenemos:
+                                                $$\sum_{i=0}^{p} B_{i,p}(u) = \sum_{i=0}^{p} \binom{p}{i} u^i (1-u)^{p-i} = (u + (1-u))^p = (1)^p = 1.$$
+        \item \textbf{Interpolación de los extremos}: evaluamos en los límites $u=0$ y $u=1$. Tomando $0^0 = 1$.
+            \begin{itemize}
+                \item Para $u=0$:
+                $$B_{i,p}(0) = \binom{p}{i} 0^i (1)^{p-i}.$$
+                Si $i \neq 0$, el término $0^i = 0$, anulando la expresión. El único término no nulo es $i=0$:
+                $$B_{0,p}(0) = \binom{p}{0} 0^0 (1)^{p} = 1 \cdot 1 \cdot 1 = 1.$$
+                
+                \item Para $u=1$:
+                $$B_{i,p}(1) = \binom{p}{i} 1^i (0)^{p-i}.$$
+                Si $i \neq p$, el término $(0)^{p-i} = 0$ (pues $p-i > 0$). El único término no nulo es $i=p$:
+                $$B_{p,p}(1) = \binom{p}{p} 1^p (0)^{0} = 1 \cdot 1 \cdot 1 = 1.$$
+            \end{itemize}
+        \item \textbf{Soporte global}: analizamos el intervalo abierto $u \in (0,1)$.
+            En este intervalo, $u > 0$ y $(1-u) > 0$. Consecuentemente, $u^i > 0$ y $(1-u)^{p-i} > 0$ ($\forall i \geq 0$).
+            Luego obtenemos
+            $$B_{i,p}(u) > 0,\quad \forall i \geq 0, \quad u \in (0,1).$$
+    \end{enumerate}
+\end{proof}
+\subsubsection{Curvas}
+\begin{proof}Se demostrarán las propiedades en el orden en el que han sido establecidas:
+    \begin{enumerate}
+        \item \textbf{Interpolación en los extremos}: de las propiedades de las funciones base de Bezier obtenemos que para $u=0$ se tiene
+                $$\mathbf{C}(0) = \sum_{i=0}^{p} B_{i,p}(0)\mathbf{P}_i = 1 \cdot \mathbf{P}_0 .$$
+                Para el caso $u=1$ tenemos
+                $$\mathbf{C}(1) = \sum_{i=0}^{p} B_{i,p}(1)\mathbf{P}_i = 1 \cdot \mathbf{P}_p .$$
+        \item \textbf{Tangencia en los extremos}: partiremos de la derivada de las funciones base,
+                $$ \frac{d}{du} B_{i,p}(u) = p \left( B_{i-1, p-1}(u) - B_{i, p-1}(u) \right). $$
+                Sustituyendo esto en la derivada de la curva:
+                $$ \mathbf{C}'(u) = \sum_{i=0}^{p} p \left( B_{i-1, p-1}(u) - B_{i, p-1}(u) \right) \mathbf{P}_i. $$
+                Reorganizando el sumatorio obtenemos
+                $$ \mathbf{C}'(u) = p \sum_{i=0}^{p-1} B_{i,p-1}(u) (\mathbf{P}_{i+1} - \mathbf{P}_i). $$
+                Ahora evaluamos en los extremos usando la propiedad de interpolación de las funciones base:
+                \begin{itemize}
+                    \item En $u=0$:
+                    $$ \mathbf{C}'(0) = p \cdot B_{0,p-1}(0) (\mathbf{P}_{1} - \mathbf{P}_0) = p(\mathbf{P}_1 - \mathbf{P}_0). $$
+                    \item En $u=1$:
+                    $$ \mathbf{C}'(1) = p \cdot B_{p-1,p-1}(1) (\mathbf{P}_{p} - \mathbf{P}_{p-1}) = p(\mathbf{P}_p - \mathbf{P}_{p-1}). $$
+                \end{itemize}
+        \item \textbf{Invarianza afín}: sea $\Phi(\mathbf{x}) = \mathbf{A}\mathbf{x} + \mathbf{b}$ una transformación afín. Aplicamos $\Phi$ a la curva:
+                    $$ \Phi(\mathbf{C}(u)) = \mathbf{A} \left( \sum_{i=0}^{p} B_{i,p}(u)\mathbf{P}_i \right) + \mathbf{b}. $$
+                    Por la linealidad de la multiplicación matricial $\mathbf{A}$:
+                    $$ \Phi(\mathbf{C}(u)) = \sum_{i=0}^{p} B_{i,p}(u) (\mathbf{A}\mathbf{P}_i) + \mathbf{b}. $$
+                    Aquí utilizamos la propiedad de \textbf{Partición de la Unidad} para multiplicar el vector $\mathbf{b}$ por 1 e introducirlo en el sumatorio:                    
+                    $$ \Phi(\mathbf{C}(u)) = \sum_{i=0}^{p} B_{i,p}(u) (\mathbf{A}\mathbf{P}_i) + \mathbf{b} = \sum_{i=0}^{p} B_{i,p}(u) (\mathbf{A}\mathbf{P}_i) + \sum_{i=0}^{p} B_{i,p}(u)\mathbf{b} = \sum_{i=0}^{p} B_{i,p}(u) (\mathbf{A}\mathbf{P}_i + \mathbf{b}). $$
+                    Reconocemos que $\mathbf{A}\mathbf{P}_i + \mathbf{b} = \Phi(\mathbf{P}_i)$, por lo tanto:
+                    $$ \Phi(\mathbf{C}(u)) = \sum_{i=0}^{p} B_{i,p}(u) \Phi(\mathbf{P}_i). $$
+    \end{enumerate}
+\end{proof}
+
 \subsection{Propiedades de los B-Splines}
 \label{sec:B-Splines_proof}
+\subsubsection{Funciones base}
 \begin{proof} Se demostrarán las propiedades en el orden en el que han sido establecidas:
 
 
     \begin{enumerate}
-        \item \textbf{Soporte Local}: procederemos mediante inducción sobre $p$:
+        \item \textbf{Soporte local}: procederemos mediante inducción sobre $p$:
             \begin{itemize}
-                \item \textbf{Caso Base ($p=0$)}: tenemos, $N_{i,0}(u)=1$ si $u\in [u_i, u_{i+1})$ por definición.
+                \item \textbf{Caso base ($p=0$)}: tenemos, $N_{i,0}(u)=1$ si $u\in [u_i, u_{i+1})$ por definición.
                 \item \textbf{Paso de inducción sobre $p$}: partiendo de la definición mediante el algoritmo de Cox-de Boor:
                 \begin{equation}
                     N_{i,p}(u) = \frac{u - u_i}{u_{i+p} - u_i} N_{i,p-1}(u) + \frac{u_{i+p+1} - u}{u_{i+p+1} - u_{i+1}} N_{i+1,p-1}(u).
@@ -1594,26 +2037,26 @@ u = g & \text{en } \Gamma_D \quad (u\in V(\Omega)), \\[6pt]
                 \end{equation}
                 Asumimos que $N_{i,p-1}(u)$ tiene soporte en $[u_i, u_{i+p})$ y $N_{i+1,p-1}(u)$ tiene soporte en $[u_{i+1}, u_{i+p+1})$, luego $N_{i,p}(u)$ tiene soporte $[u_{i}, u_{i+p+1})$.
             \end{itemize}
-            \item \textbf{No Negatividad}: procederemos mediante inducción sobre $p$:
+            \item \textbf{No negatividad}: procederemos mediante inducción sobre $p$:
             \begin{itemize}
-                \item \textbf{Caso Base ($p=0$)}: tenemos por definición que $N_{i,}=0$ o $1$, luego $N_{i,} \geq 0$.
+                \item \textbf{Caso base ($p=0$)}: tenemos por definición que $N_{i,}=0$ o $1$, luego $N_{i,} \geq 0$.
                 \item \textbf{Paso de inducción sobre $p$}: asumimos cierta la hipótesis para $p-1$, tomando $u \in [u_i, u_{i+p+1})$ y aplicando el algoritmo \ref{alg:Cox}, la demostración se reduce a probar que:
                 \begin{itemize}
-                    \item $\frac{u - u_i}{u_{i+p} - u_i}\geq 0$, trivial pues por como esta definido el vector de nodos, $u_{i+p} \geq u_i$ y como $u \in [u_i, u_{i+p+1})$, $u \geq u_i$
+                    \item $\frac{u - u_i}{u_{i+p} - u_i}\geq 0$, trivial pues por como esta definido el vector de nudos, $u_{i+p} \geq u_i$ y como $u \in [u_i, u_{i+p+1})$, $u \geq u_i$
                     \item $\frac{u_{i+p+1} - u}{u_{i+p+1} - u_{i+1}}\geq 0$, de manera análoga tenemos $u_{i+p+1} \geq u_{i+1}$ y $u_{i+p+1}\geq u$.
                 \end{itemize}
             
             \end{itemize}
-            \item \textbf{Número de Bases Activas}: procederemos mediante inducción sobre $p$:
+            \item \textbf{Número de bases activas}: procederemos mediante inducción sobre $p$:
                 \begin{itemize}
-                    \item \textbf{Caso Base ($p=0$)}: por definición del caso $p=0$ de la funciones base y por la propiedad de no decrecimiento del vector de nudos, si $u\in [u_i, u_{i+1})$, existe unicamente una función base $N_{i,0}$ no nula en ese intervalo, luego el único indice $j$ que satisface la condición de tener una función base no nula asociada es $i=j$.
-                    \item \textbf{Paso de inducción sobre $p$}: asumimos que para el intervalo $[u_i, u_{i+1})$ existen a lo sumo $p$ funciones base $N_{j,p-1}$ no nulas con indices $j\in \{i-(p-1),\dots , i\}$, debido al algoritmo de Cox-de Boor
-                    \ref{alg:Cox} y a la no negatividad de los coeficientes y de las funciones base provada en el apartado anterior,si $u\in [u_i, u_{i+1})$, $N_{j,p}(u)$ será no nula en el intervalo $ [u_i, u_{i+1})$ si alguna de las funciones base $N_{j,p-1}(u)$ y $N_{j+1,p-1}(u)$ no lo son, luego:
+                    \item \textbf{Caso base ($p=0$)}: por definición del caso $p=0$ de la funciones base y por la propiedad de no decrecimiento del vector de nudos, si $u\in [u_i, u_{i+1})$, existe únicamente una función base $N_{i,0}$ no nula en ese intervalo, luego el único indice $j$ que satisface la condición de tener una función base no nula asociada es $i=j$.
+                    \item \textbf{Paso de inducción sobre $p$}: asumimos que para el intervalo $[u_i, u_{i+1})$ existen a lo sumo $p$ funciones base $N_{j,p-1}$ no nulas con índices $j\in \{i-(p-1),\dots , i\}$, debido al algoritmo de Cox-de Boor
+                    \ref{alg:Cox} y a la no negatividad de los coeficientes y de las funciones base probada en el apartado anterior,si $u\in [u_i, u_{i+1})$, $N_{j,p}(u)$ será no nula en el intervalo $ [u_i, u_{i+1})$ si alguna de las funciones base $N_{j,p-1}(u)$ y $N_{j+1,p-1}(u)$ no lo son, luego:
                     \begin{itemize}
                         \item $N_{j,p-1}(u)$ es no nula a lo sumo cuando $j\in \{i-p+1, i-p+2, \dots ,i\}$
                         \item $N_{j+1,p-1}(u)$ es no nula a lo sumo cuando $j\in \{i-p, i-p+1, \dots ,i-1\}$                 
                     \end{itemize}
-                    Luego $N_{j,p}$ es no nula cuando $j\in [i-p, i]$, probando así las posibles $p+1$ funciones base no nulas con sus indices posibles correspondientes.
+                    Luego $N_{j,p}$ es no nula cuando $j\in [i-p, i]$, probando así las posibles $p+1$ funciones base no nulas con sus índices posibles correspondientes.
                 \end{itemize}
                 %Finalmente para probar la cantidad de funciones base nulas en un intervalo $[u_i, u_{i+1})$, suponemos que $u_j=u_{j+1}=\dots=u_{j+k-1}$, 
                 %ahora tenemos que una función base $\mathbf{N_{j, p}(u)}$ será activa en $[u_i, u_{i+1})$ si su soporte $\mathbf{(u_j, u_{j+p+1})}$ interseca a este, notamos que $\forall j \in [i-p, i-p+k-1]$, $\mathbf{N_{j, p}(u)}$ tiene soporte local que llega hasta $u_i$, luego su soporte no interseca con el intervalo, dandonos así $k$ funciones nulas y por ende, $p+1-k$ funciones base activas.
@@ -1630,9 +2073,9 @@ u = g & \text{en } \Gamma_D \quad (u\in V(\Omega)), \\[6pt]
                 Consecuentemente, el número de funciones base activas o no nulas es:
                 $\mathbf{p+1} - \mathbf{k}$.
                 %\newpage
-            \item \textbf{Partición de la Unidad}:
+            \item \textbf{Partición de la unidad}:
                 \begin{itemize}
-                    \item \textbf{Caso Base ($p=0$)}: como hemos probado en el apartado anterior en $p=0$ por cada intervalo $[u_i, u_{i+1})$ hay una sola función base no nula, luego $\forall u \in [u_0, u_m), \, \exists j\in R^+$ tal que $u\in [u_j,u{j+1})$, luego,
+                    \item \textbf{Caso base ($p=0$)}: como hemos probado en el apartado anterior en $p=0$ por cada intervalo $[u_i, u_{i+1})$ hay una sola función base no nula, luego $\forall u \in [u_0, u_m), \, \exists j\in R^+$ tal que $u\in [u_j,u{j+1})$, luego,
                     \begin{equation*}
                         \sum_{i=0}^{n} N_{i,0}(u) = N_{j,0}(u) = 1.
                     \end{equation*}
@@ -1654,8 +2097,13 @@ u = g & \text{en } \Gamma_D \quad (u\in V(\Omega)), \\[6pt]
                                                   =& \sum_{i=0}^{n} \left[ \frac{u - u_i}{u_{i+p} - u_i} + \frac{u_{i+p} - u}{u_{i+p} - u_{i}}  \right]N_{i,p-1}(u) = \sum_{i=0}^{n}N_{i,p-1}(u) = 1.
                     \end{align*}
                 \end{itemize}
-            
-            \item \textbf{Invarianza bajo Transformaciones Afines}: sea una transformación afín $T(\mathbf{P}) = \mathbf{M} \mathbf{P} + \mathbf{t}$, aplicamos esta a la curva obteniendo:
+    \end{enumerate}
+\end{proof}
+
+\subsubsection{Curvas}
+\begin{proof} Se demostrarán las propiedades en el orden en el que han sido establecidas:
+    \begin{enumerate}
+            \item \textbf{Invarianza bajo transformaciones afines}: sea una transformación afín $T(\mathbf{P}) = \mathbf{M} \mathbf{P} + \mathbf{t}$, aplicamos esta a la curva obteniendo:
             \begin{align*}
                     T(\mathbf{C}(u)) &= \mathbf{M} \mathbf{C}(u) + \mathbf{t} = \mathbf{M} \left( \sum_{i=0}^{n} N_{i,p}(u) \mathbf{P}_i \right) + \mathbf{t} =\\
                                      &=  \sum_{i=0}^{n} \mathbf{M} (N_{i,p}(u) \mathbf{P}_i) + 1 \cdot \mathbf{t} = \sum_{i=0}^{n} N_{i,p}(u) (\mathbf{M} \mathbf{P}_i) + \mathbf{t} \left( \sum_{i=0}^{n} N_{i,p}(u) \right)=\\
@@ -1664,11 +2112,11 @@ u = g & \text{en } \Gamma_D \quad (u\in V(\Omega)), \\[6pt]
 
             Siendo esta última serie la curva generada por los puntos de control transformados mediante la transformación afín.
             
-            \item \textbf{Continuidad Controlable}: Suponemos que $u_j$ tiene multiplicidad $k \leq p$, aplicamos ahora la definición de la derivada de la curva:
+            \item \textbf{Continuidad controlable}: Suponemos que $u_j$ tiene multiplicidad $k \leq p$, aplicamos ahora la definición de la derivada de la curva:
             \begin{equation*}
                 \mathbf{C}'(u) = \frac{d}{du} \left( \sum_{i=0}^{n} N_{i,p}(u) \mathbf{P}_i \right) = \sum_{i=0}^{n} N_{i,p}'(u) \mathbf{P}_i = \sum_{i=0}^{n} \left[ \frac{p}{u_{i+p} - u_i} N_{i,p-1}(u) - \frac{p}{u_{i+p+1} - u_{i+1}} N_{i+1,p-1}(u) \right] \mathbf{P}_i.
             \end{equation*}
-            Reordenamos ahora los indices del término de la derecha de la suma, aplicando las mismas propiedades que en el apartado anterior, obteniendo así:
+            Reordenamos ahora los índices del término de la derecha de la suma, aplicando las mismas propiedades que en el apartado anterior, obteniendo así:
             \begin{equation*}
                 \mathbf{C}'(u) = \sum_{i=0}^{n-1} N_{i,p-1}(u) \underbrace{\left[ p \frac{\mathbf{P}_{i+1} - \mathbf{P}_i}{u_{i+p+1} - u_{i+1}} \right]}_{\mathbf{P}_i^{(1)}}  = \sum_{i=0}^{n-1} N_{i,p-1}(u) \mathbf{P}_i^{(1)}.
             \end{equation*}
@@ -1709,7 +2157,7 @@ u = g & \text{en } \Gamma_D \quad (u\in V(\Omega)), \\[6pt]
                 =&N^*_{k,0}(u) + N^*_{k+1,0}(u) = \alpha_k N^*_{k,0}(u) +(1-\alpha_{k+1}) N^*_{k+1,0}(u).
             \end{align*}
         \end{itemize}
-        \item \textbf{Paso de inducción sobre $p$}: inicamos asumiendo cierta la hipótesis para $p-1$ y sustituimos en el algoritmo de Cox-de Boor,
+        \item \textbf{Paso de inducción sobre $p$}: iniciamos asumiendo cierta la hipótesis para $p-1$ y sustituimos en el algoritmo de Cox-de Boor,
             \begin{align*}
                 N_{i,p}(u) &= \frac{u - u_i}{u_{i+p} - u_i} \left[ \alpha_{i,p-1} N^*_{i,p-1}(u) + (1 - \alpha_{i+1,p-1}) N^*_{i+1,p-1}(u) \right]+ \\
                         &+ \frac{u_{i+p+1} - u}{u_{i+p+1} - u_{i+1}} \left[ \alpha_{i+1,p-1} N^*_{i+1,p-1}(u) + (1 - \alpha_{i+2,p-1}) N^*_{i+2,p-1}(u) \right].
@@ -1735,14 +2183,14 @@ u = g & \text{en } \Gamma_D \quad (u\in V(\Omega)), \\[6pt]
 \end{proof}
 \subsection{Equivalencia de curvas bajo refinamiento}
 \label{sec:refinement_proof}
-\begin{proof} Separaremos entre indices donde $\alpha_j$ toma valores 0 o 1 y en los que no son tan triviales
+\begin{proof} Separaremos entre índices donde $\alpha_j$ toma valores 0 o 1 y en los que no son tan triviales
         \begin{itemize}
             
-        \item Para los indices $j\leq k-p$,\, $\alpha_j=1, \, \mathbf{Q}_{j}^{w} = (1) \mathbf{P}_{j}^{w} + (1 - 1) \mathbf{P}_{j-1}^{w} =  \mathbf{P}_{j}^{w}$, $N_{j,p}=N^*_{j,p}$.
+        \item Para los índices $j\leq k-p$,\, $\alpha_j=1, \, \mathbf{Q}_{j}^{w} = (1) \mathbf{P}_{j}^{w} + (1 - 1) \mathbf{P}_{j-1}^{w} =  \mathbf{P}_{j}^{w}$, $N_{j,p}=N^*_{j,p}$.
 
-        \item Ahora para los indices $j > k$,\, $\alpha_j=0, \, \mathbf{Q}_{j}^{w} = (0) \mathbf{P}_{j}^{w} + (1 - 0) \mathbf{P}_{j-1}^{w} =  \mathbf{P}_{j-1}^{w}$, $N_{j-1,p}=N^*_{j,p}$.
+        \item Ahora para los índices $j > k$,\, $\alpha_j=0, \, \mathbf{Q}_{j}^{w} = (0) \mathbf{P}_{j}^{w} + (1 - 0) \mathbf{P}_{j-1}^{w} =  \mathbf{P}_{j-1}^{w}$, $N_{j-1,p}=N^*_{j,p}$.
     
-        \item Por último para los indices $i \in \{k-p, k-p+1, \dots, k\}$, obtenemos la definición de la influencia de estos indices mediante:
+        \item Por último para los índices $i \in \{k-p, k-p+1, \dots, k\}$, obtenemos la definición de la influencia de estos índices mediante:
         \begin{equation*}
             \mathbf{C}^{w}(u) = \sum_{i=k-p}^{k} N_{i,p}(u) \mathbf{P}_{i}^{w}.
         \end{equation*}
@@ -1755,7 +2203,7 @@ u = g & \text{en } \Gamma_D \quad (u\in V(\Omega)), \\[6pt]
             &\sum_{i=k-p}^{k} \alpha_{i} N_{i,p}^*(u) \mathbf{P}_{i}^{w}.\\
             &\sum_{i=k-p}^{k} (1 - \alpha_{i+1}) N_{i+1,p}^*(u) \mathbf{P}_{i}^{w}=\sum_{j=k-p+1}^{k+1} (1 - \alpha_j) N_{j,p}^*(u) \mathbf{P}_{j-1}^{w}.
         \end{align*}
-        Como hemos mostrado anteiormente la equivalencia de los términos de la serie para $j=k-p, \, j=k+1$ y ambos términos aparecen con su función base y punto de control correspondiente una única vez, podemos eliminarlos de la suma y centrarnos en los indices de los que desconocemos si se cumple.
+        Como hemos mostrado anteriormente la equivalencia de los términos de la serie para $j=k-p, \, j=k+1$ y ambos términos aparecen con su función base y punto de control correspondiente una única vez, podemos eliminarlos de la suma y centrarnos en los índices de los que desconocemos si se cumple.
         \begin{align*}
             &\mathbf{C}^{w}(u) = \sum_{j=k-p+1}^{k} [\alpha_{j} N_{j,p}^*(u)\mathbf{P}_{j}^{w} + (1 - \alpha_j) N_{j,p}^*(u)] \mathbf{P}_{j-1}^{w}=\\
             &=\sum_{j=k-p+1}^{k} N_{j,p}^*(u)\left[\alpha_i \mathbf{P}_{i}^{w} + (1 - \alpha_i) \mathbf{P}_{i-1}^{w} \right]=\sum_{j=k-p+1}^{k} N_{j,p}^*(u) \mathbf{Q}_{j}^{w}.
@@ -1763,6 +2211,95 @@ u = g & \text{en } \Gamma_D \quad (u\in V(\Omega)), \\[6pt]
         
         \end{itemize}
     \end{proof}
+
+\subsection{Propiedades del sistema}
+\label{prop_sistema}
+\begin{proof}Se demostrarán las propiedades en el orden en el que han sido establecidas:
+    \begin{enumerate}
+        \item \textbf{Dispersión:} la matriz de rigidez se define como $\mathbf{K}_{i,j} = a(\phi_j, \phi_i)$. La propiedad fundamental de las funciones base NURBS es que tienen \textbf{soporte local}.
+        
+        Para que $\mathbf{K}_{ij} \neq 0$, la intersección de los soportes debe ser no nula:
+        $$ \text{supp}(\phi_i) \cap \text{supp}(\phi_j) \neq \emptyset. $$
+        
+        Para un cierto grado polinomial $p$ tenemos que cada función base NURBS tiene soporte en, a lo sumo, $p+1$ intervalos no nulos del vector de nudos, por lo que obtenemos las siguientes propiedades:
+        \begin{itemize}
+            \item En 1D, una función base comparte soporte con a lo sumo $p$ funciones base con índices menores, $p$ con índices mayores y consigo misma. Total: $2p+1$.
+            \item En $\mathbb{R}^n$, si tomamos $p$ como el grado polinomial direccional mayor en cada dirección, mediante estructura de producto tensorial, el número de interacciones es a lo sumo el producto de las interacciones en cada dimensión si tuvieran grado máximo: $(2p+1)^n$.
+        \end{itemize}
+        Por tanto, el número de entradas no nulas por fila de $\mathbf{K}$ está acotado por $C_p = (2p+1)^n$. Dado que el número total de incógnitas $N_B$ crece con el refinamiento ($N_{el} \to \infty$), mientras que $C_p$ permanece constante (fijo $p$ o tomando $p$ como el grado polinomial máximo), se cumple:
+        $$ \lim_{N_{el} \to \infty} \frac{(2p+1)^n}{N_B} = \lim_{N_{B} \to \infty} \frac{C_p}{N_B} = 0. $$
+
+        \item \textbf{Simetría:}
+        La entrada de la matriz está dada por $\mathbf{K}_{ij} = a(\phi_j, \phi_i)$.
+        Si el operador diferencial del problema $\mathcal{L}$ es autoadjunto (por ejemplo, $\mathcal{L}u = -\Delta u$), la forma bilineal asociada $a(\cdot, \cdot)$ hereda la propiedad de simetría, tal que:
+        $$ a(u, v) = a(v, u) \quad \forall u, v \in V. $$
+        Aplicando esto a las funciones de base:
+        $$ \mathbf{K}_{ij} = a(\phi_j, \phi_i) = a(\phi_i, \phi_j) = \mathbf{K}_{ji}. $$
+        Por consiguiente, la matriz $\mathbf{K}$ es simétrica.
+
+        \item \textbf{Condicionamiento:} 
+        El número de condición espectral se define mediante el cociente de los autovalores extremos $\kappa(\mathbf{K}) = \frac{\lambda_{\max}}{\lambda_{\min}}$. Podemos estimarlos mediante el cociente de Rayleigh asociado a la forma bilineal $a(\cdot, \cdot)$ y la norma euclídea de los coeficientes $\mathbf{c}$:
+        $$ \lambda = \frac{\mathbf{c}^T \mathbf{K} \mathbf{c}}{\mathbf{c}^T \mathbf{c}} = \frac{a(u_h, u_h)}{\|\mathbf{c}\|^2}, \quad \text{donde } u_h = \sum_{i} c_i \phi_i. $$
+        
+        Es necesario relacionar la norma $L^2$ de la solución discreta $u_h$ con la norma euclídea de sus coeficientes de control $\mathbf{c}$. Gracias a la \textbf{Estabilidad de Riesz} de la base B-spline y al mapeo geométrico desde el dominio paramétrico, se satisface la equivalencia de normas:
+        $$ C_1 h^n \|\mathbf{c}\|^2 \le \|u_h\|_{L^2}^2 \le C_2 h^n \|\mathbf{c}\|^2. $$
+
+        Basándonos en esta relación y en las propiedades del espacio de aproximación:        
+        \begin{itemize}
+            \item \textbf{Cota superior ($\lambda_{\max}$):} 
+            Se utiliza la \textbf{desigualdad inversa global} típica en espacios de elementos finitos y splines:
+            \begin{equation*}
+                \|\nabla u_h\|_{L^2(\Omega)} \le C_{\text{inv}} h^{-1} \|u_h\|_{L^2(\Omega)}.
+            \end{equation*}
+            Elevando al cuadrado para la forma bilineal obtenemos
+            $$ a(u_h, u_h) = \|\nabla u_h\|_{L^2}^2 \lesssim h^{-2} \|u_h\|_{L^2}^2. $$
+            Finalmente, dividiendo por $\|\mathbf{c}\|^2$:
+            $$ \lambda_{\max} \approx \sup_{\mathbf{c}} \frac{a(u_h, u_h)}{\|\mathbf{c}\|^2} \lesssim h^{n-2}. $$
+
+            \item \textbf{Autovalor mínimo ($\lambda_{\min}$):} Usando la \textit{coercividad} del operador ($a(u_h, u_h) \ge \alpha \|u_h\|_{L^2}^2$):
+            $$ \lambda_{\min} \approx \inf_{u_h} \frac{a(u_h, u_h)}{\|\mathbf{c}\|^2} \gtrsim \frac{\|u_h\|_{L^2}^2}{h^{-n} \|u_h\|_{L^2}^2} \sim O(h^n). $$
+        \end{itemize}
+        
+        Finalmente, el número de condición escala como el cociente de ambas cotas:
+        $$ \kappa(\mathbf{K}) = \frac{\lambda_{\max}}{\lambda_{\min}} \approx C \frac{h^{n-2}}{h^n} = O(h^{-2}). $$
+    \end{enumerate}
+\end{proof}
+
+\section{Base teórica de los algoritmos de condiciones de contorno}
+\label{cond:contorno}
+Partimos de la partición de la frontera $\Gamma = \overline{\Gamma_D \cup \Gamma_R \cup \Gamma_N}$, con $\Gamma_D \cap \Gamma_R = \Gamma_D \cap \Gamma_N = \Gamma_R \cap \Gamma_N = \emptyset$.
+
+Partiendo de la formulación variacional:
+\begin{align} \label{form:variacional1}
+     a(u,v) &= \int_{\Omega}\nabla u \cdot \nabla v d\Omega + \int_{\Gamma_R}\frac{\alpha}{\beta}uv d\Gamma, \\
+     \label{form:variacional2}
+     L(v) &= \int_{\Omega}fv  d\Omega + \int_{\Gamma_N}hv d\Gamma + \int_{\Gamma_R}\frac{r}{\beta}v d\Gamma. 
+\end{align}
+
+Sea el sistema lineal discreto resultante del ensamblado $\mathbf{K}\mathbf{u}=\mathbf{F}$, donde $\mathbf{u} \in \R^n$.
+
+\subsection{Tipo Dirichlet}
+
+Sea el espacio de funciones test en la condición de Dirichlet $V_{h,0} = \{ v \in V_h \mid v|_{\Gamma_D} = 0 \}$.
+
+Sin embargo tenemos que para cada función de forma $\phi_k$ cuya intersección de su soporte con $\Gamma_D$ es no nula, no son necesariamente nulas en la frontera.
+Esto implica que estas funciones no pertenecen al espacio test admisible.
+
+Como consecuencia las filas $k$ dadas por
+$\mathbf{K}_{k,i}=a(\phi_i,\phi_k)$, y su correspondiente elemento del vector de carga $L(\phi_k)=F_k$, no son válidas para el sistema, por ende estas filas las "perdemos", obteniendo ahora un
+sistema singular no resoluble, al que podemos añadir ahora las igualdades en los puntos de la frontera en las que solo una función base es no nula, de manera
+que obtenemos un número equivalente de ecuaciones a las que hemos eliminado de la forma $\mathbf{K}_{k,i}=0, \forall i \neq k$, $\mathbf{K}_{k,k}=1$, $F_k=g(x_k)$.
+
+\subsection{Tipo Neumann}
+
+Observamos en \ref{form:variacional2}, que las condiciones de contorno de tipo Neumann solo suman la integral
+referente a esta a la forma lineal, obteniendo así un caso trivial en el que solo debemos sumarle al valor del vector de carga
+su integral correspondiente a cada elemento en la frontera\footnote{Notar que para el caso 1D esta integral se resume a la evaluación en un punto.}.
+
+\subsection{Tipo Robin o mixtas}
+
+Análogamente a las condiciones de Neumann, en este caso observamos en \ref{form:variacional1} y \ref{form:variacional2} afectarán a la matriz de rigidez y al vector de carga,
+debiendo sumar las integrales correspondientes en ambos términos del sistema.
 
 \section{Código omitido}
 
@@ -1781,7 +2318,7 @@ u = g & \text{en } \Gamma_D \quad (u\in V(\Omega)), \\[6pt]
 \subsection{Figuras de Bézier}
 \label{sec:codigo_bezier}
 \textbf{Código de las bases de Bernstein}
-\begin{listing}[H]
+\begin{listing}
 \inputminted[
     linenos,
     breaklines,
@@ -1789,7 +2326,6 @@ u = g & \text{en } \Gamma_D \quad (u\in V(\Omega)), \\[6pt]
     fontsize=\footnotesize
 ]{octave}{plot_bernstein_bases.m}
 \end{listing}
-\newpage
 \textbf{Código de las curvas racionalizadas de Bernstein}
 \inputminted[
     linenos,
@@ -1805,8 +2341,8 @@ u = g & \text{en } \Gamma_D \quad (u\in V(\Omega)), \\[6pt]
     frame=lines,
     framesep=2mm,
     linenos=true,
-    style=dracula,
-    bgcolor=black, 
+    style=vs,
+    %bgcolor=black, 
     fontfamily=tt,
     tabsize=4,
     fontsize=\tiny
@@ -1817,8 +2353,8 @@ u = g & \text{en } \Gamma_D \quad (u\in V(\Omega)), \\[6pt]
     frame=lines,
     framesep=2mm,
     linenos=true,
-    style=dracula,
-    bgcolor=black, 
+    style=vs,
+    %bgcolor=black, 
     fontfamily=tt,
     tabsize=4,
     fontsize=\tiny
@@ -1829,8 +2365,8 @@ u = g & \text{en } \Gamma_D \quad (u\in V(\Omega)), \\[6pt]
     frame=lines,
     framesep=2mm,
     linenos=true,
-    style=dracula,
-    bgcolor=black, 
+    style=vs,
+    %bgcolor=black, 
     fontfamily=tt,
     tabsize=4,
     fontsize=\tiny
@@ -1852,8 +2388,8 @@ u = g & \text{en } \Gamma_D \quad (u\in V(\Omega)), \\[6pt]
     frame=lines,          
     framesep=2mm,         
     linenos=true,         
-    style=dracula,      
-    bgcolor=black,
+    style=vs,      
+    %bgcolor=black,
     fontfamily=tt,        
     tabsize=4,            
     fontsize=\footnotesize 
@@ -1900,8 +2436,8 @@ std::cout << "Tiempo tomado: " << duration.count() << " nanosegundos\n";
     frame=lines,          
     framesep=2mm,         
     linenos=true,         
-    style=dracula,      
-    bgcolor=black,
+    style=vs,      
+    %bgcolor=black,
     fontfamily=tt,        
     tabsize=4,            
     fontsize=\footnotesize 
@@ -1939,16 +2475,16 @@ Write_BasisFunctions(sol, "path+name");
     frame=lines,       
     fontsize=\footnotesize 
 ]{octave}
-dataX =  dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\Superficies\SuperficieRationalEj2X.txt', ' ');
-dataY =  dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\Superficies\SuperficieRationalEj2Y.txt', ' ');
-dataZ =  dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\Superficies\SuperficieRationalEj2Z.txt', ' ');
+dataX =  dlmread(PATH + 'SuperficieRationalEj2X.txt', ' ');
+dataY =  dlmread(PATH + 'SuperficieRationalEj2Y.txt', ' ');
+dataZ =  dlmread(PATH + 'SuperficieRationalEj2Z.txt', ' ');
 
 hold on
 surf(dataX, dataY, dataZ);
 
-dataCtrlX =  dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\CtrlPts\Ej2X.txt', ' ');
-dataCtrlY =  dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\CtrlPts\Ej2Y.txt', ' ');
-dataCtrlZ =  dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\CtrlPts\Ej2Z.txt', ' ');
+dataCtrlX =  dlmread(PATH + 'Ej2X.txt', ' ');
+dataCtrlY =  dlmread(PATH + 'Ej2Y.txt', ' ');
+dataCtrlZ =  dlmread(PATH + 'Ej2Z.txt', ' ');
 
 [n1 n2] = size(dataCtrlX);
 
@@ -1973,8 +2509,8 @@ hold off;
     frame=lines,          
     framesep=2mm,         
     linenos=true,         
-    style=dracula,      
-    bgcolor=black,
+    style=vs,      
+    %bgcolor=black,
     fontfamily=tt,        
     tabsize=4,            
     fontsize=\footnotesize 
@@ -1998,7 +2534,8 @@ for(unsigned int i=0; i<N_Steps_1+1;i++){
     iMatrix<double> auxMatrix(3,N_Steps_2+1);
     for(unsigned int j=0; j< N_Steps_2+1;j++){
         
-        std::vector<double> aux = SurfacePointRational(V1.size()-2-p1,p1,V1, V2.size()-2-p2,p2,V2,CtrlPtsW,i*Step_1,j*Step_2);
+        std::vector<double> aux = SurfacePointRational(V1.size()-2-p1,p1,V1,
+                                                       V2.size()-2-p2,p2,V2,CtrlPtsW,i*Step_1,j*Step_2);
         for(unsigned int k=0; k<3;k++){
             auxMatrix(k,j)=aux[k];
         }
@@ -2009,5 +2546,398 @@ for(unsigned int i=0; i<N_Steps_1+1;i++){
 Write_BezierSurface(eval,"path+nameSurf" );
 Write_CtrlPts(CtrlPts,"path+nameCtrlPts");
 \end{minted}
+
+\subsection{Implementaciones de IGA}
+\label{sec:IGAimp}
+
+\textbf{Caso 1D, Solución}
+
+\begin{minted}[
+    frame=lines,          
+    framesep=2mm,         
+    linenos=true,         
+    style=vs,      
+    %bgcolor=black,
+    fontfamily=tt,        
+    tabsize=4,            
+    fontsize=\tiny
+]{c++}
+
+
+bool PrintMatixes=false;
+bool PrintIntermediateValues=false;
+bool PrintPrevalues=false;
+
+
+int p=2;
+double nElements = 512;
+//variables que no cambian en cada ejecución del bucle o que se declaran fuera para ir actualizandolas
+iMatrix<double> CtrlPts = ReadDataFile_Matrix(PATH + "EjCirculo.txt"); 
+if(PrintPrevalues){
+    std::cout<< "----------------CtrlPts--------------" << std::endl;
+    CtrlPts.PrintMatrix();
+}
+std::vector<double> KnotVector={0,0,0,0.5,0.5,1,1,1};
+double lower_limit=KnotVector[0];
+double upper_limit=KnotVector[KnotVector.size()-1];
+std::vector<double> Weights={1,sqrt(2)/2,1,sqrt(2)/2,1};
+
+
+iMatrix<double> WeightedCtrlPts=WeightCtrlPts(CtrlPts,Weights);
+
+if(PrintPrevalues){
+    std::cout<< "----------WeightedCtrlPts--------------" << std::endl;
+    WeightedCtrlPts.PrintMatrix();
+}
+int n= KnotVector.size()-p-2;
+if(PrintPrevalues){
+    std::cout<< "---------------KnotVectorOld-----------------" << std::endl;
+    for(unsigned int i=0; i<KnotVector.size(); i++){
+        std::cout << std::setprecision(7) << KnotVector[i] << ", ";
+    }
+    std::cout << std::endl;
+    std::cout << "n value:" << n << std::endl;
+}
+std::vector<double> Insertions=createSubIntervals(nElements, lower_limit, upper_limit);
+Insertions=removeMatches(Insertions, KnotVector);
+iMatrix<double> NewCtrlPts=RefineKnotVectCurve(n,p,KnotVector, WeightedCtrlPts, Insertions, Insertions.size()-1);
+if(PrintPrevalues){
+    std::cout<< "----------------NewCtrlPtsW--------------" << std::endl;   
+    NewCtrlPts.PrintMatrix(7);
+}
+int size = KnotVector.size()-p-1;
+std::function<double(double)> f = [](double x) { 
+    return  100 std::sin( 10*M_PI * x);
+};
+
+auto analyticSol = [](double x){
+    //double pi= std::numbers::pi;
+    return sin(10*M_PI*x);
+};
+
+auto analyticSolDers = [](double x){
+    //double pi= std::numbers::pi;
+    return 10*cos(10*M_PI*x);
+};
+
+n = KnotVector.size()-p-2;
+
+
+if(PrintPrevalues){
+    std::cout<< "---------------KnotVectorNew-----------------" << std::endl;
+    for(unsigned int i=0; i<KnotVector.size(); i++){
+        std::cout <<std::setprecision(7) << KnotVector[i] << ", ";
+    }
+}
+//double Lenght=IntegrateNormDer(lower_limit,upper_limit, 5000, NewCtrlPts, KnotVector, n, p);
+double Lenght = M_PI;
+std::cout << std::endl;
+std::cout << "n value:" << n << std::endl;
+
+Weights=NewCtrlPts.GetRow(NewCtrlPts.GetNumRows()-1);
+if(PrintPrevalues){
+    std::cout<< "---------------Weights-----------------" << std::endl;
+    for(unsigned int i=0; i<Weights.size(); i++){
+        std::cout <<std::setprecision(7) << Weights[i] << ", ";
+    }
+    std::cout << std::endl;
+}
+int dim=NewCtrlPts.GetNumRows()-1;
+int numElements= NewCtrlPts.GetNumCols();
+
+int nEvals=p+1;
+
+
+Eigen::SparseMatrix<double> global(size, size);
+Eigen::VectorXd LinearForm(size);
+LinearForm.setZero(); // Inicializa en cero
+
+std::vector<double> Intervals=removeDuplicates(KnotVector);
+
+
+if(PrintPrevalues){
+    std::cout<< "---------------Intervals-----------------" << std::endl;
+    for(unsigned int i=0; i<Intervals.size(); i++){
+        std::cout << Intervals[i] << ", ";
+    }
+    std::cout << std::endl;
+}
+Eigen::VectorXd nodes, weights;
+legendre_pol(nEvals, nodes, weights);
+if(PrintPrevalues){
+    std::cout << "Nodos (raices):\n" << nodes.transpose() << "\n";
+    std::cout << "Pesos:\n" << weights.transpose() << "\n"; 
+}
+typedef Eigen::Triplet<double> T;
+std::vector<Eigen::Triplet<double>> tripletList;
+double preEvalPoint=lower_limit;
+double cumLenght=0;
+
+//iteraciones 
+auto start = std::chrono::high_resolution_clock::now();
+for(unsigned int index=0; index<Intervals.size()-1; index++){
+    double lowerLimit=Intervals[index], upperLimit=Intervals[index+1];
+    int span = FindSpan(KnotVector, lowerLimit,p,n);
+    std::vector<int> global_indices(p+1);
+    for(unsigned int w=0; w<=p; w++){
+        global_indices[w]=span-p+w;
+    }
+    if(PrintIntermediateValues){
+
+        std::cout << "global_indices: (";
+        for(unsigned int w=0; w<p; w++){
+            std::cout <<global_indices[w] << ", ";
+        }
+        std::cout << global_indices[p] << ")" <<std::endl;
+        std::cout << "Evaluation Interval: (" << Intervals[index] << ", " << Intervals[index+1]<< ")" <<std::endl;
+        std::cout<< "--------------------------------------------" << std::endl;
+    }
+    
+    iMatrix<double> BasisFunsEvals;
+    iMatrix<double> DerBasisFunsEvals;
+    std::vector<double> JacobianEvals;
+    std::vector<double> InverseJacobianEvals;
+    std::vector<double> funcEvals;
+    
+    D1_element_eval(n, span,p,nEvals, lowerLimit, upperLimit, KnotVector, Weights, nodes, NewCtrlPts, 
+                    f, preEvalPoint, cumLenght, BasisFunsEvals, DerBasisFunsEvals, JacobianEvals, InverseJacobianEvals, funcEvals, Lenght);
+    if(PrintIntermediateValues){
+        std::cout<< "-------------BasisFunsEvals----------------" << std::endl;
+        BasisFunsEvals.PrintMatrix(7);
+        std::cout<< "-------------DerBasisFunsEvals----------------" << std::endl;
+        DerBasisFunsEvals.PrintMatrix(7);
+        std::cout<< "--------------JacobianEvals----------------" << std::endl;
+        for(unsigned int i=0; i<JacobianEvals.size(); i++){
+            std::cout<< std::setprecision(7) << JacobianEvals[i] << ", ";
+        }
+        std::cout << std::endl;
+        std::cout<< "--------------InverseJacobianEvals----------------" << std::endl;
+        for(unsigned int i=0; i<InverseJacobianEvals.size(); i++){
+            std::cout<< std::setprecision(7) << InverseJacobianEvals[i] << ", ";
+        }
+        std::cout << std::endl;
+        std::cout<< "--------------funcEvals----------------" << std::endl;
+        for(unsigned int i=0; i<funcEvals.size(); i++){
+            std::cout<< std::setprecision(7) << funcEvals[i] << ", ";
+        }
+        std::cout << std::endl;
+        std::cout<< "--------------Element----------------" << std::endl;
+    }
+
+    iMatrix<double> Element=gauss_legendre_cuadrature_integral_bilinealForm(p,lowerLimit,upperLimit,nEvals, DerBasisFunsEvals, InverseJacobianEvals, weights);
+    
+    if(PrintIntermediateValues){
+        Element.PrintMatrix(7);
+        std::cout<< "-------------------------------------" << std::endl;
+    }
+
+    for (int i = 0; i <= p; ++i){
+        for (int j = 0; j <= p; ++j){
+            tripletList.push_back(T(global_indices[i], global_indices[j], Element(i, j)));
+        } 
+    }    
+
+    std::vector<double> LinearElement=gauss_legendre_cuadrature_integral_linealForm(p,lowerLimit, upperLimit, nEvals,
+                                                                                    BasisFunsEvals, JacobianEvals, funcEvals, weights);
+    
+    if(PrintIntermediateValues){
+        std::cout<< "--------------LinearElement----------------" << std::endl;
+        for(unsigned int i=0; i<LinearElement.size(); i++){
+            std::cout<< std::setprecision(7) << LinearElement[i] << ", ";
+        }
+        std::cout << std::endl;
+    }
+    for(unsigned int i=0; i<=p; i++){
+        LinearForm(global_indices[i])+=LinearElement[i];
+    }
+    
+}
+
+global.setFromTriplets(tripletList.begin(), tripletList.end());
+
+if(PrintMatixes){
+     std::cout<< "--------------GlobalMat----------------" << std::endl;
+    for (int k = 0; k < global.outerSize(); ++k){
+        for (Eigen::SparseMatrix<double>::InnerIterator it(global, k); it; ++it){
+            std::cout << "(" << it.row() << "," << it.col() << "): " << it.value() << "\n";
+        }
+    }
+    //std::cout<<Eigen::MatrixXd(global) <<std::endl;
+    std::cout<< "--------------GlobalLinearForm----------------" << std::endl;
+    for (int k = 0; k < LinearForm.size(); ++k){
+        std::cout << LinearForm[k] << ", ";
+    }
+    std::cout << std::endl;
+}
+
+//Compute of the Inverse jacobians for boundary conditions on dirhclet/Robin conditions
+iMatrix<double> Aders, wders;
+iMatrix<double> Allders0 = CurveDerivsAlg1(n, p, KnotVector, NewCtrlPts, 0, 1);
+int auxInt=Allders0.GetNumCols()-1;
+Aders = Allders0.GetSubMat(0,1,0, auxInt-1);
+wders = Allders0.GetSubMat(0,1,auxInt, auxInt);
+iMatrix<double> AuxMat2 = RatCurveDerivs(Aders, wders, 1);
+std::vector<double> AuxVec= AuxMat2.GetRow(1);
+double JacobianEvals0=0;
+for(unsigned int i=0; i< AuxVec.size(); i++){
+    JacobianEvals0+= AuxVec[i]*AuxVec[i];
+}
+
+
+double InverseJacobianEvals0=1/JacobianEvals0;
+
+
+iMatrix<double> Allders1 = CurveDerivsAlg1(n, p, KnotVector, NewCtrlPts, 1, 1);
+Aders = Allders1.GetSubMat(0,1,0, auxInt-1);
+wders = Allders1.GetSubMat(0,1,auxInt, auxInt);
+AuxMat2 = RatCurveDerivs(Aders, wders, 1);
+AuxVec= AuxMat2.GetRow(1);
+double JacobianEvals1=0;
+for(unsigned int i=0; i< AuxVec.size(); i++){
+    JacobianEvals1+= AuxVec[i]*AuxVec[i];
+}
+double InverseJacobianEvals1=1/JacobianEvals1;
+
+//apply boundary conditions
+impose_Dirichlet_Condition(p, size-1, global, LinearForm, true, true);
+//impose_Neumann_Condition(size-1, LinearForm, true, true);
+//double alpha = 3;
+//double beta= 5;
+//impose_Robin_Condition(p, size-1, global, LinearForm, alpha, beta, true, false);
+
+if(PrintMatixes){
+    std::cout<< "--------------GlobalMatPostCond----------------" << std::endl;
+    for (int k = 0; k < global.outerSize(); ++k){
+        for (Eigen::SparseMatrix<double>::InnerIterator it(global, k); it; ++it){
+            std::cout << setprecision(std::numeric_limits<double>::max_digits10) << "(" << it.row() << "," << it.col() << "): " << it.value() << "\n";
+        }
+    }
+}
+        
+if(PrintMatixes){
+    std::cout<< "--------------GlobalLinearFormPostCond----------------" << std::endl;
+    for (int k = 0; k < LinearForm.size(); ++k){
+        std::cout  << setprecision(std::numeric_limits<double>::max_digits10) << LinearForm[k] << ", ";
+    }
+    std::cout << std::endl;
+}
+        
+
+Eigen::SparseLU<Eigen::SparseMatrix<double>> solver;
+solver.compute(global);
+if(solver.info() != Eigen::Success) {
+    std::cout << "Error 1" << std::endl;
+}
+
+Eigen::VectorXd u = solver.solve(LinearForm);
+if(solver.info() != Eigen::Success) {
+    std::cout << "Error 2" << std::endl;
+}
+auto end = std::chrono::high_resolution_clock::now();
+auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+std::cout << "Tiempo tomado: " << duration.count() << " nanosegundos\n";
+
+       
+//std::cout<<"Longitud de la curva= "<< setprecision(std::numeric_limits<double>::max_digits10) <<  Lenght <<std::endl;
+std::string Text=PATH + "EjSinNonConst"; //_h=" + to_string(static_cast<int>(nElements)) +"_p="+ to_string(p)+"_test2.txt"
+        
+writeNumericFunction(u, KnotVector, Weights, n, p, nEvals, lower_limit, upper_limit, Text,Intervals, nElements, M_PI);
+//std::cout<<"Longitud de la curva= "<< setprecision(std::numeric_limits<double>::max_digits10) <<  Lenght <<std::endl;
+writeAnalyticFunction(analyticSol, analyticSolDers, Intervals, nEvals, NewCtrlPts, KnotVector, n, p, Text, Lenght, nElements);
+               
+//std::cout<<"Longitud de la curva= "<< setprecision(std::numeric_limits<double>::max_digits10) <<  cumLenght <<std::endl;
+        
+iMatrix<double> sol(dim,nEvals*nElements);
+std::vector<double> eval(dim);
+
+for(unsigned int iter = 0; iter<nElements; iter++){
+    double auxeval1= (Intervals[iter+1] - Intervals[iter])/2;
+    double auxeval2= (Intervals[iter+1] + Intervals[iter])/2;
+
+    for(unsigned int j=0; j<nEvals; j++){
+        double t=0.5*(auxeval1)*nodes(j)+auxeval2;
+        //std::cout << i << std::endl;
+        eval=CurvePointRational(KnotVector.size()-2-p,p,KnotVector,NewCtrlPts,t);
+        //std::cout << eval[0] << "|" << eval[1] << std::endl;
+        sol.SetCol(iter*nEvals + j,eval);
+    }
+            
+}
+Write_Curve(sol,PATH + "CurvaEjCircle_h="+  std::to_string(static_cast<int>(nElements)) + "_p=" + to_string(p) +".txt");
+        
+\end{minted}
+
+\textbf{Caso1D, Cálculo de Normas}
+\begin{minted}[
+    frame=lines,          
+    framesep=2mm,         
+    linenos=true,         
+    style=vs,      
+    %bgcolor=black,
+    fontfamily=tt,        
+    tabsize=4,            
+    fontsize=\tiny
+]{c++}
+
+int h_val = 32768;
+int p_val = 2;
+std::string nameAnalytic=PATH + "EjSinNonConst_h="+ to_string(h_val) + "_p=" + to_string(p_val) +"_Analytic_testCircle.txt";
+std::string nameNumeric=PATH + "EjSinNonConst_h="+ to_string(h_val) + "_p=" + to_string(p_val) +"_testCircle.txt";
+std::string nameAnalyticDers=PATH + "EjSinNonConst_h="+ to_string(h_val) + "_p=" + to_string(p_val) +"Ders_Analytic_testCircle.txt";
+std::string nameNumericDers=PATH + "EjSinNonConstDers_h="+ to_string(h_val) + "_p=" + to_string(p_val) +"_testCircle.txt";
+std::vector<std::vector<double>> AnalyticSol = leerArchivo(nameAnalytic, p_val+1);
+std::vector<std::vector<double>> NumericSol = leerArchivo(nameNumeric, p_val+1);
+std::vector<std::vector<double>> AnalyticSolDers = leerArchivo(nameAnalyticDers, p_val+1);
+std::vector<std::vector<double>> NumericSolDers = leerArchivo(nameNumericDers, p_val+1);
+
+Eigen::VectorXd nodes, weights;
+legendre_pol(p_val+1, nodes, weights);
+
+std::vector<double> Intervals = createSubIntervals(h_val, 0, 1);
+
+double L2sqr=0;
+double H1sqr=0;
+double cumSum=0;
+double cumSumDers=0;
+
+
+for(unsigned int iter=0; iter<h_val; iter++){
+    double a = Intervals[iter];
+    double b = Intervals[iter+1];
+    double h_elemento = (b - a)/2.0;
+
+    cumSum=0;
+    cumSumDers=0;
+
+    for(unsigned int i=0; i<=p_val; i++){
+        cumSum+=(AnalyticSol[iter][i]-NumericSol[iter][i])*(AnalyticSol[iter][i]-NumericSol[iter][i])*weights(i)* h_elemento;
+        cumSumDers+=(AnalyticSolDers[iter][i]-NumericSolDers[iter][i])*(AnalyticSolDers[iter][i]-NumericSolDers[iter][i])*weights(i)* h_elemento;
+    }
+
+    L2sqr+=cumSum;
+    H1sqr+=cumSumDers;
+}
+
+double L2norm=std::sqrt(L2sqr);
+double H1norm=std::sqrt(L2sqr+H1sqr);
+std::cout <<"Norma L2=" << L2norm << std::endl;
+std::cout <<"Norma H1=" << H1norm << std::endl;
+std::cout<< "fin 29 " << std::endl;
+
+\end{minted}
+
+\textbf{Caso 2D}
+
+\inputminted[
+    frame=lines,
+    framesep=2mm,
+    linenos=true,
+    style=vs,
+    %bgcolor=black, 
+    fontfamily=tt,
+    tabsize=4,
+    fontsize=\tiny
+]{c++}{2D.cpp}
+
 
 \end{document}

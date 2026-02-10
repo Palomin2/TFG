@@ -1,0 +1,8 @@
+Anexos, modificado el sistema de capitulos para que no comparta
+        enumeración con el capítulo 6.
+Página 16, eliminada la definicion de M=J^-1*J^t por no ser usada y
+           aclarada la diferencia entre las ecuaciones.
+Página 31, faltaba el ultimo paso de la demostracion.
+
+Dudas: 
+-Debo citar en bibliografia la documentación de la libreria de Eigen?

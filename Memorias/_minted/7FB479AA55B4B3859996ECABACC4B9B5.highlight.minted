@@ -1,5 +1,5 @@
 \begin{MintedVerbatim}[commandchars=\\\{\}]
-\PYG{n}{RUTA\PYGZus{}ARCHIVO\PYGZus{}CURVA} \PYG{p}{=} \PYG{l+s}{\PYGZsq{}C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/Curvas/EjCurva3d.txt\PYGZsq{}}\PYG{p}{;}
+\PYG{n}{RUTA\PYGZus{}ARCHIVO\PYGZus{}CURVA} \PYG{p}{=} \PYG{n}{PATH} \PYG{o}{+} \PYG{l+s}{\PYGZsq{}EjCurva3d.txt\PYGZsq{}}\PYG{p}{;}
 \PYG{n}{NOMBRE\PYGZus{}ARCHIVO\PYGZus{}SVG} \PYG{p}{=} \PYG{l+s}{\PYGZsq{}CurvaNurbs\PYGZus{}3D\PYGZus{}Plot.svg\PYGZsq{}}\PYG{p}{;}
 
 \PYG{n}{PC} \PYG{p}{=} \PYG{p}{[}

@@ -1,4 +1,4 @@
-RUTA_ARCHIVO_CURVA = 'C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/Curvas/EjCurva3d.txt';
+RUTA_ARCHIVO_CURVA = PATH + 'EjCurva3d.txt';
 NOMBRE_ARCHIVO_SVG = 'CurvaNurbs_3D_Plot.svg';
 
 PC = [

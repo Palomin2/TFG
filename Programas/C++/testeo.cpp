@@ -1560,7 +1560,7 @@ int main(int argc, char *argv[]) {
 
         
         int p=2;
-        double nElements = 512;
+        double nElements = 256;
         //variables que no cambian en cada ejecución del bucle o que se declaran fuera para ir actualizandolas
         iMatrix<double> CtrlPts = ReadDataFile_Matrix("C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/CtrlPts/EjCirculo.txt"); 
         if(PrintPrevalues){
@@ -1597,7 +1597,7 @@ int main(int argc, char *argv[]) {
         }
         int size = KnotVector.size()-p-1;
         std::function<double(double)> f = [](double x) { 
-            return  100*M_PI * M_PI * std::sin( 10*M_PI * x);
+            return  100 * std::sin( 10*M_PI * x);
         };
 
         auto analyticSol = [](double x){
@@ -1607,7 +1607,7 @@ int main(int argc, char *argv[]) {
 
         auto analyticSolDers = [](double x){
             //double pi= std::numbers::pi;
-            return 10*M_PI*cos(10*M_PI*x);
+            return 10*cos(10*M_PI*x);
         };
 
         n = KnotVector.size()-p-2;
@@ -1892,7 +1892,7 @@ int main(int argc, char *argv[]) {
     }
     if(stoi(argv[1])==29){//Norm calculations
 
-        int h_val = 32768;
+        int h_val = 256;
         int p_val = 2;
         std::string nameAnalytic="C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/SolEvals/EjSinNonConst_h="+ to_string(h_val) + "_p=" + to_string(p_val) +"_Analytic_testCircle.txt";
         std::string nameNumeric="C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/SolEvals/EjSinNonConst_h="+ to_string(h_val) + "_p=" + to_string(p_val) +"_testCircle.txt";
@@ -2951,8 +2951,8 @@ int main(int argc, char *argv[]) {
         //Initial definitions of variables
         int pY= 2;
         int pX= 2;
-        int hY= 2048;
-        int hX= 2048;
+        int hY= 32;
+        int hX= 32;
         int nEvalsY=pY+1;
         int nEvalsX=pX+1;
         int subMatSize=nEvalsX*nEvalsY;
@@ -3538,7 +3538,7 @@ int main(int argc, char *argv[]) {
         }
         //MatSol.PrintMatrix();
 
-        //ExportToTxt(SolEvals, Surf, "C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/SolEvals/surfaceCircle3d_hX="+  std::to_string(static_cast<int>(hX)) + "_pX=" + to_string(pX) +"_hY="+  std::to_string(static_cast<int>(hY)) + "_p=" + to_string(pY) + " data.txt");
+        ExportToTxt(SolEvals, Surf, "C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/SolEvals/surfaceCircle3d_hX="+  std::to_string(static_cast<int>(hX)) + "_pX=" + to_string(pX) +"_hY="+  std::to_string(static_cast<int>(hY)) + "_p=" + to_string(pY) + " data.txt");
 
         //------------------L2 norm calculations----------------------
         
@@ -4337,7 +4337,348 @@ int main(int argc, char *argv[]) {
 
         std::cout << "fin 32" << std::endl;
     }
+
+
+
+    if(stoi(argv[1])==34){//test 1D alabeada
+
+        bool PrintMatixes=false;
+        bool PrintIntermediateValues=false;
+        bool PrintPrevalues=false;
+
+        double Lenght = 1.86302298656134;        
+        int p=3;
+        double nElements = 512;
+        //variables que no cambian en cada ejecución del bucle o que se declaran fuera para ir actualizandolas
+        iMatrix<double> CtrlPts = ReadDataFile_Matrix("C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/CtrlPts/EjAlabeada.txt"); 
+        if(PrintPrevalues){
+            std::cout<< "----------------CtrlPts--------------" << std::endl;
+            CtrlPts.PrintMatrix();
+        }
+        std::vector<double> KnotVector={0,0,0,0,1,1,1,1};
+        double lower_limit=KnotVector[0];
+        double upper_limit=KnotVector[KnotVector.size()-1];
+        std::vector<double> Weights={1,1,1,1};
+
+
+        iMatrix<double> WeightedCtrlPts=WeightCtrlPts(CtrlPts,Weights);
+
+        if(PrintPrevalues){
+            std::cout<< "----------WeightedCtrlPts--------------" << std::endl;
+            WeightedCtrlPts.PrintMatrix();
+        }
+        int n= KnotVector.size()-p-2;
+        if(PrintPrevalues){
+            std::cout<< "---------------KnotVectorOld-----------------" << std::endl;
+            for(unsigned int i=0; i<KnotVector.size(); i++){
+                std::cout << std::setprecision(7) << KnotVector[i] << ", ";
+            }
+            std::cout << std::endl;
+            std::cout << "n value:" << n << std::endl;
+        }
+        std::vector<double> Insertions=createSubIntervals(nElements, lower_limit, upper_limit);
+        Insertions=removeMatches(Insertions, KnotVector);
+        iMatrix<double> NewCtrlPts=RefineKnotVectCurve(n,p,KnotVector, WeightedCtrlPts, Insertions, Insertions.size()-1);
+        if(PrintPrevalues){
+            std::cout<< "----------------NewCtrlPtsW--------------" << std::endl;   
+            NewCtrlPts.PrintMatrix(7);
+        }
+        int size = KnotVector.size()-p-1;
+        std::function<double(double)> f = [](double x) {
+            double Lenght = 1.86302298656134;        
+
+            return  100*M_PI * M_PI/Lenght/Lenght * std::sin( 10*M_PI * x);
+        };
+
+        auto analyticSol = [](double x){
+            //double pi= std::numbers::pi;
+            return sin(10*M_PI*x);
+        };
+
+        auto analyticSolDers = [](double x){
+            //double pi= std::numbers::pi;
+            double Lenght = 1.86302298656134;        
+            return 10*M_PI/Lenght*cos(10*M_PI*x);
+        };
+
+        n = KnotVector.size()-p-2;
+
+
+        if(PrintPrevalues){
+            std::cout<< "---------------KnotVectorNew-----------------" << std::endl;
+            for(unsigned int i=0; i<KnotVector.size(); i++){
+                std::cout <<std::setprecision(7) << KnotVector[i] << ", ";
+            }
+        }
+        //double Lenght=IntegrateNormDer(lower_limit,upper_limit, 5000, NewCtrlPts, KnotVector, n, p);
+        std::cout << std::endl;
+        std::cout << "n value:" << n << std::endl;
+        
+        Weights=NewCtrlPts.GetRow(NewCtrlPts.GetNumRows()-1);
+        if(PrintPrevalues){
+            std::cout<< "---------------Weights-----------------" << std::endl;
+            for(unsigned int i=0; i<Weights.size(); i++){
+                std::cout <<std::setprecision(7) << Weights[i] << ", ";
+            }
+            std::cout << std::endl;
+        }
+        int dim=NewCtrlPts.GetNumRows()-1;
+        int numElements= NewCtrlPts.GetNumCols();
+        
+        int nEvals=p+1;
+        
+        
+        Eigen::SparseMatrix<double> global(size, size);
+        Eigen::VectorXd LinearForm(size);
+        LinearForm.setZero(); // Inicializa en cero
+        
+        std::vector<double> Intervals=removeDuplicates(KnotVector);
+        
+       
+        if(PrintPrevalues){
+            std::cout<< "---------------Intervals-----------------" << std::endl;
+            for(unsigned int i=0; i<Intervals.size(); i++){
+                std::cout << Intervals[i] << ", ";
+            }
+            std::cout << std::endl;
+        }
+        Eigen::VectorXd nodes, weights;
+        legendre_pol(nEvals, nodes, weights);
+        if(PrintPrevalues){
+            std::cout << "Nodos (raices):\n" << nodes.transpose() << "\n";
+            std::cout << "Pesos:\n" << weights.transpose() << "\n"; 
+        }
+        typedef Eigen::Triplet<double> T;
+        std::vector<Eigen::Triplet<double>> tripletList;
+        double preEvalPoint=lower_limit;
+        double cumLenght=0;
+
+        //iteraciones 
+        auto start = std::chrono::high_resolution_clock::now();
+        for(unsigned int index=0; index<Intervals.size()-1; index++){
+            double lowerLimit=Intervals[index], upperLimit=Intervals[index+1];
+            int span = FindSpan(KnotVector, lowerLimit,p,n);
+            std::vector<int> global_indices(p+1);
+            for(unsigned int w=0; w<=p; w++){
+                global_indices[w]=span-p+w;
+            }
+            if(PrintIntermediateValues){
+
+                std::cout << "global_indices: (";
+                for(unsigned int w=0; w<p; w++){
+                    std::cout <<global_indices[w] << ", ";
+                }
+                std::cout << global_indices[p] << ")" <<std::endl;
+                std::cout << "Evaluation Interval: (" << Intervals[index] << ", " << Intervals[index+1]<< ")" <<std::endl;
+                std::cout<< "--------------------------------------------" << std::endl;
+            }
+            
+            iMatrix<double> BasisFunsEvals;
+            iMatrix<double> DerBasisFunsEvals;
+            std::vector<double> JacobianEvals;
+            std::vector<double> InverseJacobianEvals;
+            std::vector<double> funcEvals;
+            
+            D1_element_eval(n, span,p,nEvals, lowerLimit, upperLimit, KnotVector, Weights, nodes, NewCtrlPts, 
+                            f, preEvalPoint, cumLenght, BasisFunsEvals, DerBasisFunsEvals, JacobianEvals, InverseJacobianEvals, funcEvals, Lenght);
+            if(PrintIntermediateValues){
+                std::cout<< "-------------BasisFunsEvals----------------" << std::endl;
+                BasisFunsEvals.PrintMatrix(7);
+                std::cout<< "-------------DerBasisFunsEvals----------------" << std::endl;
+                DerBasisFunsEvals.PrintMatrix(7);
+                std::cout<< "--------------JacobianEvals----------------" << std::endl;
+                for(unsigned int i=0; i<JacobianEvals.size(); i++){
+                    std::cout<< std::setprecision(7) << JacobianEvals[i] << ", ";
+                }
+                std::cout << std::endl;
+                std::cout<< "--------------InverseJacobianEvals----------------" << std::endl;
+                for(unsigned int i=0; i<InverseJacobianEvals.size(); i++){
+                    std::cout<< std::setprecision(7) << InverseJacobianEvals[i] << ", ";
+                }
+                std::cout << std::endl;
+                std::cout<< "--------------funcEvals----------------" << std::endl;
+                for(unsigned int i=0; i<funcEvals.size(); i++){
+                    std::cout<< std::setprecision(7) << funcEvals[i] << ", ";
+                }
+                std::cout << std::endl;
+                std::cout<< "--------------Element----------------" << std::endl;
+            }
+
+            iMatrix<double> Element=gauss_legendre_cuadrature_integral_bilinealForm(p,lowerLimit,upperLimit,nEvals, DerBasisFunsEvals, InverseJacobianEvals, weights);
+            
+            if(PrintIntermediateValues){
+                Element.PrintMatrix(7);
+                std::cout<< "-------------------------------------" << std::endl;
+            }
+
+
+            for (int i = 0; i <= p; ++i){
+                for (int j = 0; j <= p; ++j){
+                    tripletList.push_back(T(global_indices[i], global_indices[j], Element(i, j)));
+                } 
+            }
+            
+
+            std::vector<double> LinearElement=gauss_legendre_cuadrature_integral_linealForm(p,lowerLimit, upperLimit, nEvals, BasisFunsEvals, JacobianEvals, funcEvals, weights);
+            
+            if(PrintIntermediateValues){
+                std::cout<< "--------------LinearElement----------------" << std::endl;
+                for(unsigned int i=0; i<LinearElement.size(); i++){
+                    std::cout<< std::setprecision(7) << LinearElement[i] << ", ";
+                }
+                std::cout << std::endl;
+            }
+            for(unsigned int i=0; i<=p; i++){
+                LinearForm(global_indices[i])+=LinearElement[i];
+            }
+            
+        }
+        
+        global.setFromTriplets(tripletList.begin(), tripletList.end());
+
+        if(PrintMatixes){
+             std::cout<< "--------------GlobalMat----------------" << std::endl;
+            for (int k = 0; k < global.outerSize(); ++k){
+                for (Eigen::SparseMatrix<double>::InnerIterator it(global, k); it; ++it){
+                    std::cout << "(" << it.row() << "," << it.col() << "): " << it.value() << "\n";
+                }
+            }
+            //std::cout<<Eigen::MatrixXd(global) <<std::endl;
+            std::cout<< "--------------GlobalLinearForm----------------" << std::endl;
+            for (int k = 0; k < LinearForm.size(); ++k){
+                std::cout << LinearForm[k] << ", ";
+            }
+            std::cout << std::endl;
+        }
+       
+        //Compute of the Inverse jacobians for boundary conditions on dirhclet/Robin conditions
+        iMatrix<double> Aders, wders;
+        iMatrix<double> Allders0 = CurveDerivsAlg1(n, p, KnotVector, NewCtrlPts, 0, 1);
+        int auxInt=Allders0.GetNumCols()-1;
+        Aders = Allders0.GetSubMat(0,1,0, auxInt-1);
+        wders = Allders0.GetSubMat(0,1,auxInt, auxInt);
+        iMatrix<double> AuxMat2 = RatCurveDerivs(Aders, wders, 1);
+        std::vector<double> AuxVec= AuxMat2.GetRow(1);
+        double JacobianEvals0=0;
+        for(unsigned int i=0; i< AuxVec.size(); i++){
+            JacobianEvals0+= AuxVec[i]*AuxVec[i];
+        }
+
+        
+        double InverseJacobianEvals0=1/JacobianEvals0;
+
+
+        iMatrix<double> Allders1 = CurveDerivsAlg1(n, p, KnotVector, NewCtrlPts, 1, 1);
+        Aders = Allders1.GetSubMat(0,1,0, auxInt-1);
+        wders = Allders1.GetSubMat(0,1,auxInt, auxInt);
+        AuxMat2 = RatCurveDerivs(Aders, wders, 1);
+        AuxVec= AuxMat2.GetRow(1);
+        double JacobianEvals1=0;
+        for(unsigned int i=0; i< AuxVec.size(); i++){
+            JacobianEvals1+= AuxVec[i]*AuxVec[i];
+        }
+        double InverseJacobianEvals1=1/JacobianEvals1;
+
+
+
+
+        //apply boundary conditions
+        impose_Dirichlet_Condition(p, size-1, global, LinearForm, true, true);
+        //impose_Newmann_Condition(size-1, LinearForm, true, true);
+        double alpha = 3;
+        double beta= 5;
+        //impose_Robin_Condition(p, size-1, global, LinearForm, alpha, beta, true, false);
+
+        if(PrintMatixes){
+            std::cout<< "--------------GlobalMatPostCond----------------" << std::endl;
+            for (int k = 0; k < global.outerSize(); ++k){
+                for (Eigen::SparseMatrix<double>::InnerIterator it(global, k); it; ++it){
+                    std::cout << setprecision(std::numeric_limits<double>::max_digits10) << "(" << it.row() << "," << it.col() << "): " << it.value() << "\n";
+                }
+            }
+            //std::cout<<Eigen::MatrixXd(global) <<std::endl;
+        }
+        
+        if(PrintMatixes){
+            std::cout<< "--------------GlobalLinearFormPostCond----------------" << std::endl;
+            for (int k = 0; k < LinearForm.size(); ++k){
+                std::cout  << setprecision(std::numeric_limits<double>::max_digits10) << LinearForm[k] << ", ";
+            }
+            std::cout << std::endl;
+        }
+        
+
+        Eigen::SparseLU<Eigen::SparseMatrix<double>> solver;
+        solver.compute(global);
+        if(solver.info() != Eigen::Success) {
+            std::cout << "Error 1" << std::endl;
+        }
+
+        Eigen::VectorXd u = solver.solve(LinearForm);
+        if(solver.info() != Eigen::Success) {
+            std::cout << "Error 2" << std::endl;
+        }
+        auto end = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+        std::cout << "Tiempo tomado: " << duration.count() << " nanosegundos\n";
+
+        //std::cout<< "--------------Solution----------------" << std::endl;
+        //for (int k = 0; k < u.size(); ++k){
+        //    std::cout << setprecision(std::numeric_limits<double>::max_digits10)<< u[k] << ", ";
+        //}
+        //std::cout << std::endl;
+
+        //Pre-computations of necessary variables in order to write the functions
+        //nEvals=nElements;
+        //nEvals =200;
+        /*
+        double auxeval1= (upper_limit - lower_limit)/2;
+        double auxeval2= (upper_limit + lower_limit)/2;
+        Eigen::VectorXd NewNodes, NewWeights;
+        legendre_pol(nEvals, NewNodes, NewWeights);
+        std::vector<double> time(nEvals);
+        for(unsigned int i=0; i<nEvals; i++){
+            time[i]=auxeval1*NewNodes(i)+auxeval2;
+        }
+        */
+        //std::cout<<"Longitud de la curva= "<< setprecision(std::numeric_limits<double>::max_digits10) <<  Lenght <<std::endl;
+        std::string Text= "C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/SolEvals/EjAlabeadaSinNonConst"; //_h=" + to_string(static_cast<int>(nElements)) +"_p="+ to_string(p)+"_test2.txt"
+        
+        writeNumericFunction(u, KnotVector, Weights, n, p, nEvals, lower_limit, upper_limit, Text,Intervals, nElements, M_PI);
+        //std::cout<<"Longitud de la curva= "<< setprecision(std::numeric_limits<double>::max_digits10) <<  Lenght <<std::endl;
+        writeAnalyticFunction(analyticSol, analyticSolDers, Intervals, nEvals, NewCtrlPts, KnotVector, n, p, Text, Lenght, nElements);
+       
+
+        /*
+        writeFunction(analyticSol, lower_limit, upper_limit, 50, NewCtrlPts, KnotVector, n, p, Text, Lenght);
+        Text= "C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/SolEvals/EjSinNonConstDers_Analytic_test2.txt";
+        writeFunctionDers(analyticSolDers, lower_limit, upper_limit, 50, NewCtrlPts, KnotVector, n, p, Text, Lenght);
+        */
+        std::cout<<"Longitud de la curva= "<< setprecision(std::numeric_limits<double>::max_digits10) <<  cumLenght <<std::endl;
+
+        
+        iMatrix<double> sol(dim,nEvals*nElements);
+        std::vector<double> eval(dim);
+        //std::cout<< "--------------------------------------------" << std::endl;
+        //iMatrix WeightedCtrlPts=WeightCtrlPts(CtrlPts,Weights);
+        //WeightedCtrlPts.PrintMatrix();
+        for(unsigned int iter = 0; iter<nElements; iter++){
+            double auxeval1= (Intervals[iter+1] - Intervals[iter])/2;
+            double auxeval2= (Intervals[iter+1] + Intervals[iter])/2;
+
+            for(unsigned int j=0; j<nEvals; j++){
+                double t=0.5*(auxeval1)*nodes(j)+auxeval2;
+                //std::cout << i << std::endl;
+                eval=CurvePointRational(KnotVector.size()-2-p,p,KnotVector,NewCtrlPts,t);
+                //std::cout << eval[0] << "|" << eval[1] << std::endl;
+                sol.SetCol(iter*nEvals + j,eval);
+            }
+            
+        }
+        Write_Curve(sol,"C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/Curvas/CurvaEjAlabeada_h="+  std::to_string(static_cast<int>(nElements)) + "_p=" + to_string(p) +".txt");
+        
+        std::cout<<"fin 34"<<std::endl;
+        
+    }
     return 0;
 }
-
-

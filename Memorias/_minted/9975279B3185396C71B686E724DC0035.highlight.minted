@@ -1,0 +1,48 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+
+\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{h\PYGZus{}val}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{32768}\PYG{p}{;}
+\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{p\PYGZus{}val}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{2}\PYG{p}{;}
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{string}\PYG{+w}{ }\PYG{n}{nameAnalytic}\PYG{o}{=}\PYG{n}{PATH}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}EjSinNonConst\PYGZus{}h=\PYGZdq{}}\PYG{o}{+}\PYG{+w}{ }\PYG{n}{to\PYGZus{}string}\PYG{p}{(}\PYG{n}{h\PYGZus{}val}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}\PYGZus{}p=\PYGZdq{}}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{to\PYGZus{}string}\PYG{p}{(}\PYG{n}{p\PYGZus{}val}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{+}\PYG{l+s}{\PYGZdq{}\PYGZus{}Analytic\PYGZus{}testCircle.txt\PYGZdq{}}\PYG{p}{;}
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{string}\PYG{+w}{ }\PYG{n}{nameNumeric}\PYG{o}{=}\PYG{n}{PATH}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}EjSinNonConst\PYGZus{}h=\PYGZdq{}}\PYG{o}{+}\PYG{+w}{ }\PYG{n}{to\PYGZus{}string}\PYG{p}{(}\PYG{n}{h\PYGZus{}val}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}\PYGZus{}p=\PYGZdq{}}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{to\PYGZus{}string}\PYG{p}{(}\PYG{n}{p\PYGZus{}val}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{+}\PYG{l+s}{\PYGZdq{}\PYGZus{}testCircle.txt\PYGZdq{}}\PYG{p}{;}
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{string}\PYG{+w}{ }\PYG{n}{nameAnalyticDers}\PYG{o}{=}\PYG{n}{PATH}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}EjSinNonConst\PYGZus{}h=\PYGZdq{}}\PYG{o}{+}\PYG{+w}{ }\PYG{n}{to\PYGZus{}string}\PYG{p}{(}\PYG{n}{h\PYGZus{}val}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}\PYGZus{}p=\PYGZdq{}}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{to\PYGZus{}string}\PYG{p}{(}\PYG{n}{p\PYGZus{}val}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{+}\PYG{l+s}{\PYGZdq{}Ders\PYGZus{}Analytic\PYGZus{}testCircle.txt\PYGZdq{}}\PYG{p}{;}
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{string}\PYG{+w}{ }\PYG{n}{nameNumericDers}\PYG{o}{=}\PYG{n}{PATH}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}EjSinNonConstDers\PYGZus{}h=\PYGZdq{}}\PYG{o}{+}\PYG{+w}{ }\PYG{n}{to\PYGZus{}string}\PYG{p}{(}\PYG{n}{h\PYGZus{}val}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}\PYGZus{}p=\PYGZdq{}}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{to\PYGZus{}string}\PYG{p}{(}\PYG{n}{p\PYGZus{}val}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{+}\PYG{l+s}{\PYGZdq{}\PYGZus{}testCircle.txt\PYGZdq{}}\PYG{p}{;}
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZgt{}}\PYG{+w}{ }\PYG{n}{AnalyticSol}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{leerArchivo}\PYG{p}{(}\PYG{n}{nameAnalytic}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{p\PYGZus{}val}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{);}
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZgt{}}\PYG{+w}{ }\PYG{n}{NumericSol}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{leerArchivo}\PYG{p}{(}\PYG{n}{nameNumeric}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{p\PYGZus{}val}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{);}
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZgt{}}\PYG{+w}{ }\PYG{n}{AnalyticSolDers}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{leerArchivo}\PYG{p}{(}\PYG{n}{nameAnalyticDers}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{p\PYGZus{}val}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{);}
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}\PYGZgt{}}\PYG{+w}{ }\PYG{n}{NumericSolDers}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{leerArchivo}\PYG{p}{(}\PYG{n}{nameNumericDers}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{p\PYGZus{}val}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{);}
+
+\PYG{n}{Eigen}\PYG{o}{::}\PYG{n}{VectorXd}\PYG{+w}{ }\PYG{n}{nodes}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{weights}\PYG{p}{;}
+\PYG{n}{legendre\PYGZus{}pol}\PYG{p}{(}\PYG{n}{p\PYGZus{}val}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{nodes}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{weights}\PYG{p}{);}
+
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{Intervals}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{createSubIntervals}\PYG{p}{(}\PYG{n}{h\PYGZus{}val}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{);}
+
+\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{L2sqr}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{H1sqr}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{cumSum}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{cumSumDers}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}
+
+
+\PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{unsigned}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{iter}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{iter}\PYG{o}{\PYGZlt{}}\PYG{n}{h\PYGZus{}val}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{iter}\PYG{o}{++}\PYG{p}{)\PYGZob{}}
+\PYG{+w}{    }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{a}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{Intervals}\PYG{p}{[}\PYG{n}{iter}\PYG{p}{];}
+\PYG{+w}{    }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{b}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{Intervals}\PYG{p}{[}\PYG{n}{iter}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{];}
+\PYG{+w}{    }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{h\PYGZus{}elemento}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{b}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{a}\PYG{p}{)}\PYG{o}{/}\PYG{l+m+mf}{2.0}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{n}{cumSum}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{cumSumDers}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{unsigned}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{i}\PYG{o}{\PYGZlt{}=}\PYG{n}{p\PYGZus{}val}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{i}\PYG{o}{++}\PYG{p}{)\PYGZob{}}
+\PYG{+w}{        }\PYG{n}{cumSum}\PYG{o}{+=}\PYG{p}{(}\PYG{n}{AnalyticSol}\PYG{p}{[}\PYG{n}{iter}\PYG{p}{][}\PYG{n}{i}\PYG{p}{]}\PYG{o}{\PYGZhy{}}\PYG{n}{NumericSol}\PYG{p}{[}\PYG{n}{iter}\PYG{p}{][}\PYG{n}{i}\PYG{p}{])}\PYG{o}{*}\PYG{p}{(}\PYG{n}{AnalyticSol}\PYG{p}{[}\PYG{n}{iter}\PYG{p}{][}\PYG{n}{i}\PYG{p}{]}\PYG{o}{\PYGZhy{}}\PYG{n}{NumericSol}\PYG{p}{[}\PYG{n}{iter}\PYG{p}{][}\PYG{n}{i}\PYG{p}{])}\PYG{o}{*}\PYG{n}{weights}\PYG{p}{(}\PYG{n}{i}\PYG{p}{)}\PYG{o}{*}\PYG{+w}{ }\PYG{n}{h\PYGZus{}elemento}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{cumSumDers}\PYG{o}{+=}\PYG{p}{(}\PYG{n}{AnalyticSolDers}\PYG{p}{[}\PYG{n}{iter}\PYG{p}{][}\PYG{n}{i}\PYG{p}{]}\PYG{o}{\PYGZhy{}}\PYG{n}{NumericSolDers}\PYG{p}{[}\PYG{n}{iter}\PYG{p}{][}\PYG{n}{i}\PYG{p}{])}\PYG{o}{*}\PYG{p}{(}\PYG{n}{AnalyticSolDers}\PYG{p}{[}\PYG{n}{iter}\PYG{p}{][}\PYG{n}{i}\PYG{p}{]}\PYG{o}{\PYGZhy{}}\PYG{n}{NumericSolDers}\PYG{p}{[}\PYG{n}{iter}\PYG{p}{][}\PYG{n}{i}\PYG{p}{])}\PYG{o}{*}\PYG{n}{weights}\PYG{p}{(}\PYG{n}{i}\PYG{p}{)}\PYG{o}{*}\PYG{+w}{ }\PYG{n}{h\PYGZus{}elemento}\PYG{p}{;}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{    }\PYG{n}{L2sqr}\PYG{o}{+=}\PYG{n}{cumSum}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{H1sqr}\PYG{o}{+=}\PYG{n}{cumSumDers}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{L2norm}\PYG{o}{=}\PYG{n}{std}\PYG{o}{::}\PYG{n}{sqrt}\PYG{p}{(}\PYG{n}{L2sqr}\PYG{p}{);}
+\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{H1norm}\PYG{o}{=}\PYG{n}{std}\PYG{o}{::}\PYG{n}{sqrt}\PYG{p}{(}\PYG{n}{L2sqr}\PYG{o}{+}\PYG{n}{H1sqr}\PYG{p}{);}
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{l+s}{\PYGZdq{}Norma L2=\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{+w}{ }\PYG{n}{L2norm}\PYG{+w}{ }\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{endl}\PYG{p}{;}
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{l+s}{\PYGZdq{}Norma H1=\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{+w}{ }\PYG{n}{H1norm}\PYG{+w}{ }\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{endl}\PYG{p}{;}
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{cout}\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}fin 29 \PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{endl}\PYG{p}{;}
+
+\end{MintedVerbatim}
