@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.11.29)  9 FEB 2026 12:48
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.11.29)  17 FEB 2026 10:43
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -742,7 +742,7 @@ Package: titleps 2025/01/04 v2.17 Page styles
 Writing index file PlantillaTFG.idx
 \c@teorema=\count383
 \c@lemma=\count384
-LaTeX Font Info:    Trying to load font information for T1+ptm on input line 138.
+LaTeX Font Info:    Trying to load font information for T1+ptm on input line 140.
 (C:\Users\carlo\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\t1ptm.fd
 File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
 ) (C:\Users\carlo\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
@@ -756,24 +756,24 @@ Package babel Info: 'spanish' activates 'spanish' shorthands.
 )
 \openout1 = `PlantillaTFG.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 138.
-LaTeX Font Info:    ... okay on input line 138.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 138.
-LaTeX Font Info:    ... okay on input line 138.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 138.
-LaTeX Font Info:    ... okay on input line 138.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 138.
-LaTeX Font Info:    ... okay on input line 138.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 138.
-LaTeX Font Info:    ... okay on input line 138.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 138.
-LaTeX Font Info:    ... okay on input line 138.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 138.
-LaTeX Font Info:    ... okay on input line 138.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 138.
-LaTeX Font Info:    ... okay on input line 138.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 138.
-LaTeX Font Info:    ... okay on input line 138.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 140.
+LaTeX Font Info:    ... okay on input line 140.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 140.
+LaTeX Font Info:    ... okay on input line 140.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 140.
+LaTeX Font Info:    ... okay on input line 140.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 140.
+LaTeX Font Info:    ... okay on input line 140.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 140.
+LaTeX Font Info:    ... okay on input line 140.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 140.
+LaTeX Font Info:    ... okay on input line 140.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 140.
+LaTeX Font Info:    ... okay on input line 140.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 140.
+LaTeX Font Info:    ... okay on input line 140.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 140.
+LaTeX Font Info:    ... okay on input line 140.
  (C:\Users\carlo\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count386
@@ -829,15 +829,15 @@ File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Info: Redefining \. on input line 138.
-LaTeX Info: Redefining \% on input line 138.
+LaTeX Info: Redefining \. on input line 140.
+LaTeX Info: Redefining \% on input line 140.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
 Package caption Info: hyperref package is loaded.
 Package caption Info: listings package is loaded.
 Package caption Info: End \AtBeginDocument code.
 \c@lstlisting=\count392
-Package hyperref Info: Link coloring ON on input line 138.
+Package hyperref Info: Link coloring ON on input line 140.
 (PlantillaTFG.out) (PlantillaTFG.out)
 \@outlinefile=\write6
 \openout6 = `PlantillaTFG.out'.
@@ -845,12 +845,12 @@ Package hyperref Info: Link coloring ON on input line 138.
 <ciencias.png, id=293, 345.9324pt x 127.1952pt>
 File: ciencias.png Graphic file (type png)
 <use ciencias.png>
-Package pdftex.def Info: ciencias.png  used on input line 160.
+Package pdftex.def Info: ciencias.png  used on input line 162.
 (pdftex.def)             Requested size: 284.52756pt x 104.62485pt.
 <logoUZ.png, id=295, 345.9324pt x 127.1952pt>
 File: logoUZ.png Graphic file (type png)
 <use logoUZ.png>
-Package pdftex.def Info: logoUZ.png  used on input line 161.
+Package pdftex.def Info: logoUZ.png  used on input line 163.
 (pdftex.def)             Requested size: 284.52756pt x 104.62485pt.
  [1
 
@@ -858,39 +858,40 @@ Package pdftex.def Info: logoUZ.png  used on input line 161.
 
 {C:/Users/carlo/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/carlo/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc} <./ciencias.png> <./logoUZ.png>] [2
 
-] [3
+]
+LaTeX Font Info:    Trying to load font information for OT1+ztmcm on input line 192.
+ (C:\Users\carlo\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ot1ztmcm.fd
+File: ot1ztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ztmcm.
+)
+LaTeX Font Info:    Trying to load font information for OML+ztmcm on input line 192.
+ (C:\Users\carlo\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\omlztmcm.fd
+File: omlztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ztmcm.
+)
+LaTeX Font Info:    Trying to load font information for OMS+ztmcm on input line 192.
+ (C:\Users\carlo\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\omsztmcm.fd
+File: omsztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/ztmcm.
+)
+LaTeX Font Info:    Trying to load font information for OMX+ztmcm on input line 192.
+ (C:\Users\carlo\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\omxztmcm.fd
+File: omxztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/ztmcm.
+)
+LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 192.
+ (C:\Users\carlo\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ot1ptm.fd
+File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
+)
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 192.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 192.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 192.
+ [3
 
 ] [4
 
 ] (PlantillaTFG.toc
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
-LaTeX Font Info:    Trying to load font information for OT1+ztmcm on input line 4.
- (C:\Users\carlo\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ot1ztmcm.fd
-File: ot1ztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ztmcm.
-)
-LaTeX Font Info:    Trying to load font information for OML+ztmcm on input line 4.
- (C:\Users\carlo\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\omlztmcm.fd
-File: omlztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ztmcm.
-)
-LaTeX Font Info:    Trying to load font information for OMS+ztmcm on input line 4.
- (C:\Users\carlo\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\omsztmcm.fd
-File: omsztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/ztmcm.
-)
-LaTeX Font Info:    Trying to load font information for OMX+ztmcm on input line 4.
- (C:\Users\carlo\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\omxztmcm.fd
-File: omxztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/ztmcm.
-)
-LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 4.
- (C:\Users\carlo\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ot1ptm.fd
-File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
-)
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 4.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 4.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 4.
  [5
 
 ])
@@ -900,64 +901,81 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
  [6]
 Cap\'{\i }tulo 1.
 
-Underfull \hbox (badness 10000) in paragraph at lines 241--242
+Underfull \hbox (badness 10000) in paragraph at lines 259--260
 []|\T1/ptm/b/n/10.95 Complejo. \T1/ptm/m/n/10.95 Au-men-to del cos-te
  []
 
-Package svg Info: Last page of `./svg-inkscape/bases_fem_p1_svg-tex.pdf' is 3 on input line 250.
+Package svg Info: Last page of `./svg-inkscape/bases_fem_p1_svg-tex.pdf' is 3 on input line 271.
 (svg-inkscape/bases_fem_p1_svg-tex.pdf_tex
-<./svg-inkscape/bases_fem_p1_svg-tex.pdf, id=402, page=1, 419.5675pt x 315.1775pt>
+<./svg-inkscape/bases_fem_p1_svg-tex.pdf, id=405, page=1, 419.5675pt x 315.1775pt>
 File: ./svg-inkscape/bases_fem_p1_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/bases_fem_p1_svg-tex.pdf, page 1>
 Package pdftex.def Info: ./svg-inkscape/bases_fem_p1_svg-tex.pdf , page1 used on input line 56.
 (pdftex.def)             Requested size: 145.68144pt x 109.43369pt.
-<./svg-inkscape/bases_fem_p1_svg-tex.pdf, id=403, page=2, 419.5675pt x 315.1775pt>
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 57.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 57.
+<./svg-inkscape/bases_fem_p1_svg-tex.pdf, id=406, page=2, 419.5675pt x 315.1775pt>
 File: ./svg-inkscape/bases_fem_p1_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/bases_fem_p1_svg-tex.pdf, page 2>
 Package pdftex.def Info: ./svg-inkscape/bases_fem_p1_svg-tex.pdf , page2 used on input line 63.
 (pdftex.def)             Requested size: 145.68144pt x 109.43369pt.
-<./svg-inkscape/bases_fem_p1_svg-tex.pdf, id=404, page=3, 419.5675pt x 315.1775pt>
+<./svg-inkscape/bases_fem_p1_svg-tex.pdf, id=407, page=3, 419.5675pt x 315.1775pt>
 File: ./svg-inkscape/bases_fem_p1_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/bases_fem_p1_svg-tex.pdf, page 3>
 Package pdftex.def Info: ./svg-inkscape/bases_fem_p1_svg-tex.pdf , page3 used on input line 71.
 (pdftex.def)             Requested size: 145.68144pt x 109.43369pt.
 )
-Package svg Info: Last page of `./svg-inkscape/bases_fem_p2_svg-tex.pdf' is 3 on input line 255.
- (svg-inkscape/bases_fem_p2_svg-tex.pdf_tex
-<./svg-inkscape/bases_fem_p2_svg-tex.pdf, id=406, page=1, 419.5675pt x 315.1775pt>
+Underfull \hbox (badness 10000) in paragraph at lines 271--273
+
+ []
+
+Package svg Info: Last page of `./svg-inkscape/bases_fem_p2_svg-tex.pdf' is 3 on input line 279.
+(svg-inkscape/bases_fem_p2_svg-tex.pdf_tex
+<./svg-inkscape/bases_fem_p2_svg-tex.pdf, id=409, page=1, 419.5675pt x 315.1775pt>
 File: ./svg-inkscape/bases_fem_p2_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/bases_fem_p2_svg-tex.pdf, page 1>
 Package pdftex.def Info: ./svg-inkscape/bases_fem_p2_svg-tex.pdf , page1 used on input line 56.
 (pdftex.def)             Requested size: 150.23138pt x 112.85304pt.
-<./svg-inkscape/bases_fem_p2_svg-tex.pdf, id=407, page=2, 419.5675pt x 315.1775pt>
+<./svg-inkscape/bases_fem_p2_svg-tex.pdf, id=410, page=2, 419.5675pt x 315.1775pt>
 File: ./svg-inkscape/bases_fem_p2_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/bases_fem_p2_svg-tex.pdf, page 2>
 Package pdftex.def Info: ./svg-inkscape/bases_fem_p2_svg-tex.pdf , page2 used on input line 63.
 (pdftex.def)             Requested size: 150.23138pt x 112.85304pt.
-<./svg-inkscape/bases_fem_p2_svg-tex.pdf, id=408, page=3, 419.5675pt x 315.1775pt>
+<./svg-inkscape/bases_fem_p2_svg-tex.pdf, id=411, page=3, 419.5675pt x 315.1775pt>
 File: ./svg-inkscape/bases_fem_p2_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/bases_fem_p2_svg-tex.pdf, page 3>
 Package pdftex.def Info: ./svg-inkscape/bases_fem_p2_svg-tex.pdf , page3 used on input line 71.
 (pdftex.def)             Requested size: 150.23138pt x 112.85304pt.
 )
-Package svg Info: Last page of `./svg-inkscape/funciones_base_NURBS_2_svg-tex.pdf' is 3 on input line 260.
- (svg-inkscape/funciones_base_NURBS_2_svg-tex.pdf_tex
-<./svg-inkscape/funciones_base_NURBS_2_svg-tex.pdf, id=410, page=1, 419.5675pt x 315.1775pt>
+Underfull \hbox (badness 10000) in paragraph at lines 279--281
+
+ []
+
+Package svg Info: Last page of `./svg-inkscape/funciones_base_NURBS_2_svg-tex.pdf' is 3 on input line 287.
+(svg-inkscape/funciones_base_NURBS_2_svg-tex.pdf_tex
+<./svg-inkscape/funciones_base_NURBS_2_svg-tex.pdf, id=413, page=1, 419.5675pt x 315.1775pt>
 File: ./svg-inkscape/funciones_base_NURBS_2_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/funciones_base_NURBS_2_svg-tex.pdf, page 1>
 Package pdftex.def Info: ./svg-inkscape/funciones_base_NURBS_2_svg-tex.pdf , page1 used on input line 56.
 (pdftex.def)             Requested size: 145.68144pt x 109.43369pt.
-<./svg-inkscape/funciones_base_NURBS_2_svg-tex.pdf, id=411, page=2, 419.5675pt x 315.1775pt>
+<./svg-inkscape/funciones_base_NURBS_2_svg-tex.pdf, id=414, page=2, 419.5675pt x 315.1775pt>
 File: ./svg-inkscape/funciones_base_NURBS_2_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/funciones_base_NURBS_2_svg-tex.pdf, page 2>
 Package pdftex.def Info: ./svg-inkscape/funciones_base_NURBS_2_svg-tex.pdf , page2 used on input line 58.
 (pdftex.def)             Requested size: 145.68144pt x 109.43369pt.
-<./svg-inkscape/funciones_base_NURBS_2_svg-tex.pdf, id=412, page=3, 419.5675pt x 315.1775pt>
+<./svg-inkscape/funciones_base_NURBS_2_svg-tex.pdf, id=415, page=3, 419.5675pt x 315.1775pt>
 File: ./svg-inkscape/funciones_base_NURBS_2_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/funciones_base_NURBS_2_svg-tex.pdf, page 3>
 Package pdftex.def Info: ./svg-inkscape/funciones_base_NURBS_2_svg-tex.pdf , page3 used on input line 65.
 (pdftex.def)             Requested size: 145.68144pt x 109.43369pt.
 )
+Underfull \hbox (badness 10000) in paragraph at lines 287--289
+
+ []
+
+
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [1
@@ -989,26 +1007,25 @@ pdfTeX warning: pdflatex (file ./svg-inkscape/funciones_base_NURBS_2_svg-tex.pdf
 
 pdfTeX warning: pdflatex (file ./svg-inkscape/funciones_base_NURBS_2_svg-tex.pdf): PDF inclusion: multiple pdfs with page group included in a single page
 >]
-Overfull \hbox (4.15543pt too wide) in paragraph at lines 309--311
+Overfull \hbox (4.15543pt too wide) in paragraph at lines 335--337
 []\T1/ptm/b/n/10.95 Definición. []\T1/ptm/m/n/10.95 Sea $\OT1/ztmcm/m/n/10.95 
  \OMS/ztmcm/m/n/10.95 ^^Z \U/msb/m/n/10.95 R[]$ \T1/ptm/m/n/10.95 un con-jun-to abier-to y aco-ta-do, don-de $\OML/ztmcm/m/it/10.95 n \OMS/ztmcm/m/n/10.95 2 \U/msb/m/n/10.95 N$\T1/ptm/m/n/10.95 , con fron-te-ra $\OML/ztmcm/m/it/10.95 @\OT1/ztmcm/m/n/10.95 
  = ^^@ = []$\T1/ptm/m/n/10.95 ,
  []
 
-[3] [4
-
-]
+[3] [4]
 Cap\'{\i }tulo 2.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 408.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 450.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 408.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 450.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <5> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 408.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 450.
 [5
 
+
 ]
-Package svg Info: Last page of `./svg-inkscape/curva_bezier_svg-tex.pdf' is 16 on input line 450.
+Package svg Info: Last page of `./svg-inkscape/curva_bezier_svg-tex.pdf' is 16 on input line 492.
  (svg-inkscape/curva_bezier_svg-tex.pdf_tex
 <./svg-inkscape/curva_bezier_svg-tex.pdf, id=492, page=1, 419.5675pt x 315.1775pt>
 File: ./svg-inkscape/curva_bezier_svg-tex.pdf Graphic file (type pdf)
@@ -1091,7 +1108,7 @@ File: ./svg-inkscape/curva_bezier_svg-tex.pdf Graphic file (type pdf)
 Package pdftex.def Info: ./svg-inkscape/curva_bezier_svg-tex.pdf , page16 used on input line 90.
 (pdftex.def)             Requested size: 145.68144pt x 109.43369pt.
 )
-Package svg Info: Last page of `./svg-inkscape/curva_bezier_racional_svg-tex.pdf' is 16 on input line 455.
+Package svg Info: Last page of `./svg-inkscape/curva_bezier_racional_svg-tex.pdf' is 16 on input line 497.
  (svg-inkscape/curva_bezier_racional_svg-tex.pdf_tex
 <./svg-inkscape/curva_bezier_racional_svg-tex.pdf, id=509, page=1, 419.5675pt x 315.1775pt>
 File: ./svg-inkscape/curva_bezier_racional_svg-tex.pdf Graphic file (type pdf)
@@ -1174,11 +1191,7 @@ File: ./svg-inkscape/curva_bezier_racional_svg-tex.pdf Graphic file (type pdf)
 Package pdftex.def Info: ./svg-inkscape/curva_bezier_racional_svg-tex.pdf , page16 used on input line 90.
 (pdftex.def)             Requested size: 150.23138pt x 112.85304pt.
 )
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 456.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 456.
-Package svg Info: Last page of `./svg-inkscape/bernstein_bases_p3_svg-tex.pdf' is 3 on input line 460.
+Package svg Info: Last page of `./svg-inkscape/bernstein_bases_p3_svg-tex.pdf' is 3 on input line 502.
  (svg-inkscape/bernstein_bases_p3_svg-tex.pdf_tex
 <./svg-inkscape/bernstein_bases_p3_svg-tex.pdf, id=526, page=1, 419.5675pt x 315.1775pt>
 File: ./svg-inkscape/bernstein_bases_p3_svg-tex.pdf Graphic file (type pdf)
@@ -1298,7 +1311,7 @@ pdfTeX warning: pdflatex (file ./svg-inkscape/bernstein_bases_p3_svg-tex.pdf): P
 
 pdfTeX warning: pdflatex (file ./svg-inkscape/bernstein_bases_p3_svg-tex.pdf): PDF inclusion: multiple pdfs with page group included in a single page
 >] [7]
-Package svg Info: Last page of `./svg-inkscape/CurvaNurbs_3D_Plot_svg-tex.pdf' is 11 on input line 585.
+Package svg Info: Last page of `./svg-inkscape/CurvaNurbs_3D_Plot_svg-tex.pdf' is 11 on input line 627.
  (svg-inkscape/CurvaNurbs_3D_Plot_svg-tex.pdf_tex
 <./svg-inkscape/CurvaNurbs_3D_Plot_svg-tex.pdf, id=663, page=1, 419.5675pt x 315.1775pt>
 File: ./svg-inkscape/CurvaNurbs_3D_Plot_svg-tex.pdf Graphic file (type pdf)
@@ -1356,7 +1369,7 @@ File: ./svg-inkscape/CurvaNurbs_3D_Plot_svg-tex.pdf Graphic file (type pdf)
 Package pdftex.def Info: ./svg-inkscape/CurvaNurbs_3D_Plot_svg-tex.pdf , page11 used on input line 79.
 (pdftex.def)             Requested size: 145.68144pt x 109.43369pt.
 )
-Package svg Info: Last page of `./svg-inkscape/funciones_base_NURBS_svg-tex.pdf' is 3 on input line 590.
+Package svg Info: Last page of `./svg-inkscape/funciones_base_NURBS_svg-tex.pdf' is 3 on input line 632.
  (svg-inkscape/funciones_base_NURBS_svg-tex.pdf_tex
 <./svg-inkscape/funciones_base_NURBS_svg-tex.pdf, id=675, page=1, 419.5675pt x 315.1775pt>
 File: ./svg-inkscape/funciones_base_NURBS_svg-tex.pdf Graphic file (type pdf)
@@ -1374,7 +1387,7 @@ File: ./svg-inkscape/funciones_base_NURBS_svg-tex.pdf Graphic file (type pdf)
 Package pdftex.def Info: ./svg-inkscape/funciones_base_NURBS_svg-tex.pdf , page3 used on input line 69.
 (pdftex.def)             Requested size: 150.23138pt x 112.85304pt.
 )
-Package svg Info: Last page of `./svg-inkscape/Ders_funciones_base_NURBS_svg-tex.pdf' is 3 on input line 595.
+Package svg Info: Last page of `./svg-inkscape/Ders_funciones_base_NURBS_svg-tex.pdf' is 3 on input line 637.
  (svg-inkscape/Ders_funciones_base_NURBS_svg-tex.pdf_tex
 <./svg-inkscape/Ders_funciones_base_NURBS_svg-tex.pdf, id=679, page=1, 419.5675pt x 315.1775pt>
 File: ./svg-inkscape/Ders_funciones_base_NURBS_svg-tex.pdf Graphic file (type pdf)
@@ -1440,7 +1453,7 @@ pdfTeX warning: pdflatex (file ./svg-inkscape/Ders_funciones_base_NURBS_svg-tex.
 
 pdfTeX warning: pdflatex (file ./svg-inkscape/Ders_funciones_base_NURBS_svg-tex.pdf): PDF inclusion: multiple pdfs with page group included in a single page
 >]
-Package svg Info: Last page of `./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf' is 14 on input line 659.
+Package svg Info: Last page of `./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf' is 14 on input line 701.
  (svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf_tex
 <./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf, id=759, page=1, 419.5675pt x 315.1775pt>
 File: ./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf Graphic file (type pdf)
@@ -1513,7 +1526,7 @@ File: ./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf Graphic file (type pdf)
 Package pdftex.def Info: ./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf , page14 used on input line 86.
 (pdftex.def)             Requested size: 145.68144pt x 109.43369pt.
 )
-Package svg Info: Last page of `./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf' is 12 on input line 664.
+Package svg Info: Last page of `./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf' is 12 on input line 706.
  (svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf_tex
 <./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, id=774, page=1, 419.5675pt x 315.1775pt>
 File: ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf Graphic file (type pdf)
@@ -1576,7 +1589,7 @@ File: ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf Graphic file (type pdf)
 Package pdftex.def Info: ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf , page12 used on input line 82.
 (pdftex.def)             Requested size: 150.23138pt x 112.85304pt.
 )
-Package svg Info: Last page of `./svg-inkscape/Superficie_NURBS_Ej2_Refined_svg-tex.pdf' is 12 on input line 669.
+Package svg Info: Last page of `./svg-inkscape/Superficie_NURBS_Ej2_Refined_svg-tex.pdf' is 12 on input line 711.
  (svg-inkscape/Superficie_NURBS_Ej2_Refined_svg-tex.pdf_tex
 <./svg-inkscape/Superficie_NURBS_Ej2_Refined_svg-tex.pdf, id=787, page=1, 419.5675pt x 315.1775pt>
 File: ./svg-inkscape/Superficie_NURBS_Ej2_Refined_svg-tex.pdf Graphic file (type pdf)
@@ -1639,7 +1652,7 @@ File: ./svg-inkscape/Superficie_NURBS_Ej2_Refined_svg-tex.pdf Graphic file (type
 Package pdftex.def Info: ./svg-inkscape/Superficie_NURBS_Ej2_Refined_svg-tex.pdf , page12 used on input line 82.
 (pdftex.def)             Requested size: 145.68144pt x 109.43369pt.
 )
-Overfull \hbox (2.01277pt too wide) in paragraph at lines 691--692
+Overfull \hbox (2.01277pt too wide) in paragraph at lines 733--734
 []\T1/ptm/b/n/10.95 Nuevos pun-tos de con-trol pon-de-ra-dos\T1/ptm/m/n/10.95 , $\OT1/ptm/b/n/10.95 Q[]$\T1/ptm/m/n/10.95 : es-ta-rán de-fi-ni-dos me-dian-te $\OT1/ptm/b/n/10.95 Q[] \OT1/ztmcm/m/n/10.95 = \OML/ztmcm/m/it/10.95 []\OT1/ptm/b/n/10.95 P[] \OT1/ztmcm/m/n/10.95 + (1 \OMS/ztmcm/m/n/10.95 ^^@ \OML/ztmcm/m/it/10.95 []\OT1/ztmcm/m/n/10.95 )\OT1/ptm/b/n/10.95 P[]$\T1/ptm/m/n/10.95 ,
  []
 
@@ -1761,11 +1774,11 @@ File: lstlang1.sty 2025/11/14 1.11b listings language file
 ) (C:\Users\carlo\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstmisc.sty
 File: lstmisc.sty 2025/11/14 1.11b (Carsten Heinz)
 )
-Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on input line 718.
+Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on input line 760.
 LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <10> not available
-(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 719.
+(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 761.
 
-Overfull \hbox (4.61911pt too wide) in paragraph at lines 750--751
+Overfull \hbox (4.61911pt too wide) in paragraph at lines 792--793
 []\T1/cmtt/m/n/10.95 CtrlPtsW\T1/ptm/m/n/10.95 : Re-pre-sen-ta los pun-tos de con-trol en coor-de-na-das ho-mo-gé-neas $\OT1/ptm/b/n/10.95 P[] \OT1/ztmcm/m/n/10.95 = (\OML/ztmcm/m/it/10.95 w[]x[]; w[]y[]; w[]z[]; w[]\OT1/ztmcm/m/n/10.95 )$\T1/ptm/m/n/10.95 . 
  []
 
@@ -1776,12 +1789,12 @@ Cap\'{\i }tulo 3.
 [13
 
 ] [14] [15]
-Overfull \hbox (15.41895pt too wide) in paragraph at lines 986--987
+Overfull \hbox (15.41895pt too wide) in paragraph at lines 1030--1031
 []\T1/ptm/m/n/10.95 Actualizaremos tan-to $\OT1/ptm/b/n/10.95 K[] \OMS/ztmcm/m/n/10.95 ! \OT1/ptm/b/n/10.95 K[] \OT1/ztmcm/m/n/10.95 + []$\T1/ptm/m/n/10.95 , $[]$ y $\OT1/ptm/b/n/10.95 F[] \OMS/ztmcm/m/n/10.95 ! \OT1/ptm/b/n/10.95 F[] \OT1/ztmcm/m/n/10.95 + []$\T1/ptm/m/n/10.95 , $[]$. 
  []
 
 
-Overfull \hbox (13.72697pt too wide) detected at line 1030
+Overfull \hbox (11.41505pt too wide) detected at line 1074
 \OT1/ptm/b/n/10.95 K[] \OT1/ztmcm/m/n/10.95 = [][] [][] [][] [] [] \OMS/ztmcm/m/n/10.95 j [] \OT1/ptm/b/n/10.95 J\OMS/ztmcm/m/n/10.95 j \OML/ztmcm/m/it/10.95 d^^Xd^^Q:
  []
 
@@ -1793,14 +1806,14 @@ Cap\'{\i }tulo 4.
 
 ] [22]
 Cap\'{\i }tulo 5.
-LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 1259.
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 1303.
 (C:\Users\carlo\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 )
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-Package svg Info: Last page of `./svg-inkscape/CurvaColor_h256_p2_svg-tex.pdf' is 12 on input line 1319.
+Package svg Info: Last page of `./svg-inkscape/CurvaColor_h256_p2_svg-tex.pdf' is 12 on input line 1363.
 (svg-inkscape/CurvaColor_h256_p2_svg-tex.pdf_tex
 <./svg-inkscape/CurvaColor_h256_p2_svg-tex.pdf, id=1048, page=1, 508.90125pt x 406.51875pt>
 File: ./svg-inkscape/CurvaColor_h256_p2_svg-tex.pdf Graphic file (type pdf)
@@ -1863,7 +1876,7 @@ File: ./svg-inkscape/CurvaColor_h256_p2_svg-tex.pdf Graphic file (type pdf)
 Package pdftex.def Info: ./svg-inkscape/CurvaColor_h256_p2_svg-tex.pdf , page12 used on input line 82.
 (pdftex.def)             Requested size: 145.68144pt x 116.37389pt.
 )
-Package svg Info: Last page of `./svg-inkscape/CurvaColor_h256_p2_Z_svg-tex.pdf' is 15 on input line 1324.
+Package svg Info: Last page of `./svg-inkscape/CurvaColor_h256_p2_Z_svg-tex.pdf' is 15 on input line 1368.
  (svg-inkscape/CurvaColor_h256_p2_Z_svg-tex.pdf_tex
 <./svg-inkscape/CurvaColor_h256_p2_Z_svg-tex.pdf, id=1061, page=1, 508.90125pt x 406.51875pt>
 File: ./svg-inkscape/CurvaColor_h256_p2_Z_svg-tex.pdf Graphic file (type pdf)
@@ -1941,7 +1954,7 @@ File: ./svg-inkscape/CurvaColor_h256_p2_Z_svg-tex.pdf Graphic file (type pdf)
 Package pdftex.def Info: ./svg-inkscape/CurvaColor_h256_p2_Z_svg-tex.pdf , page15 used on input line 88.
 (pdftex.def)             Requested size: 150.23138pt x 120.00882pt.
 )
-Package svg Info: Last page of `./svg-inkscape/CurvaColor_h256_p3_svg-tex.pdf' is 16 on input line 1329.
+Package svg Info: Last page of `./svg-inkscape/CurvaColor_h256_p3_svg-tex.pdf' is 16 on input line 1373.
  (svg-inkscape/CurvaColor_h256_p3_svg-tex.pdf_tex
 <./svg-inkscape/CurvaColor_h256_p3_svg-tex.pdf, id=1077, page=1, 508.90125pt x 406.51875pt>
 File: ./svg-inkscape/CurvaColor_h256_p3_svg-tex.pdf Graphic file (type pdf)
@@ -2156,12 +2169,12 @@ pdfTeX warning: pdflatex (file ./svg-inkscape/CurvaColor_h256_p3_svg-tex.pdf): P
 <surface_hX=256_CROP_HQ1.png, id=1244, 3502.08376pt x 2626.81375pt>
 File: surface_hX=256_CROP_HQ1.png Graphic file (type png)
 <use surface_hX=256_CROP_HQ1.png>
-Package pdftex.def Info: surface_hX=256_CROP_HQ1.png  used on input line 1466.
+Package pdftex.def Info: surface_hX=256_CROP_HQ1.png  used on input line 1510.
 (pdftex.def)             Requested size: 213.96529pt x 160.48792pt.
 <surface_hX=256_CROP_HQ.png, id=1245, 3502.08376pt x 2626.81375pt>
 File: surface_hX=256_CROP_HQ.png Graphic file (type png)
 <use surface_hX=256_CROP_HQ.png>
-Package pdftex.def Info: surface_hX=256_CROP_HQ.png  used on input line 1471.
+Package pdftex.def Info: surface_hX=256_CROP_HQ.png  used on input line 1515.
 (pdftex.def)             Requested size: 213.96529pt x 160.48792pt.
  [25 <./surface_hX=256_CROP_HQ1.png (PNG copy)> <./surface_hX=256_CROP_HQ.png (PNG copy)>] [26
 
@@ -2180,27 +2193,27 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 pdfTeX warning (ext4): destination with the same identifier (name{section.6.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.1554 \section{MÃ©todo de los elementos finitos.}
+l.1598 \section{MÃ©todo de los elementos finitos.}
                                                    [31
 
 
 ] [32] [33] [34]
-Overfull \hbox (8.92148pt too wide) in paragraph at lines 1785--1787
+Overfull \hbox (8.92148pt too wide) in paragraph at lines 1829--1831
 \T1/ptm/m/n/10.95 Buscamos aho-ra aco-tar el se-gun-do tér-mino uti-li-zan-do pri-me-ro la \T1/ptm/b/n/10.95 des-igual-dad de Cauchy-Schwartz\T1/ptm/m/n/10.95 : 
  []
 
 [35] [36] [37] [38] [39]
-Overfull \hbox (10.03943pt too wide) in paragraph at lines 2037--2039
+Overfull \hbox (10.03943pt too wide) in paragraph at lines 2081--2083
 \T1/ptm/m/n/10.95 Asumimos que $\OML/ztmcm/m/it/10.95 N[]\OT1/ztmcm/m/n/10.95 (\OML/ztmcm/m/it/10.95 u\OT1/ztmcm/m/n/10.95 )$ \T1/ptm/m/n/10.95 tie-ne so-por-te en $\OT1/ztmcm/m/n/10.95 [\OML/ztmcm/m/it/10.95 u[]; u[]\OT1/ztmcm/m/n/10.95 )$ \T1/ptm/m/n/10.95 y $\OML/ztmcm/m/it/10.95 N[]\OT1/ztmcm/m/n/10.95 (\OML/ztmcm/m/it/10.95 u\OT1/ztmcm/m/n/10.95 )$ \T1/ptm/m/n/10.95 tie-ne so-por-te en $\OT1/ztmcm/m/n/10.95 [\OML/ztmcm/m/it/10.95 u[]; u[]\OT1/ztmcm/m/n/10.95 )$\T1/ptm/m/n/10.95 ,
  []
 
 [40] [41]
-Overfull \hbox (17.76642pt too wide) detected at line 2118
+Overfull \hbox (17.76642pt too wide) detected at line 2162
 \OT1/ptm/b/n/10.95 C[]\OT1/ztmcm/m/n/10.95 (\OML/ztmcm/m/it/10.95 u\OT1/ztmcm/m/n/10.95 ) = [] [] = [] \OML/ztmcm/m/it/10.95 N[]\OT1/ztmcm/m/n/10.95 (\OML/ztmcm/m/it/10.95 u\OT1/ztmcm/m/n/10.95 )\OT1/ptm/b/n/10.95 P[] \OT1/ztmcm/m/n/10.95 = [] [] \OT1/ptm/b/n/10.95 P[]\OML/ztmcm/m/it/10.95 :
  []
 
 [42] [43]
-Overfull \hbox (23.51292pt too wide) detected at line 2174
+Overfull \hbox (23.51292pt too wide) detected at line 2218
 []\OT1/ztmcm/m/n/10.95 (1 \OMS/ztmcm/m/n/10.95 ^^@ \OML/ztmcm/m/it/10.95 []\OT1/ztmcm/m/n/10.95 ) + []\OML/ztmcm/m/it/10.95 [] \OT1/ztmcm/m/n/10.95 = \OML/ztmcm/m/it/10.95 [][] \OT1/ztmcm/m/n/10.95 + (1 \OMS/ztmcm/m/n/10.95 ^^@ \OML/ztmcm/m/it/10.95 []\OT1/ztmcm/m/n/10.95 )[]\OML/ztmcm/m/it/10.95 :
  []
 
@@ -2208,10 +2221,10 @@ Overfull \hbox (23.51292pt too wide) detected at line 2174
 \pydata@fh@0=\write8
 \openout8 = `_B2DC335CC6609A05EE33507F30831883.data.minted'.
 
-runsystem(latexminted config  --timestamp 20260209124813 B2DC335CC6609A05EE33507F30831883)...executed.
+runsystem(latexminted config  --timestamp 20260217104303 B2DC335CC6609A05EE33507F30831883)...executed.
 
  (_B2DC335CC6609A05EE33507F30831883.config.minted)
-runsystem(latexminted cleanconfig  --timestamp 20260209124813 B2DC335CC6609A05EE33507F30831883)...executed.
+runsystem(latexminted cleanconfig  --timestamp 20260217104303 B2DC335CC6609A05EE33507F30831883)...executed.
 
  (_minted/colorful.style.minted) (_minted/FFC3511D9E15C7AF0482C1D651DAD8BF.highlight.minted
 LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <9> not available
@@ -2357,18 +2370,18 @@ LaTeX2e <2025-11-01>
 L3 programming layer <2025-11-06>
  ***********
 Package rerunfilecheck Info: File `PlantillaTFG.out' has not changed.
-(rerunfilecheck)             Checksum: 60EEB83C515E0408A5DF8789DD169535;14047.
+(rerunfilecheck)             Checksum: 10735BB0F043269D3676ED75AEDDF6AD;14055.
  ) 
 Here is how much of TeX's memory you used:
  33887 strings out of 467871
  689346 string characters out of 5418375
- 1459806 words of memory out of 5000000
+ 1459807 words of memory out of 5000000
  61735 multiletter control sequences out of 15000+600000
  744535 words of font info for 205 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  94i,18n,94p,1106b,1413s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\carlo\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi450\tctt0800.pk> <C:\Users\carlo\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi450\ectt0800.pk> <C:\Users\carlo\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tctt0900.pk> <C:\Users\carlo\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ectt0900.pk> <C:\Users\carlo\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ectt1000.pk> <C:\Users\carlo\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ectt1095.pk><C:/Users/carlo/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/carlo/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/carlo/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/carlo/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/carlo/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msam10.pfb><C:/Users/carlo/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb><C:/Users/carlo/AppData/Local/Programs/MiKTeX/fonts/type1/public/rsfs/rsfs10.pfb><C:/Users/carlo/AppData/Local/Programs/MiKTeX/fonts/type1/urw/symbol/usyr.pfb><C:/Users/carlo/AppData/Local/Programs/MiKTeX/fonts/type1/urw/symbol/usyr.pfb><C:/Users/carlo/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/Users/carlo/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmbi8a.pfb><C:/Users/carlo/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Users/carlo/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Users/carlo/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
-Output written on PlantillaTFG.pdf (105 pages, 3250250 bytes).
+Output written on PlantillaTFG.pdf (105 pages, 3253137 bytes).
 PDF statistics:
  2115 PDF objects out of 2487 (max. 8388607)
  337 named destinations out of 1000 (max. 500000)

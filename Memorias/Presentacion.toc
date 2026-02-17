@@ -1,0 +1,6 @@
+\babel@toc {english}{}\relax 
+\beamer@sectionintoc {1}{Medidas reales y complejas: primeras propiedades}{3}{0}{1}
+\beamer@sectionintoc {2}{Variación total}{18}{0}{2}
+\beamer@sectionintoc {3}{Teorema de Lebesgue-Radon-Nikodym}{27}{0}{3}
+\beamer@sectionintoc {4}{Consecuencias del teorema de Lebesgue-Radon-Nikodym}{37}{0}{4}
+\beamer@sectionintoc {5}{Funciones de variación acotada}{46}{0}{5}

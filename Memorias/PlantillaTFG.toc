@@ -1,5 +1,5 @@
 \babel@toc {spanish}{}\relax 
-\contentsline {chapter}{Summary}{\es@scroman {iii}}{chapter*.2}%
+\contentsline {chapter}{Abstract}{\es@scroman {iii}}{chapter*.2}%
 \contentsline {chapter}{\numberline {1}Introducción}{1}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Contexto y relación con el método de elementos finitos}{1}{section.1.1}%
 \contentsline {section}{\numberline {1.2}Evolución del análisis isogeométrico}{2}{section.1.2}%
@@ -7,7 +7,7 @@
 \contentsline {section}{\numberline {1.4}El problema modelo: la ecuación de Poisson}{3}{section.1.4}%
 \contentsline {subsection}{\numberline {1.4.1}Formulación fuerte (o clásica)}{3}{subsection.1.4.1}%
 \contentsline {subsection}{\numberline {1.4.2}Formulación variacional (o débil)}{3}{subsection.1.4.2}%
-\contentsline {section}{\numberline {1.5}Estructura del documento}{3}{section.1.5}%
+\contentsline {section}{\numberline {1.5}Estructura del documento}{4}{section.1.5}%
 \contentsline {chapter}{\numberline {2}Construcción de estructuras mediante CAD}{5}{chapter.2}%
 \contentsline {section}{\numberline {2.1}Bézier}{5}{section.2.1}%
 \contentsline {subsection}{\numberline {2.1.1}Funciones base}{5}{subsection.2.1.1}%
@@ -48,7 +48,7 @@
 \contentsline {subsubsection}{Fase de ensamblado}{19}{section*.18}%
 \contentsline {subsubsection}{Fase de resolución}{19}{section*.19}%
 \contentsline {chapter}{\numberline {4}Implementación computacional}{21}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Lenguaje y librerías utilizadas}{21}{section.4.1}%
+\contentsline {section}{\numberline {4.1}Lenguaje y librerías utilizados}{21}{section.4.1}%
 \contentsline {section}{\numberline {4.2}Métodos numéricos empleados}{21}{section.4.2}%
 \contentsline {section}{\numberline {4.3}Estructura del programa}{21}{section.4.3}%
 \contentsline {chapter}{\numberline {5}Resultados.}{23}{chapter.5}%
@@ -70,7 +70,7 @@
 \contentsline {subsection}{\numberline {A.2.4}Equivalencia de normas}{37}{subsection.6.2.4}%
 \contentsline {subsection}{\numberline {A.2.5}Condiciones del lema de Céa}{38}{subsection.6.2.5}%
 \contentsline {subsection}{\numberline {A.2.6}Continuidad de la forma lineal dual}{38}{subsection.6.2.6}%
-\contentsline {subsection}{\numberline {A.2.7}Propiedades de Bezier}{39}{subsection.6.2.7}%
+\contentsline {subsection}{\numberline {A.2.7}Propiedades de Bézier}{39}{subsection.6.2.7}%
 \contentsline {subsubsection}{Funciones base}{39}{section*.34}%
 \contentsline {subsubsection}{Curvas}{39}{section*.35}%
 \contentsline {subsection}{\numberline {A.2.8}Propiedades de los B-Splines}{40}{subsection.6.2.8}%

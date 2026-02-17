@@ -1,0 +1,20 @@
+\babel@toc {spanish}{}\relax 
+\beamer@sectionintoc {1}{Introducción}{3}{0}{1}
+\beamer@subsectionintoc {1}{1}{Contexto y relación con el método de elementos finitos}{3}{0}{1}
+\beamer@subsectionintoc {1}{2}{El problema modelo: la ecuación de Poisson}{9}{0}{1}
+\beamer@sectionintoc {2}{Estructuras CAD}{11}{0}{2}
+\beamer@subsectionintoc {2}{1}{Bézier}{11}{0}{2}
+\beamer@subsectionintoc {2}{2}{B-Splines}{15}{0}{2}
+\beamer@subsectionintoc {2}{3}{NURBS}{19}{0}{2}
+\beamer@subsectionintoc {2}{4}{Superficies}{21}{0}{2}
+\beamer@subsectionintoc {2}{5}{Refinamiento de nudos}{24}{0}{2}
+\beamer@sectionintoc {3}{Análisis isogeométrico}{26}{0}{3}
+\beamer@subsectionintoc {3}{1}{Espacios funcionales}{26}{0}{3}
+\beamer@subsectionintoc {3}{2}{Formulación discreta de Galerkin}{28}{0}{3}
+\beamer@subsectionintoc {3}{3}{Propiedades del sistema}{30}{0}{3}
+\beamer@subsectionintoc {3}{4}{Caso 1D}{31}{0}{3}
+\beamer@subsectionintoc {3}{5}{Caso 2D}{35}{0}{3}
+\beamer@subsectionintoc {3}{6}{Cotas y coste computacional}{38}{0}{3}
+\beamer@sectionintoc {4}{Implementación computacional}{40}{0}{4}
+\beamer@sectionintoc {5}{Resultados}{43}{0}{5}
+\beamer@sectionintoc {6}{Conclusiones}{53}{0}{6}

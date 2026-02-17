@@ -1,8 +1,27 @@
+Resumen, creado
 Anexos, modificado el sistema de capitulos para que no comparta
         enumeración con el capítulo 6.
+Anexos, demostraciones y explicaciones añadidas, A.2.7, A.2.11 y A.3.
+Página 4, seccion de estructura del documento creada.
+Páginas 5 y 6, demostraciones de las propiedades de las funciones base
+               y curvas de Bézier creadas y pasadas al anexo.
+Página 13, introducida una Observación para definir el concepto Isoparamétrico.
+Página 14, añadidas las demostraciones de las propiedades del sistema y pasadas al anexo.
 Página 16, eliminada la definicion de M=J^-1*J^t por no ser usada y
            aclarada la diferencia entre las ecuaciones.
+Página 17, corregido el sombrero en las Omega_e para que este solo sobre Omega.
 Página 31, faltaba el ultimo paso de la demostracion.
+
+Total de caras empleadas:
+
+Capítulo 1: 4
+Capítulo 2: 7
+Capítulo 3: 7
+Capítulo 4: 2
+Capítulo 5: 3
+Capítulo 6: 1
+
+Total: 24
 
 Dudas: 
 -Debo citar en bibliografia la documentación de la libreria de Eigen?

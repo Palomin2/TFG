@@ -71,6 +71,8 @@ urlcolor=black]{hyperref}
 %------ Cabeceras y pies de página
 \usepackage{titleps}
 
+
+
 \newpagestyle{miestilo}{
 %-- Cabecera par y cabecera impar
 \sethead[\thepage][][\textsl{\chaptername\ \thechapter. \chaptertitle}]
@@ -177,9 +179,25 @@ urlcolor=black]{hyperref}
 \clearemptydoublepage
 
 %--- RESUMEN
-\chapter{Summary}
+\chapter{Abstract}
 
-Se creará al finalizar el trabajo.
+Isogeometric Analysis (IGA) was proposed to address the compatibility issues between Computer-Aided Design
+(CAD) and Finite Element Analysis (FEA). This thesis studies the transition from CAD geometries to analysis, using the Poisson equation
+as a model problem to evaluate the method's performance.
+
+First, we review the mathematical basis of geometric design, moving from Bézier curves to B-Splines and Non-Uniform Rational B-Splines (NURBS).
+We compare these functions to understand why NURBS are necessary, specifically addressing the limitations of Bézier curves—such as global support and the dependency between degree and control points—and the need for rational functions to represent conic sections. 
+
+In this context, we define how curves are constructed and extended to surfaces using tensor products. We also examine knot insertion, which serves a dual purpose:
+it is a design tool in CAD and the mechanism for mesh refinement ($h$-refinement) in the analysis phase.
+
+Next, we set up the IGA framework using the isoparametric concept, where the geometry basis also approximates the solution. From here, we analyze the linear system derived
+from the Galerkin formulation. A significant part of the work involves verifying the properties of the stiffness matrix, specifically its sparsity, symmetry, and condition number,
+which scales as $O(h^{-2})$.
+
+Finally, we document the numerical implementation, including matrix assembly via Gaussian quadrature and the application of
+Dirichlet boundary conditions. Using the code included in the appendix, we performed numerical experiments that confirm the
+theoretical error estimates and demonstrate optimal convergence rates for $L^2$ and $H^1$ norms.
 %--- FIN DEL RESUMEN
 
 \clearemptydoublepage
@@ -216,7 +234,7 @@ Se asemeja al método de elementos finitos (FEM), ambos buscan la solución medi
         \cellcolor{ventaja} \textbf{Exacta.} Geometría NURBS idéntica al CAD. \\
         \midrule
         
-        \textbf{Funciones de Base} & 
+        \textbf{Funciones base} & 
         Interpolatorias (Nodos). & 
         NURBS (Puntos de Control). \\
         \midrule
@@ -231,12 +249,12 @@ Se asemeja al método de elementos finitos (FEM), ambos buscan la solución medi
         \cellcolor{ventaja} $h$, $p$ y \textbf{$k$-refinamiento}. \\
         \midrule
         
-        \textbf{Coste Ensamblaje} & 
+        \textbf{Coste ensamblaje} & 
         \cellcolor{ventaja} \textbf{Económico.} Cuadratura sencilla. & 
         \cellcolor{desventaja} \textbf{Elevado.} Requiere reglas de cuadratura más complejas. \\
         \midrule
         
-        \textbf{Mapeo Inverso} & 
+        \textbf{Mapeo inverso} & 
         \cellcolor{ventaja} \textbf{Directo.} Inversión simple o analítica.  & 
         \cellcolor{desventaja} \textbf{Complejo.} Aumento del coste computacional. \\
         \bottomrule
@@ -247,21 +265,29 @@ Se asemeja al método de elementos finitos (FEM), ambos buscan la solución medi
 \begin{figure}[H]
     \centering
     \begin{subfigure}{0.32\textwidth}
+        {
+            \small
+        
         \includesvg[width=\linewidth]{bases_fem_p1.svg}
+        }
         \caption{Funciones base FEM, p=1.}
     \end{subfigure}
     \hfill
     \begin{subfigure}{0.33\textwidth}
+        {
+        \small
         \includesvg[width=\linewidth]{bases_fem_p2.svg}
+        }
         \caption{Funciones base FEM, p=2.}
     \end{subfigure}
     \hfill
     \begin{subfigure}{0.32\textwidth}
+        {
+        \small
         \includesvg[width=\linewidth]{funciones_base_NURBS_2.svg}
+        }
         \caption{Funciones base NURBS, p=2.}
     \end{subfigure}
-    %\caption{Código para las figuras en el anexo}
-    % --- NOTA DEL CÓDIGO FUENTE ---
     \vspace{0.5em} % Pequeño espacio vertical para separar de las subfiguras
     \begin{flushleft}
         \footnotesize{\textit{Nota}: El código fuente de estas figuras se encuentra disponible en los anexos \ref{sec:codigo_FEM} y \ref{sec:codigo_NURBS1}.}
@@ -320,7 +346,7 @@ u = g & \text{en } \Gamma_D, \quad \text{(Condición de Dirichlet)}, \\[6pt]
 \end{cases}
 \]
 
-Donde las formas bilineal $a(\cdot,\cdot)$ y lineal $L(\cdot)$ se definen como:
+Tal que los elementos anteriores cumplen las siguientes propiedades:
 
 \begin{itemize}
     \item ${f: \Omega \to \mathbb{R}}$, $f \in L^2(\Omega)$.
@@ -353,9 +379,25 @@ Donde:
 
 \section{Estructura del documento}
 
-resumen rapido de los posteriores capitulos asi como explicación de donde apareceran el codigo o diferentes elementos en el anexo.
+Iniciaremos introduciendo las bases del diseño CAD, tomando su evolución natural desde Bézier, pasando por
+B-Splines y terminando en NURBS.
+Definiremos cómo se crean las curvas y superficies en las que trabajaremos y sus
+funciones base, al igual que las propiedades de estas que nos serán útiles a lo
+largo del trabajo.
+Explicaremos también el refinamiento de nudos, el cual nos servirá para comprobar que los resultados numéricos
+cumplen las propiedades teóricas.
 
-Se creará al finalizar el trabajo.
+Seguidamente trataremos las bases del IGA, definiremos todos los elementos necesarios para plantear, discretizar,
+ensamblar y finalmente resolver el problema dado.
+
+Estudiaremos las propiedades del sistema resultante, así como las cotas de error de la solución en las normas $L^2$ y
+$H^1$ y su tiempo de computación.
+
+Mostraremos el paso de la teoría al código, explicando los métodos numéricos empleados y los pasos que
+requiere el programa, desde la creación del espacio físico hasta la resolución del problema.
+
+Finalmente comprobaremos, mediante los resultados numéricos obtenidos, que se cumplan las propiedades teóricas del método,
+como las cotas de las soluciones o el tiempo de computación.
 %--- FIN DEL CAPÍTULO 1
 
 \clearemptydoublepage
@@ -419,7 +461,7 @@ Los polinomios de Bernstein se definen como: $$B_{i,p}(u) = \binom{p}{i} u^{i} (
         \begin{equation*}
             \mathbf{C}'(0) = p(\mathbf{P}_1 - \mathbf{P}_0), \quad \mathbf{C}'(1) = p(\mathbf{P}_p - \mathbf{P}_{p-1}).
         \end{equation*}
-        \textit{Implicación:} La continuidad $C^1$ entre dos curvas de Bézier unidas requiere la colinealidad de $\mathbf{P}_{p-1}, \mathbf{P}_p$ (primera curva) y $\mathbf{P}_1$ (segunda curva).
+        \textit{Implicación:} La continuidad $C^1$ entre dos curvas de Bézier unidas requiere la colinealidad de $\mathbf{P}_{p-1}, \mathbf{P}_p$ (primera curva) y $\mathbf{P}_1, \mathbf{P}_0$ (segunda curva).
         
         \item \textbf{Invarianza afín}:
         Sea $\Phi: \mathbb{R}^n \to \mathbb{R}^n$ una transformación afín ( $\Phi(\mathbf{x}) = \mathbf{A}\mathbf{x} + \mathbf{b}$). Entonces:
@@ -477,7 +519,7 @@ se transiciona entonces a la implementación de funciones base \textbf{B-spline}
 \subsection{Funciones base}
 
 \begin{defin}
-    El \textbf{Vector de nudos} se define como $$U = \{u_0, u_1, \ldots, u_m\},$$ cumplen $u_i \le u_{i+1}, \quad i = 0, \ldots, m-1$, el número de nudos $m+1$ está relacionado con $p$ y $n$ tal que cumple: $m=n+p+1$.
+    El \textbf{Vector de nudos} se define como $$U = \{u_0, u_1, \ldots, u_m\},$$ se cumple que $u_i \le u_{i+1}, \quad i = 0, \ldots, m-1$, el número de nudos $m+1$ está relacionado con $p$ y $n$ tal que cumple: $m=n+p+1$.
 
     A lo largo del trabajo nos enfocaremos en los vectores de nudos \textbf{abiertos}, es decir, aquellos cuyos extremos se repiten $p+1$ veces, $u_0=u_1=\dots=u_{p}$, $u_m=u_{m-1}=\dots=u_{m-p+1}$.
 \end{defin}
@@ -835,6 +877,8 @@ El \textbf{espacio físico} $\Omega$ queda parametrizado así mediante el mapeo 
 \end{defin}
 \vspace{-0.2cm}
 
+\noindent \textbf{Observación (Concepto Isoparamétrico):}
+Nótese que las funciones base $\hat{R}$ utilizadas para generar el espacio de aproximación $V_h$ son idénticas a las empleadas para construir el mapeo geométrico $\mathbf{G}$. Esta dualidad, donde la geometría y la solución comparten la misma base matemática, es lo que define el \textbf{enfoque isoparamétrico} del método.
 \section{Formulación discreta de Galerkin}
 \vspace{-0.2cm}
 
@@ -843,7 +887,7 @@ Partiendo del espacio de aproximación $V_h \subset V$ (mismo V que en la secci�
 
 \begin{equation} \label{eq:Galerkin_Form}
     \vspace{-0.06cm}
-    a(u_h, v_h) = L(v_h), \quad \forall v_h \in V_h.
+    a(u_h, v_h) = L(v_h), \quad \forall v_h \in V_{h,0}=\{w_h \in V_h \mid w_h=0 \text{ en } \Gamma\}.
 \end{equation}
 %\vspace{-0.2cm}
 Expresamos la solución discreta $u_h$ como una combinación lineal de las funciones de forma definidas anteriormente:
@@ -859,7 +903,7 @@ Sustituyendo $u_h$ en la ecuación \ref{eq:Galerkin_Form} y tomando sucesivament
 \vspace{-0.3cm}
 \begin{equation*}
     \vspace{-0.1cm}
-    \sum_{j=1}^{N_b} a(\phi_j, \phi_i) d_i = L(\phi_i), \quad \forall i=1,\dots,N_b.
+    \sum_{j=1}^{N_b} a(\phi_j, \phi_i) d_j = L(\phi_i), \quad \forall i=1,\dots,N_b.
 \end{equation*}
 
 Reescribiendo ahora en forma matricial como:
@@ -975,7 +1019,7 @@ Al ser en el caso 1D, solo es posible aplicar condiciones de contorno a dos punt
 
 Sustituimos la primera (última en el caso $u_m$) fila de $\mathbf{K}$, el elemento (1,1) será 1, y el resto pasarán a ser 0, $\mathbf{F}_1$ tomará el valor de la condición de contorno $g(u_0)$.
 
-Con el fin de mantener la simetría del sistema se modificarán las $p$ filas siguientes (anteriores), estableceremos a 0 los elementos de la forma (1,j), y modificaremos los elementos $\mathbf{F}_j$ restándoles el valor $\mathbf{K}_{(1,j)}g(u_0)$.
+Con el fin de mantener la simetría del sistema se modificarán las $p$ filas siguientes (anteriores), estableceremos a 0 los elementos de la forma (j,1), y modificaremos los elementos $\mathbf{F}_j$ restándoles el valor $\mathbf{K}_{(j,1)}g(u_0)$.
 
 \subsubsection{Tipo Neumann}
 
@@ -1018,21 +1062,21 @@ Para este caso la \textbf{matriz local} $\mathbf{K}^e$ será de tamaño $(p+1)(q
 
 \begin{align}
     \label{eq:indices}
-    &i=(i_1-1)\cdot(q+1)+j_1=(i_1,j_1), \\
-    &j=(i_2-1)\cdot(q+1)+j_2=(i_2,j_2), \quad i_1, i_2 \in \{1,2,\dots,p+1\}, \quad j_1, j_2 \in \{1,2,\dots,q+1\}.
+    &i=I(i_1,j_1)=(i_1-1)\cdot(q+1)+j_1, \\
+    &j=J(i_2,j_2)=(i_2-1)\cdot(q+1)+j_2, \quad i_1, i_2 \in \{1,2,\dots,p+1\}, \quad j_1, j_2 \in \{1,2,\dots,q+1\}.
 \end{align}
 
 Teniendo así la integral que le corresponde al elemento:
 {\setlength{\abovedisplayskip}{2pt}
 \setlength{\belowdisplayskip}{2pt}
 \begin{equation*} 
-    \mathbf{K}^e_{((i_1,j_1),(i_2,j_2))} =\int_{v_k}^{v_{(k+1)}}\int_{u_n}^{u_{(n+1)}} \left(\hat{\nabla}\hat{R}_{(i_2 + n - p - 1, j_2 + k - q - 1)}^{(p,q)}\right)^T \left( \mathbf{J}^{-1} \mathbf{J}^{-T} \right) \left(\hat{\nabla}\hat{R}_{(i_1 + n - p - 1, , j_1 + k - q - 1)}^{(p,q)}\right) |\det \mathbf{J}| \, d\xi d\eta.
+    \mathbf{K}^e_{(I(i_1,j_1),J(i_2,j_2))} =\int_{v_k}^{v_{k+1}}\int_{u_n}^{u_{n+1}} \left(\hat{\nabla}\hat{R}_{(i_2 + n - p - 1, j_2 + k - q - 1)}^{(p,q)}\right)^T \left( \mathbf{J}^{-1} \mathbf{J}^{-T} \right) \left(\hat{\nabla}\hat{R}_{(i_1 + n - p - 1, , j_1 + k - q - 1)}^{(p,q)}\right) |\det \mathbf{J}| \, d\xi d\eta.
 \end{equation*}
 }
 Definimos de la misma manera ahora la \textbf{matriz local extendida} $\tilde{\mathbf{K}}^e$,
 
 \begin{equation*}
-    \tilde{\mathbf{K}}^e_{((i_1+n-p-1,j_1+k-q-1),(i_2+n-p-1, j_2+k-q-1))}=\mathbf{K}^e_{((i_1,j_1)(i_2,j_2))}.
+    \tilde{\mathbf{K}}^e_{(I(i_1+n-p-1,j_1+k-q-1),J(i_2+n-p-1, j_2+k-q-1))}=\mathbf{K}^e_{(I(i_1,j_1),J(i_2,j_2))}.
 \end{equation*}
 
 Formando así la \textbf{matriz de rigidez} $\mathbf{K}$ mediante la suma de estas matrices:
@@ -1045,8 +1089,8 @@ Realizamos el mismo procedimiento para el vector de carga:
 {\setlength{\abovedisplayskip}{2pt}
 \setlength{\belowdisplayskip}{2pt}
 \begin{align*}
-    &\mathbf{F}^e_{(i_1,j_1)}=\int_{v_k}^{v_{(k+1)}}\int_{u_n}^{u_{(n+1)}}f(\mathbf{G})\hat{R}_{(i_1,j_1)}^{(p,q)}|\det \mathbf{J}| \, d\xi d\eta. \\
-    &\tilde{\mathbf{F}}^e_{(i_1+n-p-1,j_1+k-q-1)}=\mathbf{F}^e_{(i_1,j_1)}.\\
+    &\mathbf{F}^e_{I(i_1,j_1)}=\int_{v_k}^{v_{k+1}}\int_{u_n}^{u_{n+1}}f(\mathbf{G})\hat{R}_{(i_1,j_1)}^{(p,q)}|\det \mathbf{J}| \, d\xi d\eta. \\
+    &\tilde{\mathbf{F}}^e_{I(i_1+n-p-1,j_1+k-q-1)}=\mathbf{F}^e_{I(i_1,j_1)}.\\
     &\mathbf{F}= \sum_{e=1}^{N_{el}} \tilde{\mathbf{F}}^e.
 \end{align*}
 }
@@ -1054,51 +1098,51 @@ Realizamos el mismo procedimiento para el vector de carga:
 \label{sec:cond2D}
 Se aplicarán los siguientes algoritmos para los elementos que contengan a la frontera de nuestro espacio físico.
 
-Sea $\hat{\Omega}_e=[u_{n},u_{{n}+1})\times[v_{k}, v_{{k}+1})$, un elemento paramétrico tal que $\mathbf{G}(\hat{\Omega_e})$ contiene parte de la frontera de $\Omega$, 
-dado que la frontera de $\Omega$ coincide con la frontera paramétrica, suponemos, sin pérdida de generalidad, que la frontera correspondiente a $\mathbf{G}(\hat{\Omega_e})$ coincide únicamente 
+Sea $\hat{\Omega}_e=[u_{n},u_{{n}+1})\times[v_{k}, v_{{k}+1})$, un elemento paramétrico tal que $\mathbf{G}(\hat{\Omega}_e)$ contiene parte de la frontera de $\Omega$, 
+dado que la frontera de $\Omega$ coincide con la frontera paramétrica, suponemos, sin pérdida de generalidad, que la frontera correspondiente a $\mathbf{G}(\hat{\Omega}_e)$ coincide únicamente 
 con la frontera al borde paramétrico inferior, es decir, $\xi \in [u_{n},u_{{n}+1})$ y $\eta=v_k$\footnote{Para los elementos esquina basta aplicar el algoritmo dos veces, una para cada borde.}.
 
-Recorreremos las funciones base asociadas a esta frontera, (en este caso recorremos el indice $i_1$ y fijamos $j_1=1$), para ello proyectamos de vuelta nuestros índices $I=(i_1,1)$ para $i_2=1,\dots,p+1$, mediante la ecuación \ref{eq:indices}.
+Recorreremos las funciones base asociadas a esta frontera, (en este caso recorremos el indice $i_1$ y fijamos $j_1=1$), para ello proyectamos de vuelta nuestros índices $I_{1}=I(i_1,1)$ para $i_2=1,\dots,p+1$, mediante la ecuación \ref{eq:indices}.
 
 \subsubsection{Tipo Dirichlet}
 \begin{enumerate}
-    \item Para cada índice $I$:
+    \item Para cada índice $I_{1}$:
     \begin{itemize}
-        \item Sustituimos la fila $I$-ésima de la matriz global $\mathbf{K}$ por ceros, imponiendo 1 en la diagonal ($\mathbf{K}_{I,I} = 1$).
-        \item Actualizamos el vector de carga: $\mathbf{F}_I = g(\mathbf{x}_I)$.
+        \item Sustituimos la fila $I_{1}$-ésima de la matriz global $\mathbf{K}$ por ceros, imponiendo 1 en la diagonal ($\mathbf{K}_{I_1,I_1} = 1$).
+        \item Actualizamos el vector de carga: $\mathbf{F}_{I_{1}} = g(\mathbf{x}_{I_{1}})$.
     \end{itemize}
     \item Para mantener la simetría del sistema, eliminamos las columnas $I$ correspondientes:
     \begin{itemize}
-        \item Para cada fila distinta de $I_2 \neq I$ donde $\mathbf{K}_{I_2,I} \neq 0$, modificamos el vector de carga restando la contribución conocida: $\mathbf{F}_K \leftarrow \mathbf{F}_K - \mathbf{K}_{I_2,I} \cdot g(\mathbf{x}_I)$.
-        \item Establecemos $\mathbf{K}_{I_2,I} = 0$.
+        \item Para cada fila distinta de $I_2 \neq I_1$ donde $\mathbf{K}_{I_2,I_1} \neq 0$, modificamos el vector de carga restando la contribución conocida: $\mathbf{F}_K \leftarrow \mathbf{F}_K - \mathbf{K}_{I_2,I_1} \cdot g(\mathbf{x}_{I_1})$.
+        \item Establecemos $\mathbf{K}_{I_2,I_1} = 0$.
     \end{itemize}
 \end{enumerate}
 
 
 \subsubsection{Tipo Neumann}
-Para cada índice $I$:
+Para cada índice $I_1$:
 {\setlength{\abovedisplayskip}{1pt}
 \setlength{\belowdisplayskip}{1pt}
 \begin{equation*}
-        \mathbf{F}_I \leftarrow \mathbf{F}_I + \int_{u_n}^{u_{n+1}} h(\mathbf{G}(\xi, v_k)) \cdot \hat{R}_{(i_1,1)}^{(p,q)}(\xi, v_k) \cdot J_{\Gamma}(\xi) \, d\xi.
+        \mathbf{F}_{I_1} \leftarrow \mathbf{F}_{I_1} + \int_{u_n}^{u_{n+1}} h(\mathbf{G}(\xi, v_k)) \cdot \hat{R}_{(i_1,1)}^{(p,q)}(\xi, v_k) \cdot J_{\Gamma}(\xi) \, d\xi.
 \end{equation*}
 }
 \subsubsection{Tipo Robin o mixtas}
 
-Proyectamos también en este caso $J = (i_2, 1)$ para $i_2=1,\dots,p+1$.
+Proyectamos también en este caso $J_1 = (i_2, 1)$ para $i_2=1,\dots,p+1$.
 
-Para cada índice $I$:
+Para cada índice $I_1$:
 {\setlength{\abovedisplayskip}{2pt}
 \setlength{\belowdisplayskip}{2pt}
     \begin{equation*}
-        \mathbf{F}_I \leftarrow \mathbf{F}_I + \int_{u_n}^{u_{n+1}} \frac{r}{\beta} \cdot \hat{R}_{(i_1,1)}^{(p,q)}(\xi, v_k) \cdot J_{\Gamma}(\xi) \, d\xi.
+        \mathbf{F}_{I_1} \leftarrow \mathbf{F}_{I_1} + \int_{u_n}^{u_{n+1}} \frac{r}{\beta} \cdot \hat{R}_{(i_1,1)}^{(p,q)}(\xi, v_k) \cdot J_{\Gamma}(\xi) \, d\xi.
     \end{equation*}
 }
-Para cada par de índices $(I, J)$:
+Para cada par de índices $(I_1, J_1)$:
 {\setlength{\abovedisplayskip}{3pt}
 \setlength{\belowdisplayskip}{2pt}
     \begin{equation*}
-        \mathbf{K}_{I,J} \leftarrow \mathbf{K}_{I,J} + \int_{u_n}^{u_{n+1}} \frac{\alpha}{\beta} \cdot \hat{R}_{(i_1,1)}^{(p,q)}(\xi, v_k) \cdot \hat{R}_{(i_2,1)}^{(p,q)}(\xi, v_k) \cdot J_{\Gamma}(\xi) \, d\xi.
+        \mathbf{K}_{I_1,J_1} \leftarrow \mathbf{K}_{I_1,J_1} + \int_{u_n}^{u_{n+1}} \frac{\alpha}{\beta} \cdot \hat{R}_{(i_1,1)}^{(p,q)}(\xi, v_k) \cdot \hat{R}_{(i_2,1)}^{(p,q)}(\xi, v_k) \cdot J_{\Gamma}(\xi) \, d\xi.
     \end{equation*}
 }
 
@@ -1118,15 +1162,15 @@ Para asegurar la convergencia debemos partir de unas condiciones iniciales:
 Bajo estas condiciones podemos tomar cotas del error en diferentes espacios:
 
 \begin{itemize}
-    \item \textbf{Norma en $H^1(\Omega)$:} $\| u - u_h \|_{H^1(\Omega)} \leq C_1 h^p | u |_{H^{p+1}(\Omega)}$.
-    \item \textbf{Norma en $L^2(\Omega)$:} $\| u - u_h \|_{L^2(\Omega)} \le C_2 h^{p+1} | u |_{H^{p+1}(\Omega)}$.
+    \item \textbf{Norma en $H^1(\Omega)$:} $\| u - u_h \|_{H^1(\Omega)} \leq C_1 h^p \| u \|_{H^{p+1}(\Omega)}$.
+    \item \textbf{Norma en $L^2(\Omega)$:} $\| u - u_h \|_{L^2(\Omega)} \le C_2 h^{p+1} \| u \|_{H^{p+1}(\Omega)}$.
 \end{itemize}
 
 Donde $C_1$ y $C_2$ dependen de la continuidad de las estructuras de NURBS asociadas al problema, a medida que la suavidad crece, estas decrecen.
 \begin{proof}
     Se demostrará para dimensión 2, siendo análoga la demostración para el caso de dimensión 1.
 
-    Buscamos demostrar que $\forall v_h \in V_h, v_h \in H^1(\Omega)$, para ello tomamos la siguiente igualdad:
+    Buscamos demostrar que $\forall v_h \in V_h,$ $v_h \in H^1(\Omega)$, para ello tomamos la siguiente igualdad:
     
     \begin{equation*}
         \| \nabla v_h \|_{L^2(\Omega)}^2 = \int_{\Omega} \left| \nabla v_h(\mathbf{x}) \right|^2 d\mathbf{x} = \int_{\hat{\Omega}} \left| J^{-T} \left( \sum_{i,j} c_{i,j} \nabla \hat{R}^{p,q}_{i,j} \right) \right|^2 |\det(J)| \, d\hat{\Omega}.
@@ -1171,9 +1215,9 @@ Depende del tamaño final del sistema y del método elegido para resolver el sis
 
 A lo largo del siguiente capítulo mostraremos como se ha implementado numéricamente todo lo referente a IGA.
 
-\section{Lenguaje y librerías utilizadas}
+\section{Lenguaje y librerías utilizados}
 
-El lenguaje principal utilizado ha sido C++, los cálculos de las curvas y superficies NURBS y el análisis isogeométrico, han sido escritos en este lenguaje, Octave ha sido empleado como visualizador de los ficheros de salida del código en C++.
+El lenguaje principal utilizado ha sido C++, los cálculos de las curvas y superficies NURBS, ensamblado y resolución del sistema y cálculo de normas, han sido escritos en este lenguaje, Octave ha sido empleado como visualizador de los ficheros de salida del código en C++.
 
 Se ha implementado la clase \textbf{iMatrix} que define una matriz de elementos abstractos, así como todos los métodos y operadores necesarios.
 
@@ -1961,7 +2005,7 @@ u = g & \text{en } \Gamma_D \quad (u\in V(\Omega)), \\[6pt]
     \end{equation*}
     Como $e=u-u^h$ es constante en este contexto, $e\in L^2(\Omega)$, luego tomamos $C_\text{L}=\|e\|_{L^2(\Omega)}$.
 \end{proof}
-\subsection{Propiedades de Bezier}
+\subsection{Propiedades de Bézier}
 \label{sec:Bezier_proof}
 \subsubsection{Funciones base}
 \begin{proof}Se demostrarán las propiedades en el orden en el que han sido establecidas:
@@ -1992,7 +2036,7 @@ u = g & \text{en } \Gamma_D \quad (u\in V(\Omega)), \\[6pt]
 \subsubsection{Curvas}
 \begin{proof}Se demostrarán las propiedades en el orden en el que han sido establecidas:
     \begin{enumerate}
-        \item \textbf{Interpolación en los extremos}: de las propiedades de las funciones base de Bezier obtenemos que para $u=0$ se tiene
+        \item \textbf{Interpolación en los extremos}: de las propiedades de las funciones base de Bézier obtenemos que para $u=0$ se tiene
                 $$\mathbf{C}(0) = \sum_{i=0}^{p} B_{i,p}(0)\mathbf{P}_i = 1 \cdot \mathbf{P}_0 .$$
                 Para el caso $u=1$ tenemos
                 $$\mathbf{C}(1) = \sum_{i=0}^{p} B_{i,p}(1)\mathbf{P}_i = 1 \cdot \mathbf{P}_p .$$
