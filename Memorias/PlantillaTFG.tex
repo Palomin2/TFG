@@ -213,35 +213,42 @@ theoretical error estimates and demonstrate optimal convergence rates for $L^2$ 
 %--- CAPÍTULO 1 DEL TFG
 \chapter{Introducción}
 
+\vspace{-0.4cm}
+
 \section{Contexto y relación con el método de elementos finitos}
 
-El análisis isogeométrico (IGA) es un método numérico, cuya finalidad se basa en la resolución de problemas de ecuaciones en derivadas parciales.
+El análisis isogeométrico (IGA) es un método numérico, cuya finalidad es la aproximación de problemas de ecuaciones en derivadas parciales. Esta solución aproximada se crea mediante una combinación lineal de funciones base a partir de la formulación variacional \cite{hughes_isogeometric_2005, cottrell_isogeometric_2009}. Propuesto originalmente por Hughes, Cottrell y Bazilevs en el año 2005 \cite{hughes_isogeometric_2005}, este método nace con el objetivo fundamental de unificar los campos del diseño asistido por ordenador (CAD) y el análisis de elementos finitos (FEA). 
 
-Se asemeja al método de elementos finitos (FEM), ambos buscan la solución mediante una combinación lineal de funciones base a partir de la formulación variacional; su principal diferencia con él radica en la preservación de la geometría original del espacio en el que se trabaja.
+La diferencia principal del IGA respecto al método de los elementos finitos (FEM) tradicional es la eliminación del error geométrico introducido por la discretización en mallas poligonales \cite{hughes_isogeometric_2005}. Tradicionalmente, la base fundamental de este método han sido las \textit{Non-Uniform Rational B-Splines} (NURBS) \cite{piegl_nurbs_2012}, aunque actualmente abarca una familia más amplia de funciones base \cite{bazilevs_isogeometric_2010}.
+
+
+A continuación observaremos más detalladamente las diferencias entre IGA y FEM tradicional en el Cuadro \ref{tab:fem_vs_iga}.
+
+\vspace{-0.5cm}
 
 \begin{table}[htbp]
     \centering
-    \caption{Comparación técnica entre FEM e IGA.}
+    \caption{Comparación técnica entre FEM tradicional e IGA.}
     \label{tab:fem_vs_iga}
     \renewcommand{\arraystretch}{1.5}
     \begin{tabular}{p{3cm} p{5.5cm} p{5.5cm}}
         \toprule
-        \textbf{Criterio} & \textbf{FEM Clásico} & \textbf{Análisis Isogeométrico (IGA)} \\
+        \textbf{Criterio} & \textbf{FEM tradicional} & \textbf{Análisis isogeométrico (IGA)} \\
         \midrule
         
         \textbf{Geometría} & 
         \cellcolor{desventaja} \textbf{Aproximada.} Malla poligonal que introduce error geométrico. & 
-        \cellcolor{ventaja} \textbf{Exacta.} Geometría NURBS idéntica al CAD. \\
+        \cellcolor{ventaja} \textbf{Exacta.} Geometría idéntica al CAD (NURBS, T-Splines, etc.). \\
         \midrule
         
         \textbf{Funciones base} & 
         Interpolatorias (Nodos). & 
-        NURBS (Puntos de Control). \\
+        No interpolatorias (puntos de Control). \\
         \midrule
         
-        \textbf{Continuidad} & 
+        \textbf{Continuidad global} & 
         \cellcolor{desventaja} Baja ($C^0$). & 
-        \cellcolor{ventaja} Alta ($C^{p-1}$). \\
+        \cellcolor{ventaja} Alta (hasta $C^{p-1}$). \\
         \midrule
         
         \textbf{Refinamiento} & 
@@ -250,8 +257,8 @@ Se asemeja al método de elementos finitos (FEM), ambos buscan la solución medi
         \midrule
         
         \textbf{Coste ensamblaje} & 
-        \cellcolor{ventaja} \textbf{Económico.} Cuadratura sencilla. & 
-        \cellcolor{desventaja} \textbf{Elevado.} Requiere reglas de cuadratura más complejas. \\
+        \cellcolor{ventaja} \textbf{Variable.} Generalmente menor, las funciones base toma valor 1 en su nodo y valores nulos en el resto de nodos (propiedad de delta de Kronecker), aunque escala con el grado $p$. & 
+        \cellcolor{desventaja} \textbf{Elevado.} Mayor densidad de la matriz debido a la no nulidad de las funciones base en todo su soporte y coste de evaluar funciones racionales. \\
         \midrule
         
         \textbf{Mapeo inverso} & 
@@ -260,7 +267,12 @@ Se asemeja al método de elementos finitos (FEM), ambos buscan la solución medi
         \bottomrule
     \end{tabular}
 \end{table}
-\textit{Nota:} Si se desea conocer más en detalle los distintos elementos del FEM para comparar más meticulosamente ambos métodos refiérase al anexo \ref{FEM}.
+
+\vspace{-0.2cm}
+
+\textit{Nota:} Si se desea conocer más en detalle los distintos elementos del FEM para comparar más meticulosamente ambos métodos, refiérase al Anexo \ref{FEM}.
+
+Seguidamente se muestran las gráficas de distintas funciones base (figura \ref{fig:comparativa_bases_completa}).
 
 \begin{figure}[H]
     \centering
@@ -270,7 +282,11 @@ Se asemeja al método de elementos finitos (FEM), ambos buscan la solución medi
         
         \includesvg[width=\linewidth]{bases_fem_p1.svg}
         }
-        \caption{Funciones base FEM, p=1.}
+
+        \vspace{-0.5cm}
+
+        \caption{Funciones base FEM, $p=1$.}
+        \label{fig:FEM_IGA_1}
     \end{subfigure}
     \hfill
     \begin{subfigure}{0.33\textwidth}
@@ -278,64 +294,138 @@ Se asemeja al método de elementos finitos (FEM), ambos buscan la solución medi
         \small
         \includesvg[width=\linewidth]{bases_fem_p2.svg}
         }
-        \caption{Funciones base FEM, p=2.}
+
+        \vspace{-0.5cm}
+
+        \caption{Funciones base FEM, $p=2$.}
+        \label{fig:FEM_IGA_2}
     \end{subfigure}
     \hfill
     \begin{subfigure}{0.32\textwidth}
         {
         \small
-        \includesvg[width=\linewidth]{funciones_base_NURBS_2.svg}
+        \includesvg[width=\linewidth]{funciones_base_NURBS_3.svg}
         }
-        \caption{Funciones base NURBS, p=2.}
+
+        \vspace{-0.5cm}
+
+        \caption{Funciones base NURBS, $p=2$.}
+        \label{fig:FEM_IGA_3}
+
     \end{subfigure}
-    \vspace{0.5em} % Pequeño espacio vertical para separar de las subfiguras
+    \vspace{-0.5em} % Pequeño espacio vertical para separar de las subfiguras
     \begin{flushleft}
-        \footnotesize{\textit{Nota}: El código fuente de estas figuras se encuentra disponible en los anexos \ref{sec:codigo_FEM} y \ref{sec:codigo_NURBS1}.}
+        \footnotesize{\textit{Nota}: Explicación mas detalla de las figuras en el Anexo \ref{exp_fig1.1} y código fuente de estas en los Anexos \ref{sec:codigo_FEM} y \ref{sec:codigo_NURBS1}.}
     \end{flushleft}
+
+    \vspace{-0.5cm}
+
+    \caption{Comparativa de funciones base entre FEM y NURBS.}
+    \label{fig:comparativa_bases_completa}
     % -------------------------------
 \end{figure}
 
+\vspace{-1cm}
 
 \section{Evolución del análisis isogeométrico}
 
-Para comprender el IGA, es necesario conocer la evolución del diseño asistido por ordenador (CAD), en \textbf{1967} Ahlberg, Nilson y Walsh publican su obra \textit{Theory of Splines and Their Applications},
-pionera en formalizar la teoría de los \textbf{splines}.
+El IGA está íntimamente relacionado con el CAD, por lo que es necesario conocer la evolución de este para comprenderlo. La formalización 
+de las bases geométricas modernas comenzó a inicios de 1960, impulsada por las necesidades de representación de formas complejas 
+en las industrias como aeronáutica y de automoción. En este contexto destacan las contribuciones de Pierre Bézier y 
+Paul de Casteljau, quienes sentaron las bases algorítmicas de las curvas paramétricas. 
+Posteriormente, en \textbf{1967}, Ahlberg, Nilson y Walsh publicaron su obra 
+\textit{Theory of Splines and Their Applications} \cite{ahlberg_theory_2016},
+pionera en formalizar la teoría de los \textbf{splines}. 
+Durante las décadas de 1970 y 1980, estas herramientas matemáticas evolucionaron hasta el estándar de los \textit{Non-Uniform Rational B-Splines} (NURBS) \cite{piegl_nurbs_2012}, 
+consolidando las bases funcionales que, años más tarde, constituirían los fundamentos del IGA.
 
-Con la llegada de la industria de automoción y aeronáutica en los 70 y 80, comienza la necesidad de representar formas complejas de manera eficiente impulsando así el CAD.
+De forma paralela, el FEM surgió entre los años 50 y 60 como la principal herramienta para resolver ecuaciones en derivadas parciales en dominios complejos. 
+Sin embargo, el FEM se desarrolló para evaluar mallas poligonales discretas que aproximan estos dominios, 
+ignorando por completo la representación analítica exacta que se estaba desarrollando simultáneamente en el CAD.
+Esta separación generó una profunda brecha en el análisis, la cual perduró durante décadas,
+obligando a introducir un costoso proceso de conversión geométrica entre el diseño y el análisis computacional.
+Para resolver definitivamente este cuello de botella, Thomas J.R. Hughes, J. Austin Cottrell y Yuri Bazilevs 
+introdujeron el IGA en el año 2005 \cite{hughes_isogeometric_2005}, unificando por primera vez el análisis
+al emplear las propias bases paramétricas del CAD para aproximar la solución del problema físico.
 
-Durante esta época se estandarizaron las técnicas y los algoritmos esenciales que posteriormente serían las bases del IGA.
+Actualmente, el IGA se ha consolidado en diversas industrias en las que la exactitud geométrica desempeña un papel fundamental. 
+En particular, en la \textbf{industria automotriz} se emplea en la simulación de colisiones y en el análisis de vibraciones estructurales.
+Asimismo, en los sectores \textbf{aeroespacial y eólico} permite modelar con gran precisión las interacciones fluido-estructura.
+De forma similar, en \textbf{biomedicina} se utiliza para simular el flujo sanguíneo en modelos arteriales realistas, mientras que en 
+\textbf{ingeniería naval} contribuye a optimizar la resistencia hidrodinámica en el diseño de cascos de buques. Finalmente, en el ámbito del
+\textbf{electromagnetismo}, su precisión es crucial para predecir correctamente la dispersión de ondas de alta frecuencia.
 
-Paralelamente a este proceso, en los años 50 y 60, impulsado por la industria aeroespacial, con el fin de resolver ecuaciones en derivadas parciales en dominios complejos, surgió el FEM, ignorando el CAD y creando una brecha entre ellos que duró décadas.
+En lo que respecta a su desarrollo teórico, la investigación actual se orienta principalmente a abordar algunas de las limitaciones 
+inherentes a la formulación original del método. Uno de los avances más relevantes en este sentido es la incorporación de los \textbf{T-Splines} \cite{bazilevs_isogeometric_2010}, los cuales 
+permiten la introducción de “nodos en T” en la parametrización, haciendo posible un refinamiento estrictamente local. 
+De este modo, únicamente se añaden grados de libertad en aquellas regiones donde el comportamiento físico lo requiere.
 
-En una búsqueda de unificar el diseño asistido por ordenador (CAD) y el análisis asistido por ordenador (CAE), en busca de eliminar la necesidad de crear una conversión geométrica que afecta a la precisión, nace el análisis isogeométrico.
-
-Actualmente IGA se usa en diferentes industrias como: \textbf{automoción},  simulación de choques, \textbf{aeroespacial}, diseño de álabes de turbinas, \textbf{biomedicina}, simulación de flujo sanguíneo, \textbf{eólica}, Interacción fluido-estructura en las palas.
-
-Finalmente mencionamos los campos de estudio en los que se avanzan actualmente en referencia a IGA como son los \textbf{T-Splines}, para un mayor refinamiento local, y los métodos \textbf{espacio-temporales}, campo actualmente en investigación.
+Por otra parte, también se están desarrollando formulaciones de carácter espacio-temporal \cite{langer_space-time_2016}. 
+En lugar de recurrir a esquemas clásicos de discretización temporal, el tiempo se incorpora 
+como una dimensión geométrica adicional dentro del propio dominio de análisis. 
+Esta aproximación permite trabajar sobre un dominio unificado en el espacio-tiempo y aplicar 
+sobre él las mismas bases isogeométricas, lo que puede traducirse en una mayor regularidad 
+en la resolución de problemas dinámicos.
 
 \section{Objetivos}
 
-El objetivo principal del trabajo es entender el marco teórico y las ventajas del IGA frente al FEM, tanto en costo computacional como en orden de convergencia, en problemas de contorno de ecuaciones en derivadas parciales.
+\vspace{-0.1cm}
 
-Nos centraremos en el estudio de los casos 1D y 2D, pues la generalización a dimensiones superiores es análoga.
 
-Con el fin de cumplir este objetivo, este se segmentará en los siguientes puntos que se seguirán en el orden siguiente:
+El objetivo principal del trabajo es desarrollar el marco teórico del IGA, 
+así como trabajar sobre una implementación de este y validar las cotas teóricas 
+con resultados numéricos obtenidos; adicionalmente se tratarán algunas de las diferencias principales del IGA 
+respecto al FEM, todo en el marco de problemas de contorno de ecuaciones en derivadas parciales.
+
+Nos centraremos en el estudio de los casos 1D y 2D, pues la generalización a dimensiones superiores es análoga. 
+Con el fin de cumplir este objetivo, el trabajo se estructura en las siguientes fases:
+
+\vspace{-0.1cm}
+
 
 \begin{enumerate}
-    \item \textbf{Marco teórico:} Establecer el marco teórico del IGA, contrastando la formulación variacional basada en las funciones NURBS con la aproximación polinómica del FEM.
+    \item \textbf{Marco teórico:} Establecer las bases matemáticas del IGA, contrastando la formulación variacional basada en las funciones de tipo \textbf{spline} con la aproximación polinómica del FEM.
+    \vspace{-0.1cm}
     \item \textbf{Implementación computacional:} Desarrollo e implementación de código propio que pueda resolver problemas de contorno de EDPs usando el IGA.
-    \item \textbf{Validación y comparación:} Validar los resultados numéricos comparándolos con las soluciones analíticas de los problemas y comprobar las diferencias en velocidad de convergencia con el FEM.
+    \vspace{-0.1cm}
+    \item \textbf{Validación y comparación:} Validar los resultados numéricos comparándolos con las soluciones analíticas de los problemas, así como comprobar que se cumpla el orden de convergencia en las normas $H^1$ y $L^2$.
 \end{enumerate}
+
+\vspace{-0.7cm}
 
 \section{El problema modelo: la ecuación de Poisson}
 
-Durante la realización del trabajo nos centraremos en el problema de Poisson como benchmark para mostrar en este las propiedades del IGA.
+\vspace{-0.1cm}
+
+Durante la realización del trabajo tomaremos como caso de estudio el \textbf{problema de Poisson} 
+como \textit{benchmark} para evaluar el IGA. Esta ecuación en derivadas parciales elíptica 
+de segundo orden, que generaliza la ecuación de Laplace, se expresa matemáticamente como:
+
+\vspace{-0.25cm}
+
+$$-\Delta u = f \quad \text{en } \Omega,$$
+
+\vspace{-0.1cm}
+
+\noindent
+donde $\Omega$ es un dominio abierto y acotado, $\Delta$ es el operador laplaciano, $u$ es la 
+función incógnita y $f$ representa un término fuente conocido.
+
+\vspace{-0.2cm}
 
 \subsection{Formulación fuerte (o clásica)}
-\begin{defin} Sea $\Omega \subset \mathbb{R}^n$ un conjunto abierto y acotado, donde $n \in \mathbb{N}$,
+
+La \textbf{formulación fuerte} de un problema de contorno implica que la ecuación diferencial debe cumplirse punto a punto en todo el dominio 
+considerado, lo que conlleva imponer condiciones de regularidad exigentes sobre la función incógnita. 
+En el caso de una ecuación de segundo orden, como la de Poisson, la solución ha de ser suficientemente regular para que sus derivadas existan 
+en el sentido clásico y el operador diferencial pueda evaluarse directamente; además, debe satisfacer de manera estricta las condiciones en cada parte de la frontera. 
+
+\begin{defin} Sea $\Omega \subset \mathbb{R}^n$ un conjunto abierto y acotado (donde $n \in \mathbb{N}$),
      con frontera $\partial\Omega = \Gamma = \overline{\Gamma_D \cup \Gamma_R \cup \Gamma_N}$, que sea suficientemente regular, tal que $\Gamma_D \cap \Gamma_R = \Gamma_D \cap \Gamma_N =  \Gamma_R \cap \Gamma_N = \emptyset$ .
 
-Buscamos una función solución $u: \Omega \to \mathbb{R}$, que cumpla $u \in C^2(\Omega)$ y tal que: 
+Buscamos una función solución $u: \Omega \to \mathbb{R}$, que cumpla $u \in C^2(\Omega) \cap C^1(\overline{\Omega})$ y tal que: 
+
+\vspace{-0.2cm}
 
 \[
 \begin{cases}
@@ -346,110 +436,187 @@ u = g & \text{en } \Gamma_D, \quad \text{(Condición de Dirichlet)}, \\[6pt]
 \end{cases}
 \]
 
-Tal que los elementos anteriores cumplen las siguientes propiedades:
+\vspace{-0.1cm}
+
+Donde los elementos anteriores cumplen las siguientes propiedades:
+
+\vspace{-0.1cm}
 
 \begin{itemize}
-    \item ${f: \Omega \to \mathbb{R}}$, $f \in L^2(\Omega)$.
-    \item ${g: \Gamma_D \to \mathbb{R}}$, $g \in H^{1/2}(\Gamma_D)$.
-    \item ${h: \Gamma_N \to \mathbb{R}}$, $h \in L^2(\Gamma_N)$.
-    \item ${r: \Gamma_R \to \mathbb{R}}$, $r \in L^2(\Gamma_R)$.
-    \item ${\mathbf{n}: \Gamma \to \mathbb{R}^n}$, vector normal exterior unitario a la frontera $\Gamma$.
+    \item ${f: \Omega \to \mathbb{R}}$, $f \in L^2(\Omega)$.\vspace{-0.1cm}
+    \item ${g: \Gamma_D \to \mathbb{R}}$, $g \in H^{1/2}(\Gamma_D)$.\vspace{-0.1cm}
+    \item ${h: \Gamma_N \to \mathbb{R}}$, $h \in L^2(\Gamma_N)$.\vspace{-0.1cm}
+    \item ${r: \Gamma_R \to \mathbb{R}}$, $r \in L^2(\Gamma_R)$.\vspace{-0.1cm}
+    \item ${\mathbf{n}: \Gamma \to \mathbb{R}^n}$, vector normal exterior unitario a la frontera $\Gamma$.\vspace{-0.1cm}
     \item ${\alpha, \beta \in \mathbb{R}}$, tal que $\frac{\alpha}{\beta} \geq 0$.
 \end{itemize}
+
+\vspace{-0.1cm}
+
 \end{defin}
 
+\textit{Nota sobre los espacios funcionales:}
+
+$$L^2(\Omega) = \left\{ v : \Omega \to \mathbb{R} \mid \int_{\Omega} |v|^2 \, dx < \infty \right\}, \, \, \, H^1(\Omega) = \{ v \in L^2(\Omega) \mid \nabla v \in [L^2(\Omega)]^n \},$$
+
+\vspace{-0.1cm}
+
+$$H^{1/2}(\Gamma_D) = \left\{ v \in L^2(\Gamma_D) \mid \int_{\Gamma_D} \int_{\Gamma_D} \frac{|v(x) - v(y)|^2}{\|x - y\|^n} \, ds_x \, ds_y < \infty \right\}\footnote{$ds_x$ y $ds_y$ denotan la integración respecto a la medida de Hausdorff $(n-1)$-dimensional $\mathcal{H}^{n-1}$. Para un conjunto $S \subset \mathbb{R}^n$, la medida de Hausdorff $d$-dimensional se define como $\mathcal{H}^d(S) = \lim_{\delta \to 0} \inf \left\{ \sum_{i=1}^\infty \alpha(d) \left(\frac{\text{diam}(U_i)}{2}\right)^d \right\}$, donde el ínfimo se toma sobre todos los recubrimientos numerables $\{U_i\}$ de $S$ tales que $\text{diam}(U_i) < \delta$, siendo $\alpha(d)$ el volumen de la bola unidad en $\mathbb{R}^d$.}.$$
+
+\vspace{-0.25cm}
+
 \subsection{Formulación variacional (o débil)}\label{sec:Debil}
-\begin{defin} Buscamos  $u \in V(\Omega)=\{v \in H^1(\Omega) \mid v=g \text{ en } \Gamma_D\}$, tal que para  
-$v \in V_0(\Omega)=\{v \in H^1(\Omega) \mid v=0 \text{ en } \Gamma_D\}$, se cumple que:
+
+La formulación débil puede entenderse como una reinterpretación del problema diferencial original 
+en términos integrales, de modo que la ecuación ya no se exige punto a punto, sino en un sentido global 
+sobre el dominio. Para obtenerla, se multiplica la ecuación en su forma fuerte por una función test y se 
+integra en $\Omega$, aplicando la primera identidad de Green. Como consecuencia, una de las derivadas se traslada 
+a la función test\footnote{$ \int_{\Omega} -\Delta u \, v \, dx = \int_{\Omega} \nabla u \cdot \nabla v \, dx - \int_{\partial\Omega} \frac{\partial u}{\partial \mathbf{n}} \, v \, ds $}, 
+lo que permite rebajar las exigencias de regularidad sobre la incógnita, 
+que pasa a considerarse en el espacio $H^1(\Omega)$. Además, en esta formulación las condiciones de 
+Neumann y Robin aparecen de manera natural en los términos de frontera, mientras que la condición de 
+Dirichlet se incorpora como una restricción esencial del espacio funcional.
+
+\begin{defin} Buscamos $u \in V(\Omega)=\{w \in H^1(\Omega) \mid w=g \text{ en } \Gamma_D\}$, tal que 
+para toda función test $v \in V_0(\Omega)=\{w \in H^1(\Omega) \mid w=0 \text{ en } \Gamma_D\}$, se cumple que:
+
+\vspace{-0.15cm}
 
 \begin{equation}
     \label{eq:form_weak}
-    a(u,v)=L(v).
+    a(u,v)=L(v),
 \end{equation}
 
-Donde:
+\vspace{-0.15cm}
+
+donde:
+
+\vspace{-0.2cm}
+
 \begin{itemize}
-    \item ${a(u,v)}=\int_{\Omega}\nabla u \cdot \nabla v\, d\Omega + \int_{\Gamma_R}\frac{\alpha}{\beta}uv\, d\Gamma$.
+    \item ${a(u,v)}=\int_{\Omega}\nabla u \cdot \nabla v\, d\Omega + \int_{\Gamma_R}\frac{\alpha}{\beta}uv\, d\Gamma$.\vspace{-0.1cm}
     \item ${L(v)}=\int_{\Omega}fv \, d\Omega+\int_{\Gamma_N}hv\, d\Gamma+\int_{\Gamma_R}\frac{r}{\beta}v\, d\Gamma$.
 \end{itemize}
+
+\vspace{-0.15cm}
+
 \end{defin}
 
 \textit{Nota:} El desarrollo detallado para obtener \eqref{eq:form_weak} a partir de la formulación fuerte, la demostración de existencia y unicidad de la solución variacional, así como la prueba de que esta (bajo suficiente regularidad) es también solución del problema fuerte, se detallan en los Anexos \ref{sec:Paso_Soluciones}, \ref{sec:Lax} y \ref{sec:equivform}.
 %nota aqui sobre que las demostraciones de la equivalencia de las soluciones y del paso a la formulación clasica a variacional se encuentran en el anexo x e y
 
+\vspace{-0.25cm}
+
 \section{Estructura del documento}
 
-Iniciaremos introduciendo las bases del diseño CAD, tomando su evolución natural desde Bézier, pasando por
-B-Splines y terminando en NURBS.
-Definiremos cómo se crean las curvas y superficies en las que trabajaremos y sus
-funciones base, al igual que las propiedades de estas que nos serán útiles a lo
-largo del trabajo.
-Explicaremos también el refinamiento de nudos, el cual nos servirá para comprobar que los resultados numéricos
-cumplen las propiedades teóricas.
+\vspace{-0.1cm}
 
-Seguidamente trataremos las bases del IGA, definiremos todos los elementos necesarios para plantear, discretizar,
-ensamblar y finalmente resolver el problema dado.
-
-Estudiaremos las propiedades del sistema resultante, así como las cotas de error de la solución en las normas $L^2$ y
-$H^1$ y su tiempo de computación.
-
-Mostraremos el paso de la teoría al código, explicando los métodos numéricos empleados y los pasos que
-requiere el programa, desde la creación del espacio físico hasta la resolución del problema.
-
-Finalmente comprobaremos, mediante los resultados numéricos obtenidos, que se cumplan las propiedades teóricas del método,
-como las cotas de las soluciones o el tiempo de computación.
+El trabajo se organiza en cuatro bloques principales. En la primera parte
+se introducen los fundamentos matemáticos del diseño CAD, desde las curvas
+de Bézier y las B-splines hasta las NURBS, describiendo tanto la construcción
+geométrica como las funciones base y los procedimientos de inserción de nudos
+Seguidamente, se desarrolla el marco teórico del IGA con el objetivo de formular,
+discretizar y resolver el problema modelo, prestando especial atención a las propiedades
+del sistema algebraico obtenido y a las cotas teóricas de error en las normas $L^2$ y $H^1$.
+A continuación, se aborda la implementación computacional, explicando cómo se traduce la formulación
+teórica al código y qué métodos numéricos intervienen en la resolución. Finalmente,
+se presentan los resultados numéricos, que permiten contrastar las tasas de convergencia esperadas
+y analizar el coste computacional asociado al método.
 %--- FIN DEL CAPÍTULO 1
 
 \clearemptydoublepage
 
 %--- CAPÍTULO 2 DEL TFG
-\chapter{Construcción de estructuras mediante CAD}
+\chapter{Construcción de curvas y superficies mediante CAD}
 
 
 %Se mencionara rapidamente conceptos como el paso de formulación fuerte a formulación débil o variacional, las funciones base polinómicas clásicas con su espacio de funciones y la suavidad que estas aportan, así como su convergencia en L2 y H1.
 
-
+\vspace{-0.75cm}
 
 %En este apartado no sé si explicar tambíen las curvas/superficies de Bezier y/o los B-splines como inicio o si quedaría demasiado largo así. 
 %Se seguira en este apartado el libro de NURBS para explicar como realizar tanto las estructuras simples aportando ejemplos de estas variando su suavidad a lo largo de su parametrizacion, se introducirá también el concepto isoparamétrico y como se refina el mallado mediante inserción de nodos.
 
-Las curvas y superficies creadas mediante \textbf{NURBS} son la base y el estándar del diseño CAD, durante esta sección introduciremos los conceptos necesarios para entender su funcionamiento e implementación siguiendo la progresión natural e histórica de las siguientes curvas: 
+La integración entre el CAD y el análisis numérico requiere comprender cómo se construyen y parametrizan los dominios físicos.
+En la práctica, las curvas y superficies definidas mediante \textbf{NURBS} se han convertido en el estándar de la industria
+para la representación geométrica exacta. No obstante, para entender mejor esta parametrización y las
+propiedades funcionales que el análisis isogeométrico hereda del CAD,
+resulta necesario revisar el desarrollo que hay detrás de estas herramientas. Por este motivo, en esta sección
+se aborda la construcción de geometrías siguiendo la evolución natural e histórica de estos métodos:
+
+\vspace{-0.65cm}
+%Las curvas y superficies creadas mediante \textbf{NURBS} son la base y el estándar del diseño CAD, durante esta sección introduciremos los conceptos necesarios para entender su funcionamiento e implementación siguiendo la progresión natural e histórica de las siguientes curvas: 
 \begin{equation*}
     \text{Bézier} \quad \longrightarrow \quad \text{B-Splines} \quad \longrightarrow \quad \text{NURBS}.
 \end{equation*}
-\section{Bézier}
 
-En los años 60, impulsados por la industria de la automoción francesa y su necesidad de pasar los diseños en arcilla y papel a ordenador. Pierre Bézier y Paul Casteljau desarrollan la manera de crear curvas parametrizadas mediante el uso de \textbf{polinomios de Bernstein} como funciones base y \textbf{puntos de control}.
+\vspace{-0.65cm}
 
-\subsection{Funciones base}
+\section{Curvas de Bézier}
+
+En los años 60, impulsados por la industria de la automoción francesa y su necesidad de pasar los diseños en arcilla y papel a ordenador,
+de forma independiente, Pierre Bézier y Paul de Casteljau formalizaron la construcción de curvas parametrizadas mediante el uso de \textbf{polinomios de Bernstein} como funciones base, combinándolos con una red de \textbf{puntos de control} \cite{farin_curves_2002}.
+
+La ventaja analítica de este método radica en el control geométrico que proporciona;
+el polinomio empleado no interpola simplemente los puntos de control, sino que, de manera intuitiva,
+el polígono formado por estos actúa como un esqueleto que moldea la forma.
+Esto nos garantiza propiedades como la invarianza bajo transformaciones afines.
+
+A lo largo de esta sección se definirá la formulación analítica de las curvas de Bézier, se analizarán las propiedades de los
+polinomios de Bernstein y se tratará el \textbf{algoritmo de De Casteljau}\footnote{Implementación de este en el Anexo \ref{sec:codigo_bezier}.}, con el fin de evitar la inestabilidad numérica
+inherente a la evaluación de polinomios de grado elevado.
+
+\vspace{-0.2cm}
+
+\subsection{Polinomios de Bernstein}
+
+\vspace{-0.1cm}
+
 \begin{defin}
-Los polinomios de Bernstein se definen como: $$B_{i,p}(u) = \binom{p}{i} u^{i} (1-u)^{p-i}.$$
+Los $p+1$ polinomios de Bernstein de grado $p$ se definen como: $$B_{i,p}(u) = \binom{p}{i} u^{i} (1-u)^{p-i}, \quad i \in \{0,1, \dots , p\}.$$
 \end{defin}
 
+\vspace{-0.4cm}
+
 \begin{proposicion}
-    Algunas de las propiedades fundamentales de los \textbf{polinomios de Bernstein} en este contexto son:
+    Algunas de las propiedades fundamentales de los \textbf{polinomios de Bernstein} en este contexto son:\vspace{-0.1cm}
     \begin{itemize}
-        \item \textbf{No negatividad}: $B_{i,p}(u) \geq 0, \forall u \in [0,1]$.
-        \item \textbf{Partición de la unidad}: $\sum_{i=0}^{p} B_{i,p}(u) = 1, \quad \forall u \in [0,1]$.
-        \item \textbf{Interpolación de los extremos}: $B_{0,p}(0) = 1, \quad B_{p,p}(1) = 1$.
+        \item \textbf{No negatividad}: $B_{i,p}(u) \geq 0, \forall u \in [0,1]$.\vspace{-0.1cm}
+        \item \textbf{Partición de la unidad}: $\sum_{i=0}^{p} B_{i,p}(u) = 1, \quad \forall u \in [0,1]$.\vspace{-0.1cm}
+        \item \textbf{Interpolación de los extremos}: $B_{0,p}(0) = 1, \quad B_{p,p}(1) = 1$.\vspace{-0.1cm}
         \item \textbf{Soporte global}: $B_{i,p}(u) > 0, \quad \forall u \in (0,1)$.
     \end{itemize}
     \begin{proof}
-        La demostración se encuentra en el anexo \ref{sec:Bezier_proof}.
+        La demostración se encuentra en el Anexo \ref{sec:Bezier_proof}.
     \end{proof}
 \end{proposicion}
 
-\subsection{Curvas}
 \begin{defin}
-    Las curvas de Bézier de grado $p$ son curvas parametrizadas en el espacio $\R^n$ con $n,p \in \N$, de la forma:
+    Las curvas de Bézier de grado $p$ son curvas parametrizadas que emplean los polinomios de Bernstein
+    como base para la parametrización en el espacio $\R^n$ con $n,p \in \N$, de la forma:
+    
+    \vspace{-0.2cm}
+
     \begin{equation*}
         \mathbf{C}(u) = \sum_{i=0}^{p} B_{i,p}(u) \mathbf{P}_i, \quad u \in [0, 1].
     \end{equation*}
+    
+    \vspace{-0.35cm}
+    
     Donde:
+
+    \vspace{-0.2cm}
+
     \begin{itemize}
         \item $\{\mathbf{P}_0, \mathbf{P}_1, \dots , \mathbf{P}_p\} \footnote{El conjunto de puntos de control puede contener repeticiones, es decir, \textbf{NO} satisfacen necesariamente $\mathbf{P}_i \neq \mathbf{P}_j, \quad \text{si } i \neq j$.}\subset \R^n$, es el conjunto formado por los \textbf{puntos de control}.
     \end{itemize}
 \end{defin}
+
+\vspace{-0.2cm}
+
+\subsection{Propiedades}
+
+\vspace{-0.1cm}
 
 \begin{proposicion}
     Sea $\mathbf{C}(u) = \sum_{i=0}^{p} B_{i,p}(u)\mathbf{P}_i$ una curva de Bézier de grado $p$, con $u \in [0,1]$. Se satisfacen las siguientes propiedades:
@@ -457,10 +624,8 @@ Los polinomios de Bernstein se definen como: $$B_{i,p}(u) = \binom{p}{i} u^{i} (
     \begin{enumerate}
         \item \textbf{Interpolación en los extremos}:
          $\mathbf{C}(0) = \mathbf{P}_0$ y $\mathbf{C}(1) = \mathbf{P}_p$.
-        \item \textbf{Tangencia en los extremos}:
-        \begin{equation*}
-            \mathbf{C}'(0) = p(\mathbf{P}_1 - \mathbf{P}_0), \quad \mathbf{C}'(1) = p(\mathbf{P}_p - \mathbf{P}_{p-1}).
-        \end{equation*}
+        \item \textbf{Tangencia en los extremos}: $\mathbf{C}'(0) = p(\mathbf{P}_1 - \mathbf{P}_0), \quad \mathbf{C}'(1) = p(\mathbf{P}_p - \mathbf{P}_{p-1}).$
+        
         \textit{Implicación:} La continuidad $C^1$ entre dos curvas de Bézier unidas requiere la colinealidad de $\mathbf{P}_{p-1}, \mathbf{P}_p$ (primera curva) y $\mathbf{P}_1, \mathbf{P}_0$ (segunda curva).
         
         \item \textbf{Invarianza afín}:
@@ -470,108 +635,157 @@ Los polinomios de Bernstein se definen como: $$B_{i,p}(u) = \binom{p}{i} u^{i} (
         \end{equation*}
     \end{enumerate}
     \begin{proof}
-        La demostración se encuentra en el anexo \ref{sec:Bezier_proof}.
+        La demostración se encuentra en el Anexo \ref{sec:Bezier_proof}.
     \end{proof}
 \end{proposicion}
 
-Uno de los principales inconvenientes de las curvas de Bézier es su incapacidad de representar cónicas de forma exacta, para ello se introduce el concepto de racionalizarlas.
+Los principales inconvenientes de las curvas de Bézier son la imposibilidad de control local sobre la curva—lo que hace que cualquier
+modificación en los puntos de control la afecte de manera global—
+y su incapacidad de representar cónicas de forma exacta. Para solucionar esto último
+se introduce el concepto de racionalizarlas.
 
-\begin{proposicion} Racionalización de las curvas de Bézier.
+\begin{proposicion}\label{prop:raz_Bezier}
+    Racionalización de las curvas de Bézier.
 
-    Se le asigna un peso $w_i\in \R^+$ a cada punto de control $P_i$, de manera que elevamos cada uno a coordenadas homogéneas en el \textbf{espacio proyectivo $\mathbb{P}^n$
-    \footnote{Sea $\sim$ una relación de equivalencia, donde $\mathbf{X} \sim \mathbf{Y}$ si $\mathbf{Y} = \lambda \mathbf{X}$, con $\lambda \in \mathbb{R} \setminus \{0\}$. El \textbf{espacio proyectivo} se define como $\mathbb{P}^n = \left( \mathbb{R}^{n+1} \setminus \{\mathbf{0}\} \right) / \sim$.}} y proyectando de vuelta al espacio euclídeo $\R^n$.
+    Se asigna un peso $w_i \in \mathbb{R}^+$ a cada punto de control $\mathbf{P}_i$, elevándolo a un
+    espacio extendido $\mathbb{R}^n \times \mathbb{R}$ mediante coordenadas homogéneas de la forma $(w_i \mathbf{P}_i, w_i)$.
+    Posteriormente, se proyecta la curva resultante sobre el hiperplano $w=1$, lo que analíticamente equivale
+    a tomar las coordenadas referentes a $\mathbf{P}_i$ y dividirlas entre la suma ponderada de los pesos activos:    
     
-    
+    \vspace{-0.15cm}
+
     \begin{equation*}
         \mathbf{C}^R(u) = \frac{\sum_{i=0}^{p} B_{i,p}(u) w_i \mathbf{P}_i}{\sum_{i=0}^{p} B_{i,p}(u) w_i}
     \end{equation*}
 \end{proposicion}
+
+Como se ilustra en la siguiente figura \ref{fig:bezier_comparativa}, la introducción
+de pesos altera drásticamente la atracción de los puntos de control.
+
 \begin{figure}[H]
     \centering
     \begin{subfigure}{0.32\textwidth}
         \includesvg[width=\linewidth]{curva_bezier.svg}
         \caption{Curva Bézier no racional.}
+        \label{fig:bezier_comparativa_1}
     \end{subfigure}
     \hfill
     \begin{subfigure}{0.33\textwidth}
         \includesvg[width=\linewidth]{curva_bezier_racional.svg}
-        \caption{Curva racional, $W=(1,10,7,1)^T$.}
+        \caption{Curva racional, $w=(1,10,7,1)$.}
+        \label{fig:bezier_comparativa_2}
     \end{subfigure}
     \hfill
     \begin{subfigure}{0.32\textwidth}
         \includesvg[width=\linewidth]{bernstein_bases_p3.svg}
-        \caption{Funciones base de Bernstein.}
+        \caption{Polinomios de Bernstein.}
+        \label{fig:bezier_comparativa_3}
     \end{subfigure}
-    %\caption{Código para las figuras en el anexo}
+    \caption{Comparativa de las curvas de Bézier junto a sus funciones base asociadas.}
+    \label{fig:bezier_comparativa}   
     % --- NOTA DEL CÓDIGO FUENTE ---
-    \vspace{0.5em} % Pequeño espacio vertical para separar de las subfiguras
+    \vspace{-0.2cm} % Pequeño espacio vertical para separar de las subfiguras
     \begin{flushleft}
-        \footnotesize{\textit{Nota}: El código fuente para la generación de estas figuras se encuentra disponible en el anexo \ref{sec:codigo_bezier}.}
+        \footnotesize{\textit{Nota}: Expliación de las figuras en el Anexo \ref{exp_fig:bezier_comparativa} y código fuente para la generación de estas en el Anexo \ref{sec:codigo_bezier}.}
     \end{flushleft}
     % -------------------------------
 \end{figure}
 
 \section{B-Splines}
-A pesar de que la racionalización de las curvas de Bézier permitió la representación de cónicas exactas, hubo otros problemas intrínsecos a estas que motivaron la transición en los años 70 debido a la necesidad de representar estructuras más complejas en la industria aeroespacial y de automoción,
-se transiciona entonces a la implementación de funciones base \textbf{B-spline} que permitían, debido a tener un soporte local y un número de elementos no ligado obligatoriamente al grado polinomial de estas, superar las limitaciones de las funciones base de Bernstein.
+%A pesar de que la racionalización de las curvas de Bézier permitió la representación de cónicas exactas, el aporte global de los puntos de control y su necesidad de un orden polinomial
+%ligado al número de puntos de control motivaron la transición en los años 70 debido a la necesidad de representar estructuras más complejas en la industria aeroespacial y de automoción,
+%se transiciona entonces a la implementación de funciones base \textbf{B-spline} que permitían, debido a tener un soporte local y un número de elementos no ligado obligatoriamente al grado polinomial de estas, superar las limitaciones de las funciones base de Bernstein.
+
+Aunque la racionalización permitió representar con exactitud curvas cónicas, seguían existiendo las limitaciones relacionadas con el control
+global de la geometría y con la dependencia entre el grado del polinomio y el número de puntos de control. En respuesta a estas limitaciones,
+y motivada en gran medida por las necesidades de la industria aeroespacial y automotriz durante la década de 1970, la representación geométrica
+comenzó a transicionar hacia el uso de las curvas \textbf{B-Splines} \cite{piegl_nurbs_2012}.
+
+Estas curvas se construyen a partir de funciones definidas a trozos mediante la \textbf{fórmula de Cox-de Boor} y
+permiten superar varias de las restricciones asociadas a los polinomios de Bernstein.
+En particular, introducen la propiedad de \textbf{soporte local}, según la cual la modificación de un punto de
+control solo afecta a una parte local y limitada de la curva.
 
 %Debido a las limitaciones que tienen las curvas de Bézier, como pueden ser el requerimiento de un orden polinomial $n-1$ para $n$ puntos de control, aparece en este contexto los \textbf{B-Splines}.
-\subsection{Funciones base}
+\subsection{Funciones base B-Spline}
 
 \begin{defin}
-    El \textbf{Vector de nudos} se define como $$U = \{u_0, u_1, \ldots, u_m\},$$ se cumple que $u_i \le u_{i+1}, \quad i = 0, \ldots, m-1$, el número de nudos $m+1$ está relacionado con $p$ y $n$ tal que cumple: $m=n+p+1$.
-
-    A lo largo del trabajo nos enfocaremos en los vectores de nudos \textbf{abiertos}, es decir, aquellos cuyos extremos se repiten $p+1$ veces, $u_0=u_1=\dots=u_{p}$, $u_m=u_{m-1}=\dots=u_{m-p+1}$.
+    Un \textbf{Vector de nudos} es una succesión no decreciente de números reales $$U = \{u_0, u_1, \ldots, u_m\},$$ el número de nudos ($m+1$) está relacionado con $p$ y $n$ tal que cumple: $m=n+p+1$.
 \end{defin}
 
 \begin{defin}
-    Las \textbf{Funciones base B-Spline, $N_{i,p}(u)$}: se definen recursivamente mediante el \textbf{algoritmo de Cox-de Boor}:
+    Al intervalo entre dos nudos consecutivos se le denota como \textbf{knot span}.
+\end{defin}
+
+Con el fin de realizar una interpolación de los extremos del dominio, capturando así la frontera física del
+problema y facilitando la imposición de condiciones de contorno, nos
+enfocaremos en los vectores de nudos \textbf{abiertos}, es decir, aquellos cuyos extremos
+se repiten $p+1$ veces, $u_0=u_1=\dots=u_{p}$, $u_m=u_{m-1}=\dots=u_{m-p+1}$.
+
+
+\begin{defin}
+    Las \textbf{Funciones base B-Spline, $N_{i,p}(u)$}: se definen recursivamente para grados polinomiales $p \geq 1$:
                 \begin{itemize}
                     \item Caso base ($p=0$): 
                     \begin{equation*}
                         N_{i,0}(u) = \begin{cases} 1 & \text{si } u_i \le u < u_{i+1}, \\ 0 & \text{en caso contrario.} \end{cases}
                     \end{equation*} 
-                    \item Caso genérico ($p\geq 1$):
+                    \item Caso genérico, fórmula de \textbf{Cox-de Boor} ($p\geq 1$):
                     \begin{equation*}
-                        N_{i,p}(u) = \frac{u - u_i}{u_{i+p} - u_i} N_{i,p-1}(u) + \frac{u_{i+p+1} - u}{u_{i+p+1} - u_{i+1}} N_{i+1,p-1}(u) \footnote{Para el caso en el que los coeficientes toman valor $\frac{0}{0}$ se les asignará como valor 1.}.
+                        N_{i,p}(u) = \frac{u - u_i}{u_{i+p} - u_i} N_{i,p-1}(u) + \frac{u_{i+p+1} - u}{u_{i+p+1} - u_{i+1}} N_{i+1,p-1}(u) \footnote{Para el caso en el que los coeficientes toman valor $\frac{0}{0}$ se les asignará como valor 0.}.
                     \end{equation*}
                 \end{itemize} 
     
 \end{defin}
 
 \begin{proposicion}
+    La derivada de las funciones base B-Splines pueden calcularse mediante esta fórmula,
+    $$N'_{i,p}(u) = \frac{p}{u_{i+p} - u_i} N_{i,p-1}(u) - \frac{p}{u_{i+p+1} - u_{i+1}} N_{i+1,p-1}(u).$$
+\end{proposicion}
+
+\vspace{-0.5cm}
+
+
+\begin{proposicion}
     Algunas de las propiedades importantes de las funciones base B-Splines son:
     \label{prop:bspline_basis_fundamentales}
     \begin{enumerate}
-        \item \textbf{Soporte Local}: Cada función base $N_{i,p}(u)$ es no nula solo en un número limitado de intervalos de nudo, concretamente en $[u_i, u_{i+p+1})$. En consecuencia la curva adquiere la propiedad de \textbf{control local}: mover un punto de control $\mathbf{P}_i$ solo altera la forma de la curva en una región limitada.
+        \item \textbf{Soporte Local}: Cada función base $N_{i,p}(u)$ tiene soporte en un número limitado de intervalos de nudo, concretamente en $[u_i, u_{i+p+1})$. En consecuencia la curva adquiere la propiedad de \textbf{control local}: mover un punto de control $\mathbf{P}_i$ solo altera la forma de la curva en una región limitada.
         
         \item \textbf{No Negatividad}: El valor de las funciones base B-Spline es siempre no negativo en todo el dominio paramétrico, es decir, $\forall u \in [u_0, u_m]$, $N_{i,p}(u) \geq 0$.
-
 
         \item \textbf{Número de Bases Activas}:  Para cualquier intervalo de nudos $[u_i, u_{i+1})$, las únicas funciones base $N_{j,p}(u)$ cuyo soporte contiene dicho intervalo son aquellas con el índice:
         \begin{equation*}
             j \in \{i-p, i-p+1, \ldots, i\}
         \end{equation*}
         
-        Por tanto el número de funciones base no nulas en el intervalo es a lo sumo $p+1$.
-
-        El número exacto de funciones base no nulas decrece con la multiplicidad $k$ de $u_i$, reduciéndose a $\mathbf{p+1-k}$.
+        Por tanto el número de funciones base no nulas en el intervalo es $p+1$.
 
         \item \textbf{Partición de la Unidad}: $\forall u\in [u_0, u_m]$, se cumple,
         $\sum_{i=0}^{n} N_{i,p}(u) = 1$.
     \end{enumerate}
     \begin{proof}
-        La demostración puede encontrarse en el anexo \ref{sec:B-Splines_proof}.
+        La demostración puede encontrarse en el Anexo \ref{sec:B-Splines_proof}.
     \end{proof}
 \end{proposicion}
+
+\vspace{-0.5cm}
+
 \subsection{Curvas}
 
+Con estas definiciones podemos ahora definir la curva generada por los B-Splines:
+    
+\vspace{-0.1cm}
+
 \begin{defin}
-    Con estas definiciones podemos ahora definir la curva generada por los B-Splines:
+    Una curva B-Spline se define como    
+    \vspace{-0.3cm}
     \begin{equation*}
         C(u) = \sum_{i=0}^{n} N_{i,p}(u) \cdot \mathbf{P}_i.
     \end{equation*}
 \end{defin}
+
+\vspace{-0.5cm}
 
 \begin{proposicion}
     \label{prop:bspline_curvas_fundamentales}
@@ -582,177 +796,271 @@ se transiciona entonces a la implementación de funciones base \textbf{B-spline}
         \item \textbf{Continuidad Controlable}: La continuidad de la curva en cualquier unión (nudo) se controla localmente mediante la multiplicidad $k$\footnote{La multiplicidad $k$ de un nudo $u_i$ es el número de veces que el valor $u_i$ aparece en el vector de nudos $U$, debe cumplirse que $k\leq p$ en los nudos interiores.} del nudo, sin depender de la manipulación compleja de los puntos de control. La continuidad es $C^r$, donde $r = p - k$.
     \end{enumerate}
     \begin{proof}
-        La demostración puede encontrarse en el anexo \ref{sec:B-Splines_proof}.
+        La demostración puede encontrarse en el Anexo \ref{sec:B-Splines_proof}.
     \end{proof}
 \end{proposicion}
+
+\vspace{-0.5cm}
+
+\subsection{Superficies}
+\label{subsec:Sup_B-Splines}
+
+Para la generación de superficies, es necesaria la implementación del \textbf{producto tensorial}, el cual constituye
+el estándar en los sistemas CAD. Para llevar a cabo esta extensión bidimensional, es necesario redefinir y generalizar
+los elementos unidimensionales que ya habíamos establecido para las curvas.
+
+\vspace{-0.2cm}
+
+    \begin{itemize}
+        \item \textbf{Grados polinomiales}: grado $p$ para la dirección paramétrica $u$, y grado $q$ para la dirección $v$.
+        \item \textbf{Vectores de nudos}: $U = \{u_0, \dots, u_r\}$ para la dirección $u$ y $V = \{v_0, \dots, v_s\}$ para la dirección $v$.
+        \item \textbf{Red de control}: matriz formada por $(n+1) \times (m+1)$ puntos de control $\mathbf{P}_{i,j}$.
+        \item \textbf{Funciones base}: $\mathbf{B}_{i,j}(u, v) = N_{i,p}(u) \cdot M_{j,q}(v),$ donde  $N_{i,p}(u)$ son las funciones 
+        base B-Spline en la dirección de $u$ y $M_{j,q}(v)$ son las funciones base en la dirección de $v$.
+    \end{itemize}
+
+
+Mediante este producto definimos la superficie generada por \textbf{B-Splines} usando la siguiente fórmula:
+
+\vspace{-0.2cm}
+
+\begin{equation*}
+    \mathbf{S}(u, v) = \sum_{i=0}^{n} \sum_{j=0}^{m} N_{i,p}(u) M_{j,q}(v) \mathbf{P}_{i,j}.
+\end{equation*}
+
+\vspace{-0.3cm}
+
 \section{NURBS}
 %Introducimos finalmente la extensión racional de los B-Splines, los \textbf{NURBS}, quedando la curva generada por estos definida de la siguiente manera,
-La transición de \textbf{B-splines} a \textbf{NURBS} no fue instantánea, se tuvo que esperar hasta \textbf{1979}, donde Boeing sufría las consecuencias de no poder representar cónicas exactas mediante B-splines, teniendo así su software
-segmentado, usando un programa basado en B-splines para el fuselaje y otro basado en las \textbf{cónicas de Rho} para las partes cónicas, siendo incapaces de conectarlos sin perder precisión.
+La transición de \textbf{B-splines} a \textbf{NURBS} no fue instantánea; se tuvo que esperar hasta \textbf{1979}, cuando Boeing sufría las consecuencias de no poder representar cónicas exactas mediante B-splines, teniendo así su software
+segmentado, usando un programa basado en B-Splines para el fuselaje y otro basado en las \textbf{cónicas de Rho} para las partes cónicas, siendo incapaces de conectarlos sin perder precisión \cite{brechner_developing_2024, farin_history_2002}.
 
-En este caos Boeing inicia el proyecto \textbf{TIGER}, reescribiendo así todo su sistema CAD interno basándose en la tesis de \textbf{Verspille}, proponiendo así en \textbf{1981} a la IGES que las \textbf{NURBS} sean el estándar universal, transicionando así la industria de manera natural entre \textbf{1983} y \textbf{1990}.
+En este caos, Boeing inició el proyecto \textbf{TIGER} \cite{brechner_developing_2024}, reescribiendo todo su sistema CAD interno basándose en la tesis de \textbf{Versprille} \cite{versprille_computer_1975} y propuso en \textbf{1981} a la IGES que las \textbf{NURBS} fueran el estándar universal, lo que llevó a la industria a transicionar de manera natural entre \textbf{1983} y \textbf{1990}.
+
+\vspace{-0.2cm}
 
 \subsection{Funciones base}
+
+\vspace{-0.1cm}
+
 \begin{defin}
     Las \textbf{Funciones base NURBS} se definen como:
+
+    \vspace{-0.15cm}
+
     \begin{equation}
         \label{eq:NURBS_Curve_Basis}
         R_i^p(u)=\frac{N_{i,p}(u) w_i}{\sum_{j=0}^{n} N_{j,p}(u) w_j}.
     \end{equation}
+
+    \vspace{-0.15cm}
 \end{defin}
 
+
+\textit{Nota:} Con el fin de preservar todas las propiedades de las \textbf{funciones base B-spline} dadas en la proposición \ref{prop:bspline_basis_fundamentales}, nos restringiremos al caso $w_i>0, \forall i$.
+
+\vspace{-0.1cm}
+
 \begin{proposicion}
-    Con el fin de preservar todas las propiedades de las \textbf{funciones base B-spline} dadas en \ref{prop:bspline_basis_fundamentales}, nos restringiremos al caso $w_i>0, \forall i$.
+    La derivada de las funciones base NURBS pueden calcularse como
+    
+    \vspace{-0.15cm}
+    
+    $$(R_i^p)'(u) = \frac{w_i N'_{i,p}(u) - R_i^p(u) \sum_{j=0}^{n} N'_{j,p}(u) w_j}{\sum_{j=0}^{n} N_{j,p}(u) w_j}.$$
+    
+    \vspace{-0.25cm}
+
+    \begin{proof}
+        Demostración en el Anexo \ref{sec:Derv_basis_NURBS}.
+    \end{proof}
 \end{proposicion}
 
+\vspace{-0.8cm}
+
 \subsection{Curvas}
+
+\vspace{-0.2cm}
+
+Con estas nuevas funciones base podemos, ahora definir las curvas \textbf{NURBS} de manera equivalente a las curvas \textbf{B-Spline}.
+
+\vspace{-0.15cm}
+
 \begin{defin}
-    Podemos ahora definir las curvas generadas por NURBS como:
+    Una curva NURBS se define como
+
+    \vspace{-0.25cm}
 
     \begin{equation}
         \label{eq:NURBS_Curve}
         \mathbf{C}(u) = \sum_{i=0}^{n} R_i^p(u) \cdot \mathbf{P}_i = \frac{\sum_{i=0}^{n} N_{i,p}(u) w_i \mathbf{P}_i}{\sum_{j=0}^{n} N_{j,p}(u) w_j}.
     \end{equation}
 
+    \vspace{-0.4cm}
+
 \end{defin}
 
+\vspace{-0.2cm}
+
 \begin{proposicion}
-    Debido a la restricción impuesta anteriormente ($w_i>0, \forall i$), las \textbf{curvas NURBS} también mantienen las propiedades de las \textbf{curvas B-spline} dadas en \ref{prop:bspline_curvas_fundamentales}.
+    La derivada de la curva NURBS viene dada por
+
+    \vspace{-0.15cm}
+
+    $$\mathbf{C}'(u) = \frac{\sum_{i=0}^{n} N'_{i,p}(u) w_i \left( \mathbf{P}_i - \mathbf{C}(u) \right)}{\sum_{i=0}^{n} N_{i,p}(u) w_i}.$$
+    
+    \vspace{-0.35cm}
+
+    \begin{proof}
+        La demostración puede encontrase en el Anexo \ref{sec:Derv_Curv_NURBS}.
+    \end{proof}
+\end{proposicion}
+
+\vspace{-0.25cm}
+
+\begin{proposicion}
+    Debido a la restricción impuesta anteriormente ($w_i>0, \forall i$), las \textbf{curvas NURBS} también mantienen las propiedades de las \textbf{curvas B-spline} dadas en la proposición \ref{prop:bspline_curvas_fundamentales}.
 \end{proposicion}
 %Mantiene todas las propiedades de los B-Splines definidas en \ref{prop:bspline_basis_fundamentales}.
+
+\vspace{-0.1cm}
+
+A continuación se da un ejemplo de curva NURBS en la figura \ref{fig:NURBS_curva}.
+
+\vspace{-0.2cm}
+
 
 \begin{figure}[H]
     \centering
     \begin{subfigure}{0.32\textwidth}
         \includesvg[width=\linewidth]{CurvaNurbs_3D_Plot.svg}
         \caption{Curva NURBS.}
+        \label{fig:NURBS_curva_1}   
     \end{subfigure}
     \hfill
     \begin{subfigure}{0.33\textwidth}
         \includesvg[width=\linewidth]{funciones_base_NURBS.svg}
         \caption{funciones base $R_{i,p}$.}
+        \label{fig:NURBS_curva_2}   
     \end{subfigure}
     \hfill
     \begin{subfigure}{0.32\textwidth}
         \includesvg[width=\linewidth]{Ders_funciones_base_NURBS.svg}
         \caption{Derivadas de  $R_{i,p}$.}
+        \label{fig:NURBS_curva_3}   
     \end{subfigure}
-    %\caption{Código para las figuras en el anexo}
+
+    \vspace{-0.15cm}
+
+
+    \caption{Curva NURBS con sus funciones base y las derivadas de estas.}
+    \label{fig:NURBS_curva}    
     % --- NOTA DEL CÓDIGO FUENTE ---
-    \vspace{0.5em} % Pequeño espacio vertical para separar de las subfiguras
+    \vspace{-0.2cm} % Pequeño espacio vertical para separar de las subfiguras
     \begin{flushleft}
-        \footnotesize{\textit{Nota}: El código fuente para la generación de estas figuras se encuentra disponible en el anexo \ref{sec:codigo_NURBS1}.}
+        \footnotesize{\textit{Nota}: Explicación de las figuras en el Anexo \ref{exp_fig:NURBS_curva} y código fuente de estas en el Anexo \ref{sec:codigo_bezier}.}
     \end{flushleft}
     % -------------------------------
 \end{figure}
 
-\section{Creación de superficies (producto tensorial)}
-El producto tensorial es el estándar de CAD para la creación de superficies, se define como:
-\begin{equation*}
-    \mathbf{B}_{i,j}(u, v) = N_{i,p}(u) \cdot M_{j,q}(v).
-\end{equation*}
-Donde  $N_{i,p}(u)$ son las funciones base en la dirección de $u$ y $M_{j,q}(v)$ son las funciones base en la dirección de $v$.
+\vspace{-1.4cm}
 
-Mediante este producto definimos la superficie generada por \textbf{B-Splines} mediante la fórmula:
-\begin{equation*}
-    \mathbf{S}(u, v) = \sum_{i=0}^{n} \sum_{j=0}^{m} N_{i,p}(u) M_{j,q}(v) \mathbf{P}_{i,j}.
-\end{equation*}
-Redefiniendo la estructura en la que se encuentran los puntos de control, pasando a formar ahora una matriz.
+\subsection{Superficies}
 
-Podemos ahora racionalizar estas curvas para obtener superficies generadas mediante \textbf{NURBS}, para ello utilizamos una matriz de pesos $w_{i,j}$ y la fórmula:
-\begin{equation}
-    \label{eq:NURBS_Surf}
-    \mathbf{S}(u, v) = \frac{\sum_{i=0}^{n} \sum_{j=0}^{m} N_{i,p}(u) M_{j,q}(v) \mathbf{w}_{i,j} \mathbf{P}_{i,j}}{\sum_{i=0}^{n} \sum_{j=0}^{m} N_{i,p}(u) M_{j,q}(v) \mathbf{w}_{i,j}}= \sum_{i=0}^{n} \sum_{j=0}^{m} R_{i,j}^{p,q}(u, v) \mathbf{P}_{i,j}.
-\end{equation}
+Partiendo de los elementos definidos en la subsección \ref{subsec:Sup_B-Splines}, definimos
+las funciones base de las superficies NURBS.
 
-Donde 
-\begin{equation} 
-    \label{eq:NURBS_Surf_Basis}
-    R_{i,j}^{p,q}(u, v) = \frac{N_{i,p}(u) M_{j,q}(v) w_{i,j}}{\sum_{k=0}^{n} \sum_{l=0}^{m} N_{k,p}(u) M_{l,q}(v) w_{k,l}} 
-\end{equation}
+\begin{defin}
+    Las \textbf{funciones base NURBS} para superficies se definen mediante
+    \begin{equation} 
+        \label{eq:NURBS_Surf_Basis}
+        R_{i,j}^{p,q}(u, v) = \frac{N_{i,p}(u) M_{j,q}(v) w_{i,j}}{\sum_{k=0}^{n} \sum_{l=0}^{m} N_{k,p}(u) M_{l,q}(v) w_{k,l}} 
+    \end{equation}
+\end{defin}
+
+Utilizando estas podemos ahora definir las \textbf{superficies NURBS}.
+
+\begin{defin}
+    Las superficies NURBS se definen como
+    \begin{equation}
+        \label{eq:NURBS_Surf}
+        \mathbf{S}(u, v) = \sum_{i=0}^{n} \sum_{j=0}^{m} R_{i,j}^{p,q}(u, v) \mathbf{P}_{i,j}= \frac{\sum_{i=0}^{n} \sum_{j=0}^{m} N_{i,p}(u) M_{j,q}(v) \mathbf{w}_{i,j} \mathbf{P}_{i,j}}{\sum_{i=0}^{n} \sum_{j=0}^{m} N_{i,p}(u) M_{j,q}(v) \mathbf{w}_{i,j}}.
+    \end{equation}
+\end{defin}
 
 \begin{proposicion}
     \label{prop:surf_tensor}
     Las superficies generadas mediante el producto tensorial mantienen la suavidad de las curvas que la generan en las direcciones de estas.
     \begin{proof}
-        Tomaremos una dirección arbitraria, $v$ en este caso, y fijaremos $u=u_0$, la demostración es análoga para la dirección $u$.
-        \begin{equation*}
-            \mathbf{S}(u_0, v) = \frac{\sum_{i=0}^{n} \sum_{j=0}^{m} N_{i,p}(u_0) M_{j,q}(v) \mathbf{w}_{i,j} \mathbf{P}_{i,j}}{\sum_{i=0}^{n} \sum_{j=0}^{m} N_{i,p}(u_0) M_{j,q}(v) \mathbf{w}_{i,j}}.
-        \end{equation*}
-        Ahora reagrupamos los valores que dependen de $v$ y los que no:
-        \begin{equation*}
-            \mathbf{S}(u_0, v) = \frac{\sum_{j=0}^{m} M_{j,q}(v) \left( \sum_{i=0}^{n} N_{i,p}(u_0) \mathbf{w}_{i,j} \mathbf{P}_{i,j} \right)}{\sum_{j=0}^{m} M_{j,q}(v) \left( \sum_{i=0}^{n} N_{i,p}(u_0) \mathbf{w}_{i,j} \right)}.
-        \end{equation*}
-        Definimos ahora los siguientes elementos:
-        \begin{equation*}
-            \mathbf{w}^*_j=\sum_{i=0}^n  N_{i,p}(u_0) \mathbf{w}_{i,j}, \quad  \mathbf{Q}_j=\frac{\sum_{i=0}^n N_{i,p}(u_0) \mathbf{P}_{i,j} \mathbf{w}_{i,j}}{\mathbf{w}^*_j}.
-        \end{equation*}
-        Obteniendo al final una definición 
-        \begin{equation*}
-            C(v)=S(u_0,v)=\frac{\sum_{j=0}^{m} M_{j,q}(v) \mathbf{w}^*_{j} \mathbf{Q}_j }{\sum_{j=0}^{m} M_{j,q}(v) \mathbf{w}^*_{j} }.
-        \end{equation*}
-        Obteniendo así la curva de NURBS asociada a la dirección $v$ en el punto $u_0$.
+        La demostración puede encontrarse en el Anexo \ref{dem_prop:surf_tensor}
     \end{proof}
 \end{proposicion}
+
+A continuación se muestran ejemplos de superficies NURBS en la figura \ref{fig:NURBS_surf}.
 
 \begin{figure}[H]
     \centering
     \begin{subfigure}{0.32\textwidth}
         \includesvg[width=\linewidth]{Superficie_NURBS_Ej1.svg}
-        \caption{Superficie NURBS ejemplo 1.}
+        \caption{Superficie NURBS ejemplo 1.}\label{fig:NURBS_surf_1}
     \end{subfigure}
     \hfill
     \begin{subfigure}{0.33\textwidth}
+        \scriptsize
         \includesvg[width=\linewidth]{Superficie_NURBS_Ej2.svg}
-        \caption{Superficie NURBS ejemplo 2.}
+        \caption{Superficie NURBS ejemplo 2.}\label{fig:NURBS_surf_2}
     \end{subfigure}
     \hfill
     \begin{subfigure}{0.32\textwidth}
+        \scriptsize
         \includesvg[width=\linewidth]{Superficie_NURBS_Ej2_Refined.svg}
-        \caption{Ejemplo 2 refinada.}
+        \caption{Ejemplo 2 refinada.}\label{fig:NURBS_surf_3}
     \end{subfigure}
     % --- NOTA DEL CÓDIGO FUENTE ---
-    \vspace{0.5em} 
+    \caption{Ejemplos de distintas superficies NURBS}\label{fig:NURBS_surf}
+    \vspace{-0.2cm} 
     \begin{flushleft}
-        \footnotesize{\textit{Nota}: El código fuente para la generación de estas figuras se encuentra disponible en el anexo \ref{sec:codigo_NURBS2}.}
+        \footnotesize{\textit{Nota}: La explicación de las figuras se encuentra en el Anexo \ref{exp_fig:NURBS_surf} y el código fuente de estas en el Anexo \ref{sec:codigo_NURBS2}.}
     \end{flushleft}
     % -------------------------------
 \end{figure}
 
-\section{Refinamiento de nudos (h-refinement)}
-En las figuras anteriores podemos observar un refinamiento de la superficie del ejemplo 2, este procedimiento se basa en insertar nuevos valores en un vector de nudos, introduciendo nuevos puntos de control y pesos para mantener la misma figura geométrica.
+\vspace{-1cm}
 
-El refinamiento de nudos tiene como finalidad aumentar el control local donde se añade el nudo, obteniendo un mayor número de funciones base donde se inserta y decreciendo el tamaño de los elementos sobre los que se trabaja. 
+\section{Inserción de nudos}
+En las figuras anteriores (\ref{fig:NURBS_surf_2} y \ref{fig:NURBS_surf_3}) podemos observar un refinamiento de la superficie. Este procedimiento se basa en insertar nuevos valores en un vector de nudos, introduciendo nuevos puntos de control y pesos para mantener la misma figura geométrica.
 
-\begin{defin}
-        Definiremos los elementos que necesitamos para aplicar el refinamiento:
-        \begin{itemize}
-            \item \textbf{Puntos de control ponderados}, $\mathbf{P}_i^w$: Sea $\mathbf{P}_i$ un punto de control y $\mathbf{w}_i$ su peso asociado, definimos $\mathbf{P}_i^w$ = ($\mathbf{w}_i\mathbf{P}_i, \mathbf{w}_i)^T$.
-            \item \textbf{Nuevo nudo}, $\xi$: aunque ya tenemos el concepto de nudo definido es necesario declarar en que intervalo se encuentra, tomaremos que $\xi \in [u_k, u_{k+1})$.
-            \item \textbf{Nuevo vector de nudos}, $U^*=\{u_0,u_1, \dots , u_k, \xi, u_{k+1}, \dots, u_m\}$.
-            \item \textbf{Nuevos puntos de control ponderados}, $\mathbf{Q}_i^w$: estarán definidos mediante $\mathbf{Q}_{i}^{w} = \alpha_i \mathbf{P}_{i}^{w} + (1 - \alpha_i) \mathbf{P}_{i-1}^{w}$, donde $\alpha_i$ se define mediante la fórmula:
+La inserción de nudos tiene como finalidad aumentar el control local de las estructuras definidas mediante NURBS, obteniendo un mayor número de funciones base donde se inserta y aumentando por ende el número de elementos sobre los que se trabaja.
+En consecuencia, el sistema adquiere un mayor número de grados de libertad en esta sección local. 
+
+A continuación, redefiniremos los elementos necesarios para la inserción:
+    \begin{itemize}
+        \item \textbf{Puntos de control ponderados}, $\mathbf{P}_i^w$: Retomando la elevación previa al espacio extendido $\mathbb{R}^n \times \mathbb{R}$ de la proposición \ref{prop:raz_Bezier},Sea $\mathbf{P}_i$ un punto de control y $w_i$ su peso asociado, definimos $\mathbf{P}_i^w = (w_i\mathbf{P}_i, w_i)^T$.
+        \item \textbf{Nuevo nudo}, $\xi$: tomando valor en el intervalo de longitud no nula $[u_k, u_{k+1})$, es decir $u_k < \xi < u_{k+1}$.
+        \item \textbf{Nuevo vector de nudos}, $U^*=\{u_0,u_1, \dots , u_k, \xi, u_{k+1}, \dots, u_m\}$.
+        \item \textbf{Nuevos puntos de control ponderados}, $\mathbf{Q}_i^w$: estarán definidos mediante $\mathbf{Q}_{i}^{w} = \alpha_i \mathbf{P}_{i}^{w} + (1 - \alpha_i) \mathbf{P}_{i-1}^{w}$, donde $\alpha_i$ se define mediante la fórmula:
                 $$\alpha_i = \begin{cases} 1 & \text{si } i \le k-p, \\ \frac{\xi - u_i}{u_{i+p} - u_i} & \text{si } k-p+1 \le i \le k, \\ 0 & \text{si } i > k. \end{cases}$$
-            \item \textbf{Nuevas funciones base}, $N_{i,p}^*(u)$, asociadas al nuevo vector de nudos $U^*$, que cumplen la igualdad: $N_{i,p}(u) = \alpha_{i} N_{i,p}^*(u) + (1 - \alpha_{i+1}) N_{i+1,p}^*(u)$\footnote{Demostración en el anexo \ref{sec:dem_new_bases}}.
-        \end{itemize}
-\end{defin}
+        \textit{Nota}: El algoritmo solo modifica los $p$ puntos de control $\mathbf{P}_i$ tal que $k-p+1 \le i \le k$.
+        \item \textbf{Nuevas funciones base}, $N_{i,p}^*(u)$, asociadas al nuevo vector de nudos $U^*$, que cumplen la igualdad: $N_{i,p}(u) = \alpha_{i} N_{i,p}^*(u) + (1 - \alpha_{i+1}) N_{i+1,p}^*(u)$\footnote{Demostración en el Anexo \ref{sec:dem_new_bases}}.
+    \end{itemize}
+
 \begin{proposicion}
     La curva original ponderada es equivalente a la curva ponderada refinada,
     \begin{equation*}
         \mathbf{C}^{w}(u) = \sum_{i=0}^{m} N_{i,p}(u) \mathbf{P}_{i}^{w}=  \sum_{j=0}^{m+1} N_{j,p}^*(u) \mathbf{Q}_{j}^{w} 
     \end{equation*}
     \begin{proof}
-        La demostración puede encontrarse en el anexo \ref{sec:refinement_proof}.
+        La demostración puede encontrarse en el Anexo \ref{sec:refinement_proof}.
     \end{proof}
 \end{proposicion}
 
 La inserción de nudos en superficies se realiza de manera direccional, introduciendo únicamente elementos a uno de los dos vectores de nudos,
- modificando así una de las dos curvas que generan la superficie, pero al ser invariante bajo la inserción de nudos esta, la superficie generada final es idéntica a la original,
-  los pesos y puntos de control en forma matricial son tratados como en la demostración de la proposición \ref{prop:surf_tensor}, trabajando con ellos de forma vectorial 
-  ,relacionándolos con el vector de nudos que recibe la inserción.
+modificando así una de las dos curvas que generan la superficie, pero al ser invariante bajo la inserción de nudos esta, la superficie generada final es idéntica a la original.
+Los pesos y puntos de control en forma matricial son tratados como en la demostración de la proposición \ref{prop:surf_tensor}, trabajando con ellos de forma vectorial
+, relacionándolos con el vector de nudos que recibe la inserción.
 
 \subsection{Implementación de la inserción de nudos}
 
-Durante el trabajo se utilizarán las siguientes funciones para la inserción de nudos en las estructuras correspondientes:
+Se han implementado los siguientes algoritmos para la inserción de nudos:
 
 \paragraph{Caso curvas (1D):}
 La función \texttt{CurveKnotsIns} calcula los nuevos puntos de control tras insertar un nudo $u$ con multiplicidad $r$.
@@ -793,7 +1101,7 @@ La correspondencia matemática de los parámetros es:
     \item \texttt{index}: Corresponde al índice del intervalo nodal o \textit{span} donde se encuentra el nudo a insertar.
 \end{itemize}
 
-El código fuente de estas implementaciones puede encontrarse en el anexo \ref{sec:codigo_fund}.
+El código fuente de estas implementaciones puede encontrarse en el Anexo \ref{sec:codigo_fund}.
 %--- FIN DEL CAPÍTULO 2
 
 \clearemptydoublepage
@@ -930,11 +1238,11 @@ Las siguientes propiedades se cumplen para problemas en un abierto $\Omega \subs
     \begin{equation*} 
         \lim_{N_{el} \to \infty} \frac{(2p+1)^n}{N_B} = 0.
     \end{equation*}
-    \item \textbf{Simetría:} los elementos $\mathbf{K}_{(i,j)}=a(\phi_j,\phi_i)=a(\phi_i,\phi_j)=\mathbf{K}_{(j,i)}$, esta propiedad ocurre si y solo la forma bilineal es simétrica, que depende de que el operador diferencial del problema sea autoadjunto.
+    \item \textbf{Simetría:} los elementos $\mathbf{K}_{(i,j)}=a(\phi_j,\phi_i)=a(\phi_i,\phi_j)=\mathbf{K}_{(j,i)}$, esta propiedad ocurre si y solo si la forma bilineal es simétrica, que depende de que el operador diferencial del problema sea autoadjunto.
     \item \textbf{Condicionamiento:} $\kappa(\mathbf{K}) \approx O(h^{-2})$
 \end{enumerate}
 \begin{proof}
-    La demostración puede encontrarse en el anexo \ref{prop_sistema}.
+    La demostración puede encontrarse en el Anexo \ref{prop_sistema}.
 \end{proof}
 \end{proposicion}
 
@@ -1012,7 +1320,7 @@ Al ser en el caso 1D, solo es posible aplicar condiciones de contorno a dos punt
 
 
 \begin{flushleft}
-    \footnotesize{\textit{Nota}: La explicación de por qué se realizan así las imposiciones de contorno puede consultarse en el anexo \ref{cond:contorno}.}
+    \footnotesize{\textit{Nota}: La explicación de por qué se realizan así las imposiciones de contorno puede consultarse en el Anexo \ref{cond:contorno}.}
 \end{flushleft}
 
 \subsubsection{Tipo Dirichlet}
@@ -1073,17 +1381,27 @@ Teniendo así la integral que le corresponde al elemento:
     \mathbf{K}^e_{(I(i_1,j_1),J(i_2,j_2))} =\int_{v_k}^{v_{k+1}}\int_{u_n}^{u_{n+1}} \left(\hat{\nabla}\hat{R}_{(i_2 + n - p - 1, j_2 + k - q - 1)}^{(p,q)}\right)^T \left( \mathbf{J}^{-1} \mathbf{J}^{-T} \right) \left(\hat{\nabla}\hat{R}_{(i_1 + n - p - 1, , j_1 + k - q - 1)}^{(p,q)}\right) |\det \mathbf{J}| \, d\xi d\eta.
 \end{equation*}
 }
+
 Definimos de la misma manera ahora la \textbf{matriz local extendida} $\tilde{\mathbf{K}}^e$,
+
+\vspace{-0.35cm}
 
 \begin{equation*}
     \tilde{\mathbf{K}}^e_{(I(i_1+n-p-1,j_1+k-q-1),J(i_2+n-p-1, j_2+k-q-1))}=\mathbf{K}^e_{(I(i_1,j_1),J(i_2,j_2))}.
 \end{equation*}
 
+\vspace{-0.05cm}
+
 Formando así la \textbf{matriz de rigidez} $\mathbf{K}$ mediante la suma de estas matrices:
+
+\vspace{-0.35cm}
 
 \begin{equation*}
     \mathbf{K} = \sum_{e=1}^{N_{el}} \tilde{\mathbf{K}}^e.
 \end{equation*}
+
+\vspace{-0.2cm}
+
 
 Realizamos el mismo procedimiento para el vector de carga:
 {\setlength{\abovedisplayskip}{2pt}
@@ -1094,7 +1412,13 @@ Realizamos el mismo procedimiento para el vector de carga:
     &\mathbf{F}= \sum_{e=1}^{N_{el}} \tilde{\mathbf{F}}^e.
 \end{align*}
 }
+
+\vspace{-0.5cm}
+
 \subsection{Imposición de condiciones de contorno}
+
+\vspace{-0.1cm}
+
 \label{sec:cond2D}
 Se aplicarán los siguientes algoritmos para los elementos que contengan a la frontera de nuestro espacio físico.
 
@@ -1104,22 +1428,37 @@ con la frontera al borde paramétrico inferior, es decir, $\xi \in [u_{n},u_{{n}
 
 Recorreremos las funciones base asociadas a esta frontera, (en este caso recorremos el indice $i_1$ y fijamos $j_1=1$), para ello proyectamos de vuelta nuestros índices $I_{1}=I(i_1,1)$ para $i_2=1,\dots,p+1$, mediante la ecuación \ref{eq:indices}.
 
+\vspace{-0.5cm}
+
 \subsubsection{Tipo Dirichlet}
 \begin{enumerate}
     \item Para cada índice $I_{1}$:
+    
+    \vspace{-0.3cm}
+
     \begin{itemize}
         \item Sustituimos la fila $I_{1}$-ésima de la matriz global $\mathbf{K}$ por ceros, imponiendo 1 en la diagonal ($\mathbf{K}_{I_1,I_1} = 1$).
         \item Actualizamos el vector de carga: $\mathbf{F}_{I_{1}} = g(\mathbf{x}_{I_{1}})$.
     \end{itemize}
     \item Para mantener la simetría del sistema, eliminamos las columnas $I$ correspondientes:
+
+    \vspace{-0.3cm}
+
     \begin{itemize}
         \item Para cada fila distinta de $I_2 \neq I_1$ donde $\mathbf{K}_{I_2,I_1} \neq 0$, modificamos el vector de carga restando la contribución conocida: $\mathbf{F}_K \leftarrow \mathbf{F}_K - \mathbf{K}_{I_2,I_1} \cdot g(\mathbf{x}_{I_1})$.
         \item Establecemos $\mathbf{K}_{I_2,I_1} = 0$.
     \end{itemize}
+
 \end{enumerate}
+
+\vspace{-0.5cm}
 
 
 \subsubsection{Tipo Neumann}
+
+\vspace{-0.2cm}
+
+
 Para cada índice $I_1$:
 {\setlength{\abovedisplayskip}{1pt}
 \setlength{\belowdisplayskip}{1pt}
@@ -1127,6 +1466,9 @@ Para cada índice $I_1$:
         \mathbf{F}_{I_1} \leftarrow \mathbf{F}_{I_1} + \int_{u_n}^{u_{n+1}} h(\mathbf{G}(\xi, v_k)) \cdot \hat{R}_{(i_1,1)}^{(p,q)}(\xi, v_k) \cdot J_{\Gamma}(\xi) \, d\xi.
 \end{equation*}
 }
+
+\vspace{-0.5cm}
+
 \subsubsection{Tipo Robin o mixtas}
 
 Proyectamos también en este caso $J_1 = (i_2, 1)$ para $i_2=1,\dots,p+1$.
@@ -1180,11 +1522,19 @@ Donde $C_1$ y $C_2$ dependen de la continuidad de las estructuras de NURBS asoci
     gracias a esto la demostración de convergencia es análoga a la del teorema \ref{teor:FEM_cotas}, en el caso de dimensión 2.
 \end{proof}
 
+\vspace{-0.5cm}
+
+
 \subsection{Tiempo de computación}
 
 Separaremos el tiempo de computación en sus fases independientes:
 
+\vspace{-0.5cm}
+
 \subsubsection{Fase de evaluación}
+
+\vspace{-0.2cm}
+
 
 Fase previa al ensamblado para dimensiones mayores o iguales que dos, que aprovecha las propiedades del producto tensorial para evitar recalcular evaluaciones de funciones base, su coste computacional:
 {\setlength{\abovedisplayskip}{2pt}
@@ -1410,7 +1760,7 @@ Tomaremos el problema en 1D definido mediante $f(x)=100\frac{\pi^2}{L^2} \sin(10
         \mathbf{P} = 
         %\footnotesize % Reducimos tamaño de fuente solo aquí
         \begin{pmatrix}
-            (0, 0, 0) & (1, 0, 1) & (2, 0, 0) \\
+            (0, 0, 0) & (1, 0, 0) & (2, 0, 0) \\
             (0, 1, 0) & (1, 1, 0) & (2, 1, 0) \\
             (0, 2, 0) & (1, 2, 0) & (2, 2, 0)
         \end{pmatrix}
@@ -1676,7 +2026,7 @@ Definimos ahora la norma inducida por la forma bilineal $a( \cdot , \cdot)$, que
 \begin{itemize}
     \item \textbf{Convergencia en } $\|\cdot\|_{H^1(\Omega)}$:
 
-    Asumiendo la coercividad y continuidad de la forma bilineal en $V(\Omega)$\footnote{La demostración de estas puede ser encontrada en el anexo \ref{sec:Cea}}, nos encontramos en las condiciones del \textbf{Lema de Céa} por tanto se cumple:
+    Asumiendo la coercividad y continuidad de la forma bilineal en $V(\Omega)$\footnote{La demostración de estas puede ser encontrada en el Anexo \ref{sec:Cea}}, nos encontramos en las condiciones del \textbf{Lema de Céa} por tanto se cumple:
     \begin{equation*}
         \|u - u_h\|_V \leq \frac{C_{cont}}{C_{coer}} \inf_{v_h \in V_h} \|u - v_h\|_V, 
     \end{equation*}
@@ -1708,7 +2058,7 @@ Definimos ahora la norma inducida por la forma bilineal $a( \cdot , \cdot)$, que
         a(v,w) = (e,v)_{L^2(\Omega)}=\int_\Omega ev \, d\Omega, \quad \forall v \in V(\Omega).
     \end{equation*}
 
-    Debido a la coercividad y continuidad de la forma bilineal y la continuidad de la forma lineal\footnote{La demostración de la continuidad de la forma lineal se encuentra en el anexo \ref{sec:cont}}, debido al \textbf{Lema de Lax-Milgram}, la solución w existe y es única, su regularidad viene dada por las condiciones de regularidad elípticas asumidas en el anexo \ref{sec:equivform}, luego $\exists \, C_{\text{Reg}}\in \R^+$ tal que:
+    Debido a la coercividad y continuidad de la forma bilineal y la continuidad de la forma lineal\footnote{La demostración de la continuidad de la forma lineal se encuentra en el Anexo \ref{sec:cont}}, debido al \textbf{Lema de Lax-Milgram}, la solución w existe y es única, su regularidad viene dada por las condiciones de regularidad elípticas asumidas en el Anexo \ref{sec:equivform}, luego $\exists \, C_{\text{Reg}}\in \R^+$ tal que:
     \begin{equation}
         \label{eq:Lax-Millgram}
         \|w\|_{H^2(\Omega)} \leq C_{\text{reg}} \|e\|_{L^2(\Omega)}
@@ -2093,30 +2443,21 @@ u = g & \text{en } \Gamma_D \quad (u\in V(\Omega)), \\[6pt]
             \end{itemize}
             \item \textbf{Número de bases activas}: procederemos mediante inducción sobre $p$:
                 \begin{itemize}
-                    \item \textbf{Caso base ($p=0$)}: por definición del caso $p=0$ de la funciones base y por la propiedad de no decrecimiento del vector de nudos, si $u\in [u_i, u_{i+1})$, existe únicamente una función base $N_{i,0}$ no nula en ese intervalo, luego el único indice $j$ que satisface la condición de tener una función base no nula asociada es $i=j$.
-                    \item \textbf{Paso de inducción sobre $p$}: asumimos que para el intervalo $[u_i, u_{i+1})$ existen a lo sumo $p$ funciones base $N_{j,p-1}$ no nulas con índices $j\in \{i-(p-1),\dots , i\}$, debido al algoritmo de Cox-de Boor
-                    \ref{alg:Cox} y a la no negatividad de los coeficientes y de las funciones base probada en el apartado anterior,si $u\in [u_i, u_{i+1})$, $N_{j,p}(u)$ será no nula en el intervalo $ [u_i, u_{i+1})$ si alguna de las funciones base $N_{j,p-1}(u)$ y $N_{j+1,p-1}(u)$ no lo son, luego:
+                    \item \textbf{Caso base ($p=0$)}: Sea un intervalo no degenerado $[u_i, u_{i+1})$ con $u_i < u_{i+1}$. Por definición de la función indicatriz, si $u \in [u_i, u_{i+1})$, $N_{i,0}(u) = 1$ y todas las demás $N_{j,0}(u) = 0$ para $j \neq i$. Luego, existe exactamente una ($0+1$) función base no nula, cuyo índice es $j=i$, cumpliendo la propiedad.
+                    
+                    \item \textbf{Paso de inducción}: Asumimos como hipótesis de inducción que para un grado $p-1$, en el intervalo $[u_i, u_{i+1})$ existen exactamente $p$ funciones base no nulas, correspondientes a los índices $k \in \{i-(p-1), \dots, i\}$. 
+                    
+                    Por la fórmula de recurrencia de Cox-de Boor, la función $N_{j,p}(u)$ es una combinación lineal de $N_{j,p-1}(u)$ y $N_{j+1,p-1}(u)$. Dado que los coeficientes de la combinación y las propias bases son no negativos en el dominio válido, $N_{j,p}(u)$ será estrictamente positiva en $[u_i, u_{i+1})$ si y solo si al menos una de las dos funciones de grado inferior es no nula en dicho intervalo. Evaluando los índices:
                     \begin{itemize}
-                        \item $N_{j,p-1}(u)$ es no nula a lo sumo cuando $j\in \{i-p+1, i-p+2, \dots ,i\}$
-                        \item $N_{j+1,p-1}(u)$ es no nula a lo sumo cuando $j\in \{i-p, i-p+1, \dots ,i-1\}$                 
+                        \item $N_{j,p-1}(u) \neq 0 \implies j \in \{i-p+1, \dots, i\}$
+                        \item $N_{j+1,p-1}(u) \neq 0 \implies j+1 \in \{i-p+1, \dots, i\} \implies j \in \{i-p, \dots, i-1\}$
                     \end{itemize}
-                    Luego $N_{j,p}$ es no nula cuando $j\in [i-p, i]$, probando así las posibles $p+1$ funciones base no nulas con sus índices posibles correspondientes.
+                    La unión de ambos conjuntos de índices determina las funciones base de grado $p$ que son activas en el intervalo:
+                    \begin{equation*}
+                        j \in \{i-p+1, \dots, i\} \cup \{i-p, \dots, i-1\} = \{i-p, i-p+1, \dots, i\}
+                    \end{equation*}
+                    Este conjunto contiene exactamente $p+1$ índices distintos. Por lo tanto, en cualquier intervalo paramétrico no nulo existen exactamente $p+1$ funciones base activas, completando así la inducción.
                 \end{itemize}
-                %Finalmente para probar la cantidad de funciones base nulas en un intervalo $[u_i, u_{i+1})$, suponemos que $u_j=u_{j+1}=\dots=u_{j+k-1}$, 
-                %ahora tenemos que una función base $\mathbf{N_{j, p}(u)}$ será activa en $[u_i, u_{i+1})$ si su soporte $\mathbf{(u_j, u_{j+p+1})}$ interseca a este, notamos que $\forall j \in [i-p, i-p+k-1]$, $\mathbf{N_{j, p}(u)}$ tiene soporte local que llega hasta $u_i$, luego su soporte no interseca con el intervalo, dandonos así $k$ funciones nulas y por ende, $p+1-k$ funciones base activas.
-                
-                Para demostrar la reducción, consideramos un nudo de valor $\mathbf{u^*}$ con multiplicidad $k$, tal que la secuencia de nudos coincidentes es $\mathbf{u_j=u_{j+1}=\dots=u_{i}}$, donde $\mathbf{i=j+k-1}$.
-
-                Una función base $\mathbf{N_{m, p}(u)}$ es nula en el intervalo $[u_i, u_{i+1})$ si su soporte $\mathbf{(u_m, u_{m+p+1})}$ no interseca dicho intervalo, es decir, si $\mathbf{u_{m+p+1} \leq u_i}$.
-
-                Las $\mathbf{k}$ funciones base con los índices más bajos en el rango máximo, dadas por el conjunto\\
-                 $\mathbf{J_{\text{nulo}} = \{i-p, i-p+1, \dots, i-p+k-1\}}$, se anulan.
-                Analizamos el índice final del soporte para el último elemento de este conjunto, $\mathbf{m = i-p+k-1}$:
-                $$\mathbf{u_{m+p+1}} = u_{(i-p+k-1) + p + 1} = \mathbf{u_{i+k}}$$.
-                Puesto que $\mathbf{u_i, u_{i+1}, \dots, u_{i+k-1}}$ son todos iguales a $\mathbf{u^*}$, la secuencia de $k$ nudos coincidentes fuerza a estas $\mathbf{k}$ bases a ser nulas. Por lo tanto, el número de funciones base nulas es $\mathbf{k}$. 
-                Consecuentemente, el número de funciones base activas o no nulas es:
-                $\mathbf{p+1} - \mathbf{k}$.
-                %\newpage
             \item \textbf{Partición de la unidad}:
                 \begin{itemize}
                     \item \textbf{Caso base ($p=0$)}: como hemos probado en el apartado anterior en $p=0$ por cada intervalo $[u_i, u_{i+1})$ hay una sola función base no nula, luego $\forall u \in [u_0, u_m), \, \exists j\in R^+$ tal que $u\in [u_j,u{j+1})$, luego,
@@ -2143,6 +2484,8 @@ u = g & \text{en } \Gamma_D \quad (u\in V(\Omega)), \\[6pt]
                 \end{itemize}
     \end{enumerate}
 \end{proof}
+
+
 
 \subsubsection{Curvas}
 \begin{proof} Se demostrarán las propiedades en el orden en el que han sido establecidas:
@@ -2186,6 +2529,61 @@ u = g & \text{en } \Gamma_D \quad (u\in V(\Omega)), \\[6pt]
             Luego como la continuidad de $\mathbf{C}^{(r)}(u)$ depende de los puntos de control, $\mathbf{C}(u)\notin L^{p-k+1}(\Omega)$. 
         \end{enumerate}
 \end{proof}
+
+\subsection{Derivada de las funciones base NURBS}
+\label{sec:Derv_basis_NURBS}
+\begin{proof}
+    Definimos inicialmente al cociente como $W(u) = \sum_{i=0}^{n} N_{i,p}(u) w_i$.
+
+    Obteniendo ahora 
+    \begin{align*}
+        &(R_i^p)'(u) = \frac{w_i N'_{i,p}(u) W(u) - w_i N_{i,p}(u) W'(u)}{(W(u))^2}==\frac{w_i N'_{i,p}(u) W(u)}{(W(u))^2} - \frac{w_i N_{i,p}(u) W'(u)}{(W(u))^2}\\
+        &=\frac{w_i N'_{i,p}(u)}{W(u)} - \left( \frac{w_i N_{i,p}(u)}{W(u)} \right) \frac{W'(u)}{W(u)}=\frac{w_i N'_{i,p}(u)}{W(u)} - R_i^p(u) \frac{W'(u)}{W(u)}=\frac{w_i N'_{i,p}(u) - R_i^p(u) W'(u)}{W(u)}.
+    \end{align*}
+    Sustituyendo de vuelva $W(u)$ y su derivada obtenemos la fórmula
+    $$(R_i^p)'(u) = \frac{w_i N'_{i,p}(u) - R_i^p(u) \sum_{j=0}^{n} N'_{j,p}(u) w_j}{\sum_{j=0}^{n} N_{j,p}(u) w_j}.$$
+\end{proof}
+
+
+\subsection{Derivada de la curva NURBS}
+\label{sec:Derv_Curv_NURBS}
+\begin{proof}Definimos la curva como cociente de funciones $\mathbf{C}(u) = \frac{\mathbf{A}(u)}{W(u)}$, donde
+    \begin{itemize}
+        \item \textbf{Numerador:} $\mathbf{A}(u) = \sum_{i=0}^{n} N_{i,p}(u) w_i \mathbf{P}_i$.
+        \item \textbf{Denominador:} $W(u) = \sum_{i=0}^{n} N_{i,p}(u) w_i$.
+    \end{itemize}
+    
+    Aplicando ahora la derivada del cociente la parametrización analítica de su primera derivada es:
+    $$\mathbf{C}'(u) = \frac{\mathbf{A}'(u)W(u) - \mathbf{A}(u)W'(u)}{(W(u))^2}=\frac{\mathbf{A}'(u)}{W(u)} - \left( \frac{\mathbf{A}(u)}{W(u)} \right) \frac{W'(u)}{W(u)}.$$
+    
+    Manipulando ahora este resultado obtenemos
+    \begin{equation*}
+    \mathbf{C}'(u) = \frac{\mathbf{A}'(u) - W'(u)\mathbf{C}(u)}{W(u)}= \frac{\sum_{i=0}^{n} N'_{i,p}(u) w_i \mathbf{P}_i - \mathbf{C}(u) \sum_{i=0}^{n} N'_{i,p}(u) w_i}{W(u)}=\frac{\sum_{i=0}^{n} N'_{i,p}(u) w_i \left( \mathbf{P}_i - \mathbf{C}(u) \right)}{\sum_{i=0}^{n} N_{i,p}(u) w_i} .
+    \end{equation*}
+\end{proof}
+
+\subsection{Comportamiento direccional de las superficies NURBS}\label{dem_prop:surf_tensor}
+
+\begin{proof}
+    Tomaremos una dirección arbitraria, $v$ en este caso, y fijaremos $u=u_0$, la demostración es análoga para la dirección $u$.
+        \begin{equation*}
+            \mathbf{S}(u_0, v) = \frac{\sum_{i=0}^{n} \sum_{j=0}^{m} N_{i,p}(u_0) M_{j,q}(v) \mathbf{w}_{i,j} \mathbf{P}_{i,j}}{\sum_{i=0}^{n} \sum_{j=0}^{m} N_{i,p}(u_0) M_{j,q}(v) \mathbf{w}_{i,j}}.
+        \end{equation*}
+        Ahora reagrupamos los valores que dependen de $v$ y los que no:
+        \begin{equation*}
+            \mathbf{S}(u_0, v) = \frac{\sum_{j=0}^{m} M_{j,q}(v) \left( \sum_{i=0}^{n} N_{i,p}(u_0) \mathbf{w}_{i,j} \mathbf{P}_{i,j} \right)}{\sum_{j=0}^{m} M_{j,q}(v) \left( \sum_{i=0}^{n} N_{i,p}(u_0) \mathbf{w}_{i,j} \right)}.
+        \end{equation*}
+        Definimos ahora los siguientes elementos:
+        \begin{equation*}
+            \mathbf{w}^*_j=\sum_{i=0}^n  N_{i,p}(u_0) \mathbf{w}_{i,j}, \quad  \mathbf{Q}_j=\frac{\sum_{i=0}^n N_{i,p}(u_0) \mathbf{P}_{i,j} \mathbf{w}_{i,j}}{\mathbf{w}^*_j}.
+        \end{equation*}
+        Obteniendo al final una definición 
+        \begin{equation*}
+            C(v)=S(u_0,v)=\frac{\sum_{j=0}^{m} M_{j,q}(v) \mathbf{w}^*_{j} \mathbf{Q}_j }{\sum_{j=0}^{m} M_{j,q}(v) \mathbf{w}^*_{j} }.
+        \end{equation*}
+        Obteniendo así la curva de NURBS asociada a la dirección $v$ en el punto $u_0$.
+\end{proof}
+
 \subsection{Igualdad de las nuevas funciones base bajo refinamiento}
 \label{sec:dem_new_bases}
 \begin{proof}
@@ -2345,6 +2743,159 @@ su integral correspondiente a cada elemento en la frontera\footnote{Notar que pa
 Análogamente a las condiciones de Neumann, en este caso observamos en \ref{form:variacional1} y \ref{form:variacional2} afectarán a la matriz de rigidez y al vector de carga,
 debiendo sumar las integrales correspondientes en ambos términos del sistema.
 
+\section{Explicación y parámetros de las figuras}
+
+\subsection{Figura 1.1}\label{exp_fig1.1}
+En referencia a la figura \ref{fig:comparativa_bases_completa}.
+\begin{itemize}
+
+    \item Subfigura \ref{fig:FEM_IGA_1}: la subfigura ilustra las funciones base clásicas del Método de los Elementos Finitos (FEM) para un grado polinomial lineal ($p=1$) sobre un dominio discretizado en $6$ elementos. En ella se puede apreciar visualmente la continuidad estrictamente $C^0$ en las fronteras inter-elementales, una limitación geométrica inherente a esta formulación.
+
+    \item Subfigura \ref{fig:FEM_IGA_2}: la subfigura presenta las funciones base cuadráticas ($p=2$) del FEM clásico para una discretización de 3 elementos (7 funciones base en total). A diferencia de las bases B-Spline, se observa claramente que estas funciones pueden tomar valores negativos. Asimismo, se evidencia que el incremento del grado polinomial no mejora la regularidad global: aunque las bases son suaves en los nodos interiores de cada elemento, la continuidad decae abruptamente a estrictamente $C^0$ en los 4 nodos que conforman las fronteras de los elementos.
+
+    \item Subfigura \ref{fig:FEM_IGA_3}: la subfigura muestra las funciones base NURBS cuadráticas ($p=2$), definidas sobre el vector de nudos $U = \{0, 0, 0, 0.4, 0.8, 1, 1, 1\}$ y con vector de pesos $w = \{1, 4, 5, 1, 1\}$, se puede apreciar en esta la suavidad global que obtienen las funciones base de este tipo.
+    
+\end{itemize}
+
+\subsection{Figura 2.1}\label{exp_fig:bezier_comparativa}
+En referencia a la figura \ref{fig:bezier_comparativa}.
+
+Puntos de control utilizados para las curvas: 
+$$\mathbf{P} = \left\{
+\begin{pmatrix} 0 \\ 0 \\ 0 \end{pmatrix}, \quad
+\begin{pmatrix} 1 \\ 5 \\ 1 \end{pmatrix}, \quad
+\begin{pmatrix} 2 \\ 0 \\ 2 \end{pmatrix}, \quad
+\begin{pmatrix} 3 \\ 4.5 \\ 4 \end{pmatrix}
+\right\}$$
+
+\begin{itemize}
+    \item Subfigura \ref{fig:bezier_comparativa_1}: curva \textbf{no} racionalizada de Bézier, con 4 puntos de control y grado polinomial $p=3$. Su trazado tridimensional respeta la propiedad de la envolvente convexa, con una influencia geométrica simétrica dictada en exclusiva por los polinomios de Bernstein.
+    \item Subfigura \ref{fig:bezier_comparativa_2}: curva racionalizada de Bézier, con los mismos datos que la anterior y vector de pesos $w=\{ 1,\, 10,\, 7,\, 1\}.$ Al asignar valores mayores a los vértices interiores, la curva es atraída fuertemente hacia $\mathbf{P}_1$ y $\mathbf{P}_2$. Esto demuestra el control local de la forma mediante la proyección desde $\mathbb{R}^4$, sin alterar la red de control ni elevar el grado polinomial.
+    \item Subfigura \ref{fig:bezier_comparativa_3}: polinomios de Bernstein de grado polinomial $p=3$. Estas funciones $B_{i,3}(u)$ conforman la base del espacio polinomial subyacente y cumplen la partición estricta de la unidad ($\sum B_{i,3}(u) = 1$). Para la curva racionalizada, estas bases se ponderan por el vector $W$ y se dividen por la suma ponderada total del denominador, deformando esta simetría original para adaptar la geometría.
+\end{itemize}
+
+\subsection{Figura 2.2}\label{exp_fig:NURBS_curva}
+En referencia a la figura \ref{fig:NURBS_curva}.
+
+Puntos de control utilizados para la curva: 
+$$\mathbf{P} = \left\{
+\begin{pmatrix} 10 \\ 0 \\ 0 \end{pmatrix}, \quad
+\begin{pmatrix} 15 \\ 10 \\ 5 \end{pmatrix}, \quad
+\begin{pmatrix} 5 \\ 15 \\ 20 \end{pmatrix}, \quad
+\begin{pmatrix} 0 \\ 5 \\ 10 \end{pmatrix}, \quad
+\begin{pmatrix} 10 \\ 0 \\ 0 \end{pmatrix}
+\right\}$$
+
+Vector de nudos para la curva: $U = \{0,\, 0,\, 0,\, 0,\, 0.5,\, 1,\, 1,\, 1,\, 1\}$. 
+
+Vector de pesos para la curva: $w = \{1,\, 1,\, 5,\, 1,\, 1\}$.
+\begin{itemize}
+    \item Subfigura \ref{fig:NURBS_curva_1}: curva NURBS de grado polinomial $p=3$, definida por 5 puntos de control.
+
+    \item Subfigura \ref{fig:NURBS_curva_2}: funciones base racionales. Representan la influencia ponderada de cada punto de control sobre el dominio paramétrico.
+
+    \item Subfigura \ref{fig:NURBS_curva_3}: derivadas de primer orden de las funciones base.
+\end{itemize}
+
+\subsection{Figura 2.3}\label{exp_fig:NURBS_surf}
+En referencia a la figura \ref{fig:NURBS_surf}.
+
+\begin{itemize}
+    \item Subfigura \ref{fig:NURBS_surf_1}:
+    \begin{itemize}
+        \item Grados polinomiales: $p = 2$ (dirección $u$) y $q = 3$ (dirección $v$).
+        \item Vectores de nudos: $U = \{0,\, 0,\, 0,\, 0.5,\, 0.5,\, 1,\, 1,\, 1\}$ y $V = \{0,\, 0,\, 0,\, 0,\, 1,\, 1,\, 1,\, 1\}$.
+        \item Red de control $\mathbf{P}$: matriz de $5 \times 4$ vértices tridimensionales:
+        \begin{equation*}
+            \mathbf{P} = \begin{pmatrix}
+                (0, 1, 1) & (0, 2, 2) & (0, 3, 2) & (0, 4, 1) \\
+                (1, 1, 1) & (1, 2, 2) & (1, 3, 2) & (1, 4, 1) \\
+                (2, 1, 1) & (2, 2, 3) & (2, 3, 3) & (2, 4, 1) \\
+                (3, 1, 1) & (3, 2, 3) & (3, 3, 3) & (3, 4, 1) \\
+                (4, 1, 1) & (4, 2, 2) & (4, 3, 2) & (4, 4, 1)
+            \end{pmatrix}
+        \end{equation*}
+        \item Matriz de pesos $w$:
+        \begin{equation*}
+            w = \begin{pmatrix}
+                1 & 1 & 1 & 1 \\
+                1 & 2 & 2 & 1 \\
+                1 & 3 & 2 & 1 \\
+                1 & 2 & 2 & 1 \\
+                1 & 1 & 1 & 1
+            \end{pmatrix}
+        \end{equation*}
+    \end{itemize}
+    \item Subfigura \ref{fig:NURBS_surf_2}: 
+    \begin{itemize}
+        \item Grados polinomiales: $p = 2$ (dirección $u$) y $q = 1$ (dirección $v$).
+        \item Vectores de nudos: 
+            $\begin{aligned}[t]
+                U &= \{0,\, 0,\, 0,\, 0.25,\, 0.25,\, 0.5,\, 0.5,\, 0.75,\, 0.75,\, 1,\, 1,\, 1\} \text{ y} \\
+                V &= \{0,\, 0,\, 0.25,\, 0.5,\, 0.75,\, 1,\, 1\}.
+            \end{aligned}$
+        \item Red de control $\mathbf{P}$: matriz de $9 \times 5$ vértices tridimensionales que definen la directriz circular y las generatrices lineales:
+        \begin{equation*}
+            \mathbf{P} = \begin{pmatrix}
+                (1, 0, 0) & (1, 0, 2) & (0.5, 0, 2) & (0.5, 0, 0) & (1, 0, 0) \\
+                (1, 1, 0) & (1, 1, 2) & (0.5, 0.5, 2) & (0.5, 0.5, 0) & (1, 1, 0) \\
+                (0, 1, 0) & (0, 1, 2) & (0, 0.5, 2) & (0, 0.5, 0) & (0, 1, 0) \\
+                (-1, 1, 0) & (-1, 1, 2) & (-0.5, 0.5, 2) & (-0.5, 0.5, 0) & (-1, 1, 0) \\
+                (-1, 0, 0) & (-1, 0, 2) & (-0.5, 0, 2) & (-0.5, 0, 0) & (-1, 0, 0) \\
+                (-1, -1, 0) & (-1, -1, 2) & (-0.5, -0.5, 2) & (-0.5, -0.5, 0) & (-1, -1, 0) \\
+                (0, -1, 0) & (0, -1, 2) & (0, -0.5, 2) & (0, -0.5, 0) & (0, -1, 0) \\
+                (1, -1, 0) & (1, -1, 2) & (0.5, -0.5, 2) & (0.5, -0.5, 0) & (1, -1, 0) \\
+                (1, 0, 0) & (1, 0, 2) & (0.5, 0, 2) & (0.5, 0, 0) & (1, 0, 0)
+            \end{pmatrix}
+        \end{equation*}
+        \item Matriz de pesos $w$, esencial para la representación cónica exacta de la curvatura:
+        \begin{equation*}
+            w = \begin{pmatrix}
+                1 & 1 & 1 & 1 & 1 \\
+                \frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2} \\
+                1 & 1 & 1 & 1 & 1 \\
+                \frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2} \\
+                1 & 1 & 1 & 1 & 1 \\
+                \frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2} \\
+                1 & 1 & 1 & 1 & 1 \\
+                \frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2} \\
+                1 & 1 & 1 & 1 & 1
+            \end{pmatrix}
+        \end{equation*}
+    \end{itemize}
+    \item Subfigura \ref{fig:NURBS_surf_3}:
+    Tras aplicar el algoritmo de refinamiento mediante inserción de nudos en ambas direcciones paramétricas, el espacio de la superficie se enriquece sin alterar su topología ni su traza geométrica tridimensional (invariancia geométrica). Los parámetros resultantes son los siguientes:
+
+    \begin{itemize}
+        \item Grados polinomiales (invariantes): $p = 2$ y $q = 1$.
+        \item Vectores de nudos refinados ($U'$ y $V'$): \\
+        $\begin{aligned}[t]
+            U' &= \{0,\, 0,\, 0,\, 0.1,\, 0.2,\, 0.25,\, 0.25,\, 0.3,\, 0.4,\, 0.5,\, 0.5,\, 0.6,\, 0.7,\, 0.75,\, 0.75,\, 0.8,\, 0.9,\, 1,\, 1,\, 1\} \\
+            V' &= \{0,\, 0,\, 0.1,\, 0.2,\, 0.25,\, 0.3,\, 0.4,\, 0.5,\, 0.5,\, 0.6,\, 0.7,\, 0.75,\, 0.8,\, 0.9,\, 1,\, 1\}
+        \end{aligned}$
+        \item Red de control refinada $\mathbf{P}'$: al proyectar los puntos de control ponderados $\mathbf{P}^w$ desde $\mathbb{R}^4$ a $\mathbb{R}^3$ (dividiendo las tres primeras coordenadas entre el peso $w$), se obtiene una nueva malla tensorial de $17 \times 14$ vértices. Por concisión, se representa su estructura límite:
+        \begin{equation*}
+            \mathbf{P}' = \begin{pmatrix}
+                (1, 0, 0) & (1, 0, 0.8) & \dots & (1, 0, 0) \\
+                (0.883, 0.283, 0) & (0.883, 0.283, 0.706) & \dots & (0.883, 0.283, 0) \\
+                \vdots & \vdots & \ddots & \vdots \\
+                (1, 0, 0) & (1, 0, 0.8) & \dots & (1, 0, 0)
+            \end{pmatrix}_{17 \times 14}
+        \end{equation*}
+        \item Matriz de pesos refinada $w'$, extraída directamente de la cuarta coordenada del espacio proyectivo:
+        \begin{equation*}
+            w' = \begin{pmatrix}
+                1 & 1 & \dots & 1 \\
+                0.883 & 0.883 & \dots & 0.883 \\
+                \vdots & \vdots & \ddots & \vdots \\
+                1 & 1 & \dots & 1
+            \end{pmatrix}_{17 \times 14}
+        \end{equation*}
+    \end{itemize}
+\end{itemize}
+
+
+\clearpage
 \section{Código omitido}
 
 \subsection{FEM}
@@ -2356,31 +2907,36 @@ debiendo sumar las integrales correspondientes en ambos términos del sistema.
     breaklines,
     breakanywhere,
     frame=lines,
-    fontsize=\footnotesize
+    fontsize=\tiny
 ]{octave}{FEMbasis.m}
 \end{listing}
+
 \subsection{Figuras de Bézier}
 \label{sec:codigo_bezier}
-\textbf{Código de las bases de Bernstein}
-\begin{listing}
-\inputminted[
-    linenos,
-    breaklines,
-    frame=lines,
-    fontsize=\footnotesize
-]{octave}{plot_bernstein_bases.m}
-\end{listing}
+\begin{listing}[H]
 \textbf{Código de las curvas racionalizadas de Bernstein}
 \inputminted[
     linenos,
     breaklines,
     breakanywhere,
     frame=lines,
-    fontsize=\footnotesize
+    fontsize=\tiny
 ]{octave}{RatBezier3d.m}
+\end{listing}
+
+\begin{listing}[H]
+\textbf{Código de las bases de Bernstein}
+\inputminted[
+    linenos,
+    breaklines,
+    frame=lines,
+    fontsize=\tiny
+]{octave}{plot_bernstein_bases.m}
+\end{listing}
+
 \subsection{Código fundamental para el funcionamiento en C++}
 \label{sec:codigo_fund}
-\textbf{Clase iMatrix}
+\textbf{Clase iMatrix}    
 \inputminted[
     frame=lines,
     framesep=2mm,
@@ -2391,6 +2947,8 @@ debiendo sumar las integrales correspondientes en ambos términos del sistema.
     tabsize=4,
     fontsize=\tiny
 ]{c++}{iMatrix.cpp}
+
+
 
 \textbf{Fichero funciones.hpp}
 \inputminted[

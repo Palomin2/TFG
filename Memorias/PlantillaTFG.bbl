@@ -1,9 +1,73 @@
-\begin{thebibliography}{18}
+\begin{thebibliography}{19}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Hughes et~al.(2005)Hughes, Cottrell, and
+  Bazilevs]{hughes_isogeometric_2005}
+T.~J.~R. Hughes, J.~A. Cottrell, and Y.~Bazilevs.
+\newblock Isogeometric analysis: {CAD}, finite elements, {NURBS}, exact
+  geometry and mesh refinement.
+\newblock \emph{Computer Methods in Applied Mechanics and Engineering},
+  194\penalty0 (39):\penalty0 4135--4195, 2005.
+\newblock ISSN 0045-7825.
+\newblock \doi{https://doi.org/10.1016/j.cma.2004.10.008}.
+\newblock URL
+  \url{https://www.sciencedirect.com/science/article/pii/S0045782504005171}.
+
+\bibitem[Cottrell et~al.(2009)Cottrell, Hughes, and
+  Bazilevs]{cottrell_isogeometric_2009}
+J.A. Cottrell, T.J.R. Hughes, and Y.~Bazilevs.
+\newblock \emph{Isogeometric {Analysis}: {Toward} {Integration} of {CAD} and
+  {FEA}}.
+\newblock Wiley, 2009.
+\newblock ISBN 978-0-470-74873-2.
+\newblock URL \url{https://books.google.es/books?id=Sf0UDAEACAAJ}.
+
+\bibitem[Piegl and Tiller(2012)]{piegl_nurbs_2012}
+L.~Piegl and W.~Tiller.
+\newblock \emph{The {NURBS} {Book}}.
+\newblock Monographs in {Visual} {Communication}. Springer Berlin Heidelberg,
+  2012.
+\newblock ISBN 978-3-642-59223-2.
+\newblock URL \url{https://books.google.es/books?id=58KqCAAAQBAJ}.
+
+\bibitem[Bazilevs et~al.(2010)Bazilevs, Calo, Cottrell, Evans, Hughes, Lipton,
+  Scott, and Sederberg]{bazilevs_isogeometric_2010}
+Y.~Bazilevs, V.M. Calo, J.A. Cottrell, J.A. Evans, T.J.R. Hughes, S.~Lipton,
+  M.A. Scott, and T.W. Sederberg.
+\newblock Isogeometric analysis using {T}-splines.
+\newblock \emph{Computer Methods in Applied Mechanics and Engineering},
+  199\penalty0 (5-8):\penalty0 229--263, 2010.
+\newblock \doi{10.1016/j.cma.2009.02.036}.
+
+\bibitem[Ahlberg et~al.(2016)Ahlberg, Nilson, Walsh, and
+  Bellman]{ahlberg_theory_2016}
+J.H. Ahlberg, E.N. Nilson, J.L. Walsh, and R.~Bellman.
+\newblock \emph{The {Theory} of {Splines} and {Their} {Applications}:
+  {Mathematics} in {Science} and {Engineering}: {A} {Series} of {Monographs}
+  and {Textbooks}, {Vol}. 38}.
+\newblock Number v. 38. Academic Press, 2016.
+\newblock ISBN 978-1-4832-2295-0.
+\newblock URL \url{https://books.google.es/books?id=3bZlDAAAQBAJ}.
+
+\bibitem[Langer et~al.(2016)Langer, Moore, and
+  Neumüller]{langer_space-time_2016}
+Ulrich Langer, Stephen~E Moore, and Martin Neumüller.
+\newblock Space-time isogeometric analysis of parabolic evolution equations.
+\newblock \emph{Computer Methods in Applied Mechanics and Engineering},
+  306:\penalty0 342--363, 2016.
+\newblock \doi{10.1016/j.cma.2016.03.042}.
+
+\bibitem[Farin(2002{\natexlab{a}})]{farin_curves_2002}
+G.E. Farin.
+\newblock \emph{Curves and {Surfaces} for {CAGD}: {A} {Practical} {Guide}}.
+\newblock Computer graphics and geometric modeling. Elsevier Science,
+  2002{\natexlab{a}}.
+\newblock ISBN 978-1-55860-737-8.
+\newblock URL \url{https://books.google.es/books?id=5HYTP1dIAp4C}.
 
 \bibitem[Larson and Bengzon(2013)]{larson_finite_2013}
 M.G. Larson and F.~Bengzon.
@@ -28,60 +92,6 @@ L.C. Evans.
 \newblock Graduate studies in mathematics. American Mathematical Society, 1991.
 \newblock URL \url{https://books.google.es/books?id=TF8EzQEACAAJ}.
 
-\bibitem[Piegl and Tiller(2012)]{piegl_nurbs_2012}
-L.~Piegl and W.~Tiller.
-\newblock \emph{The {NURBS} {Book}}.
-\newblock Monographs in {Visual} {Communication}. Springer Berlin Heidelberg,
-  2012.
-\newblock ISBN 978-3-642-59223-2.
-\newblock URL \url{https://books.google.es/books?id=58KqCAAAQBAJ}.
-
-\bibitem[Cottrell et~al.(2009)Cottrell, Hughes, and
-  Bazilevs]{cottrell_isogeometric_2009}
-J.A. Cottrell, T.J.R. Hughes, and Y.~Bazilevs.
-\newblock \emph{Isogeometric {Analysis}: {Toward} {Integration} of {CAD} and
-  {FEA}}.
-\newblock Wiley, 2009.
-\newblock ISBN 978-0-470-74873-2.
-\newblock URL \url{https://books.google.es/books?id=Sf0UDAEACAAJ}.
-
-\bibitem[Farin(2002{\natexlab{a}})]{farin_curves_2002}
-G.E. Farin.
-\newblock \emph{Curves and {Surfaces} for {CAGD}: {A} {Practical} {Guide}}.
-\newblock Computer graphics and geometric modeling. Elsevier Science,
-  2002{\natexlab{a}}.
-\newblock ISBN 978-1-55860-737-8.
-\newblock URL \url{https://books.google.es/books?id=5HYTP1dIAp4C}.
-
-\bibitem[Ahlberg et~al.(2016)Ahlberg, Nilson, Walsh, and
-  Bellman]{ahlberg_theory_2016}
-J.H. Ahlberg, E.N. Nilson, J.L. Walsh, and R.~Bellman.
-\newblock \emph{The {Theory} of {Splines} and {Their} {Applications}:
-  {Mathematics} in {Science} and {Engineering}: {A} {Series} of {Monographs}
-  and {Textbooks}, {Vol}. 38}.
-\newblock Number v. 38. Academic Press, 2016.
-\newblock ISBN 978-1-4832-2295-0.
-\newblock URL \url{https://books.google.es/books?id=3bZlDAAAQBAJ}.
-
-\bibitem[Langer et~al.(2016)Langer, Moore, and
-  Neumüller]{langer_space-time_2016}
-Ulrich Langer, Stephen~E Moore, and Martin Neumüller.
-\newblock Space-time isogeometric analysis of parabolic evolution equations.
-\newblock \emph{Computer Methods in Applied Mechanics and Engineering},
-  306:\penalty0 342--363, 2016.
-\newblock \doi{10.1016/j.cma.2016.03.042}.
-\newblock Publisher: Elsevier.
-
-\bibitem[Bazilevs et~al.(2010)Bazilevs, Calo, Cottrell, Evans, Hughes, Lipton,
-  Scott, and Sederberg]{bazilevs_isogeometric_2010}
-Y.~Bazilevs, V.M. Calo, J.A. Cottrell, J.A. Evans, T.J.R. Hughes, S.~Lipton,
-  M.A. Scott, and T.W. Sederberg.
-\newblock Isogeometric analysis using {T}-splines.
-\newblock \emph{Computer Methods in Applied Mechanics and Engineering},
-  199\penalty0 (5-8):\penalty0 229--263, 2010.
-\newblock \doi{10.1016/j.cma.2009.02.036}.
-\newblock Publisher: Elsevier.
-
 \bibitem[Benson et~al.(2011)Benson, Bazilevs, Hsu, and
   Hughes]{benson_large_2011}
 David~J. Benson, Yuri Bazilevs, Ming-Chen Hsu, and Thomas~J.R. Hughes.
@@ -89,7 +99,6 @@ David~J. Benson, Yuri Bazilevs, Ming-Chen Hsu, and Thomas~J.R. Hughes.
 \newblock \emph{Computer Methods in Applied Mechanics and Engineering},
   200\penalty0 (13-16):\penalty0 1367--1378, 2011.
 \newblock \doi{10.1016/j.cma.2010.12.003}.
-\newblock Publisher: Elsevier.
 
 \bibitem[Bazilevs et~al.(2009)Bazilevs, Gohean, Hughes, Moser, and
   Zhang]{bazilevs_patient-specific_2009}
@@ -147,16 +156,13 @@ Gerald Farin.
   2002{\natexlab{b}}.
 \newblock \doi{10.1016/B978-044451104-1/50002-2}.
 
-\bibitem[Hughes et~al.(2005)Hughes, Cottrell, and
-  Bazilevs]{hughes_isogeometric_2005}
-T.~J.~R. Hughes, J.~A. Cottrell, and Y.~Bazilevs.
-\newblock Isogeometric analysis: {CAD}, finite elements, {NURBS}, exact
-  geometry and mesh refinement.
-\newblock \emph{Computer Methods in Applied Mechanics and Engineering},
-  194\penalty0 (39):\penalty0 4135--4195, 2005.
-\newblock ISSN 0045-7825.
-\newblock \doi{https://doi.org/10.1016/j.cma.2004.10.008}.
-\newblock URL
-  \url{https://www.sciencedirect.com/science/article/pii/S0045782504005171}.
+\bibitem[Langer and Steinbach(2019)]{langer_space-time_2019}
+U.~Langer and O.~Steinbach.
+\newblock \emph{Space-{Time} {Methods}: {Applications} to {Partial}
+  {Differential} {Equations}}.
+\newblock Radon {Series} on {Computational} and {Applied} {Mathematics}. De
+  Gruyter, 2019.
+\newblock ISBN 978-3-11-054848-8.
+\newblock URL \url{https://books.google.es/books?id=7DvEDwAAQBAJ}.
 
 \end{thebibliography}

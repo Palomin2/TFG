@@ -1,0 +1,50 @@
+This is BibTeX, Version 0.99e
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: PlantillaTFG.aux
+Reallocating 'name_of_file' (item size: 1) to 9 items.
+The style file: unsrtnat.bst
+Reallocating 'name_of_file' (item size: 1) to 8 items.
+Database file #1: Biblio2.bib
+Warning--there's a number but no series in ahlberg_theory_2016
+You've used 19 entries,
+            2481 wiz_defined-function locations,
+            691 strings with 8772 characters,
+and the built_in function-call counts, 7216 in all, are:
+= -- 646
+> -- 355
+< -- 11
++ -- 143
+- -- 104
+* -- 565
+:= -- 1213
+add.period$ -- 94
+call.type$ -- 19
+change.case$ -- 28
+chr.to.int$ -- 18
+cite$ -- 20
+duplicate$ -- 360
+empty$ -- 635
+format.name$ -- 129
+if$ -- 1518
+int.to.chr$ -- 2
+int.to.str$ -- 20
+missing$ -- 29
+newline$ -- 133
+num.names$ -- 57
+pop$ -- 141
+preamble$ -- 1
+purify$ -- 19
+quote$ -- 0
+skip$ -- 185
+stack$ -- 0
+substring$ -- 256
+swap$ -- 46
+text.length$ -- 1
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 103
+warning$ -- 1
+while$ -- 54
+width$ -- 0
+write$ -- 310
+(There was 1 warning)

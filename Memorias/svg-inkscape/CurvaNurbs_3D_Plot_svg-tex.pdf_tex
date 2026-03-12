@@ -38,7 +38,7 @@
   \newcommand*\fsize{\dimexpr\f@size pt\relax}%
   \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
   \ifx\svgwidth\undefined%
-    \setlength{\unitlength}{418bp}%
+    \setlength{\unitlength}{405bp}%
     \ifx\svgscale\undefined%
       \relax%
     \else%
@@ -50,32 +50,34 @@
   \global\let\svgwidth\undefined%
   \global\let\svgscale\undefined%
   \makeatother%
-  \begin{picture}(1,0.75119617)%
+  \begin{picture}(1,0.75061728)%
     \lineheight{1}%
     \setlength\tabcolsep{0pt}%
     \put(0,0){\includegraphics[width=\unitlength,page=1]{CurvaNurbs_3D_Plot_svg-tex.pdf}}%
-    \put(0.09163086,0.27687799){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0\end{tabular}}}}%
-    \put(0.09163086,0.3473756){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}5\end{tabular}}}}%
-    \put(0.07727679,0.41787081){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}10\end{tabular}}}}%
-    \put(0.07727679,0.48836842){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}15\end{tabular}}}}%
+    \put(0.14827284,0.08552346){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l} Y\end{tabular}}}}%
+    \put(0.75395556,0.08658765){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}X\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=2]{CurvaNurbs_3D_Plot_svg-tex.pdf}}%
-    \put(0.1112744,0.19511483){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}15\end{tabular}}}}%
+    \put(0.07669654,0.29343951){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=3]{CurvaNurbs_3D_Plot_svg-tex.pdf}}%
-    \put(0.19997679,0.15432536){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}10\end{tabular}}}}%
+    \put(0.01990642,0.45090617){\color[rgb]{0.14901961,0.14901961,0.14901961}\rotatebox{90}{\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Z\end{tabular}}}}}%
+    \put(0.06188173,0.45954815){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}10\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=4]{CurvaNurbs_3D_Plot_svg-tex.pdf}}%
-    \put(0.88457177,0.15866507){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}15\end{tabular}}}}%
+    \put(0.03305877,0.22580494){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}15~~\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=5]{CurvaNurbs_3D_Plot_svg-tex.pdf}}%
-    \put(0.76897129,0.12736842){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}10\end{tabular}}}}%
+    \put(0.13455951,0.17508395){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}10~~\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=6]{CurvaNurbs_3D_Plot_svg-tex.pdf}}%
-    \put(0.07727679,0.55886483){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}20\end{tabular}}}}%
+    \put(0.9104,0.17953827){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}15\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=7]{CurvaNurbs_3D_Plot_svg-tex.pdf}}%
-    \put(0.30303349,0.11353828){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}5\end{tabular}}}}%
+    \put(0.06188173,0.62565432){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}20\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=8]{CurvaNurbs_3D_Plot_svg-tex.pdf}}%
-    \put(0.65337321,0.09606938){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}5\end{tabular}}}}%
+    \put(0.77812099,0.14061728){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}10\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=9]{CurvaNurbs_3D_Plot_svg-tex.pdf}}%
-    \put(0.39173445,0.0727488){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0\end{tabular}}}}%
+    \put(0.25087407,0.12436049){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}5~~\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=10]{CurvaNurbs_3D_Plot_svg-tex.pdf}}%
-    \put(0.53777512,0.06477273){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0\end{tabular}}}}%
+    \put(0.64584198,0.1016963){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}5\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=11]{CurvaNurbs_3D_Plot_svg-tex.pdf}}%
+    \put(0.35237531,0.07363704){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0~~\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=12]{CurvaNurbs_3D_Plot_svg-tex.pdf}}%
+    \put(0.51356296,0.06277531){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0\end{tabular}}}}%
   \end{picture}%
 \endgroup%

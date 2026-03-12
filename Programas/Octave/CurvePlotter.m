@@ -48,7 +48,7 @@ else
 end
 
 % 4. Configuración de la figura y el trazado
-figure;
+figure('Position', [100, 100, 800, 600]);
 hold on;
 grid on;
 
@@ -57,32 +57,59 @@ if N > 1
     plot3(C(:,1), C(:,2), C(:,3), 'b-', 'LineWidth', 2);
     disp('Curva trazada exitosamente.');
 else
-    disp('Advertencia: El archivo de curva no contiene suficientes puntos (N < 2) para dibujar una línea.');
+    disp('Advertencia: El archivo de curva no contiene suficientes puntos.');
 end
 
-% Trazar el Polígono de Control (líneas rojas discontinuas)
-plot3(PC(:,1), PC(:,2), PC(:,3), 'r--', 'LineWidth', 1, 'DisplayName', 'Polígono de Control');
+% Trazar el Polígono y Puntos de Control (rojo discontinuo con círculos)
+plot3(PC(:,1), PC(:,2), PC(:,3), 'r--o', 'LineWidth', 1, 'MarkerSize', 5, 'MarkerFaceColor', 'r');
 
-% Trazar los Puntos de Control (círculos rojos)
-plot3(PC(:,1), PC(:,2), PC(:,3), 'ro', 'MarkerSize', 4, 'MarkerFaceColor', 'r', 'DisplayName', 'Puntos de Control');
+% 5. Configuración de la visualización (EJES DINÁMICOS Y LIMPIOS)
+min_coords = min([C; PC]); % Vector 1x3 con los mínimos [X, Y, Z]
+max_coords = max([C; PC]); % Vector 1x3 con los máximos [X, Y, Z]
 
-% 5. Configuración de la visualización
-%title('Curva NURBS 3D con Polígono de Control', 'FontSize', 14);
-%xlabel('Eje X', 'FontSize', 12);
-%ylabel('Eje Y', 'FontSize', 12);
-%zlabel('Eje Z', 'FontSize', 12);
+% Redondear a enteros para tener límites de caja perfectos
+min_X = floor(min_coords(1));
+max_X = ceil(max_coords(1));
+min_Y = floor(min_coords(2));
+max_Y = ceil(max_coords(2));
+min_Z = floor(min_coords(3));
+max_Z = ceil(max_coords(3));
 
-% Ajustar límites de los ejes (usando la matriz C transpuesta correctamente)
-min_coords = min([C; PC]);
-max_coords = max([C; PC]);
-margen = 2;
-axis([min_coords(1)-margen max_coords(1)+margen ...
-      min_coords(2)-margen max_coords(2)+margen ...
-      min_coords(3)-margen max_coords(3)+margen]);
+% Establecer límites cerrados a números enteros
+xlim([min_X, max_X]);
+ylim([min_Y, max_Y]);
+zlim([min_Z, max_Z]);
+
+% Forzar las marcas de los ejes a saltos de 5 en 5 (dado que el rango es ~20)
+set(gca, 'XTick', min_X:5:max_X);
+y_ticks = min_Y:5:max_Y;
+set(gca, 'YTick', y_ticks);
+z_ticks = linspace(min_Z, max_Z, 3);
+set(gca, 'ZTick', z_ticks);
+
+% Sacar las marcas hacia afuera con una longitud prudente
+set(gca, 'TickDir', 'out', 'TickLength', [0.1, 0.1]);
+
+% ** TRUCO CON TeX: Espacios insecables a la derecha para el eje Y **
+y_labels = cell(length(y_ticks), 1);
+for i = 1:length(y_ticks)
+    % Las virgulillas (~) empujan el número a la izquierda
+    y_labels{i} = sprintf('%d~~', y_ticks(i));
+end
+set(gca, 'TickLabelInterpreter', 'tex');
+set(gca, 'YTickLabel', y_labels);
+
+% Etiquetas de los ejes alejadas con saltos de línea \n
+xlabel(sprintf('X\n\n\n'));
+ylabel(sprintf('\n\n\n Y'));
+zlabel(sprintf('Z\n\n\n'));
 
 view(3);
 
-set(gca, 'Box', 'on');
+% Margen interno para que no se recorte nada al exportar a SVG
+set(gca, 'Position', [0.15 0.15 0.7 0.8]);
+
+hold off;
 
 % 6. Guardar en formato SVG
 print(NOMBRE_ARCHIVO_SVG, '-dsvg');

@@ -3,24 +3,25 @@
 \contentsline {chapter}{\numberline {1}Introducción}{1}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Contexto y relación con el método de elementos finitos}{1}{section.1.1}%
 \contentsline {section}{\numberline {1.2}Evolución del análisis isogeométrico}{2}{section.1.2}%
-\contentsline {section}{\numberline {1.3}Objetivos}{2}{section.1.3}%
+\contentsline {section}{\numberline {1.3}Objetivos}{3}{section.1.3}%
 \contentsline {section}{\numberline {1.4}El problema modelo: la ecuación de Poisson}{3}{section.1.4}%
 \contentsline {subsection}{\numberline {1.4.1}Formulación fuerte (o clásica)}{3}{subsection.1.4.1}%
-\contentsline {subsection}{\numberline {1.4.2}Formulación variacional (o débil)}{3}{subsection.1.4.2}%
+\contentsline {subsection}{\numberline {1.4.2}Formulación variacional (o débil)}{4}{subsection.1.4.2}%
 \contentsline {section}{\numberline {1.5}Estructura del documento}{4}{section.1.5}%
-\contentsline {chapter}{\numberline {2}Construcción de estructuras mediante CAD}{5}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Bézier}{5}{section.2.1}%
-\contentsline {subsection}{\numberline {2.1.1}Funciones base}{5}{subsection.2.1.1}%
-\contentsline {subsection}{\numberline {2.1.2}Curvas}{6}{subsection.2.1.2}%
+\contentsline {chapter}{\numberline {2}Construcción de curvas y superficies mediante CAD}{5}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Curvas de Bézier}{5}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Polinomios de Bernstein}{5}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Propiedades}{6}{subsection.2.1.2}%
 \contentsline {section}{\numberline {2.2}B-Splines}{7}{section.2.2}%
-\contentsline {subsection}{\numberline {2.2.1}Funciones base}{7}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.1}Funciones base B-Spline}{7}{subsection.2.2.1}%
 \contentsline {subsection}{\numberline {2.2.2}Curvas}{8}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}Superficies}{8}{subsection.2.2.3}%
 \contentsline {section}{\numberline {2.3}NURBS}{8}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}Funciones base}{8}{subsection.2.3.1}%
-\contentsline {subsection}{\numberline {2.3.2}Curvas}{8}{subsection.2.3.2}%
-\contentsline {section}{\numberline {2.4}Creación de superficies (producto tensorial)}{9}{section.2.4}%
-\contentsline {section}{\numberline {2.5}Refinamiento de nudos (h-refinement)}{10}{section.2.5}%
-\contentsline {subsection}{\numberline {2.5.1}Implementación de la inserción de nudos}{11}{subsection.2.5.1}%
+\contentsline {subsection}{\numberline {2.3.1}Funciones base}{9}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Curvas}{9}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.3}Superficies}{9}{subsection.2.3.3}%
+\contentsline {section}{\numberline {2.4}Inserción de nudos}{10}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Implementación de la inserción de nudos}{11}{subsection.2.4.1}%
 \contentsline {paragraph}{Caso curvas (1D):}{11}{section*.9}%
 \contentsline {paragraph}{Caso superficies (2D):}{11}{section*.10}%
 \contentsline {chapter}{\numberline {3}Análisis isogeométrico}{13}{chapter.3}%
@@ -40,53 +41,61 @@
 \contentsline {subsection}{\numberline {3.5.3}Imposición de condiciones de contorno}{17}{subsection.3.5.3}%
 \contentsline {subsubsection}{Tipo Dirichlet}{17}{section*.14}%
 \contentsline {subsubsection}{Tipo Neumann}{17}{section*.15}%
-\contentsline {subsubsection}{Tipo Robin o mixtas}{18}{section*.16}%
+\contentsline {subsubsection}{Tipo Robin o mixtas}{17}{section*.16}%
 \contentsline {section}{\numberline {3.6}Convergencia en L2 y H1 y tiempo de computación teórico}{18}{section.3.6}%
 \contentsline {subsection}{\numberline {3.6.1}Convergencia}{18}{subsection.3.6.1}%
 \contentsline {subsection}{\numberline {3.6.2}Tiempo de computación}{18}{subsection.3.6.2}%
 \contentsline {subsubsection}{Fase de evaluación}{18}{section*.17}%
-\contentsline {subsubsection}{Fase de ensamblado}{19}{section*.18}%
-\contentsline {subsubsection}{Fase de resolución}{19}{section*.19}%
-\contentsline {chapter}{\numberline {4}Implementación computacional}{21}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Lenguaje y librerías utilizados}{21}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Métodos numéricos empleados}{21}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Estructura del programa}{21}{section.4.3}%
-\contentsline {chapter}{\numberline {5}Resultados.}{23}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Resultados en 1D}{23}{section.5.1}%
-\contentsline {subsubsection}{Problema 1}{23}{section*.20}%
-\contentsline {subsubsection}{Problema 2}{23}{section*.22}%
-\contentsline {section}{\numberline {5.2}Resultados en 2D}{24}{section.5.2}%
-\contentsline {subsubsection}{Problema 1}{24}{section*.25}%
-\contentsline {subsubsection}{Problema 2}{25}{section*.27}%
-\contentsline {chapter}{\numberline {6}Conclusiones}{27}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Trabajo futuro}{27}{section.6.1}%
-\contentsline {chapter}{Bibliograf\'{\i }a}{29}{section*.30}%
-\contentsline {chapter}{Anexos}{31}{chapter*.33}%
-\contentsline {section}{\numberline {A.1}Método de los elementos finitos.}{31}{section.6.1}%
-\contentsline {section}{\numberline {A.2}Demostraciones omitidas}{34}{section.6.2}%
-\contentsline {subsection}{\numberline {A.2.1}Paso de Solución Fuerte a Solución Variacional}{34}{subsection.6.2.1}%
-\contentsline {subsection}{\numberline {A.2.2}Existencia y unicidad de la solución variacional (lema de Lax-Milgram)}{34}{subsection.6.2.2}%
-\contentsline {subsection}{\numberline {A.2.3}Equivalencia de la solución de la formulación variacional y fuerte}{36}{subsection.6.2.3}%
-\contentsline {subsection}{\numberline {A.2.4}Equivalencia de normas}{37}{subsection.6.2.4}%
-\contentsline {subsection}{\numberline {A.2.5}Condiciones del lema de Céa}{38}{subsection.6.2.5}%
-\contentsline {subsection}{\numberline {A.2.6}Continuidad de la forma lineal dual}{38}{subsection.6.2.6}%
-\contentsline {subsection}{\numberline {A.2.7}Propiedades de Bézier}{39}{subsection.6.2.7}%
-\contentsline {subsubsection}{Funciones base}{39}{section*.34}%
-\contentsline {subsubsection}{Curvas}{39}{section*.35}%
-\contentsline {subsection}{\numberline {A.2.8}Propiedades de los B-Splines}{40}{subsection.6.2.8}%
-\contentsline {subsubsection}{Funciones base}{40}{section*.36}%
-\contentsline {subsubsection}{Curvas}{42}{section*.37}%
-\contentsline {subsection}{\numberline {A.2.9}Igualdad de las nuevas funciones base bajo refinamiento}{43}{subsection.6.2.9}%
-\contentsline {subsection}{\numberline {A.2.10}Equivalencia de curvas bajo refinamiento}{44}{subsection.6.2.10}%
-\contentsline {subsection}{\numberline {A.2.11}Propiedades del sistema}{45}{subsection.6.2.11}%
+\contentsline {subsubsection}{Fase de ensamblado}{18}{section*.18}%
+\contentsline {subsubsection}{Fase de resolución}{18}{section*.19}%
+\contentsline {chapter}{\numberline {4}Implementación computacional}{19}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Lenguaje y librerías utilizados}{19}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Métodos numéricos empleados}{19}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Estructura del programa}{19}{section.4.3}%
+\contentsline {chapter}{\numberline {5}Resultados.}{21}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Resultados en 1D}{21}{section.5.1}%
+\contentsline {subsubsection}{Problema 1}{21}{section*.20}%
+\contentsline {subsubsection}{Problema 2}{21}{section*.22}%
+\contentsline {section}{\numberline {5.2}Resultados en 2D}{22}{section.5.2}%
+\contentsline {subsubsection}{Problema 1}{22}{section*.25}%
+\contentsline {subsubsection}{Problema 2}{23}{section*.27}%
+\contentsline {chapter}{\numberline {6}Conclusiones}{25}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Trabajo futuro}{25}{section.6.1}%
+\contentsline {chapter}{Bibliograf\'{\i }a}{27}{section*.30}%
+\contentsline {chapter}{Anexos}{29}{chapter*.33}%
+\contentsline {section}{\numberline {A.1}Método de los elementos finitos.}{29}{section.6.1}%
+\contentsline {section}{\numberline {A.2}Demostraciones omitidas}{32}{section.6.2}%
+\contentsline {subsection}{\numberline {A.2.1}Paso de Solución Fuerte a Solución Variacional}{32}{subsection.6.2.1}%
+\contentsline {subsection}{\numberline {A.2.2}Existencia y unicidad de la solución variacional (lema de Lax-Milgram)}{32}{subsection.6.2.2}%
+\contentsline {subsection}{\numberline {A.2.3}Equivalencia de la solución de la formulación variacional y fuerte}{34}{subsection.6.2.3}%
+\contentsline {subsection}{\numberline {A.2.4}Equivalencia de normas}{35}{subsection.6.2.4}%
+\contentsline {subsection}{\numberline {A.2.5}Condiciones del lema de Céa}{36}{subsection.6.2.5}%
+\contentsline {subsection}{\numberline {A.2.6}Continuidad de la forma lineal dual}{36}{subsection.6.2.6}%
+\contentsline {subsection}{\numberline {A.2.7}Propiedades de Bézier}{37}{subsection.6.2.7}%
+\contentsline {subsubsection}{Funciones base}{37}{section*.34}%
+\contentsline {subsubsection}{Curvas}{37}{section*.35}%
+\contentsline {subsection}{\numberline {A.2.8}Propiedades de los B-Splines}{38}{subsection.6.2.8}%
+\contentsline {subsubsection}{Funciones base}{38}{section*.36}%
+\contentsline {subsubsection}{Curvas}{40}{section*.37}%
+\contentsline {subsection}{\numberline {A.2.9}Derivada de las funciones base NURBS}{41}{subsection.6.2.9}%
+\contentsline {subsection}{\numberline {A.2.10}Derivada de la curva NURBS}{42}{subsection.6.2.10}%
+\contentsline {subsection}{\numberline {A.2.11}Comportamiento direccional de las superficies NURBS}{42}{subsection.6.2.11}%
+\contentsline {subsection}{\numberline {A.2.12}Igualdad de las nuevas funciones base bajo refinamiento}{42}{subsection.6.2.12}%
+\contentsline {subsection}{\numberline {A.2.13}Equivalencia de curvas bajo refinamiento}{43}{subsection.6.2.13}%
+\contentsline {subsection}{\numberline {A.2.14}Propiedades del sistema}{44}{subsection.6.2.14}%
 \contentsline {section}{\numberline {A.3}Base teórica de los algoritmos de condiciones de contorno}{46}{section.6.3}%
-\contentsline {subsection}{\numberline {A.3.1}Tipo Dirichlet}{47}{subsection.6.3.1}%
-\contentsline {subsection}{\numberline {A.3.2}Tipo Neumann}{47}{subsection.6.3.2}%
-\contentsline {subsection}{\numberline {A.3.3}Tipo Robin o mixtas}{47}{subsection.6.3.3}%
-\contentsline {section}{\numberline {A.4}Código omitido}{47}{section.6.4}%
-\contentsline {subsection}{\numberline {A.4.1}FEM}{47}{subsection.6.4.1}%
-\contentsline {subsection}{\numberline {A.4.2}Figuras de Bézier}{49}{subsection.6.4.2}%
-\contentsline {subsection}{\numberline {A.4.3}Código fundamental para el funcionamiento en C++}{51}{subsection.6.4.3}%
-\contentsline {subsection}{\numberline {A.4.4}Curvas de NURBS}{86}{subsection.6.4.4}%
-\contentsline {subsection}{\numberline {A.4.5}Superficies de NURBS}{87}{subsection.6.4.5}%
-\contentsline {subsection}{\numberline {A.4.6}Implementaciones de IGA}{88}{subsection.6.4.6}%
+\contentsline {subsection}{\numberline {A.3.1}Tipo Dirichlet}{46}{subsection.6.3.1}%
+\contentsline {subsection}{\numberline {A.3.2}Tipo Neumann}{46}{subsection.6.3.2}%
+\contentsline {subsection}{\numberline {A.3.3}Tipo Robin o mixtas}{46}{subsection.6.3.3}%
+\contentsline {section}{\numberline {A.4}Explicación y parámetros de las figuras}{46}{section.6.4}%
+\contentsline {subsection}{\numberline {A.4.1}Figura 1.1}{46}{subsection.6.4.1}%
+\contentsline {subsection}{\numberline {A.4.2}Figura 2.1}{47}{subsection.6.4.2}%
+\contentsline {subsection}{\numberline {A.4.3}Figura 2.2}{47}{subsection.6.4.3}%
+\contentsline {subsection}{\numberline {A.4.4}Figura 2.3}{47}{subsection.6.4.4}%
+\contentsline {section}{\numberline {A.5}Código omitido}{50}{section.6.5}%
+\contentsline {subsection}{\numberline {A.5.1}FEM}{50}{subsection.6.5.1}%
+\contentsline {subsection}{\numberline {A.5.2}Figuras de Bézier}{51}{subsection.6.5.2}%
+\contentsline {subsection}{\numberline {A.5.3}Código fundamental para el funcionamiento en C++}{52}{subsection.6.5.3}%
+\contentsline {subsection}{\numberline {A.5.4}Curvas de NURBS}{87}{subsection.6.5.4}%
+\contentsline {subsection}{\numberline {A.5.5}Superficies de NURBS}{89}{subsection.6.5.5}%
+\contentsline {subsection}{\numberline {A.5.6}Implementaciones de IGA}{90}{subsection.6.5.6}%

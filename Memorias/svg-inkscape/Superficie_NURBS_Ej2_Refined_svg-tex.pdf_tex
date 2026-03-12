@@ -38,7 +38,7 @@
   \newcommand*\fsize{\dimexpr\f@size pt\relax}%
   \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
   \ifx\svgwidth\undefined%
-    \setlength{\unitlength}{418bp}%
+    \setlength{\unitlength}{405bp}%
     \ifx\svgscale\undefined%
       \relax%
     \else%
@@ -50,35 +50,43 @@
   \global\let\svgwidth\undefined%
   \global\let\svgscale\undefined%
   \makeatother%
-  \begin{picture}(1,0.75119617)%
+  \begin{picture}(1,0.75061728)%
     \lineheight{1}%
     \setlength\tabcolsep{0pt}%
     \put(0,0){\includegraphics[width=\unitlength,page=1]{Superficie_NURBS_Ej2_Refined_svg-tex.pdf}}%
-    \put(0.09006579,0.2187177){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0\end{tabular}}}}%
-    \put(0.06853469,0.28341627){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0.5\end{tabular}}}}%
-    \put(0.09006579,0.34811483){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}1\end{tabular}}}}%
-    \put(0.06853469,0.4128134){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}1.5\end{tabular}}}}%
-    \put(0.09006579,0.47751196){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}2\end{tabular}}}}%
+    \put(0.13345802,0.08552346){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l} Y\end{tabular}}}}%
+    \put(0.76877037,0.08658765){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}X\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=2]{Superficie_NURBS_Ej2_Refined_svg-tex.pdf}}%
-    \put(0.9323756,0.28073684){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}1\end{tabular}}}}%
+    \put(0.07669654,0.29343951){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=3]{Superficie_NURBS_Ej2_Refined_svg-tex.pdf}}%
-    \put(0.86133493,0.22470574){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0.5\end{tabular}}}}%
+    \put(0.05447432,0.37649383){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0.5\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=4]{Superficie_NURBS_Ej2_Refined_svg-tex.pdf}}%
-    \put(0.08777177,0.17629426){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}-1\end{tabular}}}}%
+    \put(0.04787358,0.22580494){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}1~~\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=5]{Superficie_NURBS_Ej2_Refined_svg-tex.pdf}}%
-    \put(0.79029426,0.16867464){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0\end{tabular}}}}%
+    \put(0.01249901,0.45090617){\color[rgb]{0.14901961,0.14901961,0.14901961}\rotatebox{90}{\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Z\end{tabular}}}}}%
+    \put(0.07669654,0.45954815){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}1\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=6]{Superficie_NURBS_Ej2_Refined_svg-tex.pdf}}%
-    \put(0.18928636,0.14394498){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}-0.5\end{tabular}}}}%
+    \put(0.05447432,0.54260074){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}1.5\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=7]{Superficie_NURBS_Ej2_Refined_svg-tex.pdf}}%
-    \put(0.71925359,0.11264593){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}-0.5\end{tabular}}}}%
+    \put(0.07669654,0.62565432){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}2\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=8]{Superficie_NURBS_Ej2_Refined_svg-tex.pdf}}%
-    \put(0.34104067,0.11159569){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0\end{tabular}}}}%
+    \put(0.9104,0.17953827){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}1\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=9]{Superficie_NURBS_Ej2_Refined_svg-tex.pdf}}%
-    \put(0.44255502,0.07924641){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0.5\end{tabular}}}}%
+    \put(0.10177704,0.18776296){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0.5~~\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=10]{Superficie_NURBS_Ej2_Refined_svg-tex.pdf}}%
-    \put(0.64821531,0.05661483){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}-1\end{tabular}}}}%
+    \put(0.81119012,0.15034815){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0.5\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=11]{Superficie_NURBS_Ej2_Refined_svg-tex.pdf}}%
-    \put(0.58713158,0.04689713){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}1\end{tabular}}}}%
+    \put(0.20012469,0.14972099){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0~~\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=12]{Superficie_NURBS_Ej2_Refined_svg-tex.pdf}}%
+    \put(0.71198025,0.12115556){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=13]{Superficie_NURBS_Ej2_Refined_svg-tex.pdf}}%
+    \put(0.24662074,0.11167901){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}-0.5~~\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=14]{Superficie_NURBS_Ej2_Refined_svg-tex.pdf}}%
+    \put(0.61277284,0.09196543){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}-0.5\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=15]{Superficie_NURBS_Ej2_Refined_svg-tex.pdf}}%
+    \put(0.3449679,0.07363704){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}-1~~\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=16]{Superficie_NURBS_Ej2_Refined_svg-tex.pdf}}%
+    \put(0.51356296,0.06277531){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}-1\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=17]{Superficie_NURBS_Ej2_Refined_svg-tex.pdf}}%
   \end{picture}%
 \endgroup%

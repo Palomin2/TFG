@@ -24,17 +24,15 @@ if(it==1)
     plot3(dataCtrlX(:,j),dataCtrlY(:,j),dataCtrlZ(:,j), color='r');
   endfor
 elseif(it==2)
-  data1=dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\BasisFuncts.txt');
+  data1=dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\RatBasisFuncts.txt');
   data2=dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\RatBasisFuncts_Derivates.txt');
 
   [n1 n2] = size(data2);
   hold on
   for i=1:n1
-    plot(data2(i,:), color='r');
+    plot(data1(i,:), color='r');
     #pause(0.5)
   endfor
-
-  plot(data2(4,:), color='b');
   hold off
 elseif(it==3)
   data1=dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\Curvas\CurvaEj1.txt');
@@ -124,27 +122,63 @@ elseif(it==6)
   endfor
 
   elseif(it==7)
-  data1=dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\BasisFuncts2.txt');
-
+  data1 = dlmread('C:\Users\carlo\OneDrive\Escritorio\Uni\TFG\DataFiles\Nurbs\BasisFuncts2.txt');
 
   [n1 n2] = size(data1);
   colores = {'r', 'g', 'b', 'm', 'c', [1, 0.5, 0], [0.5, 0.5, 0.5], [0.2, 0.8, 0.2]};
   num_colores = length(colores);
 
   figure;
+  % --- AUMENTAMOS LOS MÁRGENES DE LA FIGURA ---
+  % Dejamos el mismo margen del 15% por la izquierda y por abajo
+  set(gca, 'Position', [0.15 0.15 0.8 0.8]);
+  % --------------------------------------------
+
   hold on;
   grid on;
+
+  % --- AÑADIMOS ESPACIO A LOS LADOS (10% del ancho) ---
+  margen_x = 0.1 * (n2 - 1);
+  limite_izq = 1 - margen_x;
+  limite_der = n2 + margen_x;
+
+  axis([limite_izq limite_der -0.2 1.2]);
+  box on;
+  % ----------------------------------------------------
+
+  % --- BLOQUE PARA DESPLAZAR LOS NÚMEROS DE LOS EJES ---
+  posiciones_ticks_fisicas = [1, 21, 41, 61, 81, 101];
+  etiquetas_deseadas = {'0', '0.2', '0.4', '0.6', '0.8', '1'};
+  yticks_vals = [0, 0.2, 0.4, 0.6, 0.8, 1];
+
+  set(gca, 'XTick', posiciones_ticks_fisicas);
+  set(gca, 'YTick', yticks_vals);
+  set(gca, 'XTickLabel', []);
+  set(gca, 'YTickLabel', []);
+
+  % Ajustamos el desplazamiento:
+  desplazamiento_y = -0.32;
+  desplazamiento_x = limite_izq - 10; % Lo alejamos 9 puntos desde el nuevo borde izquierdo
+
+  for k = 1:length(posiciones_ticks_fisicas)
+      text(posiciones_ticks_fisicas(k), desplazamiento_y, etiquetas_deseadas{k}, ...
+          'HorizontalAlignment', 'center', 'Clipping', 'off');
+  end
+
+  for k = 1:length(yticks_vals)
+      text(desplazamiento_x, yticks_vals(k), sprintf('%g', yticks_vals(k)), ...
+          'HorizontalAlignment', 'right', 'Clipping', 'off');
+  end
+  % -----------------------------------------------------
 
   for i = 1:n1
       color_index = mod(i - 1, num_colores) + 1;
       plot(data1(i,:), 'color', colores{color_index}, 'LineWidth', 1.5);
-  endfor
+  end
   hold off;
 
-  xlim([1, n2]);
-  posiciones_ticks_fisicas = [1, 251, 501, 751, 1001];
-  etiquetas_deseadas = {'0', '0.25', '0.5', '0.75', '1'};
-  set(gca, 'xtick', posiciones_ticks_fisicas, 'xticklabel', etiquetas_deseadas);
+
+
   nombre_archivo_svg = 'funciones_base_NURBS_2.svg';
   print(nombre_archivo_svg, '-dsvg');
   elseif(it==8)

@@ -16,12 +16,12 @@ Total de caras empleadas:
 
 Capítulo 1: 4
 Capítulo 2: 7
-Capítulo 3: 7
+Capítulo 3: 6
 Capítulo 4: 2
 Capítulo 5: 3
 Capítulo 6: 1
 
-Total: 24
+Total: 23
 
 Dudas: 
 -Debo citar en bibliografia la documentación de la libreria de Eigen?

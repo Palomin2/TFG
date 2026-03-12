@@ -1177,11 +1177,11 @@ int main(int argc, char *argv[]) {
             //std::cout << "Iteración iniciada " << i<< std::endl;
             int span = FindSpan(Nurbs, t, p, Nurbs.size()-2-p);
             ders = RatDersBasisFuns(span,t,p,1,Nurbs, weights);
-            ders.PrintMatrix();
-            std::cout<<"---------------------"<<std::endl;
+            //ders.PrintMatrix();
+            //std::cout<<"---------------------"<<std::endl;
             for(int j = span-p; j<=span;j++){
                 if(j>=0) {
-                    sol(j,i)=ders(1,j-span+p);
+                    sol(j,i)=ders(0,j-span+p);
                 }
                 else{
                     std::cout<<"Función base con indices " << j<<" "<< p << " no ha sido dibujada en el punto t="<< t << std::endl;
@@ -1192,7 +1192,7 @@ int main(int argc, char *argv[]) {
             }
         }
         
-        Write_BasisFunctions(sol, "C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/RatBasisFuncts_Derivates");
+        Write_BasisFunctions(sol, "C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/RatBasisFuncts");
         auto end = std::chrono::high_resolution_clock::now();
         auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
     
