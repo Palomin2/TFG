@@ -6,45 +6,45 @@ The style file: unsrtnat.bst
 Reallocating 'name_of_file' (item size: 1) to 8 items.
 Database file #1: Biblio2.bib
 Warning--there's a number but no series in ahlberg_theory_2016
-You've used 19 entries,
+You've used 25 entries,
             2481 wiz_defined-function locations,
-            691 strings with 8772 characters,
-and the built_in function-call counts, 7216 in all, are:
-= -- 646
-> -- 355
+            736 strings with 10338 characters,
+and the built_in function-call counts, 9815 in all, are:
+= -- 877
+> -- 511
 < -- 11
-+ -- 143
-- -- 104
-* -- 565
-:= -- 1213
-add.period$ -- 94
-call.type$ -- 19
-change.case$ -- 28
-chr.to.int$ -- 18
-cite$ -- 20
-duplicate$ -- 360
-empty$ -- 635
-format.name$ -- 129
-if$ -- 1518
++ -- 201
+- -- 150
+* -- 803
+:= -- 1652
+add.period$ -- 124
+call.type$ -- 25
+change.case$ -- 40
+chr.to.int$ -- 24
+cite$ -- 26
+duplicate$ -- 472
+empty$ -- 843
+format.name$ -- 181
+if$ -- 2053
 int.to.chr$ -- 2
-int.to.str$ -- 20
-missing$ -- 29
-newline$ -- 133
-num.names$ -- 57
-pop$ -- 141
+int.to.str$ -- 26
+missing$ -- 35
+newline$ -- 175
+num.names$ -- 75
+pop$ -- 171
 preamble$ -- 1
-purify$ -- 19
+purify$ -- 25
 quote$ -- 0
-skip$ -- 185
+skip$ -- 244
 stack$ -- 0
-substring$ -- 256
-swap$ -- 46
+substring$ -- 374
+swap$ -- 61
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 103
+type$ -- 145
 warning$ -- 1
-while$ -- 54
+while$ -- 74
 width$ -- 0
-write$ -- 310
+write$ -- 412
 (There was 1 warning)

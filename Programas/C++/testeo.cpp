@@ -435,11 +435,11 @@ int main(int argc, char *argv[]) {
     }
 
     if(stoi(argv[1])==10){ //Test CurvePointRational
-        iMatrix CtrlPts = ReadDataFile_Matrix("C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/CtrlPts/EjCurva3d.txt");        
+        iMatrix CtrlPts = ReadDataFile_Matrix("C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/CtrlPts/EjCurvaCirculo.txt");        
         CtrlPts.PrintMatrix();
-        std::vector<double> KnotVector={0,0,0,0,0.5,1,1,1,1};
-        std::vector<double> Weights={1,1,5,1,1};
-        int p=3;
+        int p=2;
+        std::vector<double> KnotVector={0, 0, 0, 0.25, 0.25, 0.5, 0.5, 0.75, 0.75, 1, 1, 1};
+        std::vector<double> Weights={1, 1, 1, 1, 1, 1, 1, 1, 1};
         int dim=3;
         double N_Steps = 1000;
         iMatrix<double> sol(dim,N_Steps+1);
@@ -454,7 +454,7 @@ int main(int argc, char *argv[]) {
             //std::cout << eval[0] << "|" << eval[1] << std::endl;
             sol.SetCol(i,eval);
         }
-        Write_Curve(sol,"C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/Curvas/EjCurva3d.txt");
+        Write_Curve(sol,"C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/Curvas/EjCurvaCirculo1.txt");
         std::cout<<"fin 10"<<endl;
     }
     else if(stoi(argv[1])==11){ //test RationalBasisFuns
@@ -493,21 +493,21 @@ int main(int argc, char *argv[]) {
 
         int p=2;
         double N_Steps = 100;
-        std::vector<double>KnotVector= {0,0,0,0.5,1,2,2.5,3,3,3};
-        std::vector<double>WeightVector= {1,1,2,3,2,1,1};
+        std::vector<double> KnotVector={0,0,0,0.25,0.25,0.5,0.5,0.75,0.75,1,1,1};
+        std::vector<double>WeightVector= {1, 1, 1, 1, 1, 1, 1, 1, 1};
         iMatrix<double> sol(KnotVector.size()-p-1,N_Steps+1);
         //std::vector<double> Nurb(NurbsVector.size());
         double Step=1/(N_Steps);
         for(unsigned int i = 0; i<N_Steps+1; i++){
-            double t=Step*i*3;
+            double t=Step*i;
             //std::cout << "Iteración iniciada " << i<< std::endl;
             int span = FindSpan(KnotVector, t, p, KnotVector.size()-2-p);
             std::vector<double> eval= BasisFuns(span, t , p, KnotVector);
-            std::cout<< "j sera " << span-p<< std::endl;
+            //std::cout<< "j sera " << span-p<< std::endl;
             for(int j = span-p; j<=span;j++){
                 if(j>=0) {
                     sol(j,i)=eval[j-span+p];                    
-                    std::cout<<WeightVector[j]<<"|";
+                    //std::cout<<WeightVector[j]<<"|";
                 }
                 else{
                     std::cout<<"Función base con indices " << j<<" "<< p << " no ha sido dibujada en el punto t="<< t << std::endl;
@@ -516,10 +516,10 @@ int main(int argc, char *argv[]) {
                 //std::cout<< "j: " << j<< " span " << span << " t:" << t << " i: " << i<<std::endl;
                 
             }
-            std::cout<< " span " << span << " t:" << t <<std::endl;
+            //std::cout<< " span " << span << " t:" << t <<std::endl;
             //std::cout << "Iteración completada " << i<< std::endl;
         }
-        Write_BasisFunctions(sol, "C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/BasisFuncts2");
+        Write_BasisFunctions(sol, "C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/BasisFunctsCircle");
 
 
 
@@ -1159,15 +1159,16 @@ int main(int argc, char *argv[]) {
     }
 
     if(stoi(argv[1])==24){//test RatDersBasisFuns
-        int p=3;
-        std::vector<double> Nurbs={0,0,0,0,0.5,1,1,1,1};
-        std::vector<double> weights={1,1,5,1,1};
+        int p=2;
+        std::vector<double> Nurbs={0, 0, 0, 0.25, 0.25, 0.5, 0.5, 0.75, 0.75, 1, 1, 1};
+        std::vector<double> weights={1, sqrt(2)/2, 1, sqrt(2)/2, 1, sqrt(2)/2, 1, sqrt(2)/2, 1};
 
 
         double N_Steps = 1000;
         std::vector<double> eval(Nurbs.size()-p);
         iMatrix<double> ders(p+1,p+1);
         iMatrix<double> sol(Nurbs.size()-p,N_Steps+1);
+        iMatrix<double> solders(Nurbs.size()-p,N_Steps+1);
         //std::vector<double> Nurb(NurbsVector.size());
         double Step=1/(N_Steps);
         auto start = std::chrono::high_resolution_clock::now();
@@ -1182,6 +1183,7 @@ int main(int argc, char *argv[]) {
             for(int j = span-p; j<=span;j++){
                 if(j>=0) {
                     sol(j,i)=ders(0,j-span+p);
+                    solders(j,i)=ders(1,j-span+p);
                 }
                 else{
                     std::cout<<"Función base con indices " << j<<" "<< p << " no ha sido dibujada en el punto t="<< t << std::endl;
@@ -1192,7 +1194,8 @@ int main(int argc, char *argv[]) {
             }
         }
         
-        Write_BasisFunctions(sol, "C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/RatBasisFuncts");
+        Write_BasisFunctions(sol, "C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/RatBasisFunctsCircle2");
+        Write_BasisFunctions(solders, "C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/RatBasisFunctsCircle2Ders");
         auto end = std::chrono::high_resolution_clock::now();
         auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
     

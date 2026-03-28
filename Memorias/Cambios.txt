@@ -25,3 +25,6 @@ Total: 23
 
 Dudas: 
 -Debo citar en bibliografia la documentación de la libreria de Eigen?
+
+
+Fundamentos del analisis isogeometrico y resolución numerica del problema de Poisson.

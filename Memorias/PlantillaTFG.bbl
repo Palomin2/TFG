@@ -1,4 +1,4 @@
-\begin{thebibliography}{19}
+\begin{thebibliography}{25}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -53,6 +53,51 @@ J.H. Ahlberg, E.N. Nilson, J.L. Walsh, and R.~Bellman.
 \newblock ISBN 978-1-4832-2295-0.
 \newblock URL \url{https://books.google.es/books?id=3bZlDAAAQBAJ}.
 
+\bibitem[Buffa et~al.(2011)Buffa, de~Falco, and
+  Sangalli]{buffa_isogeometric_2011}
+A.~Buffa, C.~de~Falco, and G.~Sangalli.
+\newblock {IsoGeometric} {Analysis}: {Stable} elements for the {2D} {Stokes}
+  equation.
+\newblock \emph{International Journal for Numerical Methods in Fluids},
+  65\penalty0 (11-12):\penalty0 1407--1422, 2011.
+\newblock \doi{https://doi.org/10.1002/fld.2337}.
+\newblock URL \url{https://onlinelibrary.wiley.com/doi/abs/10.1002/fld.2337}.
+\newblock \_eprint: https://onlinelibrary.wiley.com/doi/pdf/10.1002/fld.2337.
+
+\bibitem[Veiga et~al.(2009)Veiga, Buffa, Rivas, and
+  Sangalli]{veiga_estimates_2009}
+L.~Veiga, Annalisa Buffa, Judith Rivas, and G.~Sangalli.
+\newblock Some estimates for h–p–k-refinement in {Isogeometric} {Analysis}.
+\newblock \emph{Numerische Mathematik}, 118:\penalty0 271--305, January 2009.
+\newblock \doi{10.1007/s00211-010-0338-z}.
+
+\bibitem[Cottrell et~al.(2006)Cottrell, Reali, Bazilevs, and
+  Hughes]{cottrell_isogeometric_2006}
+J.A. Cottrell, A~Reali, Yuri Bazilevs, and Thomas Hughes.
+\newblock Isogeometric analysis of structural vibrations.
+\newblock \emph{Computer Methods in Applied Mechanics and Engineering - COMPUT
+  METHOD APPL MECH ENG}, 195, August 2006.
+\newblock \doi{10.1016/j.cma.2005.09.027}.
+
+\bibitem[A et~al.(2011)A, Giannelli, B, and Simeon]{a_hierarchical_2011}
+A.~A, Carlotta Giannelli, B.~B, and Bernd Simeon.
+\newblock A {Hierarchical} {Approach} to {Adaptive} {Local} {Refinement} in
+  {Isogeometric} {Analysis}.
+\newblock \emph{Computer Methods in Applied Mechanics and Engineering}, 200,
+  December 2011.
+\newblock \doi{10.1016/j.cma.2011.09.004}.
+
+\bibitem[Giannelli et~al.(2012)Giannelli, Jüttler, and
+  Speleers]{giannelli_thb-splines_2012}
+Carlotta Giannelli, Bert Jüttler, and Hendrik Speleers.
+\newblock {THB}-splines: {The} truncated basis for hierarchical splines.
+\newblock \emph{Computer Aided Geometric Design}, 29\penalty0 (7):\penalty0
+  485--498, 2012.
+\newblock ISSN 0167-8396.
+\newblock \doi{https://doi.org/10.1016/j.cagd.2012.03.025}.
+\newblock URL
+  \url{https://www.sciencedirect.com/science/article/pii/S0167839612000519}.
+
 \bibitem[Langer et~al.(2016)Langer, Moore, and
   Neumüller]{langer_space-time_2016}
 Ulrich Langer, Stephen~E Moore, and Martin Neumüller.
@@ -68,6 +113,28 @@ G.E. Farin.
   2002{\natexlab{a}}.
 \newblock ISBN 978-1-55860-737-8.
 \newblock URL \url{https://books.google.es/books?id=5HYTP1dIAp4C}.
+
+\bibitem[Brechner(2024)]{brechner_developing_2024}
+Eric Brechner.
+\newblock Developing and {Using} {CAD}/{CAM}/{CAE} {Systems} in {Boeing}.
+\newblock \emph{IEEE Annals of the History of Computing}, 46\penalty0
+  (1):\penalty0 38--49, January 2024.
+\newblock ISSN 1058-6180.
+\newblock \doi{10.1109/MAHC.2024.3468340}.
+
+\bibitem[Farin(2002{\natexlab{b}})]{farin_history_2002}
+Gerald Farin.
+\newblock A {History} of {Curves} and {Surfaces} in {CAGD}.
+\newblock \emph{Computer Aided Geometric Design - CAGD}, December
+  2002{\natexlab{b}}.
+\newblock \doi{10.1016/B978-044451104-1/50002-2}.
+
+\bibitem[Versprille(1975)]{versprille_computer_1975}
+K.J. Versprille.
+\newblock \emph{Computer {Aided} {Design} {Applications} of the {Rational}
+  {B}-spline {Approximation} {Form}}.
+\newblock University Microfilms, 1975.
+\newblock URL \url{https://books.google.es/books?id=DOwvjwEACAAJ}.
 
 \bibitem[Larson and Bengzon(2013)]{larson_finite_2013}
 M.G. Larson and F.~Bengzon.
@@ -118,14 +185,6 @@ Josef Kiendl, Kai-Uwe Bletzinger, J.~Linhard, and Roland Wüchner.
   METHOD APPL MECH ENG}, 198:\penalty0 3902--3914, November 2009.
 \newblock \doi{10.1016/j.cma.2009.08.013}.
 
-\bibitem[Brechner(2024)]{brechner_developing_2024}
-Eric Brechner.
-\newblock Developing and {Using} {CAD}/{CAM}/{CAE} {Systems} in {Boeing}.
-\newblock \emph{IEEE Annals of the History of Computing}, 46\penalty0
-  (1):\penalty0 38--49, January 2024.
-\newblock ISSN 1058-6180.
-\newblock \doi{10.1109/MAHC.2024.3468340}.
-
 \bibitem[Liming(1944)]{liming_practical_1944}
 R.A. Liming.
 \newblock \emph{Practical {Analytic} {Geometry} with {Applications} to
@@ -133,13 +192,6 @@ R.A. Liming.
 \newblock Macmillan, 1944.
 \newblock ISBN 978-0-598-45557-4.
 \newblock URL \url{https://books.google.es/books?id=x99EAAAAMAAJ}.
-
-\bibitem[Versprille(1975)]{versprille_computer_1975}
-K.J. Versprille.
-\newblock \emph{Computer {Aided} {Design} {Applications} of the {Rational}
-  {B}-spline {Approximation} {Form}}.
-\newblock University Microfilms, 1975.
-\newblock URL \url{https://books.google.es/books?id=DOwvjwEACAAJ}.
 
 \bibitem[Fazanaro et~al.(2016)Fazanaro, Amorim, Franco~de Moraes, Silva, and
   Pedrini]{fazanaro_nurbs_2016}
@@ -149,13 +201,6 @@ Dalton Fazanaro, Paulo Amorim, Thiago Franco~de Moraes, Jorge Silva, and Helio
 \newblock \emph{Applied Mathematics}, 07:\penalty0 137--144, January 2016.
 \newblock \doi{10.4236/am.2016.72013}.
 
-\bibitem[Farin(2002{\natexlab{b}})]{farin_history_2002}
-Gerald Farin.
-\newblock A {History} of {Curves} and {Surfaces} in {CAGD}.
-\newblock \emph{Computer Aided Geometric Design - CAGD}, December
-  2002{\natexlab{b}}.
-\newblock \doi{10.1016/B978-044451104-1/50002-2}.
-
 \bibitem[Langer and Steinbach(2019)]{langer_space-time_2019}
 U.~Langer and O.~Steinbach.
 \newblock \emph{Space-{Time} {Methods}: {Applications} to {Partial}
@@ -164,5 +209,17 @@ U.~Langer and O.~Steinbach.
   Gruyter, 2019.
 \newblock ISBN 978-3-11-054848-8.
 \newblock URL \url{https://books.google.es/books?id=7DvEDwAAQBAJ}.
+
+\bibitem[Antolin et~al.(2015)Antolin, Buffa, Calabrò, Martinelli, and
+  Sangalli]{antolin_efficient_2015}
+P.~Antolin, A.~Buffa, F.~Calabrò, M.~Martinelli, and G.~Sangalli.
+\newblock Efficient matrix computation for tensor-product isogeometric
+  analysis: {The} use of sum factorization.
+\newblock \emph{Computer Methods in Applied Mechanics and Engineering},
+  285:\penalty0 817--828, 2015.
+\newblock ISSN 0045-7825.
+\newblock \doi{https://doi.org/10.1016/j.cma.2014.12.013}.
+\newblock URL
+  \url{https://www.sciencedirect.com/science/article/pii/S0045782514004927}.
 
 \end{thebibliography}

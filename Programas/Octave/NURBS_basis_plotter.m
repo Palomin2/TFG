@@ -10,6 +10,8 @@ catch
 end
 
 [n1, n2] = size(data1);
+n1
+n2
 n1=n1-1;
 % Vector paramétrico normalizado [0, 1]
 u = linspace(0, 1, n2);
