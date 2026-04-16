@@ -14,91 +14,96 @@
 \contentsline {subsection}{\numberline {2.1.2}Propiedades}{8}{subsection.2.1.2}%
 \contentsline {section}{\numberline {2.2}B-Splines}{9}{section.2.2}%
 \contentsline {subsection}{\numberline {2.2.1}Funciones base B-Spline}{9}{subsection.2.2.1}%
-\contentsline {subsection}{\numberline {2.2.2}Curvas}{10}{subsection.2.2.2}%
-\contentsline {subsection}{\numberline {2.2.3}Superficies}{11}{subsection.2.2.3}%
+\contentsline {subsection}{\numberline {2.2.2}Curvas B-Spline}{11}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}Superficies B-Splines}{11}{subsection.2.2.3}%
 \contentsline {section}{\numberline {2.3}NURBS}{12}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}Funciones base}{12}{subsection.2.3.1}%
-\contentsline {subsection}{\numberline {2.3.2}Curvas}{12}{subsection.2.3.2}%
-\contentsline {subsection}{\numberline {2.3.3}Superficies}{13}{subsection.2.3.3}%
-\contentsline {section}{\numberline {2.4}Refinamiento de curvas y superficies}{13}{section.2.4}%
-\contentsline {subsection}{\numberline {2.4.1}Inserción de nudos}{13}{subsection.2.4.1}%
-\contentsline {subsection}{\numberline {2.4.2}Implementación de la inserción de nudos}{14}{subsection.2.4.2}%
-\contentsline {paragraph}{Caso curvas (1D):}{14}{section*.11}%
-\contentsline {paragraph}{Caso superficies (2D):}{15}{section*.12}%
-\contentsline {subsection}{\numberline {2.4.3}Elevación del grado polinomial}{15}{subsection.2.4.3}%
-\contentsline {subsubsection}{Paso a formas de Bézier locales}{15}{section*.13}%
-\contentsline {subsubsection}{Elevación del grado en la base de Bernstein}{16}{section*.14}%
-\contentsline {subsubsection}{Reensamblaje y eliminación de nudos}{17}{section*.15}%
+\contentsline {subsection}{\numberline {2.3.1}Funciones base NURBS}{12}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Curvas NURBS}{12}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.3}Superficies NURBS}{13}{subsection.2.3.3}%
+\contentsline {section}{\numberline {2.4}Refinamiento de curvas y superficies}{14}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Inserción de nudos}{14}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}Implementación de la inserción de nudos}{15}{subsection.2.4.2}%
+\contentsline {paragraph}{Caso curvas (1D):}{15}{section*.12}%
+\contentsline {paragraph}{Caso superficies (2D):}{15}{section*.13}%
+\contentsline {subsection}{\numberline {2.4.3}Elevación del grado polinomial}{16}{subsection.2.4.3}%
+\contentsline {subsubsection}{Paso a formas de Bézier locales}{16}{section*.14}%
+\contentsline {subsubsection}{Elevación del grado en la base de Bernstein}{16}{section*.15}%
+\contentsline {subsubsection}{Reensamblaje y eliminación de nudos}{16}{section*.16}%
 \contentsline {chapter}{\numberline {3}Análisis isogeométrico}{19}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Espacios funcionales}{19}{section.3.1}%
+\contentsline {section}{\numberline {3.1}Formulación variacional}{19}{section.3.1}%
 \contentsline {section}{\numberline {3.2}Formulación discreta de Galerkin}{20}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Propiedades del sistema}{20}{section.3.3}%
-\contentsline {section}{\numberline {3.4}Caso 1D}{20}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Elementos de la matriz global y el vector de carga}{20}{subsection.3.4.1}%
-\contentsline {subsection}{\numberline {3.4.2}Cálculo de las integrales}{21}{subsection.3.4.2}%
-\contentsline {subsection}{\numberline {3.4.3}Imposición de condiciones de contorno.}{21}{subsection.3.4.3}%
-\contentsline {subsubsection}{Tipo Dirichlet}{22}{section*.16}%
-\contentsline {subsubsection}{Tipo Neumann}{22}{section*.17}%
-\contentsline {subsubsection}{Tipo Robin o mixtas}{22}{section*.18}%
-\contentsline {section}{\numberline {3.5}Caso 2D}{22}{section.3.5}%
-\contentsline {subsection}{\numberline {3.5.1}Elementos de la matriz global y el vector de carga}{22}{subsection.3.5.1}%
-\contentsline {subsection}{\numberline {3.5.2}Cálculo de las integrales}{22}{subsection.3.5.2}%
-\contentsline {subsection}{\numberline {3.5.3}Imposición de condiciones de contorno}{23}{subsection.3.5.3}%
+\contentsline {section}{\numberline {3.3}Propiedades del sistema}{21}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Caso 1D}{21}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Elementos de la matriz global y el vector de carga}{22}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Ensamblado de la matriz de rigidez y el vector de cargas}{22}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.4.3}Imposición de condiciones de contorno.}{23}{subsection.3.4.3}%
 \contentsline {subsubsection}{Tipo Dirichlet}{23}{section*.19}%
 \contentsline {subsubsection}{Tipo Neumann}{23}{section*.20}%
 \contentsline {subsubsection}{Tipo Robin o mixtas}{23}{section*.21}%
-\contentsline {section}{\numberline {3.6}Convergencia en L2 y H1 y tiempo de computación teórico}{24}{section.3.6}%
-\contentsline {subsection}{\numberline {3.6.1}Convergencia}{24}{subsection.3.6.1}%
-\contentsline {subsection}{\numberline {3.6.2}Tiempo de computación}{24}{subsection.3.6.2}%
-\contentsline {subsubsection}{Fase de evaluación}{24}{section*.22}%
-\contentsline {subsubsection}{Fase de ensamblado}{24}{section*.23}%
-\contentsline {subsubsection}{Fase de resolución}{24}{section*.24}%
-\contentsline {chapter}{\numberline {4}Implementación computacional}{25}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Lenguaje y librerías utilizados}{25}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Métodos numéricos empleados}{25}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Estructura del programa}{25}{section.4.3}%
-\contentsline {chapter}{\numberline {5}Resultados.}{27}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Resultados en 1D}{27}{section.5.1}%
-\contentsline {subsubsection}{Problema 1}{27}{section*.25}%
-\contentsline {subsubsection}{Problema 2}{27}{section*.27}%
-\contentsline {section}{\numberline {5.2}Resultados en 2D}{28}{section.5.2}%
-\contentsline {subsubsection}{Problema 1}{28}{section*.30}%
-\contentsline {subsubsection}{Problema 2}{29}{section*.32}%
-\contentsline {chapter}{\numberline {6}Conclusiones}{31}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Trabajo futuro}{31}{section.6.1}%
-\contentsline {chapter}{Bibliograf\'{\i }a}{33}{section*.35}%
-\contentsline {chapter}{Anexos}{37}{chapter*.38}%
-\contentsline {section}{\numberline {A.1}Método de los elementos finitos.}{37}{section.6.1}%
-\contentsline {section}{\numberline {A.2}Demostraciones omitidas}{40}{section.6.2}%
-\contentsline {subsection}{\numberline {A.2.1}Paso de Solución Fuerte a Solución Variacional}{40}{subsection.6.2.1}%
-\contentsline {subsection}{\numberline {A.2.2}Existencia y unicidad de la solución variacional (lema de Lax-Milgram)}{40}{subsection.6.2.2}%
-\contentsline {subsection}{\numberline {A.2.3}Equivalencia de la solución de la formulación variacional y fuerte}{42}{subsection.6.2.3}%
-\contentsline {subsection}{\numberline {A.2.4}Equivalencia de normas}{43}{subsection.6.2.4}%
-\contentsline {subsection}{\numberline {A.2.5}Condiciones del lema de Céa}{44}{subsection.6.2.5}%
-\contentsline {subsection}{\numberline {A.2.6}Continuidad de la forma lineal dual}{44}{subsection.6.2.6}%
-\contentsline {subsection}{\numberline {A.2.7}Propiedades de Bézier}{45}{subsection.6.2.7}%
-\contentsline {subsubsection}{Funciones base}{45}{section*.39}%
-\contentsline {subsubsection}{Curvas}{45}{section*.40}%
-\contentsline {subsection}{\numberline {A.2.8}Propiedades de los B-Splines}{46}{subsection.6.2.8}%
-\contentsline {subsubsection}{Funciones base}{46}{section*.41}%
-\contentsline {subsubsection}{Curvas}{48}{section*.42}%
-\contentsline {subsection}{\numberline {A.2.9}Derivada de las funciones base NURBS}{49}{subsection.6.2.9}%
-\contentsline {subsection}{\numberline {A.2.10}Derivada de la curva NURBS}{50}{subsection.6.2.10}%
-\contentsline {subsection}{\numberline {A.2.11}Comportamiento direccional de las superficies NURBS}{50}{subsection.6.2.11}%
-\contentsline {subsection}{\numberline {A.2.12}Igualdad de las nuevas funciones base bajo refinamiento}{50}{subsection.6.2.12}%
-\contentsline {subsection}{\numberline {A.2.13}Equivalencia de curvas bajo refinamiento}{51}{subsection.6.2.13}%
-\contentsline {subsection}{\numberline {A.2.14}Propiedades del sistema}{52}{subsection.6.2.14}%
-\contentsline {section}{\numberline {A.3}Base teórica de los algoritmos de condiciones de contorno}{54}{section.6.3}%
-\contentsline {subsection}{\numberline {A.3.1}Tipo Dirichlet}{54}{subsection.6.3.1}%
-\contentsline {subsection}{\numberline {A.3.2}Tipo Neumann}{54}{subsection.6.3.2}%
-\contentsline {subsection}{\numberline {A.3.3}Tipo Robin o mixtas}{54}{subsection.6.3.3}%
-\contentsline {section}{\numberline {A.4}Explicación y parámetros de las figuras}{54}{section.6.4}%
-\contentsline {subsection}{\numberline {A.4.1}Figura 1.1}{54}{subsection.6.4.1}%
-\contentsline {subsection}{\numberline {A.4.2}Figura 2.5}{55}{subsection.6.4.2}%
-\contentsline {section}{\numberline {A.5}Código omitido}{57}{section.6.5}%
-\contentsline {subsection}{\numberline {A.5.1}FEM}{57}{subsection.6.5.1}%
-\contentsline {subsection}{\numberline {A.5.2}Figuras de Bézier}{58}{subsection.6.5.2}%
-\contentsline {subsection}{\numberline {A.5.3}Código fundamental para el funcionamiento en C++}{59}{subsection.6.5.3}%
-\contentsline {subsection}{\numberline {A.5.4}Curvas de NURBS}{94}{subsection.6.5.4}%
-\contentsline {subsection}{\numberline {A.5.5}Superficies de NURBS}{96}{subsection.6.5.5}%
-\contentsline {subsection}{\numberline {A.5.6}Implementaciones de IGA}{97}{subsection.6.5.6}%
+\contentsline {section}{\numberline {3.5}Caso 2D}{23}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}Elementos de la matriz global y el vector de carga}{24}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Ensamblado de la matriz de rigidez y el vector de cargas}{24}{subsection.3.5.2}%
+\contentsline {subsection}{\numberline {3.5.3}Imposición de condiciones de contorno}{25}{subsection.3.5.3}%
+\contentsline {subsubsection}{Tipo Dirichlet}{25}{section*.22}%
+\contentsline {subsubsection}{Tipo Neumann}{25}{section*.23}%
+\contentsline {subsubsection}{Tipo Robin o mixtas}{25}{section*.24}%
+\contentsline {section}{\numberline {3.6}Convergencia en L2 y H1 y tiempo de computación teórico}{25}{section.3.6}%
+\contentsline {subsection}{\numberline {3.6.1}Convergencia}{25}{subsection.3.6.1}%
+\contentsline {subsection}{\numberline {3.6.2}Coste computacional}{27}{subsection.3.6.2}%
+\contentsline {subsubsection}{Fase de evaluación}{27}{section*.25}%
+\contentsline {subsubsection}{Fase de ensamblado}{28}{section*.26}%
+\contentsline {subsubsection}{Fase de resolución}{28}{section*.27}%
+\contentsline {chapter}{\numberline {4}Implementación computacional}{29}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Lenguaje y librerías utilizados}{29}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Métodos numéricos empleados}{29}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Estructura del programa}{30}{section.4.3}%
+\contentsline {chapter}{\numberline {5}Resultados.}{33}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Resultados en 1D}{33}{section.5.1}%
+\contentsline {subsubsection}{Parámetros iniciales}{33}{section*.28}%
+\contentsline {subsubsection}{Resultados numéricos}{33}{section*.29}%
+\contentsline {section}{\numberline {5.2}Resultados en 2D}{35}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Problema 1}{35}{subsection.5.2.1}%
+\contentsline {subsubsection}{Parámetros iniciales}{35}{section*.32}%
+\contentsline {subsubsection}{Resultados numéricos}{35}{section*.33}%
+\contentsline {subsection}{\numberline {5.2.2}Problema 2}{36}{subsection.5.2.2}%
+\contentsline {subsubsection}{Parámetros iniciales}{36}{section*.35}%
+\contentsline {subsubsection}{Resultados numéricos}{36}{section*.36}%
+\contentsline {chapter}{\numberline {6}Conclusiones}{39}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Trabajo futuro}{39}{section.6.1}%
+\contentsline {chapter}{Bibliograf\'{\i }a}{41}{section*.39}%
+\contentsline {chapter}{Anexos}{45}{chapter*.42}%
+\contentsline {section}{\numberline {A.1}Método de los elementos finitos.}{45}{section.6.1}%
+\contentsline {section}{\numberline {A.2}Demostraciones omitidas}{48}{section.6.2}%
+\contentsline {subsection}{\numberline {A.2.1}Paso de Solución Fuerte a Solución Variacional}{48}{subsection.6.2.1}%
+\contentsline {subsection}{\numberline {A.2.2}Existencia y unicidad de la solución variacional (lema de Lax-Milgram)}{48}{subsection.6.2.2}%
+\contentsline {subsection}{\numberline {A.2.3}Equivalencia de la solución de la formulación variacional y fuerte}{50}{subsection.6.2.3}%
+\contentsline {subsection}{\numberline {A.2.4}Equivalencia de normas}{51}{subsection.6.2.4}%
+\contentsline {subsection}{\numberline {A.2.5}Condiciones del lema de Céa}{52}{subsection.6.2.5}%
+\contentsline {subsection}{\numberline {A.2.6}Continuidad de la forma lineal dual}{52}{subsection.6.2.6}%
+\contentsline {subsection}{\numberline {A.2.7}Propiedades de Bézier}{53}{subsection.6.2.7}%
+\contentsline {subsubsection}{Funciones base}{53}{section*.43}%
+\contentsline {subsubsection}{Curvas}{53}{section*.44}%
+\contentsline {subsection}{\numberline {A.2.8}Propiedades de los B-Splines}{54}{subsection.6.2.8}%
+\contentsline {subsubsection}{Funciones base}{54}{section*.45}%
+\contentsline {subsubsection}{Curvas B-Spline}{56}{section*.46}%
+\contentsline {subsection}{\numberline {A.2.9}Derivada de las funciones base NURBS}{57}{subsection.6.2.9}%
+\contentsline {subsection}{\numberline {A.2.10}Derivada de la curva NURBS}{58}{subsection.6.2.10}%
+\contentsline {subsection}{\numberline {A.2.11}Comportamiento direccional de las superficies NURBS}{58}{subsection.6.2.11}%
+\contentsline {subsection}{\numberline {A.2.12}Igualdad de las nuevas funciones base bajo refinamiento}{58}{subsection.6.2.12}%
+\contentsline {subsection}{\numberline {A.2.13}Equivalencia de curvas bajo refinamiento}{59}{subsection.6.2.13}%
+\contentsline {subsection}{\numberline {A.2.14}Proposiciones elevación del grado polinomial}{60}{subsection.6.2.14}%
+\contentsline {subsection}{\numberline {A.2.15}Propiedades del sistema}{63}{subsection.6.2.15}%
+\contentsline {section}{\numberline {A.3}Base teórica de los algoritmos de condiciones de contorno}{64}{section.6.3}%
+\contentsline {subsection}{\numberline {A.3.1}Tipo Dirichlet}{64}{subsection.6.3.1}%
+\contentsline {subsection}{\numberline {A.3.2}Tipo Neumann}{65}{subsection.6.3.2}%
+\contentsline {subsection}{\numberline {A.3.3}Tipo Robin o mixtas}{65}{subsection.6.3.3}%
+\contentsline {section}{\numberline {A.4}Explicación y parámetros de las figuras}{65}{section.6.4}%
+\contentsline {subsection}{\numberline {A.4.1}Figura 1.1}{65}{subsection.6.4.1}%
+\contentsline {subsection}{\numberline {A.4.2}Figura 2.5}{65}{subsection.6.4.2}%
+\contentsline {section}{\numberline {A.5}Código omitido}{68}{section.6.5}%
+\contentsline {subsection}{\numberline {A.5.1}FEM}{68}{subsection.6.5.1}%
+\contentsline {subsection}{\numberline {A.5.2}Figuras de Bézier}{69}{subsection.6.5.2}%
+\contentsline {subsection}{\numberline {A.5.3}Código fundamental para el funcionamiento en C++}{70}{subsection.6.5.3}%
+\contentsline {subsection}{\numberline {A.5.4}Curvas de NURBS}{105}{subsection.6.5.4}%
+\contentsline {subsection}{\numberline {A.5.5}Superficies de NURBS}{107}{subsection.6.5.5}%
+\contentsline {subsection}{\numberline {A.5.6}Implementaciones de IGA}{108}{subsection.6.5.6}%

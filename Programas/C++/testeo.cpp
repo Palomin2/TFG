@@ -1562,20 +1562,22 @@ int main(int argc, char *argv[]) {
         bool PrintPrevalues=false;
 
         
-        int p=2;
+        int p=5;
         double nElements = 256;
         //variables que no cambian en cada ejecución del bucle o que se declaran fuera para ir actualizandolas
-        iMatrix<double> CtrlPts = ReadDataFile_Matrix("C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/CtrlPts/EjCirculo.txt"); 
+        iMatrix<double> CtrlPts = ReadDataFile_Matrix("C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/CtrlPts/EjCircleP5.txt"); 
         if(PrintPrevalues){
             std::cout<< "----------------CtrlPts--------------" << std::endl;
             CtrlPts.PrintMatrix();
         }
-        std::vector<double> KnotVector={0,0,0,0.5,0.5,1,1,1};
+        //std::vector<double> KnotVector={0,0,0,0,0.5,0.5,0.5,1,1,1,1}; //p=3
+        //std::vector<double> KnotVector={0,0,0,0,0,0.5,0.5,0.5,0.5,1,1,1,1,1}; //p=4
+        std::vector<double> KnotVector={0,0,0,0,0,0,0.5,0.5,0.5,0.5,0.5,1,1,1,1,1,1}; //p=5
         double lower_limit=KnotVector[0];
         double upper_limit=KnotVector[KnotVector.size()-1];
-        std::vector<double> Weights={1,sqrt(2)/2,1,sqrt(2)/2,1};
-
-
+        //std::vector<double> Weights={1,(1+sqrt(2))/3,(1+sqrt(2))/3,1,(1+sqrt(2))/3,(1+sqrt(2))/3,1}; //p=3
+        //std::vector<double> Weights={1,(2+sqrt(2))/4,(1+sqrt(2))/3,(2+sqrt(2))/4,1,(2+sqrt(2))/4,(1+sqrt(2))/3,(2+sqrt(2))/4,1}; //p=4
+        std::vector<double> Weights={1,(3+sqrt(2))/5,(4+3*sqrt(2))/10,(4+3*sqrt(2))/10,(3+sqrt(2))/5,1,(3+sqrt(2))/5,(4+3*sqrt(2))/10,(4+3*sqrt(2))/10,(3+sqrt(2))/5,1}; //p=5
         iMatrix<double> WeightedCtrlPts=WeightCtrlPts(CtrlPts,Weights);
 
         if(PrintPrevalues){
@@ -1896,7 +1898,7 @@ int main(int argc, char *argv[]) {
     if(stoi(argv[1])==29){//Norm calculations
 
         int h_val = 256;
-        int p_val = 2;
+        int p_val = 5;
         std::string nameAnalytic="C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/SolEvals/EjSinNonConst_h="+ to_string(h_val) + "_p=" + to_string(p_val) +"_Analytic_testCircle.txt";
         std::string nameNumeric="C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/SolEvals/EjSinNonConst_h="+ to_string(h_val) + "_p=" + to_string(p_val) +"_testCircle.txt";
         std::string nameAnalyticDers="C:/Users/carlo/OneDrive/Escritorio/Uni/TFG/DataFiles/Nurbs/SolEvals/EjSinNonConst_h="+ to_string(h_val) + "_p=" + to_string(p_val) +"Ders_Analytic_testCircle.txt";

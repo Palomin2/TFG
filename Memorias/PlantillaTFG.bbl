@@ -1,4 +1,4 @@
-\begin{thebibliography}{25}
+\begin{thebibliography}{39}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -26,6 +26,14 @@ J.A. Cottrell, T.J.R. Hughes, and Y.~Bazilevs.
 \newblock ISBN 978-0-470-74873-2.
 \newblock URL \url{https://books.google.es/books?id=Sf0UDAEACAAJ}.
 
+\bibitem[Farin(2002{\natexlab{a}})]{farin_curves_2002}
+G.E. Farin.
+\newblock \emph{Curves and {Surfaces} for {CAGD}: {A} {Practical} {Guide}}.
+\newblock Computer graphics and geometric modeling. Elsevier Science,
+  2002{\natexlab{a}}.
+\newblock ISBN 978-1-55860-737-8.
+\newblock URL \url{https://books.google.es/books?id=5HYTP1dIAp4C}.
+
 \bibitem[Piegl and Tiller(2012)]{piegl_nurbs_2012}
 L.~Piegl and W.~Tiller.
 \newblock \emph{The {NURBS} {Book}}.
@@ -43,6 +51,25 @@ Y.~Bazilevs, V.M. Calo, J.A. Cottrell, J.A. Evans, T.J.R. Hughes, S.~Lipton,
   199\penalty0 (5-8):\penalty0 229--263, 2010.
 \newblock \doi{10.1016/j.cma.2009.02.036}.
 
+\bibitem[Veiga et~al.(2009)Veiga, Buffa, Rivas, and
+  Sangalli]{veiga_estimates_2009}
+L.~Veiga, Annalisa Buffa, Judith Rivas, and G.~Sangalli.
+\newblock Some estimates for h–p–k-refinement in {Isogeometric} {Analysis}.
+\newblock \emph{Numerische Mathematik}, 118:\penalty0 271--305, January 2009.
+\newblock \doi{10.1007/s00211-010-0338-z}.
+
+\bibitem[Antolin et~al.(2015)Antolin, Buffa, Calabrò, Martinelli, and
+  Sangalli]{antolin_efficient_2015}
+P.~Antolin, A.~Buffa, F.~Calabrò, M.~Martinelli, and G.~Sangalli.
+\newblock Efficient matrix computation for tensor-product isogeometric
+  analysis: {The} use of sum factorization.
+\newblock \emph{Computer Methods in Applied Mechanics and Engineering},
+  285:\penalty0 817--828, 2015.
+\newblock ISSN 0045-7825.
+\newblock \doi{https://doi.org/10.1016/j.cma.2014.12.013}.
+\newblock URL
+  \url{https://www.sciencedirect.com/science/article/pii/S0045782514004927}.
+
 \bibitem[Ahlberg et~al.(2016)Ahlberg, Nilson, Walsh, and
   Bellman]{ahlberg_theory_2016}
 J.H. Ahlberg, E.N. Nilson, J.L. Walsh, and R.~Bellman.
@@ -52,6 +79,65 @@ J.H. Ahlberg, E.N. Nilson, J.L. Walsh, and R.~Bellman.
 \newblock Number v. 38. Academic Press, 2016.
 \newblock ISBN 978-1-4832-2295-0.
 \newblock URL \url{https://books.google.es/books?id=3bZlDAAAQBAJ}.
+
+\bibitem[Benson et~al.(2011)Benson, Bazilevs, Hsu, and
+  Hughes]{benson_large_2011}
+David~J. Benson, Yuri Bazilevs, Ming-Chen Hsu, and Thomas~J.R. Hughes.
+\newblock A large deformation, rotation-free, isogeometric shell.
+\newblock \emph{Computer Methods in Applied Mechanics and Engineering},
+  200\penalty0 (13-16):\penalty0 1367--1378, 2011.
+\newblock \doi{10.1016/j.cma.2010.12.003}.
+
+\bibitem[Cottrell et~al.(2006)Cottrell, Reali, Bazilevs, and
+  Hughes]{cottrell_isogeometric_2006}
+J.A. Cottrell, A~Reali, Yuri Bazilevs, and Thomas Hughes.
+\newblock Isogeometric analysis of structural vibrations.
+\newblock \emph{Computer Methods in Applied Mechanics and Engineering - COMPUT
+  METHOD APPL MECH ENG}, 195, August 2006.
+\newblock \doi{10.1016/j.cma.2005.09.027}.
+
+\bibitem[Bazilevs et~al.(2011)Bazilevs, Hsu, Akkerman, Wright, Takizawa,
+  Henicke, Spielman, and Tezduyar]{bazilevs_3d_2011}
+Yuri Bazilevs, M.-C Hsu, Ido Akkerman, Samuel Wright, Kenji Takizawa,
+  B.~Henicke, Timothy Spielman, and Tayfun Tezduyar.
+\newblock {3D} simulation of wind turbine rotors at full scale. {Part} {I}:
+  {Geometry} modeling and aerodynamics.
+\newblock \emph{International Journal for Numerical Methods in Fluids},
+  65:\penalty0 207 -- 235, January 2011.
+\newblock \doi{10.1002/fld.2400}.
+
+\bibitem[Bazilevs et~al.(2009)Bazilevs, Gohean, Hughes, Moser, and
+  Zhang]{bazilevs_patient-specific_2009}
+Yuri Bazilevs, Jeffrey Gohean, Thomas Hughes, R.~Moser, and Yongjie Zhang.
+\newblock Patient-specific isogeometric fluid-structure interaction analysis of
+  thoracic aortic blood flow due to implantation of the {Jarvik} 2000 left
+  ventricular assist device.
+\newblock \emph{Computer Methods in Applied Mechanics and Engineering},
+  198:\penalty0 3534--3550, September 2009.
+\newblock \doi{10.1016/j.cma.2009.04.015}.
+
+\bibitem[Kostas et~al.(2015)Kostas, Ginnis, Politis, and
+  Kaklis]{kostas_ship-hull_2015}
+K.~V. Kostas, A.~I. Ginnis, C.~G. Politis, and P.~D. Kaklis.
+\newblock Ship-hull shape optimization with a {T}-spline based
+  {BEM}–isogeometric solver.
+\newblock \emph{Computer Methods in Applied Mechanics and Engineering},
+  284:\penalty0 611--622, 2015.
+\newblock ISSN 0045-7825.
+\newblock \doi{https://doi.org/10.1016/j.cma.2014.10.030}.
+\newblock URL
+  \url{https://www.sciencedirect.com/science/article/pii/S0045782514004009}.
+
+\bibitem[Buffa et~al.(2010)Buffa, Sangalli, and
+  Vázquez]{buffa_isogeometric_2010}
+A.~Buffa, G.~Sangalli, and R.~Vázquez.
+\newblock Isogeometric analysis in electromagnetics: {B}-splines approximation.
+\newblock \emph{Computer Methods in Applied Mechanics and Engineering},
+  199\penalty0 (17):\penalty0 1143--1152, 2010.
+\newblock ISSN 0045-7825.
+\newblock \doi{https://doi.org/10.1016/j.cma.2009.12.002}.
+\newblock URL
+  \url{https://www.sciencedirect.com/science/article/pii/S0045782509004010}.
 
 \bibitem[Buffa et~al.(2011)Buffa, de~Falco, and
   Sangalli]{buffa_isogeometric_2011}
@@ -63,21 +149,6 @@ A.~Buffa, C.~de~Falco, and G.~Sangalli.
 \newblock \doi{https://doi.org/10.1002/fld.2337}.
 \newblock URL \url{https://onlinelibrary.wiley.com/doi/abs/10.1002/fld.2337}.
 \newblock \_eprint: https://onlinelibrary.wiley.com/doi/pdf/10.1002/fld.2337.
-
-\bibitem[Veiga et~al.(2009)Veiga, Buffa, Rivas, and
-  Sangalli]{veiga_estimates_2009}
-L.~Veiga, Annalisa Buffa, Judith Rivas, and G.~Sangalli.
-\newblock Some estimates for h–p–k-refinement in {Isogeometric} {Analysis}.
-\newblock \emph{Numerische Mathematik}, 118:\penalty0 271--305, January 2009.
-\newblock \doi{10.1007/s00211-010-0338-z}.
-
-\bibitem[Cottrell et~al.(2006)Cottrell, Reali, Bazilevs, and
-  Hughes]{cottrell_isogeometric_2006}
-J.A. Cottrell, A~Reali, Yuri Bazilevs, and Thomas Hughes.
-\newblock Isogeometric analysis of structural vibrations.
-\newblock \emph{Computer Methods in Applied Mechanics and Engineering - COMPUT
-  METHOD APPL MECH ENG}, 195, August 2006.
-\newblock \doi{10.1016/j.cma.2005.09.027}.
 
 \bibitem[A et~al.(2011)A, Giannelli, B, and Simeon]{a_hierarchical_2011}
 A.~A, Carlotta Giannelli, B.~B, and Bernd Simeon.
@@ -106,14 +177,6 @@ Ulrich Langer, Stephen~E Moore, and Martin Neumüller.
   306:\penalty0 342--363, 2016.
 \newblock \doi{10.1016/j.cma.2016.03.042}.
 
-\bibitem[Farin(2002{\natexlab{a}})]{farin_curves_2002}
-G.E. Farin.
-\newblock \emph{Curves and {Surfaces} for {CAGD}: {A} {Practical} {Guide}}.
-\newblock Computer graphics and geometric modeling. Elsevier Science,
-  2002{\natexlab{a}}.
-\newblock ISBN 978-1-55860-737-8.
-\newblock URL \url{https://books.google.es/books?id=5HYTP1dIAp4C}.
-
 \bibitem[Brechner(2024)]{brechner_developing_2024}
 Eric Brechner.
 \newblock Developing and {Using} {CAD}/{CAM}/{CAE} {Systems} in {Boeing}.
@@ -135,6 +198,87 @@ K.J. Versprille.
   {B}-spline {Approximation} {Form}}.
 \newblock University Microfilms, 1975.
 \newblock URL \url{https://books.google.es/books?id=DOwvjwEACAAJ}.
+
+\bibitem[{Dassault Systèmes}(2016)]{dassault_systemes_abaqus_2016}
+{Dassault Systèmes}.
+\newblock \emph{Abaqus {Analysis} {User}'s {Guide}}.
+\newblock Dassault Systèmes Simulia Corp., 2016.
+\newblock URL \url{http://130.149.89.49:2080/v2016/books/usb/default.htm}.
+
+\bibitem[{ANSYS, Inc.}(2024)]{ansys_inc_ansys_2024}
+{ANSYS, Inc.}
+\newblock Ansys {Mechanical} - {Advanced} {Meshing} and {Simulation}
+  {Technologies}, 2024.
+\newblock URL \url{https://www.ansys.com/products/structures/ansys-mechanical}.
+
+\bibitem[{Robert McNeel \&
+  Associates}(2024)]{robert_mcneel__associates_rhinoceros_2024}
+{Robert McNeel \& Associates}.
+\newblock Rhinoceros {3D}, 2024.
+\newblock URL \url{https://www.rhino3d.com/features/}.
+
+\bibitem[{Coreform LLC}(2025)]{coreform_llc_coreform_2025}
+{Coreform LLC}.
+\newblock Coreform {IGA}: {Next}-generation isogeometric analysis software,
+  2025.
+\newblock URL \url{https://coreform.com/coreform-iga/}.
+
+\bibitem[Buffa et~al.(2022)Buffa, Gantner, Giannelli, Praetorius, and
+  Vázquez]{buffa_mathematical_2022}
+Annalisa Buffa, Gregor Gantner, Carlotta Giannelli, Dirk Praetorius, and Rafael
+  Vázquez.
+\newblock Mathematical {Foundations} of {Adaptive} {Isogeometric} {Analysis}.
+\newblock \emph{Archives of Computational Methods in Engineering}, 29\penalty0
+  (7):\penalty0 4479--4555, September 2022.
+\newblock ISSN 1886-1784.
+\newblock \doi{10.1007/s11831-022-09752-5}.
+\newblock URL \url{http://dx.doi.org/10.1007/s11831-022-09752-5}.
+
+\bibitem[Ciarlet(2002)]{ciarlet_finite_2002}
+P.G. Ciarlet.
+\newblock \emph{The {Finite} {Element} {Method} for {Elliptic} {Problems}}.
+\newblock Classics in {Applied} {Mathematics}. Society for Industrial and
+  Applied Mathematics, 2002.
+\newblock ISBN 978-0-89871-514-9.
+\newblock URL \url{https://books.google.es/books?id=1PF-WS0Nl9IC}.
+
+\bibitem[Golub and Van~Loan(2013)]{golub_matrix_2013}
+G.H. Golub and C.F. Van~Loan.
+\newblock \emph{Matrix {Computations}}.
+\newblock Johns {Hopkins} {Studies} in the {Mathematical} {Sciences}. Johns
+  Hopkins University Press, 2013.
+\newblock ISBN 978-1-4214-0794-4.
+\newblock URL \url{https://books.google.es/books?id=X5YfsuCWpxMC}.
+
+\bibitem[Saad(2003)]{saad_iterative_2003}
+Y.~Saad.
+\newblock \emph{Iterative {Methods} for {Sparse} {Linear} {Systems}: {Second}
+  {Edition}}.
+\newblock Other {Titles} in {Applied} {Mathematics}. Society for Industrial and
+  Applied Mathematics, 2003.
+\newblock ISBN 978-0-89871-534-7.
+\newblock URL \url{https://books.google.es/books?id=qtzmkzzqFmcC}.
+
+\bibitem[Guennebaud et~al.(2010)Guennebaud, Jacob, and
+  {others}]{guennebaud_eigen_2010}
+Gaël Guennebaud, Benoît Jacob, and {others}.
+\newblock Eigen v3, 2010.
+\newblock URL \url{http://eigen.tuxfamily.org}.
+
+\bibitem[Gahalaut(2013)]{gahalaut_isogeometric_2013}
+Kapil P.~S. Gahalaut.
+\newblock \emph{Isogeometric {Analysis}: {Condition} {Number} {Estimates} and
+  {Fast} {Solvers}}.
+\newblock {PhD} {Thesis}, Johannes Kepler University Linz, 2013.
+
+\bibitem[Higham(2002)]{higham_accuracy_2002}
+N.J. Higham.
+\newblock \emph{Accuracy and {Stability} of {Numerical} {Algorithms}: {Second}
+  {Edition}}.
+\newblock Other {Titles} in {Applied} {Mathematics}. Society for Industrial and
+  Applied Mathematics, 2002.
+\newblock ISBN 978-0-89871-802-7.
+\newblock URL \url{https://books.google.es/books?id=7J52J4GrsJkC}.
 
 \bibitem[Larson and Bengzon(2013)]{larson_finite_2013}
 M.G. Larson and F.~Bengzon.
@@ -158,24 +302,6 @@ L.C. Evans.
 \newblock \emph{Partial {Differential} {Equations}}.
 \newblock Graduate studies in mathematics. American Mathematical Society, 1991.
 \newblock URL \url{https://books.google.es/books?id=TF8EzQEACAAJ}.
-
-\bibitem[Benson et~al.(2011)Benson, Bazilevs, Hsu, and
-  Hughes]{benson_large_2011}
-David~J. Benson, Yuri Bazilevs, Ming-Chen Hsu, and Thomas~J.R. Hughes.
-\newblock A large deformation, rotation-free, isogeometric shell.
-\newblock \emph{Computer Methods in Applied Mechanics and Engineering},
-  200\penalty0 (13-16):\penalty0 1367--1378, 2011.
-\newblock \doi{10.1016/j.cma.2010.12.003}.
-
-\bibitem[Bazilevs et~al.(2009)Bazilevs, Gohean, Hughes, Moser, and
-  Zhang]{bazilevs_patient-specific_2009}
-Yuri Bazilevs, Jeffrey Gohean, Thomas Hughes, R.~Moser, and Yongjie Zhang.
-\newblock Patient-specific isogeometric fluid-structure interaction analysis of
-  thoracic aortic blood flow due to implantation of the {Jarvik} 2000 left
-  ventricular assist device.
-\newblock \emph{Computer Methods in Applied Mechanics and Engineering},
-  198:\penalty0 3534--3550, September 2009.
-\newblock \doi{10.1016/j.cma.2009.04.015}.
 
 \bibitem[Kiendl et~al.(2009)Kiendl, Bletzinger, Linhard, and
   Wüchner]{kiendl_isogeometric_2009}
@@ -209,17 +335,5 @@ U.~Langer and O.~Steinbach.
   Gruyter, 2019.
 \newblock ISBN 978-3-11-054848-8.
 \newblock URL \url{https://books.google.es/books?id=7DvEDwAAQBAJ}.
-
-\bibitem[Antolin et~al.(2015)Antolin, Buffa, Calabrò, Martinelli, and
-  Sangalli]{antolin_efficient_2015}
-P.~Antolin, A.~Buffa, F.~Calabrò, M.~Martinelli, and G.~Sangalli.
-\newblock Efficient matrix computation for tensor-product isogeometric
-  analysis: {The} use of sum factorization.
-\newblock \emph{Computer Methods in Applied Mechanics and Engineering},
-  285:\penalty0 817--828, 2015.
-\newblock ISSN 0045-7825.
-\newblock \doi{https://doi.org/10.1016/j.cma.2014.12.013}.
-\newblock URL
-  \url{https://www.sciencedirect.com/science/article/pii/S0045782514004927}.
 
 \end{thebibliography}

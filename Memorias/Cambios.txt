@@ -14,17 +14,59 @@ Página 31, faltaba el ultimo paso de la demostracion.
 
 Total de caras empleadas:
 
-Capítulo 1: 4
-Capítulo 2: 7
-Capítulo 3: 6
-Capítulo 4: 2
-Capítulo 5: 3
+Capítulo 1: 5
+Capítulo 2: 12
+Capítulo 3: 9
+Capítulo 4: 3
+Capítulo 5: 4
 Capítulo 6: 1
 
-Total: 23
+Total: 34
 
 Dudas: 
 -Debo citar en bibliografia la documentación de la libreria de Eigen?
 
 
 Fundamentos del analisis isogeometrico y resolución numerica del problema de Poisson.
+
+Vale ahora te necesito al 100%, necesito que calcules los puntos de control, vector de nudos y vector de pesos de la elevacion de grado polinomial a 3, 4 y 5 de la siguiente curva para trabajar con ella posteriormente: \item \textbf{Grado polinomial p:} 2.
+
+    \vspace{-0.2cm}
+
+    \item \textbf{Dominio paramétrico:} $U=\{0,0,0,\frac{1}{2},\frac{1}{2},1,1,1\}$.
+
+    \vspace{-0.2cm}
+
+    \item \textbf{Dominio físico:} Semicircunferencia contenida en el plano XY, centrada en el origen de radio 1.
+
+    \vspace{-0.2cm}
+
+    \item \textbf{Puntos de control y pesos:}
+
+    {\setlength{\abovedisplayskip}{2pt}
+
+    \setlength{\belowdisplayskip}{0pt}
+
+    \begin{equation*}
+
+        \mathbf{P} = \left[
+
+        \begin{pmatrix} -1 \\ 0 \\ 0 \end{pmatrix},
+
+        \begin{pmatrix} -1 \\ 1 \\ 0 \end{pmatrix},
+
+        \begin{pmatrix} 0 \\ 1 \\ 0 \end{pmatrix},
+
+        \begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix},
+
+        \begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix}
+
+        \right],
+
+        \qquad
+
+        \mathbf{w} = \left[ 1, \ \frac{\sqrt{2}}{2}, \ 1, \ \frac{\sqrt{2}}{2}, \ 1 \right].
+
+    \end{equation*}
+
+    } necesito que seas todo lo riguroso posible ya que es una parte importante del trabajo y si la elevacion no es correcta los resultados seran incorrectos todos, si puedes comprobar que la elevacion es correcta hazlo porfavor
