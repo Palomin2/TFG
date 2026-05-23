@@ -14,14 +14,24 @@ Página 31, faltaba el ultimo paso de la demostracion.
 
 Total de caras empleadas:
 
-Capítulo 1: 5
-Capítulo 2: 12
-Capítulo 3: 9
-Capítulo 4: 3
-Capítulo 5: 4
+Capítulo 1: 4
+Capítulo 2: 9
+Capítulo 3: 7
+-Capítulo 4: 3
+Capítulo 5: 5
 Capítulo 6: 1
 
-Total: 34
+Total: 26
+
+Cuanto puedo ahorrar?
+
+Cap 1: -
+Cap 2: 2 (igual 3)
+Cap 3: 2 (igual 3)
+Cap 4: - (igual 1)
+Cap 5: 1
+
+8 de 10
 
 Dudas: 
 -Debo citar en bibliografia la documentación de la libreria de Eigen?

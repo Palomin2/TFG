@@ -1,0 +1,7 @@
+Abstract:
+*p_i, el trabajo se centra en grados polinomiales distintos para cada direccion
+*interior ctrlpts, si que interpolan los extremos no? entendiendo como extremos las esquinas por ejemplo del rectangulo
+*cambio FEA por FEM?
+Volver a esto tras revisar el trabajo si lo añado:
+Idea: Comparar tambien numero de funciones base con FEM para distintos refinamientos
+
