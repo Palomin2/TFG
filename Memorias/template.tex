@@ -29,7 +29,7 @@
 \uselanguage{Spanish}
 \languagepath{Spanish}
 \usepackage{amsfonts,amsbsy}
-
+\usepackage{comment}
 \usepackage{epsfig}
 \usepackage{graphics}               %para introducir archivos eps
 \usepackage{graphicx}               %para gr\'{a}fcos
@@ -52,6 +52,8 @@
 \usepackage{caption}
 \usepackage{listings}
 \usepackage{listingsutf8}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
 
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
@@ -204,7 +206,7 @@
 \institute{ {\centering \includegraphics[scale=0.35]{ciencias.png}}\\ 
 {\centering \includegraphics[scale=0.45]{logoUZ.png}}
 \\[1em] % Añade un salto de línea con un poco de espacio tras el logo
-{\small \textbf{Tutores:} Álvaro Pé de la Riva y \\ Carmen Rodrigo Cardiel}
+{\small \textbf{Directores:} Álvaro Pé de la Riva y \\ Carmen Rodrigo Cardiel}
 }
 
 
@@ -246,42 +248,43 @@
 \subsection{Contexto y relación con el método de elementos finitos}
 
 \begin{frame}
-    \frametitle{Comparación}
+    \frametitle{Comparación técnica}
 
     % --- BLOQUE DE LA IMAGEN (TEXTBLOCK) ---
-    \begin{textblock*}{10.8cm}(1cm, 5.7cm) 
+    % Se ha ajustado la coordenada Y a 6.2cm para acomodar el texto más descriptivo de la tabla
+    \begin{textblock*}{10.8cm}(1cm, 6.2cm) 
         \only<2-3>{
             \begin{figure}
                 \captionsetup[subfigure]{skip=0pt, font=scriptsize} 
                 \centering
                 \begin{subfigure}{0.32\textwidth}
                     \centering
-					{\tiny
+                    {\tiny
                     \includesvg[width=\linewidth]{bases_fem_p1.svg}
-					}
+                    }
 
-					\vspace{-10pt}
-					\caption{Base FEM, p=1.}
+                    \vspace{-10pt}
+                    \caption{Base FEM, p=1.}
                 \end{subfigure}
                 \hfill
                 \begin{subfigure}{0.32\textwidth}
                     \centering
-					{\tiny
+                    {\tiny
                     \includesvg[width=\linewidth]{bases_fem_p2.svg}
-					}
+                    }
 
-					\vspace{-10pt}
-					\caption{Base FEM, p=2.}
+                    \vspace{-10pt}
+                    \caption{Base FEM, p=2.}
                 \end{subfigure}
                 \hfill
                 \begin{subfigure}{0.32\textwidth}
                     \centering
-					{\tiny
+                    {\tiny
                     \includesvg[width=\linewidth]{funciones_base_NURBS_2.svg}
-					}
+                    }
 
-					\vspace{-10pt}
-					\caption{Base NURBS, p=2.}
+                    \vspace{-10pt}
+                    \caption{Base NURBS, p=2.}
                 \end{subfigure}
             \end{figure}
         }
@@ -290,44 +293,38 @@
     % --- TABLA CORREGIDA ---
     \begin{table}[htbp]
         \centering
-        \renewcommand{\arraystretch}{1.3}
+        \renewcommand{\arraystretch}{1.4}
         \scriptsize 
-        
-        % p{...} alinea por la parte superior por defecto. 
-        % Al usar \raggedright evitamos saltos de línea raros.
-        \begin{tabular}{>{\raggedright\arraybackslash}p{2.4cm} >{\raggedright\arraybackslash}p{4cm} >{\raggedright\arraybackslash}p{4cm}}
+        \vspace{-1cm}
+        % Se ajustan los anchos para mantenerlos dentro de los márgenes de Beamer
+        \begin{tabular}{>{\raggedright\arraybackslash}p{2.3cm} >{\raggedright\arraybackslash}p{3.9cm} >{\raggedright\arraybackslash}p{3.5cm}}
             \toprule
-            \textbf{Criterio} & \textbf{FEM Clásico} & \textbf{IGA} \\ 
+            \textbf{Criterio} & \textbf{FEM tradicional} & \textbf{Análisis isogeométrico} \\ 
             \midrule
             
             \textbf{Geometría} & 
-            \cellcolor{desventaja} \textbf{Aproximada.} Malla poligonal. & 
-            \cellcolor{ventaja} \textbf{Exacta.} Geometría NURBS. \\ 
+            \cellcolor{desventaja} \textbf{Aproximada.} Malla poligonal que introduce error geométrico. & 
+            \cellcolor{ventaja} \textbf{Exacta.} Geometría idéntica a CAD (NURBS, etc.). \\ 
             \midrule \pause 
             
             \textbf{Funciones base} & 
-            Interpolatorias (Nodos). & 
-            NURBS (Puntos Control). \\ 
+            Interpolatorias. & 
+            No interpolatorias. \\ 
             \midrule \pause 
             
             \textbf{Continuidad} & 
-            \cellcolor{desventaja} Baja ($C^0$). & 
-            \cellcolor{ventaja} Alta ($C^{p-1}$). \\ 
+            \cellcolor{desventaja} Baja ($\mathcal{C}^0$). & 
+            \cellcolor{ventaja} Alta (hasta $\mathcal{C}^{p-1}$). \\ 
             \midrule \pause 
             
             \textbf{Refinamiento} & 
-            $h$ y $p$. & 
-            \cellcolor{ventaja} $h, p$ y $k$-refinam. \\ 
+            $h$ y $p$-refinamiento. & 
+            \cellcolor{ventaja} $h$, $p$ y \textbf{$k$}-refinamiento. \\ 
             \midrule \pause 
             
-            \textbf{Coste} & 
-            \cellcolor{ventaja} \textbf{Económico.} & 
-            \cellcolor{desventaja} \textbf{Elevado.} \\ 
-            \midrule \pause 
-            
-            \textbf{Mapeo inv.} & 
-            \cellcolor{ventaja} \textbf{Directo.} & 
-            \cellcolor{desventaja} \textbf{Complejo.} \\
+            \textbf{Mapeo inverso} & 
+            \cellcolor{ventaja} \textbf{Directo.} Inversión simple o analítica. & 
+            \cellcolor{desventaja} \textbf{Complejo.} Requiere evaluar el jacobiano. \\
             \bottomrule
         \end{tabular}
     \end{table}
@@ -357,6 +354,7 @@
 	Tal que los elementos anteriores cumplen las siguientes propiedades:
 
 	\begin{itemize}
+		\item $\mathcal{L}^{n-1}(\Gamma_D \cup \Gamma_R) > 0$.
 		\item ${f: \Omega \to \mathbb{R}}$, $f \in L^2(\Omega)$.
 		\item ${g: \Gamma_D \to \mathbb{R}}$, $g \in H^{1/2}(\Gamma_D)$.
 		\item ${h: \Gamma_N \to \mathbb{R}}$, $h \in L^2(\Gamma_N)$.
@@ -365,13 +363,13 @@
 		\item ${\alpha, \beta \in \mathbb{R}}$, tal que $\frac{\alpha}{\beta} \geq 0$.
 	\end{itemize}
 	\end{definition}
-	\end{frame}
+\end{frame}
 
 %------------------------------------------------
 \begin{frame}
 	\frametitle{Problema modelo}
 	\framesubtitle{Formulación débil}
-	\begin{definition} Buscamos  $u \in V(\Omega)=\{v \in H^1(\Omega) \mid v=g \text{ en } \Gamma_D\}$, tal que para  
+	\begin{definition} Buscamos  $u \in H^1(\Omega)$, con $u=g \text{ en } \Gamma_D$, tal que para toda función test 
 	$v \in V_0(\Omega)=\{v \in H^1(\Omega) \mid v=0 \text{ en } \Gamma_D\}$, se cumple que:
 
 	\begin{equation*}
@@ -401,15 +399,15 @@
 		Los \textbf{polinomios de Bernstein} se definen como: $$B_{i,p}(u) = \binom{p}{i} u^{i} (1-u)^{p-i}.$$
 	\end{definition}
 
-	\begin{proposition}
-		Algunas de las propiedades fundamentales de los \textbf{polinomios de Bernstein} en este contexto son:
-		\begin{itemize}
-			\item \textbf{No negatividad}: $B_{i,p}(u) \geq 0, \forall u \in [0,1]$.
-			\item \textbf{Partición de la unidad}: $\sum_{i=0}^{p} B_{i,p}(u) = 1, \quad \forall u \in [0,1]$.
-			\item \textbf{Interpolación de los extremos}: $B_{0,p}(0) = 1, \quad B_{p,p}(1) = 1$.
-			\item \textbf{Soporte global}: $B_{i,p}(u) > 0, \quad \forall u \in (0,1)$.
-		\end{itemize}
-	\end{proposition}
+	%\begin{proposition}
+	%	Algunas de las propiedades fundamentales de los \textbf{polinomios de Bernstein} en este contexto son:
+	%	\begin{itemize}
+	%		\item \textbf{No negatividad}: $B_{i,p}(u) \geq 0, \forall u \in [0,1]$.\vspace{-0.1cm}
+	%		\item \textbf{Partición de la unidad}: $\sum_{i=0}^{p} B_{i,p}(u) = 1, \quad \forall u \in [0,1]$.\vspace{-0.1cm}
+	%		\item \textbf{Interpolación de los extremos}: $B_{0,p}(0) = 1, \quad B_{p,p}(1) = 1$.\vspace{-0.1cm}
+	%		\item \textbf{Soporte global}: $B_{i,p}(u) > 0, \quad \forall u \in (0,1)$.
+	%	\end{itemize}
+	%\end{proposition}
 \end{frame}
 
 
@@ -418,71 +416,70 @@
 	\framesubtitle{Curvas} % Optional subtitle
 	
 	\begin{definition}
-		Las curvas de Bézier de grado $p$ son curvas parametrizadas en el espacio $\R^n$ con $n,p \in \N$, de la forma:
+		Las curvas de Bézier de grado $p$ son curvas parametrizadas que emplean los polinomios de Bernstein
+		como base para la parametrización en el espacio $\R^n$ con $n,p \in \N$, de la forma:
+		
+		\vspace{-0.2cm}
+
 		\begin{equation*}
-			\mathbf{C}(u) = \sum_{i=0}^{p} B_{i,p}(u) \mathbf{P}_i, \quad u \in [0, 1].
+			\mathbf{C}(u) = \sum_{i=0}^{p} B_{i,p}(u) \mathbf{P}_i, \quad u \in [0, 1],
 		\end{equation*}
-		Donde:
-		\begin{itemize}
-			\item $\{\mathbf{P}_0, \mathbf{P}_1, \dots , \mathbf{P}_p\} \subset \R^n$, es el conjunto formado por los \textbf{puntos de control}.
-		\end{itemize}
+		
+		%\vspace{-0.15cm}
+		%\noindent
+		%donde: $\{\mathbf{P}_0, \mathbf{P}_1, \dots , \mathbf{P}_p\} \footnote{El conjunto de puntos de control puede contener repeticiones, es decir, \textbf{NO} satisfacen necesariamente $\mathbf{P}_i \neq \mathbf{P}_j, \quad \text{si } i \neq j$.}\subset \R^n$, es el conjunto formado por los \textbf{puntos de control}.
+
 	\end{definition}
+		\begin{figure}[H]\tiny
+			\centering
+			\begin{subfigure}[t]{0.32\textwidth}
+				\centering
+				\includesvg[width=\linewidth]{curva_bezier.svg}
+				\caption{Curva Bézier.}
+			\end{subfigure}
+			%\hspace{0.5cm} % Espacio manual si se omite la figura central, ajustable
+			\begin{subfigure}[t]{0.32\textwidth}
+				\centering
+				\includesvg[width=\linewidth]{bernstein_bases_p3.svg}
+				\caption{Polinomios de Bernstein.}
+			\end{subfigure}
+		\end{figure}
 \end{frame}
 
-\begin{frame}
-	\frametitle{Bézier}
-	\framesubtitle{Curvas} % Optional subtitle
-	\scriptsize
-	\begin{proposition}
-		Sea $\mathbf{C}(u) = \sum_{i=0}^{p} B_{i,p}(u)\mathbf{P}_i$ una curva de Bézier de grado $p$, con $u \in [0,1]$. Se satisfacen las siguientes propiedades:
-
-		\begin{enumerate}
-			\item \textbf{Interpolación en los extremos}:
-			$\mathbf{C}(0) = \mathbf{P}_0$ y $\mathbf{C}(1) = \mathbf{P}_p$.
-			\item \textbf{Tangencia en los extremos}:
-			\begin{equation*}
-				\mathbf{C}'(0) = p(\mathbf{P}_1 - \mathbf{P}_0), \quad \mathbf{C}'(1) = p(\mathbf{P}_p - \mathbf{P}_{p-1}).
-			\end{equation*}
-			\textit{Implicación:} La continuidad $C^1$ entre dos curvas de Bézier unidas requiere la colinealidad de $\mathbf{P}_{p-1}, \mathbf{P}_p$ (primera curva) y $\mathbf{P}_1, \mathbf{P}_0$ (segunda curva).
-			
-			\item \textbf{Invarianza afín}:
-			Sea $\Phi: \mathbb{R}^n \to \mathbb{R}^n$ una transformación afín ( $\Phi(\mathbf{x}) = \mathbf{A}\mathbf{x} + \mathbf{b}$). Entonces:
-			\begin{equation*}
-				\Phi\left( \sum_{i=0}^{p} B_{i,p}(u)\mathbf{P}_i \right) = \sum_{i=0}^{p} B_{i,p}(u)\Phi(\mathbf{P}_i).
-			\end{equation*}
-		\end{enumerate}
-	\end{proposition}
-\end{frame}
 
 \begin{frame}
 	\frametitle{Bézier}
 	\framesubtitle{Racionalización}
 	\scriptsize
 	\begin{proposition}
-    Se le asigna un peso $w_i\in \R^+$ a cada punto de control $P_i$, de manera que elevamos cada uno a coordenadas homogéneas en el \textbf{espacio proyectivo $\mathbb{P}^n$}
-    y proyectando de vuelta al espacio euclídeo $\R^n$.
+	Se asigna un peso $w_i \in \mathbb{R}^+$ a cada punto de control $\mathbf{P}_i \in \R^d$, se considera el espacio extendido
+    $\mathbb{R}^d \times \mathbb{R}$ mediante coordenadas homogéneas de la forma $(w_i \mathbf{P}_i, w_i)$.
+    Posteriormente, se proyecta la curva resultante sobre el hiperplano $w=1$, lo que analíticamente equivale
+    a tomar las coordenadas referentes a $\mathbf{P}_i$ y dividirlas entre la suma ponderada de los pesos activos:    
+    
+
+	\vspace{-0.3cm}
+
     \begin{equation*}
         \mathbf{C}^R(u) = \frac{\sum_{i=0}^{p} B_{i,p}(u) w_i \mathbf{P}_i}{\sum_{i=0}^{p} B_{i,p}(u) w_i}
     \end{equation*}
 \end{proposition}
 \vspace{-5pt}
-\begin{figure}[H]
+\begin{figure}[H]\tiny
     \centering
-    \begin{subfigure}{0.32\textwidth}
-        \includesvg[width=\linewidth]{curva_bezier.svg}
-        \caption{Curva Bézier no racional.}
-    \end{subfigure}
-    \hfill
+    %\begin{subfigure}{0.32\textwidth}
+    %    \includesvg[width=\linewidth]{curva_bezier.svg}
+    %    \caption{Curva Bézier no racional.}
+    %\end{subfigure}
+    %\hfill
     \begin{subfigure}{0.33\textwidth}
         \includesvg[width=\linewidth]{curva_bezier_racional.svg}
         \caption{Curva racional, $W=(1,10,7,1)^T$.}
     \end{subfigure}
-    \hfill
+    %\hfill
     \begin{subfigure}{0.32\textwidth}
-        \includesvg[width=\linewidth]{bernstein_bases_p3.svg}
-        
-		
-		\caption{Funciones base de Bernstein.}
+        \includesvg[width=\linewidth]{rational_bernstein_bases_p3_weighted.svg}
+		\caption{Funciones base racionalizadas.}
     \end{subfigure}
 \end{figure}
 
@@ -497,7 +494,7 @@
 	\framesubtitle{Funciones base} 
 
 	\begin{definition}
-		El \textbf{Vector de nudos} se define como $$U = \{u_0, u_1, \ldots, u_m\},$$ se cumple que $u_i \le u_{i+1}, \quad i = 0, \ldots, m-1$, el número de nudos $m+1$ está relacionado con $p$ y $n$ tal que cumple: $m=n+p+1$.
+		    Un \textbf{vector de nudos} es una succesión no decreciente de números reales $U = \{u_0, u_1, \ldots, u_m\}$, el número de nudos $m+1$ está relacionado con $p$ y $n$ tal que cumple: $m=n+p+1$.
 
 		Nos enfocaremos en los vectores de nudos \textbf{abiertos}, es decir, aquellos cuyos extremos se repiten $p+1$ veces, $u_0=u_1=\dots=u_{p}$, $u_m=u_{m-1}=\dots=u_{m-p+1}$.
 	\end{definition}
@@ -507,22 +504,33 @@
 \begin{frame}
 	\frametitle{B-Splines}
 	\framesubtitle{Funciones base} 
-
+	\scriptsize
 	\begin{definition}
     Las \textbf{Funciones base B-Spline, $N_{i,p}(u)$}: se definen recursivamente mediante el \textbf{algoritmo de Cox-de Boor}:
                 \begin{itemize}
                     \item Caso base ($p=0$): 
+					\vspace{-0.4cm}
                     \begin{equation*}
                         N_{i,0}(u) = \begin{cases} 1 & \text{si } u_i \le u < u_{i+1}, \\ 0 & \text{en caso contrario.} \end{cases}
                     \end{equation*} 
-                    \item Caso genérico ($p\geq 1$):
+					\vspace{-0.4cm}
+
+                    \item Caso genérico ($p\geq 1$): 
+					\vspace{-0.3cm}
                     \begin{equation*}
-                        N_{i,p}(u) = \frac{u - u_i}{u_{i+p} - u_i} N_{i,p-1}(u) + \frac{u_{i+p+1} - u}{u_{i+p+1} - u_{i+1}} N_{i+1,p-1}(u) \footnote{Para el caso en el que los coeficientes toman valor $\frac{0}{0}$ se les asignará como valor 1.}.
+                        N_{i,p}(u) = \frac{u - u_i}{u_{i+p} - u_i} N_{i,p-1}(u) + \frac{u_{i+p+1} - u}{u_{i+p+1} - u_{i+1}} N_{i+1,p-1}(u) \footnote{\scriptsize Para el caso en el que los coeficientes toman valor $\frac{0}{0}$ se le asignará valor 1.}.
                     \end{equation*}
                 \end{itemize} 
 	\end{definition}
 
+	\begin{proposition}
+		La derivada de las funciones base B-Splines pueden calcularse mediante la fórmula
+		$$N'_{i,p}(u) = \frac{p}{u_{i+p} - u_i} N_{i,p-1}(u) - \frac{p}{u_{i+p+1} - u_{i+1}} N_{i+1,p-1}(u).$$
+	\end{proposition}
+
 \end{frame}
+
+\begin{comment}
 
 \begin{frame}
 	\frametitle{B-Splines}
@@ -553,16 +561,53 @@
 
 \end{frame}
 
+\end{comment}
+
+
 \begin{frame}
 	\frametitle{B-Splines}
 	\framesubtitle{Curvas} 
 	\scriptsize
 	\begin{definition}
-		Con estas definiciones podemos ahora definir la curva generada por los B-Splines:
-		\begin{equation*}
+	Sean $U = \{u_0, u_1, \ldots, u_m\}$ un vector de nudos, $u \in [u_0, u_m]$ y $\mathbf{P}_i \subset \mathbb{R}^d$ la red de puntos de control,
+		una curva B-Spline se define como		
+
+		\vspace{-0.3cm}
+	\begin{equation*}
 			C(u) = \sum_{i=0}^{n} N_{i,p}(u) \cdot \mathbf{P}_i.
 		\end{equation*}
 	\end{definition}
+	\begin{figure}[H]
+    \centering
+	\tiny
+    \begin{subfigure}{0.32\textwidth}
+        \includesvg[width=\linewidth]{CurvaCirculoB-SPLINE_3D_Plot.svg}
+        \caption{Curva B-Spline.}
+        \label{fig:curva_Spline_1}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.32\textwidth}
+        \includesvg[width=\linewidth]{funciones_base_B-SPLINE_3.svg}
+        \caption{Funciones base $N_{i,p}$.}
+        \label{fig:curva_Spline_2}
+    \end{subfigure}
+    %\hfill
+    \begin{subfigure}{0.32\textwidth}
+        \includesvg[width=\linewidth]{Ders_funciones_base_B-SPLINE_Circle.svg}
+        \caption{Derivadas de $N_{i,p}$.}
+        \label{fig:curva_Spline_3}
+    \end{subfigure}
+    %\caption{Curva B-spline cuadrática empleando el vector de nudos $U = \{ 0, 0, 0, 1/4, 1/4, 1/2, 1/2, 3/4, 3/4, 1, 1, 1 \}$ y los puntos de control $\mathbf{P} = \{ (1,0,0)$, $(1,1,0)$, $(0,1,0)$, $(-1,1,0)$, $(-1,0,0)$, $(-1,-1,0)$, $(0,-1,0)$, $(1,-1,0)$, $(1,0,0) \}$, junto a sus funciones base y las derivadas de estas.}    \label{fig:curva_Spline}   
+\end{figure}
+
+\end{frame}
+
+
+\begin{comment}
+\begin{frame}
+	\frametitle{B-Splines}
+	\framesubtitle{Curvas} 
+	\small
 
 	\begin{proposition}
 		\label{prop:bspline_curvas_fundamentales}
@@ -575,21 +620,63 @@
 	\end{proposition}
 
 \end{frame}
+\end{comment}
+
+\begin{frame}
+	\frametitle{B-Splines}
+	\framesubtitle{Superficies} 
+	\small
+	Implementación mediante \textbf{producto tensorial} (estándar CAD).
+
+	Requiere la generalización matemática de las bases unidimensionales previas.
+	\begin{proposition}
+		\begin{itemize}
+			\item \textbf{Grados polinomiales}: Grado $p$ para la dirección paramétrica $u$, y grado $q$ para la dirección $v$.
+			\item \textbf{Vectores de nudos}: $U = \{u_0, \dots, u_{n+p+1}\}$ para la dirección $u$ y $V = \{v_0, \dots, v_{m+q+1}\}$ para la dirección $v$.
+			\item \textbf{Red de control}: matriz formada por $(n+1) \times (m+1)$ puntos de control $\mathbf{P}_{i,j}$.
+			\item \textbf{Funciones base}: $\mathbf{B}_{i,j}(u, v) = N_{i,p}(u) \cdot M_{j,q}(v),$ donde  $N_{i,p}(u)$ son las funciones 
+			base B-Spline en la dirección de $u$ y $M_{j,q}(v)$ son las funciones base en la dirección de $v$.
+		\end{itemize}
+	\end{proposition}
+\end{frame}
+
+\begin{frame}
+	\frametitle{B-Splines}
+	\framesubtitle{Superficies} 
+	\small
+	\begin{definition}
+		\begin{equation*}
+		\mathbf{S}(u, v)= \sum_{i=0}^{n} \sum_{j=0}^{m} \mathbf{B}_{i,j}(u, v) \mathbf{P}_{i,j} = \sum_{i=0}^{n} \sum_{j=0}^{m} N_{i,p}(u) M_{j,q}(v) \mathbf{P}_{i,j},
+		\end{equation*}
+
+		donde $u \in [u_0, u_{n+p+1}]$ y $v \in [v_0, v_{m+q+1}]$.
+	\end{definition}
+\end{frame}
 
 \subsection{NURBS}
 \begin{frame}
 	\frametitle{NURBS}
 	\framesubtitle{Funciones base} 
 	\begin{definition}
-		Las \textbf{Funciones base NURBS} se definen como:
-		\begin{equation}
+		Dados los pesos $\{w_i\}$ con $w_i>0$ para $i=0,1,..., n$, definimosas \textbf{funciones base NURBS} se definen como:
+
+		\vspace{-0.15cm}
+
+		\begin{equation*}
 			\label{eq:NURBS_Curve_Basis}
-			R_i^p(u)=\frac{N_{i,p}(u) w_i}{\sum_{j=0}^{n} N_{j,p}(u) w_j}.
-		\end{equation}
+			R_i^p(u)=\frac{N_{i,p}(u) w_i}{\sum_{j=0}^{n} N_{j,p}(u) w_j},\quad i \in \{0,1, \dots , n\}.
+		\end{equation*}
+
+		\vspace{-0.15cm}
 	\end{definition}
 
 	\begin{proposition}
-		Con el fin de preservar todas las propiedades de las \textbf{funciones base B-spline}, nos restringiremos al caso $w_i>0, \forall i$.
+		La derivada de las funciones base NURBS viene dada por
+		
+		\vspace{-0.35cm}
+		
+		$$(R_i^p)'(u) = \frac{w_i N'_{i,p}(u) - R_i^p(u) \sum_{j=0}^{n} N'_{j,p}(u) w_j}{\sum_{j=0}^{n} N_{j,p}(u) w_j},\quad i \in \{0,1, \dots , n\}.$$
+	
 	\end{proposition}
 \end{frame}
 
@@ -597,162 +684,203 @@
 	\frametitle{NURBS}
 	\framesubtitle{Curvas}
 	\scriptsize 
+			\vspace{-0.15cm}
 	\begin{definition}
-		Podemos ahora definir las curvas generadas por NURBS como:
+		Sean $U = \{u_0, u_1, \ldots, u_m\}$ un vector de nudos, $u \in [u_0, u_m]$, $\{w_i\}$ los pesos y $\mathbf{P}_i \in \mathbb{R}^d$ la red de puntos de control,
+		una curva NURBS se define como
+
+		\vspace{-0.3cm}
 
 		\begin{equation}
 			\label{eq:NURBS_Curve}
 			\mathbf{C}(u) = \sum_{i=0}^{n} R_i^p(u) \cdot \mathbf{P}_i = \frac{\sum_{i=0}^{n} N_{i,p}(u) w_i \mathbf{P}_i}{\sum_{j=0}^{n} N_{j,p}(u) w_j}.
 		\end{equation}
+
+    \vspace{-0.4cm}
 	\end{definition}
+
+	\begin{proposition}
+		La derivada de la curva NURBS viene dada por
+
+		\vspace{-0.2cm}
+
+		$$\mathbf{C}'(u) = \frac{\sum_{i=0}^{n} N'_{i,p}(u) w_i \left( \mathbf{P}_i - \mathbf{C}(u) \right)}{\sum_{i=0}^{n} N_{i,p}(u) w_i}.$$
+		
+		\vspace{-0.35cm}
+	\end{proposition}
+			\vspace{-0.15cm}
 	\begin{figure}[H]
     \centering
+    \captionsetup[subfigure]{skip=0pt} % <-- Controla el espacio aquí
+    \tiny
     \begin{subfigure}{0.32\textwidth}
-        \includesvg[width=\linewidth]{CurvaNurbs_3D_Plot.svg}
-        
-		\vspace{-5pt}
-		\caption{Curva NURBS.}
+        \includesvg[width=\linewidth]{CurvaCirculoNURBS_3D_Plot.svg}
+        \caption{Curva NURBS.}
+        \label{fig:NURBS_curva_1}   
     \end{subfigure}
     \hfill
     \begin{subfigure}{0.33\textwidth}
-        \includesvg[width=\linewidth]{funciones_base_NURBS.svg}
-        
-		\vspace{-5pt}
-		\caption{funciones base $R_{i,p}$.}
+        \includesvg[width=\linewidth]{funciones_base_NURBSaux.svg}
+        \caption{Funciones base $R_i^p$.}
+        \label{fig:NURBS_curva_2}   
     \end{subfigure}
     \hfill
     \begin{subfigure}{0.32\textwidth}
-        \includesvg[width=\linewidth]{Ders_funciones_base_NURBS.svg}
-        
-		\vspace{-5pt}
-		\caption{Derivadas de  $R_{i,p}$.}
+        \includesvg[width=\linewidth]{Ders_funciones_base_NURBS_Circle.svg}
+        \caption{Derivadas de  $R_i^p$.}
+        \label{fig:NURBS_curva_3}   
     \end{subfigure}
 \end{figure}
 \end{frame}
 
-\subsection{Superficies}
-
 \begin{frame}
-	\frametitle{Superficies}
-	\framesubtitle{Producto tensorial} 
+	\frametitle{NURBS}
+	\framesubtitle{Superficies} 
 	\scriptsize
 	\begin{definition}
-		El producto tensorial es el estándar de CAD para la creación de superficies, se define como:
-		\begin{equation*}
-			\mathbf{B}_{i,j}(u, v) = N_{i,p}(u) \cdot M_{j,q}(v).
+
+		Las \textbf{funciones base NURBS} para superficies se definen mediante
+		\begin{equation*} 
+			%\label{eq:NURBS_Surf_Basis}
+			R_{i,j}^{p,q}(u, v) = \frac{N_{i,p}(u) M_{j,q}(v) w_{i,j}}{\sum_{k=0}^{n} \sum_{l=0}^{m} N_{k,p}(u) M_{l,q}(v) w_{k,l}} ,\quad i \in \{0,1, \dots , n\},\quad j \in \{0,1, \dots , m\}
 		\end{equation*}
-		Donde  $N_{i,p}(u)$ son las funciones base en la dirección de $u$ y $M_{j,q}(v)$ son las funciones base en la dirección de $v$.
+
 	\end{definition}
 
 	\begin{definition}
-		Mediante este producto definimos la superficie generada por \textbf{B-Splines} mediante la fórmula:
-		\begin{equation*}
-			\mathbf{S}(u, v) = \sum_{i=0}^{n} \sum_{j=0}^{m} N_{i,p}(u) M_{j,q}(v) \mathbf{P}_{i,j}.
-		\end{equation*}
-		Redefiniendo la estructura en la que se encuentran los puntos de control, pasando a formar ahora una matriz.
-	\end{definition}
-\end{frame}
-
-
-\begin{frame}
-	\frametitle{Superficies}
-	\framesubtitle{NURBS} 
-	\begin{definition}
-		Podemos ahora racionalizar estas curvas para obtener superficies generadas mediante \textbf{NURBS}, para ello utilizamos una matriz de pesos $w_{i,j}$ y la fórmula:
+		Sean $U = \{u_0, u_1, \ldots, u_{n+p+1}\}$, $V = \{v_0, v_1, \ldots, v_{(m+q+1)}\}$  vectores de nudos, $u \in [u_0, u_{n+p+1}]$, $v\in [v_0, v_{m+q+1}]$, $w$ matriz de pesos y $\mathbf{P}_{i,j}$ una red de puntos de control,
+		las superficies NURBS se definen como
 		\begin{equation}
 			\label{eq:NURBS_Surf}
-			\mathbf{S}(u, v) = \frac{\sum_{i=0}^{n} \sum_{j=0}^{m} N_{i,p}(u) M_{j,q}(v) \mathbf{w}_{i,j} \mathbf{P}_{i,j}}{\sum_{i=0}^{n} \sum_{j=0}^{m} N_{i,p}(u) M_{j,q}(v) \mathbf{w}_{i,j}}= \sum_{i=0}^{n} \sum_{j=0}^{m} R_{i,j}^{p,q}(u, v) \mathbf{P}_{i,j}.
-		\end{equation}
-
-		Donde 
-		\begin{equation} 
-			\label{eq:NURBS_Surf_Basis}
-			R_{i,j}^{p,q}(u, v) = \frac{N_{i,p}(u) M_{j,q}(v) w_{i,j}}{\sum_{k=0}^{n} \sum_{l=0}^{m} N_{k,p}(u) M_{l,q}(v) w_{k,l}} 
+			\mathbf{S}(u, v) = \sum_{i=0}^{n} \sum_{j=0}^{m} R_{i,j}^{p,q}(u, v) \mathbf{P}_{i,j}= \frac{\sum_{i=0}^{n} \sum_{j=0}^{m} N_{i,p}(u) M_{j,q}(v) \mathbf{w}_{i,j} \mathbf{P}_{i,j}}{\sum_{i=0}^{n} \sum_{j=0}^{m} N_{i,p}(u) M_{j,q}(v) \mathbf{w}_{i,j}}.
 		\end{equation}
 	\end{definition}
 \end{frame}
 
 \begin{frame}
-	\frametitle{Superficies}
-	\framesubtitle{Propiedades} 
+	\frametitle{NURBS}
+	\framesubtitle{Superficie} 
+	\scriptsize
 	\begin{proposition}
+    \label{prop:surf_tensor}
     Las superficies generadas mediante el producto tensorial mantienen la suavidad de las curvas que la generan en las direcciones de estas.
 	\end{proposition}
-
 	\begin{figure}[H]
-		\centering
-		\begin{subfigure}{0.32\textwidth}
-			{\tiny
-			\includesvg[width=\linewidth]{Superficie_NURBS_Ej1.svg}
-			\caption{NURBS ejemplo 1.}
-			}
-		\end{subfigure}
-		\hfill
-		\begin{subfigure}{0.33\textwidth}
-			{\tiny
-			\includesvg[width=\linewidth]{Superficie_NURBS_Ej2.svg}
-			\caption{NURBS ejemplo 2.}
-			}
-		\end{subfigure}
-		\hfill
-		\begin{subfigure}{0.32\textwidth}
-			{\tiny
-			\includesvg[width=\linewidth]{Superficie_NURBS_Ej2_Refined.svg}
-			\caption{Ejemplo 2 refinada.}
-			}
-		\end{subfigure}
-	\end{figure}
-
+    \centering
+	\tiny
+    \begin{subfigure}{0.45\textwidth}
+        \includesvg[width=\linewidth]{Superficie_NURBS_Ej1.svg}
+        \caption{Superficie NURBS ejemplo 1.}
+        \label{fig:NURBS_surf_1}
+    \end{subfigure}
+    %\hfill
+    \begin{subfigure}{0.45\textwidth}
+        \scriptsize
+        \includesvg[width=\linewidth]{Superficie_NURBS_Ej2.svg}
+        \caption{Superficie NURBS ejemplo 2.}
+        \label{fig:NURBS_surf_2}
+    \end{subfigure}
+    %\hfill
+    %\begin{subfigure}{0.32\textwidth}
+    %    \scriptsize
+    %    \includesvg[width=\linewidth]{Superficie_NURBS_Ej2_Refined.svg}
+    %    \caption{Ejemplo 2 refinada.}\label{fig:NURBS_surf_3}
+    %\end{subfigure}
+    % --- NOTA DEL CÓDIGO FUENTE ---
+    % -------------------------------
+\end{figure}
 \end{frame}
 %------------------------------------------------
-\subsection{Refinamiento de nudos}
+\subsection{Refinamiento de curvas y superficies}
 \begin{frame}
-	\frametitle{Refinamiento de nudos}
+	\frametitle{Inserción de nudos}
 	\framesubtitle{h-refinement}
-	\tiny
+	\scriptsize
 	\begin{definition}
         Definiremos los elementos que necesitamos para aplicar el refinamiento:
         \begin{itemize}
-            \item \textbf{Puntos de control ponderados}, $\mathbf{P}_i^w$: Sea $\mathbf{P}_i$ un punto de control y $\mathbf{w}_i$ su peso asociado, definimos $\mathbf{P}_i^w$ = ($\mathbf{w}_i\mathbf{P}_i, \mathbf{w}_i)^T$.
-            \item \textbf{Nuevo nudo}, $\xi$: aunque ya tenemos el concepto de nudo definido es necesario declarar en que intervalo se encuentra, tomaremos que $\xi \in [u_k, u_{k+1})$.
-            \item \textbf{Nuevo vector de nudos}, $U^*=\{u_0,u_1, \dots , u_k, \xi, u_{k+1}, \dots, u_m\}$.
-            \item \textbf{Nuevos puntos de control ponderados}, $\mathbf{Q}_i^w$: estarán definidos mediante $\mathbf{Q}_{i}^{w} = \alpha_i \mathbf{P}_{i}^{w} + (1 - \alpha_i) \mathbf{P}_{i-1}^{w}$, donde $\alpha_i$ se define mediante la fórmula:
-                $$\alpha_i = \begin{cases} 1 & \text{si } i \le k-p, \\ \frac{\xi - u_i}{u_{i+p} - u_i} & \text{si } k-p+1 \le i \le k, \\ 0 & \text{si } i > k. \end{cases}$$
-            \item \textbf{Nuevas funciones base}, $N_{i,p}^*(u)$, asociadas al nuevo vector de nudos $U^*$, que cumplen la igualdad: $N_{i,p}(u) = \alpha_{i} N_{i,p}^*(u) + (1 - \alpha_{i+1}) N_{i+1,p}^*(u)$.
-        \end{itemize}
+			\item \textbf{Puntos de control ponderados}, $\mathbf{P}_i^w = (w_i\mathbf{P}_i, w_i)^T, \quad \forall i = 0, \dots , n$.
+			\item \textbf{Nuevo nudo}, $\xi \in [u_k, u_{k+1})$.
+			\item \textbf{Nuevo vector de nudos refinado}, $U^*=\{u_0,u_1, \dots , u_k, \xi, u_{k+1}, \dots, u_{(n+p+1)}\}$.
+			\item \textbf{Nuevos puntos de control ponderados}, $\mathbf{Q}_i^w$: Viene dados por $\mathbf{Q}_{i}^{w} = \alpha_i \mathbf{P}_{i}^{w} + (1 - \alpha_i) \mathbf{P}_{i-1}^{w}$, donde $\alpha_i$ se define mediante la fórmula:
+					$$\alpha_i = \begin{cases} 1 & \text{si } i \le k-p, \\ \frac{\xi - u_i}{u_{i+p} - u_i} & \text{si } k-p+1 \le i \le k, \\ 0 & \text{si } i > k. \end{cases}$$
+			%\textit{Nota}: El algoritmo solo modifica los $p$ puntos de control $\mathbf{P}_i$ tales que $k-p+1 \le i \le k$.
+			\item \textbf{Nuevas funciones base}, $N_{i,p}^*(u)$.
+		\end{itemize}
 	\end{definition}
 \end{frame}
 
 \begin{frame}
-	\frametitle{Refinamiento de nudos}
+	\frametitle{Inserción de nudos}
 	\framesubtitle{h-refinement}
-	\small
+
+	\scriptsize
 	\begin{proposition}
 		La curva original ponderada es equivalente a la curva ponderada refinada,
+		\vspace{-0.35cm}
 		\begin{equation*}
 			\mathbf{C}^{w}(u) = \sum_{i=0}^{m} N_{i,p}(u) \mathbf{P}_{i}^{w}=  \sum_{j=0}^{m+1} N_{j,p}^*(u) \mathbf{Q}_{j}^{w} 
 		\end{equation*}
 	\end{proposition}
+	\begin{proposition}
+		La inserción de nudos en superficies se realiza de manera direccional, introduciendo únicamente nudos a uno de los dos vectores de nudos,
+		modificando así una de las dos curvas que generan la superficie
+	\end{proposition}
+	\begin{figure}[H]
+		\centering
+		\tiny
+		% Ajustamos la fuente (puedes usar scriptsize, footnotesize o tiny) 
+		% y reducimos el espacio de separación a 2pt (o 0pt)
+		\captionsetup{font=scriptsize, skip=0pt} 
+		
+		\includesvg[width=0.32\textwidth]{Superficie_NURBS_Ej2_Refined.svg}
+		
+		% Si notas que sigue habiendo mucho espacio, es culpa de un margen 
+		% invisible dentro del propio archivo .svg. En ese caso, descomenta 
+		% la siguiente línea y ajusta el valor negativo:
+		% \vspace{-10pt}
+		
+		\caption{Superficie del ejemplo 2 tras inserción de nudos}
+		\label{fig:NURBS_surf_3}
+	\end{figure}
 \end{frame}
 
+\begin{frame}
+	\frametitle{Elevación de grado polinomial}
+	\framesubtitle{p-refinement}
+	\scriptsize
+	\begin{proposition}
+        \begin{itemize}
+			\item \textbf{Paso a formas de Bézier locales:} Insertamos repeticiones a los nudos interiores hasta que todos tengan multiplicidad $p+1$.
+			\item \textbf{Elevación del grado en la base de Bernstein:} $\sum_{i=0}^p \mathbf{P}_i B_{i,p}(u) = \sum_{i=0}^{p+1} \left[ \frac{i}{p+1} \mathbf{P}_{i-1} + \left(1 - \frac{i}{p+1}\right) \mathbf{P}_i \right] B_{i, p+1}(u)$.
+			\item \textbf{Eliminación de nudos}.
+		\end{itemize}
+	\end{proposition}
+\end{frame}
 
 \section{Análisis isogeométrico}
-\subsection{Espacios funcionales}
+\subsection{Formulación variacional}
 \begin{frame}
-	\frametitle{Análisis isogeométrico}
+
+	\frametitle{Formulación variacional}
 	\framesubtitle{Espacios funcionales}
-	\tiny
 	\begin{definition}    
-    Sea $\hat{\Omega}$ el \textbf{dominio paramétrico} definido en 1D por el vector de nudos $U$ y en 2D por el producto tensorial de los vectores de nudos $U \times V$.
+    	Sea $\hat{\Omega}$ el \textbf{dominio paramétrico} definido en 1D por el vector de nudos $U$ y en 2D por el producto tensorial de los vectores de nudos $U \times V$.
 	\end{definition}
 
-	El \textbf{espacio físico} $\Omega$ queda parametrizado así mediante el mapeo geométrico $\mathbf{G}: \hat{\Omega} \to \Omega$ definido en (\ref{eq:NURBS_Curve}) en 1D y en (\ref{eq:NURBS_Surf}) en 2D.
-
+	\begin{definition}   
+		El \textbf{espacio físico} $\Omega$ queda parametrizado así mediante el mapeo geométrico de los NURBS.
+	\end{definition}
 
 	\begin{definition}
 		\textbf{Elemento:} denotado por $\Omega_e\subset \Omega$, parametrizado mediante la restricción sobre $\hat{\Omega}$ de $\mathbf{G}$, dada por el intervalo no nulo $[u_n, u_{(n+1)})$ en 1D, o por $[u_n, u_{(n+1)})\times [v_k, v_{(k+1)})$ en 2D, 
 	\end{definition}
 
+\end{frame}
+
+\begin{frame}
+	\frametitle{Formulación variacional}
+	\framesubtitle{Espacios funcionales}
 	\begin{definition}
 		\textbf{Malla física:} Sea $N_{el}$ el número de intervalos de nudos no nulos formados por nudos consecutivos, definimos la malla física como $\mathcal{T}_h = \{ \Omega_e \}_{e=1}^{N_{el}}$.
 	\end{definition}
@@ -767,7 +895,8 @@
 \end{frame}
 
 \begin{frame}
-	\frametitle{Espacios funcionales}
+	\frametitle{Formulación variacional}
+	\framesubtitle{Espacios funcionales}
 	\scriptsize
 	\begin{definition}
 		Sea $\hat{V}_h$ el \textbf{espacio de funciones NURBS} definido en 1D en (\ref{eq:NURBS_Curve_Basis}) y en 2D en (\ref{eq:NURBS_Surf_Basis})
@@ -787,6 +916,89 @@
 	\end{definition}
 \end{frame}
 
+
+\begin{frame}
+	\frametitle{Formulación variacional}
+	\framesubtitle{Espacios funcionales}
+		\begin{figure}[htbp]
+    \centering
+    \begin{tikzpicture}
+        % --- ESPACIO PARAMÉTRICO ---
+        \draw[step=0.5, gray, thin] (0,0) grid (2,2);
+        \draw[thick, ->] (0,0) -- (2.5,0) node[right] {$u$};
+        \draw[thick, ->] (0,0) -- (0,2.5) node[above] {$v$};
+        \draw[very thick] (0,0) rectangle (2,2);
+        
+        % Etiqueta \hat{\Omega} centrada y con fondo blanco
+        \node at (1,1) [fill=white, inner sep=2pt] {$\hat{\Omega}$};
+
+        % Valores en el eje u
+        \foreach \x/\val in {0/0, 1/0.5, 2/1} {
+            \draw (\x, 0.05) -- (\x, -0.05) node[below=2pt] {\scriptsize \val};
+        }
+        % Valores en el eje v (omitimos el 0 para no superponerlo con el del eje u)
+        \foreach \y/\val in {1/0.5, 2/1} {
+            \draw (0.05, \y) -- (-0.05, \y) node[left=2pt] {\scriptsize \val};
+        }
+
+        % --- MAPEO ---
+        \draw[->, thick, >=stealth] (3,1) to[bend left=20] node[above] {$\mathbf{G}$} (4.8,1);
+
+        % --- ESPACIO FÍSICO ---
+        \begin{scope}[shift={(6,0)}, scale=0.65]
+            \draw[thick, ->] (0,0) -- (3.5,0) node[right] {$x$};
+            \draw[thick, ->] (0,0) -- (0,3.5) node[above] {$y$};
+            
+            % Cuadrícula deformada
+            \foreach \r in {1, 1.5, 2, 2.5, 3} {
+                \draw[gray, thin] (\r,0) arc (0:90:\r);
+            }
+            \foreach \a in {0, 22.5, 45, 67.5, 90} {
+                \draw[gray, thin] (\a:1) -- (\a:3);
+            }
+            
+            \draw[very thick] (1,0) -- (3,0) arc (0:90:3) -- (0,1) arc (90:0:1) -- cycle;
+            \node at (45:2) [fill=white, inner sep=2pt] {$\Omega$};
+
+            % Valores en el eje x
+            \foreach \x in {1, 2, 3} {
+                \draw (\x, 0.05) -- (\x, -0.05) node[below=2pt] {\scriptsize \x};
+            }
+            % Valores en el eje y
+            \foreach \y in {1, 2, 3} {
+                \draw (0.05, \y) -- (-0.05, \y) node[left=2pt] {\scriptsize \y};
+            }
+        \end{scope}
+    \end{tikzpicture}
+
+	\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \scalebox{0.70}{% <-- Inicio del escalado al 60%
+    \begin{tikzpicture}[>=stealth]
+        % Colocación simétrica respecto al centro (0,0)
+        \node[inner sep=0pt] (parametrico) at (-4.2, 0) {\includegraphics[width=6.5cm]{nurbs_bases_parametrico.png}};
+        \node[inner sep=0pt] (fisico) at (4.2, 0) {\includegraphics[width=6.5cm]{nurbs_bases_completas.png}};
+        
+        % Etiquetas de los espacios
+        \node at (-4.2, -3.5) {\large Espacio Paramétrico $\hat{\Omega}$};
+        \node at (4.2, -3.5) {\large Espacio Físico $\Omega$};
+        
+        % Ejes superpuestos de referencia visual
+        \node at (-4.2, -4.1) {Nudos: $u \in [0,1], v \in [0,1]$};
+        \node at (4.2, -4.1) {Coordenadas cartesianas $(x,y)$};
+
+        % Mapeo G 
+        \draw[->, very thick] (-0.8, 1.2) to[bend left=20] node[above] {$\mathbf{G}$} (0.8, 1.2);
+        
+        % Mapeo G^-1 (Pull-back)
+        \draw[<-, very thick] (-0.8, 0.2) to[bend right=20] node[below] {$\mathbf{G}^{-1}$} (0.8, 0.2);
+    \end{tikzpicture}%
+    } % <-- Fin del escalado
+\end{figure}
+\end{frame}
+
 \subsection{Formulación discreta de Galerkin}
 \begin{frame}
 	\frametitle{Formulación discreta de Galerkin}
@@ -799,7 +1011,7 @@
 	\begin{equation*}
 		u_h(\mathbf{x}) = \sum_{j=1}^{N_b} d_j \phi_j(\mathbf{x}),
 	\end{equation*}
-	donde $d_j$ son los \textbf{coeficientes de control} a determinar y $N_b$ es el número total de funciones base globales.
+	donde $d_j$ son los \textbf{variables de control} a determinar y $N_b$ es el número total de funciones base globales.
 	\end{definition}
 \end{frame}
 
@@ -827,10 +1039,7 @@
 	\begin{proposition}
 		Las siguientes propiedades se cumplen para problemas en un abierto $\Omega \subset \R^n$, con $N_{el}$ elementos.
 		\begin{enumerate}
-			\item \textbf{Dispersión:} cada fila tiene a lo sumo $(2p+1)^n$, el cual no crece en función del número de elementos del problema, creando la relación asintótica
-			\begin{equation*} 
-				\lim_{N_{el} \to \infty} \frac{(2p+1)^n}{N_B} = 0.
-			\end{equation*}
+			\item \textbf{Dispersión:} cada fila tiene a lo sumo $(2p+1)^n$ elementos no nulos.
 			\item \textbf{Simetría:} los elementos $\mathbf{K}_{(i,j)}=a(\phi_j,\phi_i)=a(\phi_i,\phi_j)=\mathbf{K}_{(j,i)}$, esta propiedad ocurre si y solo si la forma bilineal es simétrica, que depende de que el operador diferencial del problema sea autoadjunto.
 			\item \textbf{Condicionamiento:} $\kappa(\mathbf{K}) \approx O(h^{-2})$
 		\end{enumerate}
@@ -1137,13 +1346,14 @@
 			\item \textbf{Norma en $H^1(\Omega)$:} $\| u - u_h \|_{H^1(\Omega)} \leq C_1 h^p \| u \|_{H^{p+1}(\Omega)}$.
 			\item \textbf{Norma en $L^2(\Omega)$:} $\| u - u_h \|_{L^2(\Omega)} \le C_2 h^{p+1} \| u \|_{H^{p+1}(\Omega)}$.
 		\end{itemize}
+	Donde $C_1$ y $C_2$ decrecen a medida que crece la continuidad de las estructuras de NURBS asociadas al problema.
 	\end{proposition}
 \end{frame}
 
 \begin{frame}
 	\frametitle{Cotas y coste computacional}
 	\framesubtitle{Coste computacional}
-	\scriptsize
+
 	\begin{proposition} \textbf{Fase de evaluación.}
 		Fase previa al ensamblado para dimensiones mayores o iguales que dos, que aprovecha las propiedades del producto tensorial para evitar recalcular evaluaciones de funciones base, su coste computacional:
 		{\setlength{\abovedisplayskip}{2pt}
@@ -1151,7 +1361,10 @@
 		$$\sum_{i=1}^{d}Q_i\cdot n_i=\mathcal{O}(d\cdot\text{max}_i\{Q_i\cdot n_i\}),$$ donde $Q_i$ es el número de evaluaciones direccionales y $n_i$ el número de divisiones correspondientes a la dimensión $i$.
 		}
 	\end{proposition}
-
+\end{frame}
+\begin{frame}
+	\frametitle{Cotas y coste computacional}
+		\framesubtitle{Coste computacional}
 	\begin{proposition} \textbf{Fase de ensamblado.}
 		Fase en la que se realizan las integrales numéricas y se ensamblan, su coste computacional:
 		{\setlength{\abovedisplayskip}{2pt}
@@ -1164,7 +1377,22 @@
 
 	\end{proposition}
 \end{frame}
+\begin{frame}
+	\frametitle{Cotas y coste computacional}
+		\framesubtitle{Coste computacional}
+	\begin{proposition} \textbf{Fase de resolución.}
+		Una vez ensamblado el sistema lineal $\mathbf{K}\mathbf{d} = \mathbf{F}$, el coste computacional de su resolución viene determinado por el semi-ancho de banda de la matriz ($B = \max |i-j|$ para todo $\mathbf{K}_{i,j} \neq 0$):
+    \begin{itemize}
+        \item \textbf{Problemas 1D (Factorización LU):} El semi-ancho de banda está acotado por $p$, $\mathcal{O}(N_b)=\mathcal{O}(h^{-1})$.
+        
+        \item \textbf{Problemas 2D (ICCG:)} El semi-ancho de banda crece aproximadamente como $p\sqrt{N_b}$, $\mathcal{O}(h^{-3})$.
+    \end{itemize}
+	\end{proposition}
+\end{frame}
 %------------------------------------------------
+
+\begin{comment}
+	
 
 \section{Implementación computacional}
 
@@ -1205,19 +1433,20 @@
 		\item \textbf{Representación gráfica en octave.}
 	\end{enumerate}
 \end{frame}
-
+\end{comment}
 \section{Resultados}
 
 \begin{frame}
 	\frametitle{Resultados}
-	\framesubtitle{1D}
-	Tomaremos el problema en 1D definido mediante $f(x)=100\frac{\pi^2}{L^2} \sin(10\pi \frac{x}{L})$, $u(0)=0$, $u(L)=0$.
+	\framesubtitle{Problema modelo en 1D}
 	\begin{itemize}
+		\item{\textbf{Término fuente:}} $f(x)=100\sin(10\pi x)$
 		\item \textbf{Grado polinomial p:} 2.
 		\item \textbf{Dominio paramétrico:} $U=\{0,0,0,\frac{1}{2},\frac{1}{2},1,1,1\}$.
-		\item \textbf{Dominio físico:} Semicircunferencia contenida en el plano XY, centrada en el origen de radio 1.
+		\item \textbf{Dominio físico:} Semicircunferencia contenida en el plano OXY, centrada en el origen de radio 1.
+		\item \textbf{Condiciones de contorno:} $u(0)=0$, $u(L)=0$.
 		\item \textbf{Solución y derivada analítica:} $u(x)=\sin(10\pi\frac{x}{\pi})$, $u'(x)=10\cos(10\pi\frac{x}{\pi})$.
-		\item \textbf{Puntos de control y pesos:} 
+		\item \textbf{Puntos de control y pesos originales:} 
 		{\setlength{\abovedisplayskip}{2pt}
 		\setlength{\belowdisplayskip}{0pt}
 		\scriptsize
@@ -1238,113 +1467,111 @@
 
 \begin{frame}
 	\frametitle{Resultados}
-	\framesubtitle{1D}
-	\begin{table}[h]
+	\framesubtitle{Tablas de resultados en 1D}
+	\begin{table}[htbp]
 		\centering
-		\caption{Tabla de convergencia y costes computacionales.}
-		\begin{tabular}{cccc}
-			\toprule
-			\textbf{Nº Elementos} & \textbf{Tiempo (s)} & \textbf{Error} $\boldsymbol{L^2}$ & \textbf{Error} $\boldsymbol{H^1}$ \\
-			\midrule
-			16    & $0.0034002$ & $0.0512509$ & $5.15944$ \\
-			32    & $0.0074421$ & $0.00415079$ & $0.827538$ \\
-			64    & $0,0123962$ & $0.000451444$ & $0.182791$ \\
-			128   & $0,0244885$ & $5.43459 \cdot 10^{-5}$ & $0.0442749$ \\
-			256   & $0,0484195$ & $6.72829 \cdot 10^{-6}$ & $0.010981$ \\
-			\bottomrule
-		\end{tabular}
-	\end{table}
-\end{frame}
-
+		\captionsetup{font=small, labelfont=bf}
+		
+		% --- FILA 1: Errores L2 y H1 ---
+		\begin{minipage}[b]{0.9\textwidth}
+			\centering
+			\caption{Error en norma $L^2$.}
+			\label{tab:error_L2}
+			\resizebox{\textwidth}{!}{%
+			\begin{tabular}{c *{5}{c}}
+				\toprule
+				$p \setminus N_{el}$ & {16} & {32} & {64} & {128} & {256} \\
+				\midrule
+				2 & {$0.0513$} & {$0.00415$} & {$0.000451$} & { $5.43 \cdot 10^{-5}$} & {$6.73 \cdot 10^{-6}$} \\
+				3 & {$0.0399$} & {$0.000916$} & {$4.18\cdot 10^{-5}$} & {$2.39\cdot 10^{-6}$} & {$1.51\cdot 10^{-7}$} \\
+				4 & {$0.014$} & {$0.000169$} & {$3.58\cdot 10^{-6}$} & {$1.74 \cdot 10^{-7}$} & {$3.62\cdot 10^{-8}$} \\
+				5 & {$0.0080$} & {$3.44\cdot 10^{-5}$} & {$6.40\cdot 10^{-7}$} & {$1.39\cdot 10^{-7}$} & {$3.48\cdot 10^{-8}$} \\
+				\bottomrule
+			\end{tabular}}
+		\end{minipage}
+		\hfill
+		\begin{minipage}[c]{0.9\textwidth}
+			\centering
+			\caption{Error en norma $H^1$.}
+			\label{tab:error_H1}
+			\resizebox{\textwidth}{!}{%
+			\begin{tabular}{c *{5}{c}}
+				\toprule
+				$p \setminus N_{el}$ & {16} & {32} & {64} & {128} & {256} \\
+				\midrule
+				2 & {$5.15$} & {$0.827$} & {$0.182$} & {$0.0442$} & {$0.010$} \\
+				3 & {$1.89$} & {$0.143$} & {$0.0147$} & {$0.00174$} & {$0.000216$} \\
+				4 & {$1.13$} & {$0.0286$} & {$0.00133$} & {$7.71\cdot 10^{-5}$} & {$4.85\cdot 10^{-6}$} \\
+				5 & {$0.51$} & {$0.00568$} & {$0.000118$} & {$5.42\cdot 10^{-6}$} & {$1.10\cdot 10^{-6}$} \\
+				\bottomrule
+			\end{tabular}}
+		\end{minipage}
+		\end{table}
+	\end{frame}
 \begin{frame}
 	\frametitle{Resultados}
-	\framesubtitle{1D}
-	Tomaremos el problema en 1D definido mediante $f(x)=100\frac{\pi^2}{L^2} \sin(10\pi \frac{x}{L})$, $u(0)=0$, $u(L)=0$.
-	\begin{itemize}
-		\item \textbf{Grado polinomial p:} 3.
-
-		\item \textbf{Dominio paramétrico:} $U=\{0,0,0,0,1,1,1,1\}$.
-
-		\item \textbf{Dominio físico:} Curva Alabeada $x=(\xi,\xi^2,\xi^3)$, $L\approx 1.86302298656134$.
-
-		\item \textbf{Solución y derivada analítica:} $u(x)=\sin(10\pi\frac{x}{L})$, $u'(x)=10\frac{\pi}{L}\cos(10\pi\frac{x}{L})$.
-
-		\item \textbf{Puntos de control y pesos:} 
-		{\setlength{\abovedisplayskip}{2pt}
-		\setlength{\belowdisplayskip}{0pt}
-		\scriptsize
-		\begin{equation*}
-			\mathbf{P} = \left[ 
-			\begin{pmatrix} 0 \\ 0 \\ 0 \end{pmatrix}, 
-			\begin{pmatrix} \frac{1}{3} \\ 0 \\ 0 \end{pmatrix}, 
-			\begin{pmatrix} \frac{2}{3} \\ \frac{1}{3} \\ 0 \end{pmatrix}, 
-			\begin{pmatrix} 1 \\ 1 \\ 1 \end{pmatrix} 
-			\right],
-			\qquad 
-			\mathbf{w} = \left[ 1, \ 1, \ 1, \ 1 \right].
-		\end{equation*}
-		}
-	\end{itemize}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Resultados}
-	\framesubtitle{1D}
-	\begin{table}[h]
-		\centering
-		\caption{Tabla de convergencia y costes computacionales.}
-		\begin{tabular}{cccc}
-			\toprule
-			\textbf{Nº Elementos} & \textbf{Tiempo (s)} & \textbf{Error} $\boldsymbol{L^2}$ & \textbf{Error} $\boldsymbol{H^1}$ \\
-			\midrule
-			16    & $0.004775$ & $0.19235$ & $7.23543$ \\
-			32    & $0.0095162$ & $0.00634774$ & $0.742005$ \\
-			64    & $0.0149659$ & $0.000235597$ & $0.0739008$ \\
-			128   & $0.0443802$ & $1.15083 \cdot 10^{-5}$ & $0.00816382$ \\
-			256   & $0,0857816$ & $6.75238 \cdot 10^{-7}$ & $1.06953 \cdot 10^{-5}$ \\
-			\bottomrule
-		\end{tabular}
+	\framesubtitle{Tablas de resultados en 1D}
+	\begin{table}[htbp]
+		% --- FILA 2: Tiempos y Gráfica de Densidad ---
+		\begin{minipage}[b]{0.9\textwidth}
+			\centering
+			\caption{Tiempos totales (s).}
+			\label{tab:tiempos}
+			\resizebox{\textwidth}{!}{%
+			\begin{tabular}{c *{5}{c}}
+				\toprule
+				$p \setminus N_{el}$ & {16} & {32} & {64} & {128} & {256} \\
+				\midrule
+				2 & 0.0034 & 0.0074 & 0.0124 & 0.0245 & 0.0484 \\
+				3 & 0.0043 & 0.0085 & 0.0163 & 0.0329 & 0.0664 \\
+				4 & 0.0055 & 0.0104 & 0.0197 & 0.0387 & 0.0807 \\
+				5 & 0.0067 & 0.0141 & 0.0286 & 0.0582 & 0.1128 \\
+				\bottomrule
+			\end{tabular}}
+		\end{minipage}
+		\hfill
+		\begin{minipage}[c]{0.9\textwidth}
+			\centering
+			% Sustituye "ruta_a_tu_grafica.png" por el nombre real de tu archivo
+			\includegraphics[width=0.9\textwidth]{densidad_matriz_final.png}
+			\captionof{figure}{Elementos no nulos de la matriz frente al grado polinomial para $N_{el}=16$ en 1D.}
+			\label{fig:densidad_matriz}
+		\end{minipage}
 	\end{table}
 \end{frame}
 
 \begin{frame}
 	\frametitle{Resultados}
 	\framesubtitle{Representación gráfica de los problemas en 1D}
-	 \begin{figure}[H]
-		\tiny
+	\scriptsize
+	\begin{figure}[H]
+		\captionsetup{skip=5pt}
 		\centering
-		\begin{subfigure}{0.32\textwidth}
-			\includesvg[width=\linewidth]{CurvaColor_h256_p2.svg}
-			\caption{Semicircunferencia, p=2.}
+		\begin{subfigure}{0.45\textwidth}
+			\includesvg[width=\linewidth]{EvaluacionCurva_Plana_Colormap.svg}
+			\caption{Dominio físico del problema.}
+			\label{subfig:eval_plana}
 		\end{subfigure}
-		\hfill
-		\begin{subfigure}{0.33\textwidth}
-			\includesvg[width=\linewidth]{CurvaColor_h256_p2_Z.svg}
-			\caption{Eje Z tomando valores solución.}
+		%\hfill
+		\begin{subfigure}{0.45\textwidth}
+			\includesvg[width=\linewidth]{EvaluacionCurva_Colormap_Plot.svg}
+			\caption{Magnitud del campo escalar.}
+			\label{subfig:eval_elevada}
 		\end{subfigure}
-		\hfill
-		\begin{subfigure}{0.32\textwidth}
-			\includesvg[width=\linewidth]{CurvaColor_h256_p3.svg}
-			\caption{Curva Alabeada, p=3.}
-		\end{subfigure}
-		%\caption{Código para las figuras en el anexo}
-		% --- NOTA DEL CÓDIGO FUENTE ---
-		%\vspace{0.5em} % Pequeño espacio vertical para separar de las subfiguras
-		%\begin{flushleft}
-		%    \footnotesize{\textit{Nota}: El código fuente de estas figuras se encuentra disponible en los anexos \ref{sec:codigo_FEM} y \ref{sec:codigo_NURBS1}.}
-		%\end{flushleft}
-		% -------------------------------
 	\end{figure}
+
 \end{frame}
 
 \begin{frame}
 	\frametitle{Resultados}
-	\framesubtitle{2D}
+	\framesubtitle{Formulación problema 1 en 2D}
+
 		\begin{itemize}
+		\item{\textbf{Témino fuente:}} $f(x,y)=2\pi^2\sin(\pi x)\sin(\pi y)$. 
 		\item \textbf{Grados polinomiales:} $q=p=2$.
 		\item \textbf{Dominio paramétrico:} $U=V=\{0,0,0,2,2,2\}$.
 		\item \textbf{Dominio físico:} $[0,2]\times[0,2]\times\{0\}$, parametrizado mediante la identidad sobre los valores X e Y.
-		\item \textbf{Ecuaciones del problema:} $f(x,y)=2\pi^2\sin(\pi x)\sin(\pi y)$, $u(\Gamma)=0$.
+		\item \textbf{Condiciones de contorno:} $u(\Gamma)=0$.
 		\item \textbf{Solución y derivadas analíticas:}
 		\begin{itemize}
 			\item $u(x,y)=\sin(\pi x)\sin(\pi y)$.
@@ -1378,7 +1605,7 @@
 
 \begin{frame}
 	\frametitle{Resultados}
-	\framesubtitle{2D}
+	\framesubtitle{Tablas de resultados del problema 1 en 2D}
 	\scriptsize
 	\begin{table}[htbp]
 		\centering
@@ -1401,7 +1628,7 @@
 
 \begin{frame}
 	\frametitle{Resultados}
-	\framesubtitle{2D}
+	\framesubtitle{Formulación problema 2 en 2D}
 		\begin{itemize}
 		\item \textbf{Grados polinomiales:} $q=p=2$.
 		\item \textbf{Dominio paramétrico:} $U=V=\{0,0,0,1,1,1\}$.
@@ -1440,7 +1667,7 @@
 
 \begin{frame}
 	\frametitle{Resultados}
-	\framesubtitle{2D}
+	\framesubtitle{Tablas de resultados del problema 2 en 2D}
 	\scriptsize
 	\begin{table}[htbp]
 		\centering
@@ -1476,10 +1703,6 @@
 		\end{subfigure}
 		%\caption{Código para las figuras en el anexo}
 		% --- NOTA DEL CÓDIGO FUENTE ---
-		\vspace{0.5em} % Pequeño espacio vertical para separar de las subfiguras
-		\begin{flushleft}
-			\footnotesize{\textit{Nota}: El eje Z, originalmente constante a 0 en ambas soluciones, se ha modificado para representar el valor de la solución en cada punto.}
-		\end{flushleft}
 		% -------------------------------
 	\end{figure}
 \end{frame}
@@ -1499,7 +1722,7 @@
 	\frametitle{Trabajo futuro}
 	\begin{itemize}
 		\item \textbf{k-refinamiento}.
-		\item \textbf{Refinamiento local (T-Splines)}.
+		\item \textbf{Refinamiento local (T-Splines, HB-Splines, U-Splines...)}.
 		\item \textbf{Problemas dependientes del tiempo}.
 		\item \textbf{Comparación de cotas respecto a FEM}.
 	\end{itemize}

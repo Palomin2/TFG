@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.25)  22 MAY 2026 15:12
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.25)  4 JUN 2026 19:06
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1156,7 +1156,7 @@ Writing index file PlantillaTFG.idx
 \c@teorema=\count405
 \c@lemma=\count406
 LaTeX Font Info:    Trying to load font information for T1+ptm on input line 14
-2.
+3.
 (C:\Users\carlo\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\t1ptm.fd
 File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
 )
@@ -1172,24 +1172,24 @@ Package babel Info: 'spanish' activates 'spanish' shorthands.
 )
 \openout1 = `PlantillaTFG.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 142.
-LaTeX Font Info:    ... okay on input line 142.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 142.
-LaTeX Font Info:    ... okay on input line 142.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 142.
-LaTeX Font Info:    ... okay on input line 142.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 142.
-LaTeX Font Info:    ... okay on input line 142.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 142.
-LaTeX Font Info:    ... okay on input line 142.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 142.
-LaTeX Font Info:    ... okay on input line 142.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 142.
-LaTeX Font Info:    ... okay on input line 142.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 142.
-LaTeX Font Info:    ... okay on input line 142.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 142.
-LaTeX Font Info:    ... okay on input line 142.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 143.
+LaTeX Font Info:    ... okay on input line 143.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 143.
+LaTeX Font Info:    ... okay on input line 143.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 143.
+LaTeX Font Info:    ... okay on input line 143.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 143.
+LaTeX Font Info:    ... okay on input line 143.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 143.
+LaTeX Font Info:    ... okay on input line 143.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 143.
+LaTeX Font Info:    ... okay on input line 143.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 143.
+LaTeX Font Info:    ... okay on input line 143.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 143.
+LaTeX Font Info:    ... okay on input line 143.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 143.
+LaTeX Font Info:    ... okay on input line 143.
 
 (C:\Users\carlo\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mk
 ii
@@ -1252,8 +1252,8 @@ File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Info: Redefining \. on input line 142.
-LaTeX Info: Redefining \% on input line 142.
+LaTeX Info: Redefining \. on input line 143.
+LaTeX Info: Redefining \% on input line 143.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
 Package caption Info: hyperref package is loaded.
@@ -1267,15 +1267,15 @@ File: translations-basic-dictionary-spanish.trsl (spanish translation file `tra
 nslations-basic-dictionary')
 )
 Package translations Info: loading dictionary `translations-basic-dictionary' f
-or `spanish'. on input line 142.
+or `spanish'. on input line 143.
 
 
 Package pgfplots Warning: running in backwards compatibility mode (unsuitable t
 ick labels; missing features). Consider writing \pgfplotsset{compat=1.18} into 
 your preamble.
- on input line 142.
+ on input line 143.
 
-Package hyperref Info: Link coloring ON on input line 142.
+Package hyperref Info: Link coloring ON on input line 143.
 (PlantillaTFG.out) (PlantillaTFG.out)
 \@outlinefile=\write7
 \openout7 = `PlantillaTFG.out'.
@@ -1283,12 +1283,12 @@ Package hyperref Info: Link coloring ON on input line 142.
 <ciencias.png, id=341, 345.9324pt x 127.1952pt>
 File: ciencias.png Graphic file (type png)
 <use ciencias.png>
-Package pdftex.def Info: ciencias.png  used on input line 164.
+Package pdftex.def Info: ciencias.png  used on input line 165.
 (pdftex.def)             Requested size: 284.52756pt x 104.62485pt.
 <logoUZ.png, id=343, 345.9324pt x 127.1952pt>
 File: logoUZ.png Graphic file (type png)
 <use logoUZ.png>
-Package pdftex.def Info: logoUZ.png  used on input line 165.
+Package pdftex.def Info: logoUZ.png  used on input line 166.
 (pdftex.def)             Requested size: 284.52756pt x 104.62485pt.
  [1
 
@@ -1300,46 +1300,46 @@ o/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc} <./ciencias.png> <
 
 ]
 LaTeX Font Info:    Trying to load font information for OT1+ztmcm on input line
- 192.
+ 193.
 
 (C:\Users\carlo\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ot1ztmcm.fd
 File: ot1ztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ztmcm.
 )
 LaTeX Font Info:    Trying to load font information for OML+ztmcm on input line
- 192.
+ 193.
 
 (C:\Users\carlo\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\omlztmcm.fd
 File: omlztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ztmcm.
 )
 LaTeX Font Info:    Trying to load font information for OMS+ztmcm on input line
- 192.
+ 193.
 
 (C:\Users\carlo\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\omsztmcm.fd
 File: omsztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/ztmcm.
 )
 LaTeX Font Info:    Trying to load font information for OMX+ztmcm on input line
- 192.
+ 193.
 
 (C:\Users\carlo\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\omxztmcm.fd
 File: omxztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/ztmcm.
 )
 LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 1
-92.
+93.
 
 (C:\Users\carlo\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 192.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 193.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 192.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 193.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 192.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 193.
 
 [3
 
 ]
-Overfull \hbox (5.75139pt too wide) in paragraph at lines 253--254
+Overfull \hbox (5.75139pt too wide) in paragraph at lines 255--256
 []\T1/ptm/m/n/10.95 This tensor-product struc-tu-re pre-ser-ves the smooth-ness
  of the un-derl-ying re-pre-sen-ta-tion whi-le enabling
  []
@@ -1706,9 +1706,9 @@ pdfTeX warning: pdflatex.exe (file ./svg-inkscape/bernstein_bases_p3_svg-tex.pd
 f): PDF inclusion: multiple pdfs with page group included in a single page
 >] [7]
 Package svg Info: Last page of `./svg-inkscape/CurvaCirculoB-SPLINE_3D_Plot_svg
--tex.pdf' is 10 on input line 947.
+-tex.pdf' is 10 on input line 944.
  (svg-inkscape/CurvaCirculoB-SPLINE_3D_Plot_svg-tex.pdf_tex
-<./svg-inkscape/CurvaCirculoB-SPLINE_3D_Plot_svg-tex.pdf, id=714, page=1, 406.5
+<./svg-inkscape/CurvaCirculoB-SPLINE_3D_Plot_svg-tex.pdf, id=716, page=1, 406.5
 1875pt x 305.14pt>
 File: ./svg-inkscape/CurvaCirculoB-SPLINE_3D_Plot_svg-tex.pdf Graphic file (typ
 e pdf)
@@ -1716,7 +1716,7 @@ e pdf)
 Package pdftex.def Info: ./svg-inkscape/CurvaCirculoB-SPLINE_3D_Plot_svg-tex.pd
 f , page1 used on input line 56.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/CurvaCirculoB-SPLINE_3D_Plot_svg-tex.pdf, id=715, page=2, 406.5
+<./svg-inkscape/CurvaCirculoB-SPLINE_3D_Plot_svg-tex.pdf, id=717, page=2, 406.5
 1875pt x 305.14pt>
 File: ./svg-inkscape/CurvaCirculoB-SPLINE_3D_Plot_svg-tex.pdf Graphic file (typ
 e pdf)
@@ -1724,7 +1724,7 @@ e pdf)
 Package pdftex.def Info: ./svg-inkscape/CurvaCirculoB-SPLINE_3D_Plot_svg-tex.pd
 f , page2 used on input line 58.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/CurvaCirculoB-SPLINE_3D_Plot_svg-tex.pdf, id=716, page=3, 406.5
+<./svg-inkscape/CurvaCirculoB-SPLINE_3D_Plot_svg-tex.pdf, id=718, page=3, 406.5
 1875pt x 305.14pt>
 File: ./svg-inkscape/CurvaCirculoB-SPLINE_3D_Plot_svg-tex.pdf Graphic file (typ
 e pdf)
@@ -1732,7 +1732,7 @@ e pdf)
 Package pdftex.def Info: ./svg-inkscape/CurvaCirculoB-SPLINE_3D_Plot_svg-tex.pd
 f , page3 used on input line 60.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/CurvaCirculoB-SPLINE_3D_Plot_svg-tex.pdf, id=717, page=4, 406.5
+<./svg-inkscape/CurvaCirculoB-SPLINE_3D_Plot_svg-tex.pdf, id=719, page=4, 406.5
 1875pt x 305.14pt>
 File: ./svg-inkscape/CurvaCirculoB-SPLINE_3D_Plot_svg-tex.pdf Graphic file (typ
 e pdf)
@@ -1740,7 +1740,7 @@ e pdf)
 Package pdftex.def Info: ./svg-inkscape/CurvaCirculoB-SPLINE_3D_Plot_svg-tex.pd
 f , page4 used on input line 62.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/CurvaCirculoB-SPLINE_3D_Plot_svg-tex.pdf, id=718, page=5, 406.5
+<./svg-inkscape/CurvaCirculoB-SPLINE_3D_Plot_svg-tex.pdf, id=720, page=5, 406.5
 1875pt x 305.14pt>
 File: ./svg-inkscape/CurvaCirculoB-SPLINE_3D_Plot_svg-tex.pdf Graphic file (typ
 e pdf)
@@ -1748,7 +1748,7 @@ e pdf)
 Package pdftex.def Info: ./svg-inkscape/CurvaCirculoB-SPLINE_3D_Plot_svg-tex.pd
 f , page5 used on input line 65.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/CurvaCirculoB-SPLINE_3D_Plot_svg-tex.pdf, id=719, page=6, 406.5
+<./svg-inkscape/CurvaCirculoB-SPLINE_3D_Plot_svg-tex.pdf, id=721, page=6, 406.5
 1875pt x 305.14pt>
 File: ./svg-inkscape/CurvaCirculoB-SPLINE_3D_Plot_svg-tex.pdf Graphic file (typ
 e pdf)
@@ -1756,7 +1756,7 @@ e pdf)
 Package pdftex.def Info: ./svg-inkscape/CurvaCirculoB-SPLINE_3D_Plot_svg-tex.pd
 f , page6 used on input line 68.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/CurvaCirculoB-SPLINE_3D_Plot_svg-tex.pdf, id=720, page=7, 406.5
+<./svg-inkscape/CurvaCirculoB-SPLINE_3D_Plot_svg-tex.pdf, id=722, page=7, 406.5
 1875pt x 305.14pt>
 File: ./svg-inkscape/CurvaCirculoB-SPLINE_3D_Plot_svg-tex.pdf Graphic file (typ
 e pdf)
@@ -1764,7 +1764,7 @@ e pdf)
 Package pdftex.def Info: ./svg-inkscape/CurvaCirculoB-SPLINE_3D_Plot_svg-tex.pd
 f , page7 used on input line 71.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/CurvaCirculoB-SPLINE_3D_Plot_svg-tex.pdf, id=721, page=8, 406.5
+<./svg-inkscape/CurvaCirculoB-SPLINE_3D_Plot_svg-tex.pdf, id=723, page=8, 406.5
 1875pt x 305.14pt>
 File: ./svg-inkscape/CurvaCirculoB-SPLINE_3D_Plot_svg-tex.pdf Graphic file (typ
 e pdf)
@@ -1772,7 +1772,7 @@ e pdf)
 Package pdftex.def Info: ./svg-inkscape/CurvaCirculoB-SPLINE_3D_Plot_svg-tex.pd
 f , page8 used on input line 73.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/CurvaCirculoB-SPLINE_3D_Plot_svg-tex.pdf, id=722, page=9, 406.5
+<./svg-inkscape/CurvaCirculoB-SPLINE_3D_Plot_svg-tex.pdf, id=724, page=9, 406.5
 1875pt x 305.14pt>
 File: ./svg-inkscape/CurvaCirculoB-SPLINE_3D_Plot_svg-tex.pdf Graphic file (typ
 e pdf)
@@ -1780,7 +1780,7 @@ e pdf)
 Package pdftex.def Info: ./svg-inkscape/CurvaCirculoB-SPLINE_3D_Plot_svg-tex.pd
 f , page9 used on input line 75.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/CurvaCirculoB-SPLINE_3D_Plot_svg-tex.pdf, id=723, page=10, 406.
+<./svg-inkscape/CurvaCirculoB-SPLINE_3D_Plot_svg-tex.pdf, id=725, page=10, 406.
 51875pt x 305.14pt>
 File: ./svg-inkscape/CurvaCirculoB-SPLINE_3D_Plot_svg-tex.pdf Graphic file (typ
 e pdf)
@@ -1790,10 +1790,10 @@ f , page10 used on input line 77.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
 )
 Package svg Info: Last page of `./svg-inkscape/funciones_base_B-SPLINE_3_svg-te
-x.pdf' is 2 on input line 953.
+x.pdf' is 2 on input line 950.
 
 (svg-inkscape/funciones_base_B-SPLINE_3_svg-tex.pdf_tex
-<./svg-inkscape/funciones_base_B-SPLINE_3_svg-tex.pdf, id=725, page=1, 419.5675
+<./svg-inkscape/funciones_base_B-SPLINE_3_svg-tex.pdf, id=727, page=1, 419.5675
 pt x 315.1775pt>
 File: ./svg-inkscape/funciones_base_B-SPLINE_3_svg-tex.pdf Graphic file (type p
 df)
@@ -1801,7 +1801,7 @@ df)
 Package pdftex.def Info: ./svg-inkscape/funciones_base_B-SPLINE_3_svg-tex.pdf ,
  page1 used on input line 56.
 (pdftex.def)             Requested size: 145.68144pt x 109.43369pt.
-<./svg-inkscape/funciones_base_B-SPLINE_3_svg-tex.pdf, id=726, page=2, 419.5675
+<./svg-inkscape/funciones_base_B-SPLINE_3_svg-tex.pdf, id=728, page=2, 419.5675
 pt x 315.1775pt>
 File: ./svg-inkscape/funciones_base_B-SPLINE_3_svg-tex.pdf Graphic file (type p
 df)
@@ -1811,10 +1811,10 @@ Package pdftex.def Info: ./svg-inkscape/funciones_base_B-SPLINE_3_svg-tex.pdf ,
 (pdftex.def)             Requested size: 145.68144pt x 109.43369pt.
 )
 Package svg Info: Last page of `./svg-inkscape/Ders_funciones_base_B-SPLINE_Cir
-cle_svg-tex.pdf' is 2 on input line 959.
+cle_svg-tex.pdf' is 2 on input line 956.
 
 (svg-inkscape/Ders_funciones_base_B-SPLINE_Circle_svg-tex.pdf_tex
-<./svg-inkscape/Ders_funciones_base_B-SPLINE_Circle_svg-tex.pdf, id=728, page=1
+<./svg-inkscape/Ders_funciones_base_B-SPLINE_Circle_svg-tex.pdf, id=730, page=1
 , 419.5675pt x 315.1775pt>
 File: ./svg-inkscape/Ders_funciones_base_B-SPLINE_Circle_svg-tex.pdf Graphic fi
 le (type pdf)
@@ -1822,7 +1822,7 @@ le (type pdf)
 Package pdftex.def Info: ./svg-inkscape/Ders_funciones_base_B-SPLINE_Circle_svg
 -tex.pdf , page1 used on input line 56.
 (pdftex.def)             Requested size: 145.68144pt x 109.43369pt.
-<./svg-inkscape/Ders_funciones_base_B-SPLINE_Circle_svg-tex.pdf, id=729, page=2
+<./svg-inkscape/Ders_funciones_base_B-SPLINE_Circle_svg-tex.pdf, id=731, page=2
 , 419.5675pt x 315.1775pt>
 File: ./svg-inkscape/Ders_funciones_base_B-SPLINE_Circle_svg-tex.pdf Graphic fi
 le (type pdf)
@@ -1831,7 +1831,7 @@ Package pdftex.def Info: ./svg-inkscape/Ders_funciones_base_B-SPLINE_Circle_svg
 -tex.pdf , page2 used on input line 68.
 (pdftex.def)             Requested size: 145.68144pt x 109.43369pt.
 )
-Underfull \hbox (badness 10000) in paragraph at lines 963--963
+Underfull \hbox (badness 10000) in paragraph at lines 960--960
 []\T1/ptm/m/n/10.95 Figura 2.2: |Cur-va B-spline cua-drá-ti-ca em-plean-do el v
 ec-tor de nu-dos $\OML/ztmcm/m/it/10.95 U \OT1/ztmcm/m/n/10.95 =
  []
@@ -1902,11 +1902,11 @@ Circle_svg-tex.pdf): PDF inclusion: multiple pdfs with page group included in a
 pdfTeX warning: pdflatex.exe (file ./svg-inkscape/Ders_funciones_base_B-SPLINE_
 Circle_svg-tex.pdf): PDF inclusion: multiple pdfs with page group included in a
  single page
->] [9]
+>]
 Package svg Info: Last page of `./svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg-te
-x.pdf' is 10 on input line 1120.
+x.pdf' is 10 on input line 1117.
  (svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg-tex.pdf_tex
-<./svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg-tex.pdf, id=812, page=1, 406.5187
+<./svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg-tex.pdf, id=802, page=1, 406.5187
 5pt x 305.14pt>
 File: ./svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg-tex.pdf Graphic file (type p
 df)
@@ -1914,7 +1914,7 @@ df)
 Package pdftex.def Info: ./svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg-tex.pdf ,
  page1 used on input line 56.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg-tex.pdf, id=813, page=2, 406.5187
+<./svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg-tex.pdf, id=803, page=2, 406.5187
 5pt x 305.14pt>
 File: ./svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg-tex.pdf Graphic file (type p
 df)
@@ -1922,7 +1922,7 @@ df)
 Package pdftex.def Info: ./svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg-tex.pdf ,
  page2 used on input line 58.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg-tex.pdf, id=814, page=3, 406.5187
+<./svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg-tex.pdf, id=804, page=3, 406.5187
 5pt x 305.14pt>
 File: ./svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg-tex.pdf Graphic file (type p
 df)
@@ -1930,7 +1930,7 @@ df)
 Package pdftex.def Info: ./svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg-tex.pdf ,
  page3 used on input line 60.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg-tex.pdf, id=815, page=4, 406.5187
+<./svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg-tex.pdf, id=805, page=4, 406.5187
 5pt x 305.14pt>
 File: ./svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg-tex.pdf Graphic file (type p
 df)
@@ -1938,7 +1938,7 @@ df)
 Package pdftex.def Info: ./svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg-tex.pdf ,
  page4 used on input line 62.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg-tex.pdf, id=816, page=5, 406.5187
+<./svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg-tex.pdf, id=806, page=5, 406.5187
 5pt x 305.14pt>
 File: ./svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg-tex.pdf Graphic file (type p
 df)
@@ -1946,7 +1946,7 @@ df)
 Package pdftex.def Info: ./svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg-tex.pdf ,
  page5 used on input line 65.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg-tex.pdf, id=817, page=6, 406.5187
+<./svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg-tex.pdf, id=807, page=6, 406.5187
 5pt x 305.14pt>
 File: ./svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg-tex.pdf Graphic file (type p
 df)
@@ -1954,7 +1954,7 @@ df)
 Package pdftex.def Info: ./svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg-tex.pdf ,
  page6 used on input line 68.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg-tex.pdf, id=818, page=7, 406.5187
+<./svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg-tex.pdf, id=808, page=7, 406.5187
 5pt x 305.14pt>
 File: ./svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg-tex.pdf Graphic file (type p
 df)
@@ -1962,7 +1962,7 @@ df)
 Package pdftex.def Info: ./svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg-tex.pdf ,
  page7 used on input line 71.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg-tex.pdf, id=819, page=8, 406.5187
+<./svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg-tex.pdf, id=809, page=8, 406.5187
 5pt x 305.14pt>
 File: ./svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg-tex.pdf Graphic file (type p
 df)
@@ -1970,7 +1970,7 @@ df)
 Package pdftex.def Info: ./svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg-tex.pdf ,
  page8 used on input line 73.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg-tex.pdf, id=820, page=9, 406.5187
+<./svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg-tex.pdf, id=810, page=9, 406.5187
 5pt x 305.14pt>
 File: ./svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg-tex.pdf Graphic file (type p
 df)
@@ -1978,7 +1978,7 @@ df)
 Package pdftex.def Info: ./svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg-tex.pdf ,
  page9 used on input line 75.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg-tex.pdf, id=821, page=10, 406.518
+<./svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg-tex.pdf, id=811, page=10, 406.518
 75pt x 305.14pt>
 File: ./svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg-tex.pdf Graphic file (type p
 df)
@@ -1988,10 +1988,10 @@ Package pdftex.def Info: ./svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg-tex.pdf ,
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
 )
 Package svg Info: Last page of `./svg-inkscape/funciones_base_NURBSaux_svg-tex.
-pdf' is 2 on input line 1126.
+pdf' is 2 on input line 1123.
 
 (svg-inkscape/funciones_base_NURBSaux_svg-tex.pdf_tex
-<./svg-inkscape/funciones_base_NURBSaux_svg-tex.pdf, id=823, page=1, 285.065pt 
+<./svg-inkscape/funciones_base_NURBSaux_svg-tex.pdf, id=813, page=1, 285.065pt 
 x 213.79875pt>
 File: ./svg-inkscape/funciones_base_NURBSaux_svg-tex.pdf Graphic file (type pdf
 )
@@ -1999,7 +1999,7 @@ File: ./svg-inkscape/funciones_base_NURBSaux_svg-tex.pdf Graphic file (type pdf
 Package pdftex.def Info: ./svg-inkscape/funciones_base_NURBSaux_svg-tex.pdf , p
 age1 used on input line 56.
 (pdftex.def)             Requested size: 150.23138pt x 112.67337pt.
-<./svg-inkscape/funciones_base_NURBSaux_svg-tex.pdf, id=824, page=2, 285.065pt 
+<./svg-inkscape/funciones_base_NURBSaux_svg-tex.pdf, id=814, page=2, 285.065pt 
 x 213.79875pt>
 File: ./svg-inkscape/funciones_base_NURBSaux_svg-tex.pdf Graphic file (type pdf
 )
@@ -2009,10 +2009,10 @@ age2 used on input line 69.
 (pdftex.def)             Requested size: 150.23138pt x 112.67337pt.
 )
 Package svg Info: Last page of `./svg-inkscape/Ders_funciones_base_NURBS_Circle
-_svg-tex.pdf' is 2 on input line 1132.
+_svg-tex.pdf' is 2 on input line 1129.
 
 (svg-inkscape/Ders_funciones_base_NURBS_Circle_svg-tex.pdf_tex
-<./svg-inkscape/Ders_funciones_base_NURBS_Circle_svg-tex.pdf, id=826, page=1, 4
+<./svg-inkscape/Ders_funciones_base_NURBS_Circle_svg-tex.pdf, id=816, page=1, 4
 19.5675pt x 315.1775pt>
 File: ./svg-inkscape/Ders_funciones_base_NURBS_Circle_svg-tex.pdf Graphic file 
 (type pdf)
@@ -2020,7 +2020,7 @@ File: ./svg-inkscape/Ders_funciones_base_NURBS_Circle_svg-tex.pdf Graphic file
 Package pdftex.def Info: ./svg-inkscape/Ders_funciones_base_NURBS_Circle_svg-te
 x.pdf , page1 used on input line 56.
 (pdftex.def)             Requested size: 145.68144pt x 109.43369pt.
-<./svg-inkscape/Ders_funciones_base_NURBS_Circle_svg-tex.pdf, id=827, page=2, 4
+<./svg-inkscape/Ders_funciones_base_NURBS_Circle_svg-tex.pdf, id=817, page=2, 4
 19.5675pt x 315.1775pt>
 File: ./svg-inkscape/Ders_funciones_base_NURBS_Circle_svg-tex.pdf Graphic file 
 (type pdf)
@@ -2028,8 +2028,8 @@ File: ./svg-inkscape/Ders_funciones_base_NURBS_Circle_svg-tex.pdf Graphic file
 Package pdftex.def Info: ./svg-inkscape/Ders_funciones_base_NURBS_Circle_svg-te
 x.pdf , page2 used on input line 68.
 (pdftex.def)             Requested size: 145.68144pt x 109.43369pt.
-)
-Overfull \hbox (2.04498pt too wide) in paragraph at lines 1162--1164
+) [9]
+Overfull \hbox (2.04498pt too wide) in paragraph at lines 1160--1162
 []\T1/ptm/b/n/10.95 Definición. []\T1/ptm/m/n/10.95 Sean $\OML/ztmcm/m/it/10.95
  U \OT1/ztmcm/m/n/10.95 = \OMS/ztmcm/m/n/10.95 f\OML/ztmcm/m/it/10.95 u[]; u[];
  [] ; u[]\OMS/ztmcm/m/n/10.95 g$\T1/ptm/m/n/10.95 , $\OML/ztmcm/m/it/10.95 V \O
@@ -2040,93 +2040,93 @@ T1/ztmcm/m/n/10.95 = \OMS/ztmcm/m/n/10.95 f\OML/ztmcm/m/it/10.95 v[]; v[]; [] ;
  []
 
 Package svg Info: Last page of `./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf
-' is 13 on input line 1183.
+' is 13 on input line 1181.
 (svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf_tex
-<./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf, id=832, page=1, 406.51875pt x
+<./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf, id=834, page=1, 406.51875pt x
  305.14pt>
 File: ./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf, page 1>
 Package pdftex.def Info: ./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf , page
 1 used on input line 56.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf, id=833, page=2, 406.51875pt x
+<./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf, id=835, page=2, 406.51875pt x
  305.14pt>
 File: ./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf, page 2>
 Package pdftex.def Info: ./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf , page
 2 used on input line 59.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf, id=834, page=3, 406.51875pt x
+<./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf, id=836, page=3, 406.51875pt x
  305.14pt>
 File: ./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf, page 3>
 Package pdftex.def Info: ./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf , page
 3 used on input line 61.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf, id=835, page=4, 406.51875pt x
+<./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf, id=837, page=4, 406.51875pt x
  305.14pt>
 File: ./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf, page 4>
 Package pdftex.def Info: ./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf , page
 4 used on input line 63.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf, id=836, page=5, 406.51875pt x
+<./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf, id=838, page=5, 406.51875pt x
  305.14pt>
 File: ./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf, page 5>
 Package pdftex.def Info: ./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf , page
 5 used on input line 66.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf, id=837, page=6, 406.51875pt x
+<./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf, id=839, page=6, 406.51875pt x
  305.14pt>
 File: ./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf, page 6>
 Package pdftex.def Info: ./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf , page
 6 used on input line 68.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf, id=838, page=7, 406.51875pt x
+<./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf, id=840, page=7, 406.51875pt x
  305.14pt>
 File: ./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf, page 7>
 Package pdftex.def Info: ./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf , page
 7 used on input line 70.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf, id=839, page=8, 406.51875pt x
+<./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf, id=841, page=8, 406.51875pt x
  305.14pt>
 File: ./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf, page 8>
 Package pdftex.def Info: ./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf , page
 8 used on input line 72.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf, id=840, page=9, 406.51875pt x
+<./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf, id=842, page=9, 406.51875pt x
  305.14pt>
 File: ./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf, page 9>
 Package pdftex.def Info: ./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf , page
 9 used on input line 74.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf, id=841, page=10, 406.51875pt 
+<./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf, id=843, page=10, 406.51875pt 
 x 305.14pt>
 File: ./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf, page 10>
 Package pdftex.def Info: ./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf , page
 10 used on input line 76.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf, id=842, page=11, 406.51875pt 
+<./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf, id=844, page=11, 406.51875pt 
 x 305.14pt>
 File: ./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf, page 11>
 Package pdftex.def Info: ./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf , page
 11 used on input line 78.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf, id=843, page=12, 406.51875pt 
+<./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf, id=845, page=12, 406.51875pt 
 x 305.14pt>
 File: ./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf, page 12>
 Package pdftex.def Info: ./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf , page
 12 used on input line 80.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf, id=844, page=13, 406.51875pt 
+<./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf, id=846, page=13, 406.51875pt 
 x 305.14pt>
 File: ./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf, page 13>
@@ -2135,130 +2135,136 @@ Package pdftex.def Info: ./svg-inkscape/Superficie_NURBS_Ej1_svg-tex.pdf , page
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
 )
 Package svg Info: Last page of `./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf
-' is 17 on input line 1190.
+' is 17 on input line 1188.
 
 (svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf_tex
-<./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, id=846, page=1, 406.51875pt x
+<./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, id=848, page=1, 406.51875pt x
  305.14pt>
 File: ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, page 1>
 Package pdftex.def Info: ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf , page
 1 used on input line 56.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, id=847, page=2, 406.51875pt x
+<./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, id=849, page=2, 406.51875pt x
  305.14pt>
 File: ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, page 2>
 Package pdftex.def Info: ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf , page
 2 used on input line 59.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, id=848, page=3, 406.51875pt x
+<./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, id=850, page=3, 406.51875pt x
  305.14pt>
 File: ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, page 3>
 Package pdftex.def Info: ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf , page
 3 used on input line 61.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, id=849, page=4, 406.51875pt x
+<./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, id=851, page=4, 406.51875pt x
  305.14pt>
 File: ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, page 4>
 Package pdftex.def Info: ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf , page
 4 used on input line 63.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, id=850, page=5, 406.51875pt x
+<./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, id=852, page=5, 406.51875pt x
  305.14pt>
 File: ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, page 5>
 Package pdftex.def Info: ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf , page
 5 used on input line 65.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, id=851, page=6, 406.51875pt x
+<./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, id=853, page=6, 406.51875pt x
  305.14pt>
 File: ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, page 6>
 Package pdftex.def Info: ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf , page
 6 used on input line 68.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, id=852, page=7, 406.51875pt x
+<./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, id=854, page=7, 406.51875pt x
  305.14pt>
 File: ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, page 7>
 Package pdftex.def Info: ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf , page
 7 used on input line 70.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, id=853, page=8, 406.51875pt x
+<./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, id=855, page=8, 406.51875pt x
  305.14pt>
 File: ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, page 8>
 Package pdftex.def Info: ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf , page
 8 used on input line 72.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, id=854, page=9, 406.51875pt x
+<./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, id=856, page=9, 406.51875pt x
  305.14pt>
 File: ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, page 9>
 Package pdftex.def Info: ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf , page
 9 used on input line 74.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, id=855, page=10, 406.51875pt 
+<./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, id=857, page=10, 406.51875pt 
 x 305.14pt>
 File: ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, page 10>
 Package pdftex.def Info: ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf , page
 10 used on input line 76.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, id=856, page=11, 406.51875pt 
+<./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, id=858, page=11, 406.51875pt 
 x 305.14pt>
 File: ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, page 11>
 Package pdftex.def Info: ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf , page
 11 used on input line 78.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, id=857, page=12, 406.51875pt 
+<./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, id=859, page=12, 406.51875pt 
 x 305.14pt>
 File: ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, page 12>
 Package pdftex.def Info: ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf , page
 12 used on input line 80.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, id=858, page=13, 406.51875pt 
+<./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, id=860, page=13, 406.51875pt 
 x 305.14pt>
 File: ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, page 13>
 Package pdftex.def Info: ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf , page
 13 used on input line 82.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, id=859, page=14, 406.51875pt 
+<./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, id=861, page=14, 406.51875pt 
 x 305.14pt>
 File: ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, page 14>
 Package pdftex.def Info: ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf , page
 14 used on input line 84.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, id=860, page=15, 406.51875pt 
+<./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, id=862, page=15, 406.51875pt 
 x 305.14pt>
 File: ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, page 15>
 Package pdftex.def Info: ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf , page
 15 used on input line 86.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, id=861, page=16, 406.51875pt 
+<./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, id=863, page=16, 406.51875pt 
 x 305.14pt>
 File: ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, page 16>
 Package pdftex.def Info: ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf , page
 16 used on input line 88.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-<./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, id=862, page=17, 406.51875pt 
+<./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, id=864, page=17, 406.51875pt 
 x 305.14pt>
 File: ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf, page 17>
 Package pdftex.def Info: ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.pdf , page
 17 used on input line 90.
 (pdftex.def)             Requested size: 145.68144pt x 109.34744pt.
-) [10 <./svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg-tex.pdf> <./svg-inkscape/Cu
-rvaCirculoNURBS_3D_Plot_svg-tex.pdf
+)
+Underfull \vbox (badness 2401) has occurred while \output is active []
+
+
+Underfull \vbox (badness 2401) has occurred while \output is active []
+
+ [10 <./svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg-tex.pdf> <./svg-inkscape/Cur
+vaCirculoNURBS_3D_Plot_svg-tex.pdf
 
 pdfTeX warning: pdflatex.exe (file ./svg-inkscape/CurvaCirculoNURBS_3D_Plot_svg
 -tex.pdf): PDF inclusion: multiple pdfs with page group included in a single pa
@@ -2442,7 +2448,7 @@ pdfTeX warning: pdflatex.exe (file ./svg-inkscape/Superficie_NURBS_Ej2_svg-tex.
 pdf): PDF inclusion: multiple pdfs with page group included in a single page
 >]
 Package svg Info: Last page of `./svg-inkscape/Superficie_NURBS_Ej2_Refined_svg
--tex.pdf' is 17 on input line 1246.
+-tex.pdf' is 17 on input line 1244.
  (svg-inkscape/Superficie_NURBS_Ej2_Refined_svg-tex.pdf_tex
 <./svg-inkscape/Superficie_NURBS_Ej2_Refined_svg-tex.pdf, id=1025, page=1, 406.
 51875pt x 305.14pt>
@@ -2672,25 +2678,34 @@ Cap\'{\i }tulo 3.
 <nurbs_bases_parametrico.png, id=1152, 1696.3375pt x 1272.755pt>
 File: nurbs_bases_parametrico.png Graphic file (type png)
 <use nurbs_bases_parametrico.png>
-Package pdftex.def Info: nurbs_bases_parametrico.png  used on input line 1584.
+Package pdftex.def Info: nurbs_bases_parametrico.png  used on input line 1582.
 (pdftex.def)             Requested size: 184.9429pt x 138.76056pt.
 <nurbs_bases_completas.png, id=1153, 1696.3375pt x 1272.755pt>
 File: nurbs_bases_completas.png Graphic file (type png)
 <use nurbs_bases_completas.png>
-Package pdftex.def Info: nurbs_bases_completas.png  used on input line 1585.
+Package pdftex.def Info: nurbs_bases_completas.png  used on input line 1583.
 (pdftex.def)             Requested size: 184.9429pt x 138.76056pt.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1588.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1586.
  Excluding 'comment' comment. [16 <./nurbs_bases_parametrico.png (PNG copy)> <.
-/nurbs_bases_completas.png (PNG copy)>] [17] [18] [19]
-Overfull \hbox (8.9617pt too wide) detected at line 1952
+/nurbs_bases_completas.png (PNG copy)>] [17] [18]
+Overfull \hbox (8.75194pt too wide) in paragraph at lines 1931--1932
+[]\T1/ptm/m/n/10.95 Tomaremos aho-ra ele-men-tos de la for-ma $[] \OT1/ztmcm/m/
+n/10.95 = [\OML/ztmcm/m/it/10.95 u[]; u[]\OT1/ztmcm/m/n/10.95 ) \OMS/ztmcm/m/n/
+10.95 ^^B \OT1/ztmcm/m/n/10.95 [\OML/ztmcm/m/it/10.95 v[]; v[]\OT1/ztmcm/m/n/10
+.95 )$\T1/ptm/m/n/10.95 , don-de los in-ter-va-los $\OT1/ztmcm/m/n/10.95 [\OML/
+ztmcm/m/it/10.95 u[]; u[]\OT1/ztmcm/m/n/10.95 )$
+ []
+
+[19]
+Overfull \hbox (8.9617pt too wide) detected at line 1948
 \OT1/ptm/b/n/10.95 K[] \OT1/ztmcm/m/n/10.95 = [][] [][] [][] [] [] \OMS/ztmcm/m
 /n/10.95 j [] \OT1/ptm/b/n/10.95 J\OMS/ztmcm/m/n/10.95 j \OML/ztmcm/m/it/10.95 
 d^^Xd^^Q:
  []
 
 
-Overfull \hbox (28.99033pt too wide) detected at line 1961
+Overfull \hbox (28.99033pt too wide) detected at line 1957
 [] \OT1/ztmcm/m/n/10.95 = \OT1/ptm/b/n/10.95 K[]\OML/ztmcm/m/it/10.95 ;  i[]; i
 [] \OMS/ztmcm/m/n/10.95 2 f\OT1/ztmcm/m/n/10.95 1\OML/ztmcm/m/it/10.95 ; \OT1/z
 tmcm/m/n/10.95 2\OML/ztmcm/m/it/10.95 ; [] ; p \OT1/ztmcm/m/n/10.95 + 1\OMS/ztm
@@ -2702,7 +2717,7 @@ mcm/m/n/10.95 1\OML/ztmcm/m/it/10.95 ; \OT1/ztmcm/m/n/10.95 2\OML/ztmcm/m/it/10
 
 [20]
 LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 2
-083.
+079.
  (C:\Users\carlo\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 )
@@ -2714,17 +2729,17 @@ Excluding 'comment' comment.
 <densidad_matriz_final.png, id=1224, 2120.92375pt x 593.21625pt>
 File: densidad_matriz_final.png Graphic file (type png)
 <use densidad_matriz_final.png>
-Package pdftex.def Info: densidad_matriz_final.png  used on input line 2296.
+Package pdftex.def Info: densidad_matriz_final.png  used on input line 2292.
 (pdftex.def)             Requested size: 204.85846pt x 57.2975pt.
  [23
 
 
  <./densidad_matriz_final.png (PNG copy)>]
 Package svg Info: Last page of `./svg-inkscape/EvaluacionCurva_Plana_Colormap_s
-vg-tex.pdf' is 11 on input line 2492.
+vg-tex.pdf' is 11 on input line 2488.
 
 (svg-inkscape/EvaluacionCurva_Plana_Colormap_svg-tex.pdf_tex
-<./svg-inkscape/EvaluacionCurva_Plana_Colormap_svg-tex.pdf, id=1248, page=1, 45
+<./svg-inkscape/EvaluacionCurva_Plana_Colormap_svg-tex.pdf, id=1249, page=1, 45
 7.71pt x 356.33125pt>
 File: ./svg-inkscape/EvaluacionCurva_Plana_Colormap_svg-tex.pdf Graphic file (t
 ype pdf)
@@ -2732,7 +2747,7 @@ ype pdf)
 Package pdftex.def Info: ./svg-inkscape/EvaluacionCurva_Plana_Colormap_svg-tex.
 pdf , page1 used on input line 56.
 (pdftex.def)             Requested size: 168.4381pt x 131.12822pt.
-<./svg-inkscape/EvaluacionCurva_Plana_Colormap_svg-tex.pdf, id=1249, page=2, 45
+<./svg-inkscape/EvaluacionCurva_Plana_Colormap_svg-tex.pdf, id=1250, page=2, 45
 7.71pt x 356.33125pt>
 File: ./svg-inkscape/EvaluacionCurva_Plana_Colormap_svg-tex.pdf Graphic file (t
 ype pdf)
@@ -2740,7 +2755,7 @@ ype pdf)
 Package pdftex.def Info: ./svg-inkscape/EvaluacionCurva_Plana_Colormap_svg-tex.
 pdf , page2 used on input line 59.
 (pdftex.def)             Requested size: 168.4381pt x 131.12822pt.
-<./svg-inkscape/EvaluacionCurva_Plana_Colormap_svg-tex.pdf, id=1250, page=3, 45
+<./svg-inkscape/EvaluacionCurva_Plana_Colormap_svg-tex.pdf, id=1251, page=3, 45
 7.71pt x 356.33125pt>
 File: ./svg-inkscape/EvaluacionCurva_Plana_Colormap_svg-tex.pdf Graphic file (t
 ype pdf)
@@ -2748,7 +2763,7 @@ ype pdf)
 Package pdftex.def Info: ./svg-inkscape/EvaluacionCurva_Plana_Colormap_svg-tex.
 pdf , page3 used on input line 61.
 (pdftex.def)             Requested size: 168.4381pt x 131.12822pt.
-<./svg-inkscape/EvaluacionCurva_Plana_Colormap_svg-tex.pdf, id=1251, page=4, 45
+<./svg-inkscape/EvaluacionCurva_Plana_Colormap_svg-tex.pdf, id=1252, page=4, 45
 7.71pt x 356.33125pt>
 File: ./svg-inkscape/EvaluacionCurva_Plana_Colormap_svg-tex.pdf Graphic file (t
 ype pdf)
@@ -2756,7 +2771,7 @@ ype pdf)
 Package pdftex.def Info: ./svg-inkscape/EvaluacionCurva_Plana_Colormap_svg-tex.
 pdf , page4 used on input line 64.
 (pdftex.def)             Requested size: 168.4381pt x 131.12822pt.
-<./svg-inkscape/EvaluacionCurva_Plana_Colormap_svg-tex.pdf, id=1252, page=5, 45
+<./svg-inkscape/EvaluacionCurva_Plana_Colormap_svg-tex.pdf, id=1253, page=5, 45
 7.71pt x 356.33125pt>
 File: ./svg-inkscape/EvaluacionCurva_Plana_Colormap_svg-tex.pdf Graphic file (t
 ype pdf)
@@ -2764,7 +2779,7 @@ ype pdf)
 Package pdftex.def Info: ./svg-inkscape/EvaluacionCurva_Plana_Colormap_svg-tex.
 pdf , page5 used on input line 66.
 (pdftex.def)             Requested size: 168.4381pt x 131.12822pt.
-<./svg-inkscape/EvaluacionCurva_Plana_Colormap_svg-tex.pdf, id=1253, page=6, 45
+<./svg-inkscape/EvaluacionCurva_Plana_Colormap_svg-tex.pdf, id=1254, page=6, 45
 7.71pt x 356.33125pt>
 File: ./svg-inkscape/EvaluacionCurva_Plana_Colormap_svg-tex.pdf Graphic file (t
 ype pdf)
@@ -2772,7 +2787,7 @@ ype pdf)
 Package pdftex.def Info: ./svg-inkscape/EvaluacionCurva_Plana_Colormap_svg-tex.
 pdf , page6 used on input line 68.
 (pdftex.def)             Requested size: 168.4381pt x 131.12822pt.
-<./svg-inkscape/EvaluacionCurva_Plana_Colormap_svg-tex.pdf, id=1254, page=7, 45
+<./svg-inkscape/EvaluacionCurva_Plana_Colormap_svg-tex.pdf, id=1255, page=7, 45
 7.71pt x 356.33125pt>
 File: ./svg-inkscape/EvaluacionCurva_Plana_Colormap_svg-tex.pdf Graphic file (t
 ype pdf)
@@ -2780,7 +2795,7 @@ ype pdf)
 Package pdftex.def Info: ./svg-inkscape/EvaluacionCurva_Plana_Colormap_svg-tex.
 pdf , page7 used on input line 70.
 (pdftex.def)             Requested size: 168.4381pt x 131.12822pt.
-<./svg-inkscape/EvaluacionCurva_Plana_Colormap_svg-tex.pdf, id=1255, page=8, 45
+<./svg-inkscape/EvaluacionCurva_Plana_Colormap_svg-tex.pdf, id=1256, page=8, 45
 7.71pt x 356.33125pt>
 File: ./svg-inkscape/EvaluacionCurva_Plana_Colormap_svg-tex.pdf Graphic file (t
 ype pdf)
@@ -2788,7 +2803,7 @@ ype pdf)
 Package pdftex.def Info: ./svg-inkscape/EvaluacionCurva_Plana_Colormap_svg-tex.
 pdf , page8 used on input line 72.
 (pdftex.def)             Requested size: 168.4381pt x 131.12822pt.
-<./svg-inkscape/EvaluacionCurva_Plana_Colormap_svg-tex.pdf, id=1256, page=9, 45
+<./svg-inkscape/EvaluacionCurva_Plana_Colormap_svg-tex.pdf, id=1257, page=9, 45
 7.71pt x 356.33125pt>
 File: ./svg-inkscape/EvaluacionCurva_Plana_Colormap_svg-tex.pdf Graphic file (t
 ype pdf)
@@ -2796,7 +2811,7 @@ ype pdf)
 Package pdftex.def Info: ./svg-inkscape/EvaluacionCurva_Plana_Colormap_svg-tex.
 pdf , page9 used on input line 74.
 (pdftex.def)             Requested size: 168.4381pt x 131.12822pt.
-<./svg-inkscape/EvaluacionCurva_Plana_Colormap_svg-tex.pdf, id=1257, page=10, 4
+<./svg-inkscape/EvaluacionCurva_Plana_Colormap_svg-tex.pdf, id=1258, page=10, 4
 57.71pt x 356.33125pt>
 File: ./svg-inkscape/EvaluacionCurva_Plana_Colormap_svg-tex.pdf Graphic file (t
 ype pdf)
@@ -2804,7 +2819,7 @@ ype pdf)
 Package pdftex.def Info: ./svg-inkscape/EvaluacionCurva_Plana_Colormap_svg-tex.
 pdf , page10 used on input line 76.
 (pdftex.def)             Requested size: 168.4381pt x 131.12822pt.
-<./svg-inkscape/EvaluacionCurva_Plana_Colormap_svg-tex.pdf, id=1258, page=11, 4
+<./svg-inkscape/EvaluacionCurva_Plana_Colormap_svg-tex.pdf, id=1259, page=11, 4
 57.71pt x 356.33125pt>
 File: ./svg-inkscape/EvaluacionCurva_Plana_Colormap_svg-tex.pdf Graphic file (t
 ype pdf)
@@ -2814,10 +2829,10 @@ pdf , page11 used on input line 80.
 (pdftex.def)             Requested size: 168.4381pt x 131.12822pt.
 )
 Package svg Info: Last page of `./svg-inkscape/EvaluacionCurva_Colormap_Plot_sv
-g-tex.pdf' is 11 on input line 2498.
+g-tex.pdf' is 11 on input line 2494.
 
 (svg-inkscape/EvaluacionCurva_Colormap_Plot_svg-tex.pdf_tex
-<./svg-inkscape/EvaluacionCurva_Colormap_Plot_svg-tex.pdf, id=1260, page=1, 457
+<./svg-inkscape/EvaluacionCurva_Colormap_Plot_svg-tex.pdf, id=1261, page=1, 457
 .71pt x 356.33125pt>
 File: ./svg-inkscape/EvaluacionCurva_Colormap_Plot_svg-tex.pdf Graphic file (ty
 pe pdf)
@@ -2825,7 +2840,7 @@ pe pdf)
 Package pdftex.def Info: ./svg-inkscape/EvaluacionCurva_Colormap_Plot_svg-tex.p
 df , page1 used on input line 56.
 (pdftex.def)             Requested size: 168.4381pt x 131.12822pt.
-<./svg-inkscape/EvaluacionCurva_Colormap_Plot_svg-tex.pdf, id=1261, page=2, 457
+<./svg-inkscape/EvaluacionCurva_Colormap_Plot_svg-tex.pdf, id=1262, page=2, 457
 .71pt x 356.33125pt>
 File: ./svg-inkscape/EvaluacionCurva_Colormap_Plot_svg-tex.pdf Graphic file (ty
 pe pdf)
@@ -2833,7 +2848,7 @@ pe pdf)
 Package pdftex.def Info: ./svg-inkscape/EvaluacionCurva_Colormap_Plot_svg-tex.p
 df , page2 used on input line 59.
 (pdftex.def)             Requested size: 168.4381pt x 131.12822pt.
-<./svg-inkscape/EvaluacionCurva_Colormap_Plot_svg-tex.pdf, id=1262, page=3, 457
+<./svg-inkscape/EvaluacionCurva_Colormap_Plot_svg-tex.pdf, id=1263, page=3, 457
 .71pt x 356.33125pt>
 File: ./svg-inkscape/EvaluacionCurva_Colormap_Plot_svg-tex.pdf Graphic file (ty
 pe pdf)
@@ -2841,7 +2856,7 @@ pe pdf)
 Package pdftex.def Info: ./svg-inkscape/EvaluacionCurva_Colormap_Plot_svg-tex.p
 df , page3 used on input line 61.
 (pdftex.def)             Requested size: 168.4381pt x 131.12822pt.
-<./svg-inkscape/EvaluacionCurva_Colormap_Plot_svg-tex.pdf, id=1263, page=4, 457
+<./svg-inkscape/EvaluacionCurva_Colormap_Plot_svg-tex.pdf, id=1264, page=4, 457
 .71pt x 356.33125pt>
 File: ./svg-inkscape/EvaluacionCurva_Colormap_Plot_svg-tex.pdf Graphic file (ty
 pe pdf)
@@ -2849,7 +2864,7 @@ pe pdf)
 Package pdftex.def Info: ./svg-inkscape/EvaluacionCurva_Colormap_Plot_svg-tex.p
 df , page4 used on input line 64.
 (pdftex.def)             Requested size: 168.4381pt x 131.12822pt.
-<./svg-inkscape/EvaluacionCurva_Colormap_Plot_svg-tex.pdf, id=1264, page=5, 457
+<./svg-inkscape/EvaluacionCurva_Colormap_Plot_svg-tex.pdf, id=1265, page=5, 457
 .71pt x 356.33125pt>
 File: ./svg-inkscape/EvaluacionCurva_Colormap_Plot_svg-tex.pdf Graphic file (ty
 pe pdf)
@@ -2857,7 +2872,7 @@ pe pdf)
 Package pdftex.def Info: ./svg-inkscape/EvaluacionCurva_Colormap_Plot_svg-tex.p
 df , page5 used on input line 66.
 (pdftex.def)             Requested size: 168.4381pt x 131.12822pt.
-<./svg-inkscape/EvaluacionCurva_Colormap_Plot_svg-tex.pdf, id=1265, page=6, 457
+<./svg-inkscape/EvaluacionCurva_Colormap_Plot_svg-tex.pdf, id=1266, page=6, 457
 .71pt x 356.33125pt>
 File: ./svg-inkscape/EvaluacionCurva_Colormap_Plot_svg-tex.pdf Graphic file (ty
 pe pdf)
@@ -2865,7 +2880,7 @@ pe pdf)
 Package pdftex.def Info: ./svg-inkscape/EvaluacionCurva_Colormap_Plot_svg-tex.p
 df , page6 used on input line 68.
 (pdftex.def)             Requested size: 168.4381pt x 131.12822pt.
-<./svg-inkscape/EvaluacionCurva_Colormap_Plot_svg-tex.pdf, id=1266, page=7, 457
+<./svg-inkscape/EvaluacionCurva_Colormap_Plot_svg-tex.pdf, id=1267, page=7, 457
 .71pt x 356.33125pt>
 File: ./svg-inkscape/EvaluacionCurva_Colormap_Plot_svg-tex.pdf Graphic file (ty
 pe pdf)
@@ -2873,7 +2888,7 @@ pe pdf)
 Package pdftex.def Info: ./svg-inkscape/EvaluacionCurva_Colormap_Plot_svg-tex.p
 df , page7 used on input line 70.
 (pdftex.def)             Requested size: 168.4381pt x 131.12822pt.
-<./svg-inkscape/EvaluacionCurva_Colormap_Plot_svg-tex.pdf, id=1267, page=8, 457
+<./svg-inkscape/EvaluacionCurva_Colormap_Plot_svg-tex.pdf, id=1268, page=8, 457
 .71pt x 356.33125pt>
 File: ./svg-inkscape/EvaluacionCurva_Colormap_Plot_svg-tex.pdf Graphic file (ty
 pe pdf)
@@ -2881,7 +2896,7 @@ pe pdf)
 Package pdftex.def Info: ./svg-inkscape/EvaluacionCurva_Colormap_Plot_svg-tex.p
 df , page8 used on input line 72.
 (pdftex.def)             Requested size: 168.4381pt x 131.12822pt.
-<./svg-inkscape/EvaluacionCurva_Colormap_Plot_svg-tex.pdf, id=1268, page=9, 457
+<./svg-inkscape/EvaluacionCurva_Colormap_Plot_svg-tex.pdf, id=1269, page=9, 457
 .71pt x 356.33125pt>
 File: ./svg-inkscape/EvaluacionCurva_Colormap_Plot_svg-tex.pdf Graphic file (ty
 pe pdf)
@@ -2889,7 +2904,7 @@ pe pdf)
 Package pdftex.def Info: ./svg-inkscape/EvaluacionCurva_Colormap_Plot_svg-tex.p
 df , page9 used on input line 74.
 (pdftex.def)             Requested size: 168.4381pt x 131.12822pt.
-<./svg-inkscape/EvaluacionCurva_Colormap_Plot_svg-tex.pdf, id=1269, page=10, 45
+<./svg-inkscape/EvaluacionCurva_Colormap_Plot_svg-tex.pdf, id=1270, page=10, 45
 7.71pt x 356.33125pt>
 File: ./svg-inkscape/EvaluacionCurva_Colormap_Plot_svg-tex.pdf Graphic file (ty
 pe pdf)
@@ -2897,7 +2912,7 @@ pe pdf)
 Package pdftex.def Info: ./svg-inkscape/EvaluacionCurva_Colormap_Plot_svg-tex.p
 df , page10 used on input line 76.
 (pdftex.def)             Requested size: 168.4381pt x 131.12822pt.
-<./svg-inkscape/EvaluacionCurva_Colormap_Plot_svg-tex.pdf, id=1270, page=11, 45
+<./svg-inkscape/EvaluacionCurva_Colormap_Plot_svg-tex.pdf, id=1271, page=11, 45
 7.71pt x 356.33125pt>
 File: ./svg-inkscape/EvaluacionCurva_Colormap_Plot_svg-tex.pdf Graphic file (ty
 pe pdf)
@@ -2912,6 +2927,7 @@ Underfull \vbox (badness 4954) has occurred while \output is active []
 Underfull \vbox (badness 4954) has occurred while \output is active []
 
  [24]
+Excluding 'comment' comment. Excluding 'comment' comment.
 Excluding 'comment' comment. Excluding 'comment' comment. [25 <./svg-inkscape/E
 valuacionCurva_Plana_Colormap_svg-tex.pdf> <./svg-inkscape/EvaluacionCurva_Plan
 a_Colormap_svg-tex.pdf
@@ -3019,16 +3035,16 @@ e page
 pdfTeX warning: pdflatex.exe (file ./svg-inkscape/EvaluacionCurva_Colormap_Plot
 _svg-tex.pdf): PDF inclusion: multiple pdfs with page group included in a singl
 e page
->] Excluding 'comment' comment. Excluding 'comment' comment.
-<surface_hX=256_CROP_HQ1.png, id=1365, 3502.08376pt x 2626.81375pt>
+>]
+<surface_hX=256_CROP_HQ1.png, id=1367, 3502.08376pt x 2626.81375pt>
 File: surface_hX=256_CROP_HQ1.png Graphic file (type png)
 <use surface_hX=256_CROP_HQ1.png>
-Package pdftex.def Info: surface_hX=256_CROP_HQ1.png  used on input line 2695.
+Package pdftex.def Info: surface_hX=256_CROP_HQ1.png  used on input line 2691.
 (pdftex.def)             Requested size: 213.96529pt x 160.48792pt.
-<surface_hX=256_CROP_HQ.png, id=1366, 3502.08376pt x 2626.81375pt>
+<surface_hX=256_CROP_HQ.png, id=1368, 3502.08376pt x 2626.81375pt>
 File: surface_hX=256_CROP_HQ.png Graphic file (type png)
 <use surface_hX=256_CROP_HQ.png>
-Package pdftex.def Info: surface_hX=256_CROP_HQ.png  used on input line 2701.
+Package pdftex.def Info: surface_hX=256_CROP_HQ.png  used on input line 2697.
 (pdftex.def)             Requested size: 213.96529pt x 160.48792pt.
  [26 <./surface_hX=256_CROP_HQ1.png (PNG copy)> <./surface_hX=256_CROP_HQ.png (
 PNG copy)>]
@@ -3070,20 +3086,20 @@ pdfTeX warning (ext4): destination with the same identifier (name{section.5.1})
  has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.2806 \section{Espacios funcionales empleados}
+l.2802 \section{Espacios funcionales empleados}
                                                 [33
 
 
 ] [34] [35] [36] [37]
 [38] [39]
-Overfull \hbox (8.92148pt too wide) in paragraph at lines 3163--3165
+Overfull \hbox (8.92148pt too wide) in paragraph at lines 3159--3161
 \T1/ptm/m/n/10.95 Buscamos aho-ra aco-tar el se-gun-do tér-mino uti-li-zan-do p
 ri-me-ro la \T1/ptm/b/n/10.95 des-igual-dad de Cauchy-Schwartz\T1/ptm/m/n/10.95
  : 
  []
 
 [40] [41] [42] [43] [44] [45]
-Overfull \hbox (10.03943pt too wide) in paragraph at lines 3456--3458
+Overfull \hbox (10.03943pt too wide) in paragraph at lines 3452--3454
 \T1/ptm/m/n/10.95 Asumimos que $\OML/ztmcm/m/it/10.95 N[]\OT1/ztmcm/m/n/10.95 (
 \OML/ztmcm/m/it/10.95 u\OT1/ztmcm/m/n/10.95 )$ \T1/ptm/m/n/10.95 tie-ne so-por-
 te en $\OT1/ztmcm/m/n/10.95 [\OML/ztmcm/m/it/10.95 u[]; u[]\OT1/ztmcm/m/n/10.95
@@ -3094,7 +3110,7 @@ ptm/m/n/10.95 ,
  []
 
 [46] [47]
-Overfull \hbox (17.76642pt too wide) detected at line 3530
+Overfull \hbox (17.76642pt too wide) detected at line 3526
 \OT1/ptm/b/n/10.95 C[]\OT1/ztmcm/m/n/10.95 (\OML/ztmcm/m/it/10.95 u\OT1/ztmcm/m
 /n/10.95 ) = [] [] = [] \OML/ztmcm/m/it/10.95 N[]\OT1/ztmcm/m/n/10.95 (\OML/ztm
 cm/m/it/10.95 u\OT1/ztmcm/m/n/10.95 )\OT1/ptm/b/n/10.95 P[] \OT1/ztmcm/m/n/10.9
@@ -3102,7 +3118,7 @@ cm/m/it/10.95 u\OT1/ztmcm/m/n/10.95 )\OT1/ptm/b/n/10.95 P[] \OT1/ztmcm/m/n/10.9
  []
 
 [48] [49]
-Overfull \hbox (23.51292pt too wide) detected at line 3641
+Overfull \hbox (23.51292pt too wide) detected at line 3637
 []\OT1/ztmcm/m/n/10.95 (1 \OMS/ztmcm/m/n/10.95 ^^@ \OML/ztmcm/m/it/10.95 []\OT
 1/ztmcm/m/n/10.95 ) + []\OML/ztmcm/m/it/10.95 [] \OT1/ztmcm/m/n/10.95 = \OML/z
 tmcm/m/it/10.95 [][] \OT1/ztmcm/m/n/10.95 + (1 \OMS/ztmcm/m/n/10.95 ^^@ \OML/z
@@ -3113,12 +3129,12 @@ tmcm/m/it/10.95 []\OT1/ztmcm/m/n/10.95 )[]\OML/ztmcm/m/it/10.95 :
 \pydata@fh@0=\write9
 \openout9 = `_B2DC335CC6609A05EE33507F30831883.data.minted'.
 
-runsystem(latexminted config  --timestamp 20260522151205 B2DC335CC6609A05EE3350
+runsystem(latexminted config  --timestamp 20260604190616 B2DC335CC6609A05EE3350
 7F30831883)...executed.
 
 
 (_B2DC335CC6609A05EE33507F30831883.config.minted)
-runsystem(latexminted cleanconfig  --timestamp 20260522151205 B2DC335CC6609A05E
+runsystem(latexminted cleanconfig  --timestamp 20260604190616 B2DC335CC6609A05E
 E33507F30831883)...executed.
 
 
@@ -3408,14 +3424,18 @@ LaTeX Info: Redefining \% on input line 13.
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
 Package rerunfilecheck Info: File `PlantillaTFG.out' has not changed.
 (rerunfilecheck)             Checksum: D496AADA3E3BDDC49C5DB1586DAF6B99;16972.
  ) 
 Here is how much of TeX's memory you used:
- 47906 strings out of 467867
- 1165063 string characters out of 5418334
- 1719672 words of memory out of 5000000
- 75551 multiletter control sequences out of 15000+600000
+ 47912 strings out of 467867
+ 1165195 string characters out of 5418334
+ 1720854 words of memory out of 5000000
+ 75556 multiletter control sequences out of 15000+600000
  757966 words of font info for 228 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  94i,18n,94p,1056b,2002s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -3440,9 +3460,9 @@ imes/utmbi8a.pfb><C:/Users/carlo/AppData/Local/Programs/MiKTeX/fonts/type1/urw/
 times/utmr8a.pfb><C:/Users/carlo/AppData/Local/Programs/MiKTeX/fonts/type1/urw/
 times/utmr8a.pfb><C:/Users/carlo/AppData/Local/Programs/MiKTeX/fonts/type1/urw/
 times/utmri8a.pfb>
-Output written on PlantillaTFG.pdf (119 pages, 3234976 bytes).
+Output written on PlantillaTFG.pdf (119 pages, 3234854 bytes).
 PDF statistics:
- 2295 PDF objects out of 2487 (max. 8388607)
- 385 named destinations out of 1000 (max. 500000)
+ 2300 PDF objects out of 2487 (max. 8388607)
+ 386 named destinations out of 1000 (max. 500000)
  1405 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -15,7 +15,7 @@
 \contentsline {section}{\numberline {2.2}B-Splines}{7}{section.2.2}%
 \contentsline {subsection}{\numberline {2.2.1}Funciones base B-Spline}{7}{subsection.2.2.1}%
 \contentsline {subsection}{\numberline {2.2.2}Curvas B-Spline}{8}{subsection.2.2.2}%
-\contentsline {subsection}{\numberline {2.2.3}Superficies B-Splines}{9}{subsection.2.2.3}%
+\contentsline {subsection}{\numberline {2.2.3}Superficies B-Splines}{8}{subsection.2.2.3}%
 \contentsline {section}{\numberline {2.3}NURBS}{9}{section.2.3}%
 \contentsline {subsection}{\numberline {2.3.1}Funciones base NURBS}{9}{subsection.2.3.1}%
 \contentsline {subsection}{\numberline {2.3.2}Curvas NURBS}{9}{subsection.2.3.2}%
@@ -55,7 +55,7 @@
 \contentsline {subsection}{\numberline {4.2.1}Problema 1}{25}{subsection.4.2.1}%
 \contentsline {subsubsection}{Parámetros iniciales}{25}{section*.26}%
 \contentsline {subsubsection}{Resultados numéricos}{25}{section*.27}%
-\contentsline {subsection}{\numberline {4.2.2}Problema 2}{26}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.2}Problema 2}{25}{subsection.4.2.2}%
 \contentsline {subsubsection}{Parámetros iniciales}{26}{section*.29}%
 \contentsline {subsubsection}{Resultados numéricos}{26}{section*.30}%
 \contentsline {chapter}{\numberline {5}Conclusiones}{27}{chapter.5}%
